@@ -1,0 +1,21 @@
+ <div class="page" ng-controller="reportViewCtrl">
+   <!--  <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#/home">Home</a></li>
+        <li class="breadcrumb-item active">Archive Report</li>
+    </ol> -->
+    <section class="panel panel-default">
+        <div class="panel-heading">
+        <strong>
+        	<span class="glyphicon glyphicon-th"></span> Status report</strong>
+        	<div class="pull-right header-buttons">
+            <button ng-click="printReport()" class="btn btn-success"> Print Report</button>
+            <a href="/#/archive/view" ><span class="btn btn-default">Back</span> </a>
+        	</div>
+        </div>
+        <div id = "print" class="panel-body">
+           <strong>
+            <span ></span>Inident: {{report.incidentName}}</strong>
+      <div ng-bind-html="re"></div>
+        </div>
+    </section>
+ </div>

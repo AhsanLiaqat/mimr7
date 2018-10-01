@@ -1,0 +1,10 @@
+1- we run header-footer-summary-report script for insert header footer in summary report in custom messages.
+we run 20180726115130-new_message_histories to make new content.
+2-we run message-history script for change type of content in message-history
+we run 20180726160319-message_history_waste to swap name.
+3- we run 20180802133115-message_waste to make new message_content.
+   we run message-script for change type of message in messages and copy messages from message to message_new.
+   we run 20180802134056-message_limit_waste to swap name.
+4-we run 20180810104616-change_limit_of_custom_messages to make new message_content.
+  we run custom_message-script for change type of message in messages and copy messages from message to message_new.
+  we run 20180810111650-remove_coloumn_from_custom_messages to swap name.

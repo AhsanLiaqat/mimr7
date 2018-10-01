@@ -1,0 +1,115 @@
+<div class="page-signin" ng-controller="inviteCtrl">
+
+    <div class="auth-container">
+        <div class="signin-header">
+            <section class="logo text-center" style="background-color: #ddd;">
+                <a href="#/">
+                    <img style="width: 400px;" src="images/full-logo.png">
+                </a>
+            </section>
+        </div>
+
+        <div class="signin-body">
+            <div class="form-container">
+
+                <form  ng-show="verifyPage" class="form-horizontal">
+                    <fieldset >
+                        <div class="form-info">
+                    <strong><p class="text-center">New user activation</p></strong>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="ti-email"></span>
+                                    </span>
+                                    <input type="text"
+                                           class="form-control input-lg"
+                                           placeholder="Email"
+                                           ng-model="data.email"
+                                           >
+                                </div>
+                            </div>
+                            <div class="form-group form-group-last">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="ti-lock"></span>
+                                    </span>
+                                    <input type="password"
+                                           class="form-control input-lg"
+                                           placeholder="Temporary Password"
+                                           ng-model="data.password"
+                                           >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-submit">
+                            <div class="form-group">
+                                <button 
+                                   type="submit"
+                                   class="btn btn-primary btn-lg btn-block text-center"
+                                   ng-click="verify()">Next</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+
+                <!-- page 2 -->
+
+
+                <form ng-show="newpass" class="form-horizontal">
+                    <fieldset>
+
+                        <div class="form-info">
+                    <strong><p class="text-center">Update Password</p></strong>
+                        
+                        <div class="form-group form-group-last">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="ti-lock"></span>
+                                    </span>
+                                    <input type="password"
+                                           class="form-control input-lg"
+                                           placeholder="New Password"
+                                           ng-model="data.password"
+                                           >
+                                </div>
+                            </div>
+                            <div class="form-group form-group-last">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <span class="ti-lock"></span>
+                                    </span>
+                                    <input type="password"
+                                           class="form-control input-lg"
+                                           placeholder="Confirm New Password"
+                                           ng-model="data.confirm"
+                                           >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-submit">
+                            <div class="form-group">
+                                <button 
+                                   type="submit"
+                                   class="btn btn-primary btn-lg btn-block text-center"
+                                   ng-click="updatepass()">Update</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="divider"></div>
+            <section class="additional-info">
+                <p class="text-right">
+                    <a ng-click="RetirvePass()">Forgot your password?</a>
+                    <!-- <span> | </span> -->
+                    <!-- <a href="#/pages/signup">Sign up</a> -->
+                </p>
+            </section>
+        </div>
+    </div>
+</div>

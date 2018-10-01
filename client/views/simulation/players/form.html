@@ -1,0 +1,66 @@
+<div class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" style="height: 600px;overflow-y: scroll;">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="close()" >&times;</button>
+                <h4 class="modal-title">New Game Player</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label> First Name</label> <span style="color: red" title="Required"> *</span>
+                    <input type="text" class="form-control" ng-model="data.firstName" placeholder="Player First Name" >
+                </div>
+
+                <div class="form-group">
+                    <label>Last Name</label> <span style="color: red" title="Required"> *</span>
+                    <input type="text" class="form-control" ng-model="data.lastName" placeholder="Player Last Name" >
+                </div>
+                 <div class="form-group">
+                    <label>Email</label> <span style="color: red" title="Required"> *</span>
+                    <input type="email" class="form-control" ng-model="data.email" placeholder="Player Email" >
+                </div>
+                <div class="form-group">
+                    <label for="mobilePhone">Mobile Number</label>
+                    <input type="text" class="form-control" ng-model="data.mobilePhone" placeholder="Player Mobile Number" id="phone">
+                </div>
+                <input type="hidden" value="{{data.countryCode}}" id="code">
+                <div class="form-group">
+                    <label>Organization Name</label> <span style="color: red" title="Required"> *</span>
+                    <input type="text" class="form-control" ng-model="data.organizationName" placeholder="Player Organization Name">
+                </div>
+
+               <!--  <div class="form-group">
+                    <label>Country</label>
+                    <input type="text" class="form-control" ng-model="data.country" placeholder="Player Country" >
+                </div> -->
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="close()" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-success" ng-click="submit()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+setTimeout(function() {
+var code = $("#code").val();
+  $("#phone").intlTelInput(
+{
+preferredCountries:['NL'],
+allowExtensions: true,
+autoFormat: false,
+autoHideDialCode: false,
+autoPlaceholder: true,
+initialCountry: code,
+ipinfoToken: "yolo",
+nationalMode: false,
+numberType: "MOBILE",
+preventInvalidNumbers: true,
+utilsScript: "bower_components/intl-tel-input/build/js/utils.js"
+}
+)
+}, 1500);
+</script>

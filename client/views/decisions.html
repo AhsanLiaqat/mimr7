@@ -1,0 +1,47 @@
+<div class="page" ng-controller="DecisionsCtrl">
+    <section class="panel panel-default">
+        <div class="panel-heading">
+        <strong>
+        	<span class="glyphicon glyphicon-th"></span> Decision List</strong>
+        	<div class="pull-right header-buttons">
+        	 <a href="#/decisions/create/" class="btn btn-success btn-sm">Create New Decision</a>
+        	</div>
+        </div>
+        <div class="panel-body">
+
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th> Name </th>
+                            <th> Responsibility Level </th>
+                            <th> Possible Outcomes </th>
+                            <th> Description </th>
+                            <th> Data Created </th>
+                            <th> Actions </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="cat in decisions">          
+                            <td>{{cat.name}}</td>
+                            <td>{{cat.responsibility_level}}</td>
+                            <td>{{cat.possible_outcomes}}</td>
+                            <td>{{cat.description}}</td>
+                            <td>{{ dateFormat(cat.createdAt) }}</td>
+                            <td>
+                            <a href="#/decisions/create/{{cat.id}}" class="btn btn-sm btn-warning">
+                            	<span class="glyphicon glyphicon-edit"></span>
+                            </a>
+                            <button class="btn btn-sm btn-danger" ng-click="deleteDecision(cat.id)">
+                            	<span class="glyphicon glyphicon-remove-sign"></span>
+                            </button>
+                            </td>                            
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+</div>

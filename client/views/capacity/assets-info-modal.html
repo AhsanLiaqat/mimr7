@@ -1,0 +1,26 @@
+<div class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="panel panel-default">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" ng-click="close()">&times;</button>
+                    <h4 class="modal-title">Information
+                    </h4>
+                </div>
+            </div>
+            <!-- Body -->
+            <div class="modal-body" style="padding-top: 0px !important;">
+                <div style="height: 250px; overflow-y: scroll;">
+                    <h4 style="font-weight: bold;">{{info | htmlToPlaintext}}</h4>
+            	</div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button class="btn btn-info" ng-click="close()" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

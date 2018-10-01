@@ -1,0 +1,60 @@
+<div class="page">
+	<form role="form">
+		<div>
+			<div ng-include="'views/partials/user-account-form.html'"></div>
+		</div>
+		<section class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="form-group">
+							<button ng-click="saveAccount()" type="submit" class="btn btn-success btn-w-md">Save Account</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</form>
+</div>
+<script>
+setTimeout(function() {
+var code = $("#code").val();
+// alert(code);
+  $("#phone").intlTelInput(
+{
+preferredCountries:['NL'],
+allowExtensions: true,
+autoFormat: false,
+autoHideDialCode: false,
+autoPlaceholder: true,
+// defaultCountry: "auto",
+initialCountry: code,
+ipinfoToken: "yolo",
+nationalMode: false,
+numberType: "MOBILE",
+preventInvalidNumbers: true,
+utilsScript: "bower_components/intl-tel-input/build/js/utils.js"
+}
+)
+}, 1000);
+setTimeout(function() {
+var code = $("#code").val();
+// alert(code);
+  $("#Ophone").intlTelInput(
+{
+preferredCountries:['NL'],
+allowExtensions: true,
+autoFormat: false,
+autoHideDialCode: false,
+autoPlaceholder: true,
+// defaultCountry: "auto",
+initialCountry: code,
+ipinfoToken: "yolo",
+nationalMode: false,
+numberType: "MOBILE",
+preventInvalidNumbers: true,
+utilsScript: "bower_components/intl-tel-input/build/js/utils.js"
+}
+)
+}, 500);
+</script>

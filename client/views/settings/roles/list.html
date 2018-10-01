@@ -1,0 +1,141 @@
+<div class="page" ng-controller="rolesCtrl">
+    <!-- ++++++++ List PAAGE -->
+    <section class="panel panel-default" ng-show="listPage">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"></span> Roles</strong>
+                <div class="pull-right header-buttons">
+                    <a href="" ng-click="CreatePageTrue()" class="btn btn-success btn-sm"> <i class="fa fa-plus"></i> ADD</a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table st-pipe="RoleTable" st-table="roles" class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th st-sort="name">Name</th>
+                            <th st-sort="users.firstName">Assigned Users</th>
+                            <th>Actions</th>
+                        </tr>
+                        <tr>
+                            <th class="search-group"><i class="fa fa-search"></i><input class="form-control search-field" placeholder="Search" st-search="name"/>
+                            </th>
+                            <th class="search-group"><i class="fa fa-search"></i><input class="form-control search-field" placeholder="Search" st-search="users.firstName"/>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="record in roles">
+                            <td>{{record.name}}</td>
+                            <td><p ng-repeat="(ind,x) in record.users" >
+                                {{getUserName(x)}}
+                                <span ng-if = "ind != record.users.length-1">, </span>
+                            </p></td>
+                            <td>
+                                <a ng-click="Edit(record)" class="btn btn-info">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                                <a class="btn btn-danger btn-sm" ng-click="deleteRole(record,$index)" confirm="Are you sure you want to delete?">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-show="isLoading">
+                        <tr>
+                            <td colspan="4" class="text-center">Loading ... </td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="table table-striped table-responsive">
+                        <tr>
+                            <td class="text-center" st-pagination="" st-items-by-page="pageItems" colspan="7">
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="col-md-3">
+                    <select class="form-control"
+                    ng-model="pageItems"
+                    ng-options="item.val as item.name for item in items"
+                    ng-selected="item.val === pageItems">
+                </select>
+            </div>
+        </div>
+    </section>
+    <!-- +++++++++++++++++++ CREATE PAGE++++++++++++++++++++++++++++++++++ -->
+    <section class="panel panel-default" ng-show="CreatePage">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"></span> CREATE ROLE</strong>
+                <div class="pull-right header-buttons">
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <input class="form-control" required="required" ng-model="role.name" placeholder="Enter Role Name"><span class="required-custom"> *</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Name</th>
+                                <th>Position/Role</th>
+                                <th>Email</th>
+                                <th>Mobile#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="user in users">
+                                <td> <input type="checkbox" ng-model="user_status" ng-click="selectUser(user)" ng-checked="user.checked"></td>
+                                <td>{{user.firstName}}  {{user.lastName}}</td>
+                                <td>{{user.title}}</td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.mobilePhone}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn btn-info" ng-click="listPageTrue()">Cancel</button>
+                <button class="btn btn-success pull-right" ng-click="CreateRole()">Save</button>
+            </div>
+        </section>
+        <!-- +++++++++++++++++++EDIT PAGE ++++++++++++++++++++++++++++++++++++++++++ -->
+        <section class="panel panel-default" ng-show="editPage">
+            <div class="panel-heading">
+                <strong>
+                    <span class="glyphicon glyphicon-th"></span>EDIT ROLE</strong>
+                    <div class="pull-right header-buttons">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <input class="form-control" ng-model="role.name" placeholder="Enter Role Name">
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Select</th>
+                                    <th>Name</th>
+                                    <th>title</th>
+                                    <th>Email</th>
+                                    <th>Mobile#</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in users">
+                                    <td> <input type="checkbox" ng-model="user_status" ng-click="selectUser(user)" ng-checked="user.checked"></td>
+                                    <td>{{user.firstName}}</td>
+                                    <td>{{user.title}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>{{user.mobilePhone}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn btn-info" ng-click="listPageTrue()">Cancel</button>
+                    <button class="btn btn-success pull-right" ng-click="update()">Save</button>
+                </div>
+            </section>
+        </div>

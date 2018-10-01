@@ -1,0 +1,76 @@
+    <div class="modal fade" role="dialog">
+  <div class="modal-dialog" id ="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" id = "modal-header">
+        <button type="button" class="close" ng-click="close()">&times;</button>
+        <h4 class="modal-title"  id = "modal-title">Quick Add User </h4>
+      </div>
+      <div class="modal-body"  id="modal-body">
+    <section class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+                    <form role="form">
+                        <div class="form-group">
+                            <label >First Name<span class="required-custom"> *</span></label>
+                            <input type="text" ng-model="data.firstName" class="form-control" placeholder="Enter first name" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label > Middle Name</label>
+                            <input type="text" ng-model="data.middleName" class="form-control" placeholder="Enter midlle name">
+                        </div>
+                        <div class="form-group">
+                            <label >Last Name<span class="required-custom"> *</span></label>
+                            <input type="text" ng-model="data.lastName" class="form-control" placeholder="Enter last name" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label >Email address<span class="required-custom"> *</span></label>
+                            <input type="email" ng-model="data.email" class="form-control" placeholder="Enter email" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label >Password<span class="required-custom"> *</span></label>
+                            <input type="password" ng-model="data.password" class="form-control" placeholder="Password" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobilePhone">Mobile Phone <span class="required-custom"> *</span>
+                            </label>
+                            <input type="tel" class="form-control" ng-model="data.mobilePhone" id="phone">
+                        </div>
+                        <input type="hidden" value="{{data.countryCode}}" id="code">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+          </div>
+        <div class="modal-footer">
+            <button class="btn btn-info" data-dismiss="modal">Cancel</button>
+            <button ng-click="submitUser()" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+setTimeout(function() {
+var code = $("#code").val();
+// alert(code);
+  $("#phone").intlTelInput(
+{
+preferredCountries:['NL'],
+allowExtensions: true,
+autoFormat: false,
+autoHideDialCode: false,
+autoPlaceholder: true,
+// defaultCountry: "auto",
+initialCountry: code,
+ipinfoToken: "yolo",
+nationalMode: false,
+numberType: "MOBILE",
+preventInvalidNumbers: true,
+utilsScript: "bower_components/intl-tel-input/build/js/utils.js"
+}
+)
+}, 1500);
+</script>

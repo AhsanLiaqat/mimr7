@@ -1,0 +1,180 @@
+<div class="modal fade" role="dialog">
+    <div id="modal-dialog" class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" id="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" id="modal-title">New Game Template</h4>
+            </div>
+            <div class="modal-body modal_big_height">
+                <section ng-show="page1" class="panel panel-default modal_third_cal">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <div id="home" class="tab-pane fade in active">
+                                    <div class="form-group">
+                                        <label>Name</label><span style="color: red" title="Required"> *</span>
+                                        <input class="form-control" ng-model="data.name">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea ng-model="data.description" class="form-control" id="textArea"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Game Type</label>
+                                        <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                            <select chosen
+                                                    class="form-control"
+                                                    data-placeholder-text-single="'Select Type'"
+                                                    ng-model="data.type"
+                                                    ng-options="type.id as type.name for type in types">
+                                                    <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" ng-if = "data.type == 0">
+                                        <label>Game Category</label>
+                                        <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                            <select chosen
+                                                    class="form-control"
+                                                    data-placeholder-text-single="'Select Type'"
+                                                    ng-model="data.gameCategoryId"
+                                                    ng-options="type.id as type.name for type in categories">
+                                                    <option></option>
+                                            </select>
+                                        </div>
+                                        <a href="" ng-click="addGameCategory()">New Game Type</a>
+                                    </div>
+
+                                    <div class="form-group" ng-if = "data.type == 0">
+                                        <label>Game Date<span class="required-custom"> *</span></label>
+                                        <datepicker date-month-title="selected year" data-date-format='EEEE, dd, MMMM, yyyy' date-min-limit ="{{newDate}}">
+                                        <input ng-model="data.planDate" class = "form-control"/>
+                                        </datepicker>
+
+<!--                                         <input class="form-control"
+                                               data-provide="datepicker"
+                                               ng-change="closePicker()"
+                                               data-date-format="dd/mm/yyyy"
+                                               ng-model="data.planDate"> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section ng-show="page3" class="panel panel-default modal_third_cal">
+                    <div class="row">
+                      <button class="btn btn-success" ng-click="newTeam({})">New Team</button>
+                    </div>
+
+                    <section class="panel panel-default"
+                          style="margin-bottom: 20px;"
+                          ng-repeat="team in teams">
+                        <div class="panel-heading">
+                            <strong>
+                              <span class="glyphicon glyphicon-th"></span> {{team.name}}
+                              <button class="btn btn-success" ng-click="CreateGameRole($index,team.id)">Add Role</button>
+                            </strong>
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped ">
+                                            <thead>
+                                                <tr>
+                                                    <th >Name</th>
+                                                    <th >Game Template</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="record in team.game_roles">
+                                                <td>{{record.name}}</td>
+                                                <td>{{data.name}}</td>
+                                                <td>
+                                                    <a ng-click="editRole(record, $parent.$index,$index)" class="btn btn-info">
+                                                        <span class="glyphicon glyphicon-edit"></span>
+                                                    </a>
+                                                    <a class="btn btn-danger btn-sm" ng-click="deleteRole(record.id, $parent.$index,$index)" confirm="Are you sure you want to delete?">
+                                                        <span class="glyphicon glyphicon-remove-sign"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+
+
+                                            <tbody ng-show="team.game_roles && team.game_roles.length === 0">
+                                            <tr class="watermark-text-medium"
+                                                style="position: inherit; display: table-row; font-size: 30px;">
+                                                <td colspan="8">
+                                                    <p>No Game Roles Present</p>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div ng-hide="teams.length > 0">
+                        <p style="margin-top: 15px;" class="watermark-text-small">
+                            No Teams Assigned
+                        </p>
+                    </div>
+
+                </section>
+
+                <section ng-show="page4" class="panel panel-default modal_third_cal">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3>{{title}}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label> Team Name </label><span style="color: red" title="Required"> *</span>
+                                <input class="form-control" ng-model="team.name">
+
+                            </div>
+                            <!-- <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                            </div> -->
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-info" ng-show="page1" ng-click="close()" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-success" ng-show="page1" ng-click="save(data)" style="float:right; margin-left:5px"> Next  <i class="fa fa-chevron-right fa-lg"></i></button>
+                <button class="btn btn-success" ng-show="page2" ng-click="saveExit()" style="float:right">
+                    <span>Save & Exit</span>
+                </button>
+
+                <div ng-show="page3">
+
+                    <button class="btn btn-success" ng-click="saveExit()" style="float:right">
+                        <span>Close</span>
+                    </button>
+                </div>
+
+                <div ng-show="page4">
+                    <button class="btn btn-info" ng-show = "teams.length != 0" ng-click="backToAssignedMessages()">Back</button>
+                    <button class="btn btn-success" ng-show = "teams.length == 0" ng-click="createTeam()" style="float:right">
+                        <span>Save Team & Continue</span>
+                    </button>
+                    <button class="btn btn-success" ng-show = "teams.length != 0" ng-click="createTeam()" style="float:right">
+                        <span>Save</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

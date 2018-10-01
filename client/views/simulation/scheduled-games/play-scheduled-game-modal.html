@@ -1,0 +1,75 @@
+<div class="modal fade" role="dialog">
+    <div id="modal-dialog" class="modal-dialog">
+        <!-- Modal content-->
+        <div id="modal-content" class="modal-content">
+
+            <!-- Header -->
+            <div id="modal-header" class="modal-header">
+                <button type="button" class="close" ng-click="close()">&times;</button>
+                <h4 class="modal-title">Play Scheduled Game</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="form-group">
+                            <label>Game Messages Summary  </label>
+                            <br><br>
+                            <table class="table table-bordered table-striped table-responsive">
+                                <thead>
+                                <tr>
+                                    <th>Message</th>
+                                    <th>Roles & Actors</th>
+                                    <th>Setof Time (Min.)</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="gameMessage in playGame.template_plan_messages">
+                                    <td>{{ gameMessage.assigned_game_message.game_message.name }}</td>
+                                    <td>
+                                    <span ng-repeat="role in gameMessage.assigned_game_message.roles"
+                                          style="margin-right: 15px;">
+                                        <b>{{role.name}}</b> ({{getUserName(role.id)}})
+                                    </span>
+                                    </td>
+                                    <td>
+                                        {{setOffTimeFormat(gameMessage.setOffTime)}}
+                                    </td>
+                                    <td>
+                                        <a ng-click="sendMessage(gameMessage)"
+                                           ng-hide="gameMessage.activated"
+                                           class="btn btn-info"
+                                           title="Send Message">
+                                            <span class="glyphicon glyphicon-send"></span>
+                                        </a>
+                                        <p ng-show="gameMessage.activated">
+                                            <i>Message sent at <b>{{dateFormat(gameMessage.activatedAt)}}</b></i>
+                                        </p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page Footer -->
+                <hr>
+                <div class="modal-footer">
+                    <button class="btn btn-info"
+                            style="float: left;"
+                            ng-click="close()">
+                        Cancel
+                    </button>
+
+                    <button class="btn btn-success"
+                            style="float: right; display: none;"
+                            ng-click="sendAllMessages()">
+                        Send All Messages
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,167 @@
+<div class="modal fade" role="dialog">
+    <div id="modal-dialog" class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div id="modal-content" class="modal-content">
+            
+            <!-- Header -->
+            <div id="modal-header" class="modal-header">
+                <button type="button" class="close" ng-click="close()">&times;</button>
+                <h4 class="modal-title">Select Assigned Task
+                    <for></for>
+                </h4>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body modal_big_height">
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button ng-show="page1" class="btn btn-primary float-left" ng-click="addTask()">Add Task</button>
+                    <button ng-show="page1" class="btn btn-info" ng-click="close()" data-dismiss="modal">Cancel</button>
+                    <button ng-show="page1" class="btn btn-success" ng-click="save()">Save</button>
+                    <button ng-show="page2" class="btn btn-info" ng-click="back()"> < Back</button>
+                    <button ng-show="page2" class="btn btn-success" ng-click="createAssignTask()">Save</button>
+                </div>
+                <section ng-show="page1" class="panel panel-default modal_third_cal">
+
+                    <div class="table-filters">
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-6 chosen-full-container" style="margin: 10px;">
+                                <form>
+                                    <input type="text"
+                                           placeholder="Search Task, and Actor"
+                                           class="form-control"
+                                           data-ng-model="searchKeywords"
+                                           data-ng-keyup="search()">
+                                </form>
+
+                                <br>
+
+                                <select chosen
+                                        class="form-control"
+                                        data-placeholder-text-single="'Select Tags'"
+                                        ng-model="categoriesFilter"
+                                        ng-options="tag.text as tag.text for tag in tags"
+                                        ng-change="CategoryFilter()">
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered table-striped table-responsive" style="height: 500px; overflow-y: scroll;">
+                        <thead>
+                            <tr>
+                                <th class="col-md-1"></th>
+                                <th class="col-md-2"><div class="th">Task Library
+                                    <a      href=""
+                                            class="fa fa-angle-up"
+                                            style="text-decoration: none;"
+                                            data-ng-click=" order('task_list.title') "
+                                            data-ng-class="{active: row == 'task_list.title'}">
+                                    </a>
+                                    <a      href=""
+                                            style="text-decoration: none;"
+                                            class="fa fa-angle-down"
+                                            data-ng-click=" order('-task_list.title') "
+                                            data-ng-class="{active: row == '-task_list.title'}">
+                                    </a>
+                                </div></th>
+                                <th class="col-md-2"><div class="th"> Responsibility Level
+                                    <a      href=""
+                                            style="text-decoration: none;"
+                                            class="fa fa-angle-up"
+                                            data-ng-click=" order('responsibility_level') "
+                                            data-ng-class="{active: row == 'responsibility_level'}">
+                                    </a>
+                                    <a      href=""
+                                            style="text-decoration: none;"
+                                            class="fa fa-angle-down"
+                                            data-ng-click=" order('-responsibility_level') "
+                                            data-ng-class="{active: row == '-responsibility_level'}">
+                                    </a>
+                                </div></th>
+                                <th class="col-md-2"><div class="th"> Category Name
+                                    <a      href=""
+                                            style="text-decoration: none;"
+                                            class="fa fa-angle-up"
+                                            data-ng-click=" order('task_list.all_category.name') "
+                                            data-ng-class="{active: row == 'task_list.all_category.name'}">
+                                    </a>
+                                    <a      href=""
+                                            style="text-decoration: none;"
+                                            class="fa fa-angle-down"
+                                            data-ng-click=" order('-task_list.all_category.name') "
+                                            data-ng-class="{active: row == '-task_list.all_category.name'}">
+                                    </a>
+                                </div></th>
+                                <th class="col-md-2">
+                                    <div class="th"> Tags
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="activity in filteredActivities | filter : searchKeywords">
+                                <td><input type="checkbox" ng-model="activity.selected"></td>
+                                <td>{{activity.task_list.title}}</td>
+                                <td>{{activity.responsibility_level}}</td>
+                                <td>{{activity.task_list.all_category.name}}</td>
+                                <td>
+                                    <a href="" ng-repeat="tag in activity.task_list.tags"> #{{tag.text}}</a> <br>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    
+                </section>
+
+                <section ng-show="page2" class="panel panel-default modal_third_cal">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label> Task </label><span style="color: red" title="Required"> *</span>
+
+                            <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                <select chosen
+                                        class="form-control"
+                                        data-placeholder-text-single="'Select Task'"
+                                        ng-model="activity.taskListId"
+                                        ng-options="task.id as task.title for task in tasks">
+                                </select>
+                            </div>
+                            <a href="" ng-click="addTaskItem()"><i class=""> Create New Task </i></a>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Description </label>
+                            <input class="form-control" ng-model="activity.description">
+                        </div>
+                        <div class="form-group">
+                            <label> Responsibility Level</label>
+                            <div class="form-group chosen-full-container">
+                                <select chosen
+                                        class="form-control"
+                                        data-placeholder-text-single="'Select Level'"
+                                        ng-model="activity.responsibility_level"
+                                        ng-options="role.name as role.name for role in roles">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Actor </label>
+                            <div class="form-group chosen-full-container">
+                                <select chosen
+                                        class="form-control"
+                                        data-placeholder-text-single="'Select Actor'"
+                                        ng-model="activity.responseActorId"
+                                        ng-options="actor.id as displayActorName(actor) for actor in users">
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>

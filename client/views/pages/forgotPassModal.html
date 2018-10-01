@@ -1,0 +1,82 @@
+<div class="modal fade" role="dialog" style="margin-top: 110px">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" id = "modal-header" >
+        <button type="button" class="close" ng-click="close()">&times;</button>
+        <h4 class="modal-title"  id = "modal-title" >Recover Password</h4>
+      </div>
+      <div class="modal-body" style="height: 300px">
+        <div >
+          <section ng-show="page1">
+            <form>
+            <div class="form-group">
+              <label>Email </label>
+                <input type="text"
+                class="form-control input-md"
+                placeholder="Provide Registered Email"
+                ng-model="data.email"
+                >
+                </div>
+                <h4 class="text-center" ng-show="found">User Found! Click next to continue.</h4>
+                <button ng-hide="found" class="btn btn-success pull-right" ng-click="FindUser()">Submit</button>
+                <button ng-show="found" class="btn btn-success pull-right" ng-click="getNumber()">Next</button>
+            </form>  
+        </section>
+        <!-- ++++++++++++++++++++++ PHONE PAGE+++++++++++++++++++++++++++++++++ -->
+        <section ng-show="Number">
+          <form>
+            <div class="form-group">
+              <label>Mobile Phone (last 7 characters)</label>
+              <input type="tel" class="form-control" ng-model="data.mobilePhone" limit-to="7" style="width: 570px">    
+            </div>
+              <button class="btn btn-success pull-right" ng-click="retrivePassword()">Reset</button> 
+            </form>  
+          </section>
+
+        <!-- page 2 -->
+        <section ng-show="page2" class="text-center">
+          <strong>Your new password has been sent to you via email and sms.</strong>
+        </section>
+          <section ng-show="page3" class="text-center">
+          <strong>Sorry No user Found! Please provide correct email and number.</strong>
+          <p> You can contact your admin to change password.</p>
+        </section>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="close()" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+
+setTimeout(function() {
+var code = $("#code").val();
+// alert(code);
+  $("#phone").intlTelInput(
+{
+  geoIpLookup: function(callback) {
+    $.get('https://ipinfo.io', function() {}, "jsonp").always(function(resp) {
+      var countryCode = (resp && resp.country) ? resp.country : "";
+      callback(countryCode);
+    });
+  },
+preferredCountries:['NL'],
+allowExtensions: true,
+autoFormat: false,
+autoHideDialCode: false,
+autoPlaceholder: true,
+defaultCountry: "auto",
+initialCountry: "auto",
+ipinfoToken: "yolo",
+nationalMode: false,
+numberType: "MOBILE",
+preventInvalidNumbers: true,
+utilsScript: "bower_components/intl-tel-input/build/js/utils.js"
+}
+)
+}, 300);
+</script>

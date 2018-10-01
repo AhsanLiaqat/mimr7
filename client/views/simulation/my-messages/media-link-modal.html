@@ -1,0 +1,35 @@
+<div class="modal fade" role="dialog">
+    <div id="modal-dialog" class="modal-dialog">
+        <!-- Modal content-->
+        <div id="modal-content" class="modal-content">
+            <!-- Header -->
+            <div id="modal-header" class="modal-header">
+                <button type="button" class="close" ng-click="close()">&times;</button>
+                <h4 class="modal-title">Media Link
+                    <for></for>
+                </h4>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+                <a class="btn btn-primary" target="_blank" href="{{link}}">Open in Tab</a>
+
+                <section class="panel panel-default" style="text-align: center;">
+                    <div class="form-group col-md-9" style="margin-left: 153px;">
+                        <a href="" ng-click="clearBrowser()" class="cross-ifram-button"><i class="fa fa-times fa-fw"></i></a>
+
+                        
+                        <a href="" ng-click="RefreshPage()" class="fresh-ifram-button"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+                        <input type="text" class="form-control" placeholder="Paste URL" ng-change="refreshframe()" ng-model="liblink">
+                    </div>
+                    <iframe style="margin-left: 18px" id="MediaFrame" width="850" height="520" ng-src="{{link}}"></iframe>
+                </section>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button class="btn btn-info" ng-click="close()" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

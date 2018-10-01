@@ -1,0 +1,198 @@
+<div class="modal fade" role="dialog">
+    <div id="modal-dialog" class="modal-dialog">
+        <!-- Modal content-->
+        <div id="modal-content" class="modal-content">
+
+            <!-- Header -->
+            <div id="modal-header" class="modal-header">
+                <button type="button" class="close" ng-click="close()">&times;</button>
+                <h4 class="modal-title">Edit Scheduled Game</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+                    <!-- Page 1 -->
+                    <div class="form-group" ng-show="page1">
+                        <label>STEP 1: Game's Basic Info</label>
+                        <br><br>
+                        <div class="chosen-full-container" style="margin: 5px;">
+                            <select chosen
+                                    class="form-control"
+                                    data-placeholder-text-single="'Select Game Template'"
+                                    ng-model="playGame.gamePlanId"
+                                    ng-options="gameTemplate.id as gameTemplate.name for gameTemplate in gameTemplates">
+                                <option></option>
+                            </select>
+                        </div>
+                        <br><br>
+                        <h4>Select Date:</h4>
+                        <datepicker date-month-title="selected year" data-date-format='EEEE, dd, MMMM, yyyy' date-min-limit ="{{newDate}}" >
+                            <input ng-model="playGame.scheduled_date" class = "form-control"/>
+                        </datepicker>
+                        <!-- <circulartimepicker model="playGame.scheduled_date"
+                                            format="{momentFormat:'HH:mm DD-MM-YYYY'}">
+                        </circulartimepicker> -->
+                        <br><br>
+                        <div class="chosen-full-container play-game-client" style="margin: 5px;">
+                            <label>Player List: </label>
+                            <select chosen
+                                    ng-model="playGame.gamePlayerListId"
+                                    ng-options="list.id as list.name for list in playerlists">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Page 2 -->
+                    <div class="form-group" ng-show="page2">
+                        <label>STEP 2: Game Role's User Selection</label>
+                        <br><br>
+                        <div ng-repeat="role in playGame.roles"
+                             class="panel-body"
+                             style="background-color: rgba(238, 238, 238, 0.7);
+                                    margin-bottom: 15px;
+                                    border-radius: 10px;">
+                            <div class="chosen-full-container">
+                                <input type="text" ng-model="role.to_show" class="form-control" disabled>
+                                <br>
+                                <select chosen
+                                        class="form-control"
+                                        data-placeholder-text-single="'Select User for Role'"
+                                        ng-model="role.playerId"
+                                        ng-options="user.id as getUserName(user) for user in game_player_list.game_players">
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Page 3 -->
+                    <div class="form-group" ng-show="page3">
+                      <!--   <label>STEP 3: Setoff Time for Game Messages </label> -->
+                          <div class="row">
+                           <button class="btn btn-danger"
+                                    style="float: right;"
+                                    title = "Clear Rounds"
+                                    ng-click="deleteRounds()"
+                                    confirm="All Rounds will be cleared. Continue?">
+                                    Clear Rounds
+                            </button>
+                          <!--  <button class="btn btn-success"
+                                    style="float: right;"
+                                    ng-click="showRound()">
+                                New Round 
+                            </button> -->
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <uib-accordion close-others="oneAtATime" class = "list-accordian">
+                                        <div uib-accordion-group class="panel-default to-move" 
+                                            ng-repeat="round in roundsArray">
+                                            <uib-accordion-heading >
+                                                <div class="panel-heading">
+                                                  <strong><span class="pull-left" ></span> {{round.name}}</strong>
+                                                  <strong style="float: right;">Time Span:{{round.timeSpan / 60}} Minutes.</strong>
+                                                </div> 
+                                               
+                                            </uib-accordion-heading>
+                                            <table class="table table-striped" style="margin-left: -10px;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Message</th>
+                                                        <th>Roles</th>
+                                                        <th>Set Off Time (Min.)</th>
+                                                    </tr>
+                                                </thead> 
+                                                    <tbody>
+                                                        <tr ng-repeat="gameMessage in round.Messages">
+                                                            <td>{{gameMessage.index}} - {{gameMessage.assigned_game_message.game_message.name}}</td>
+                                                            <td>
+                                                                <span ng-repeat="role in gameMessage.assigned_game_message.roles"
+                                                                      style="margin-right: 15px;">
+                                                                      <!-- <span ng-repeat="role in message.roles"> -->
+                                                                            {{role.name}}
+                                                                      <!-- </span> -->
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" min="0" ng-model="gameMessage.offset"
+                                                                 class="form-control" placeholder="" > 
+                                                                
+                                                            </td>
+                                                            
+                                                    
+                                                        </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </uib-accordion>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group" ng-show="page3">
+                        <label>STEP 3: Setoff Time for Game Messages </label>
+                        <br><br>
+                        <table class="table table-bordered table-striped table-responsive">
+                            <thead>
+                            <tr>
+                                <th>Message</th>
+                                <th>Roles</th>
+                                <th>Setoff Time</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="gameMessage in gameMessages">
+                                <td>{{ gameMessage.game_message.name || gameMessage.assigned_game_message.game_message.name }}</td>
+                                <td>
+                                    <span ng-repeat="role in (gameMessage.roles || gameMessage.assigned_game_message.roles)"
+                                          style="margin-right: 15px;">
+                                        {{role.name}}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div uib-timepicker
+                                         class="setOffTime"
+                                         ng-model="gameMessage.setOffTime"
+                                         show-meridian="false"
+                                         show-seconds="true">
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div> -->
+                </div>
+            </div>
+
+                <!-- Page Footer -->
+                <hr>
+                <div class="modal-footer">
+                    <button class="btn btn-info"
+                            ng-hide="page1"
+                            style="float: left;"
+                            ng-click="back()">
+                            <i class="fa fa-chevron-left fa-lg"></i> Back
+                    </button>
+
+                    <button class="btn btn-success"
+                            ng-hide="page3"
+                            style="float: right;"
+                            ng-click="next()">
+                            Next <i class="fa fa-chevron-right fa-lg"></i>
+                    </button>
+
+                    <button class="btn btn-success"
+                            ng-show="page3"
+                            style="float: right;"
+                            ng-click="updateSchedule()">
+                            Update Schedule
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

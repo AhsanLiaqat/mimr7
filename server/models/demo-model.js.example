@@ -1,0 +1,53 @@
+/*
+The company model, used to track the companies 
+that have registered with the system
+*/
+
+var Q = require('q');
+
+
+module.exports = function(sequelize, DataTypes) {
+  var companies = sequelize.define("companies", {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true
+    },
+    email: DataTypes.STRING,
+
+    name: DataTypes.STRING,
+
+    officePhone: DataTypes.STRING,
+
+    type: DataTypes.STRING,
+    // The type of the company eg Retail, Software, Construction
+
+    country: DataTypes.STRING,
+    // The country as a 3 letter code eg USA, PAK, CAN
+
+    inBusiness: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    },
+    // Is the company still in business?
+
+    available: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
+    // Is a member of the company available?
+
+  },{
+    classMethods: {
+      byId: function(id) {
+        var deferred = Q.defer();
+        companies.findOne({where: {id: id}}).then(function(user) {
+          deferred.resolve(user);
+        })
+        return deferred.promise;
+      }
+    },
+
+  });
+  return companies;
+}

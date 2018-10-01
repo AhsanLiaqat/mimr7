@@ -1,0 +1,81 @@
+<div class="page" ng-controller="orderIdMessageCtrl">
+    <section class="panel panel-default">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> ID Game Template Message Ordering </strong></div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <form role="form">
+                        <div class="form-group">
+                            <label > ID Game Name </label>
+                            <input id="name" type="text" ng-model="data.name" class="form-control" required placeholder="Type Name" disabled>
+                        </div>
+
+                        <div class="form-group content">
+                            <label >ID Game Template Messages</label>
+
+                            <table class="table table-bordered table-striped table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th >  
+                                            <div class="th">
+                                                Name
+                                                <a href=""
+                                                class="fa fa-angle-up"
+                                                style="text-decoration: none;"
+                                                data-ng-click=" order('message') "
+                                                data-ng-class="{active: row == 'message'}">
+                                              </a>
+                                              <a href=""
+                                                style="text-decoration: none;"
+                                                class="fa fa-angle-down"
+                                                data-ng-click=" order('-message') "
+                                                data-ng-class="{active: row == '-message'}">
+                                              </a>
+                                              </div>
+                                          </th>
+                                        <th ><div class="th">
+                                            Position
+                                            <a href=""
+                                            class="fa fa-angle-up"
+                                            style="text-decoration: none;"
+                                            data-ng-click=" order('order') "
+                                            data-ng-class="{active: row == 'order'}">
+                                          </a>
+                                          <a href=""
+                                            style="text-decoration: none;"
+                                            class="fa fa-angle-down"
+                                            data-ng-click=" order('-order') "
+                                            data-ng-class="{active: row == '-order'}">
+                                          </a>
+                                          </div></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="usr in messages">
+                                        
+                                        <td>{{usr.message}}</td>
+                                        <td><select
+                                                chosen
+                                                class="form-control"
+                                                ng-model="usr.order"
+                                                data-placeholder-text-single="'Select Position'"
+                                                ng-options="x for x in posArr"
+                                                >
+                                                <option></option>
+                                            </select></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="pull-right">
+                            <a href="/#/simulation/home" class="btn btn-info">Cancel</a>
+                            <button ng-click="save()" type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
