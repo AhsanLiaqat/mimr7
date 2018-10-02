@@ -9,9 +9,8 @@ module.exports = function(sequelize, DataTypes) {
                 defaultValue: DataTypes.UUIDV4
         },
         title: DataTypes.STRING,
-        author: DataTypes.STRING,
         description: DataTypes.STRING,
-        links: DataTypes.STRING,
+        link: DataTypes.STRING,
         filename: DataTypes.STRING,
         url: DataTypes.STRING,
         type: DataTypes.STRING,

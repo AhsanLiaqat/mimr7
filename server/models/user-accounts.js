@@ -24,6 +24,7 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'user_accounts',
         classMethods: {
             associate: function(models) {
+                user_accounts.hasMany(models.article);
             }
         }
     });

@@ -2,81 +2,37 @@
     <div class="container-fluid" style="padding-bottom: 10px;">
         <div class="top_btns_container">
             <div class="">
-                <div class="col-md-9">
+                <div class="col-md-11">
                     <h2>
                         <strong>
-                            Simulation Manager
+                            MIMR 7
                         </strong>
                     </h2>
                     <h3>
-                        Build games & simulations, schedule and play exercises for your team and much more.
+                       Content marketing is a way to get people talking about your products, your services, and your company and to engage your customers and create a community.
                     </h3>
                 </div>
-                <div class="col-md-3">
-                    <button ng-show = "card.index == 0" ng-click="AllnewGameTemplate()" style="margin-top:25px;" class="btn btn-success btn-sm pull-right"> New Game Template </button>
-
-                    <a href = "#/pages/simulationLogin" ng-show = "card.index == 2" style="margin-top:25px;" class="btn btn-success btn-sm pull-right"> Link To Player Page </a>
+                <div class="col-md-1">
+                    <button ng-click="AllnewGameTemplate()" style="margin-top:25px;" class="btn btn-success btn-sm pull-right"> New Content </button>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="row" style="margin: 5px;">
-        <div ng-repeat="card in cards" class="col-md-3" style="margin-bottom: 20px;">
-            <div class="card">
-                <div class="card-content" style="position: static;">
-                    <div class="card-headline">
-                        <h2 class="text-center">
-                            <a ng-click = "showGraph($index,card)" style="position: relative;top: 25px;color: #009688;" href = "">
-                                {{card.name}}
-                            </a>
-                        </h2>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="text-center">
-                            <a ng-click = "showGraph($index,card)" class="btn text-center" style="color: black;   position: relative;top: 25px;" ng-class="{'color_green': card.click}">
-                                <i class="fa fa-caret-down fa-2x "></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <br>
-    <div ng-show="card.click" class="row">
-        <div class="col-md-4" style="position: relative;" ng-if = "card.index == 0" ng-repeat="template in gameTemplates">
+    <div class="row">
+        <div class="col-md-4" style="position: relative;" ng-repeat="template in cards">
             <div style="padding: 10px;margin: 0px;">
                 <div class="card" style="background-color: rgba(255, 255, 255, 0.78) !important;">
                     <div class="card-content" style="position: relative;">
                         <div class="card-headline">
 
-                            <div ng-if = "template.type == 0">
-                                <h3 style="color: black" >{{template.name}}</h3>
-                                {{template.game_category.name}}
-                                <br>
-                                Game Date: {{ template.planDate | date: 'dd-MM-yyyy' }}
-                            </div>
-                            <div ng-if = "template.type == 1">
-                                <h3 style="color: black" >{{template.name}}</h3>
-                                Game Created: {{ template.createdAt | date: 'dd-MM-yyyy' }}
+                            <div>
+                                <h3 style="color: black" >{{template.title}}</h3>
                             </div>
                         </div>
 
                         <div class="card-body">
                             <br>
-                            <div style="min-height: 50px;" class="text-center" ng-if = "template.type == 0">
-
-                                <a href = "#/simulation/game-template/{{template.id}}/message-ordering" title="Order Message Sequencing" class="btn btn-sm btn-info" style="position: absolute;right: 160px;top:0;"\>
-                                    <span class="fa fa-sort"></span>
-                                </a>
-
-                                <button title="Schedule Game" class="btn btn-sm btn-success" style="position: absolute;right: 110px;top:0;" ng-click="scheduleGame(template)">
-                                    <i class="fa fa-calendar"></i>
-                                </button>
-
-                                <a href="#/simulation/game-roles/{{template.id}}" class="btn btn-sm color_black">Roles</a>
+                            <div style="min-height: 50px;" class="text-center">
 
                                 <a href="#/simulation/game-messages/{{template.id}}" class="btn btn-sm color_black">Messages</a>
 
@@ -126,112 +82,6 @@
                                     <span class="glyphicon glyphicon-remove-sign"></span>
                                 </button>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4" style="position: relative;" ng-if = "card.index == 1 || card.index == 2 || card.index == 3" ng-repeat="game in gameToShow ">
-            <div style="padding: 10px;margin: 0px;">
-                <div class="card" style="background-color: rgba(255, 255, 255, 0.78) !important;">
-                    <div class="card-content" style="position: relative;">
-                        <div class="card-headline">
-
-                            <div ng-if = "game.type == 0">
-                                <h3 style="color: black" >{{game.game_plan.name}}</h3>
-
-                                <p ng-if = "gamesSelected == 'schedule' && game.scheduled_date">Game Schedule Date: {{dateTimeFormat(game.scheduled_date)}}</p>
-                                <p ng-if = "gamesSelected == 'active' && game.play_date">Game Played Date: {{dateTimeFormat(game.play_date)}}</p>
-                                <p ng-if = "gamesSelected == 'stop' && game.start_time">Game Started Date: {{dateTimeFormat(game.start_time)}}</p>
-                                Player List: {{game.game_player_list.name || "No List attached"}} 
-                            </div>
-                            <div ng-if = "game.type == 1">
-                                <h3 style="color: black" >{{game.id_game.name}}</h3>
-                                <p ng-if = "gamesSelected == 'schedule' && game.scheduled_date">Game Schedule Date: {{dateTimeFormat(game.scheduled_date)}}</p>
-                                <p ng-if = "gamesSelected == 'active' && game.incident">Played for Incident: {{game.incident.name}}</p>
-
-                                <p ng-if = "gamesSelected == 'active' && game.played_At">Game Played Date: {{dateTimeFormat(game.played_At)}}</p>
-
-                            </div>
-
-
-                        </div>
-
-                        <div class="card-body">
-                            <div ng-if = "game.type == 0">
-                                <div style="min-height: 50px;" class="text-center">
-                                    <button title="Schedule Round" class="btn btn-sm btn-success" style="position: absolute;right: 0px;top:0;"
-                                    ng-if = "gamesSelected == 'schedule'"
-                                     ng-click="scheduleRound(game.id)">
-                                        <i class="fa fa-calendar"></i>
-                                    </button>
-
-                                  <!--   <a ng-click="playGame(game)"
-                                        ng-if = "gamesSelected == 'schedule'"
-                                       class="btn btn-success"
-                                       confirm = "Do you want to Play Game.?"
-                                       title="Play Scheduled Game">
-                                        <span class="glyphicon glyphicon-play"></span>
-                                    </a> -->
-                                    <a ng-click="playTrainingGame(game)"
-                                        ng-if = "gamesSelected == 'schedule'"
-                                        confirm = "Do you want to Play Game.?"
-                                        class="btn btn-success"
-                                        title="Play Schedule Game">
-                                        <span class="glyphicon glyphicon-play"></span>
-                                    </a>
-
-                                     <a href="#/simulation/active-games/{{game.id}}"
-                                        ng-if = "gamesSelected == 'active' || gamesSelected == 'stop'"
-                                       class="btn btn-success"
-                                       title="See Details">
-                                        <span class="fa fa-list"></span>
-                                    </a>
-                                     <button title="Generate Emails" class="btn btn-sm btn-success" style="position: absolute;right: 0px;top:0;"
-                                    ng-if = "gamesSelected == 'active'"
-                                     ng-click="GenerateEmail(game.id)">
-                                        <i class="fa fa-reply-all fa-2x"></i>
-                                    </button>
-                                    <a ng-click="editGame(game.id, $index)"
-                                       class="btn btn-info"
-                                       ng-hide = "gamesSelected == 'stop'"
-                                       title="Edit Scheduled Game">
-                                        <span class="glyphicon glyphicon-edit"></span>
-                                    </a>
-                                    <a class="btn btn-danger"
-                                       title="Remove Scheduled Game"
-                                       ng-hide = "card.index == 2"
-                                       ng-click="deleteGame(game, $index)"
-                                       confirm="Are you sure you want to delete?">
-                                        <span class="glyphicon glyphicon-remove-sign"></span>
-                                    </a>
-                                </div>
-                            </div>
-                            <div ng-if = "game.type == 1">
-                                <div style="min-height: 50px;" class="text-center">
-
-                                    <a ng-click="playGame(game)"
-                                        ng-if = "gamesSelected == 'schedule'"
-                                       class="btn btn-success"
-                                       title="Play Scheduled Game">
-                                        <span class="glyphicon glyphicon-play"></span>
-                                    </a>
-                                     <a href="#/simulation/game-details/{{game.id}}"
-                                        ng-if = "gamesSelected == 'active' || gamesSelected == 'stop'"
-                                       class="btn btn-success"
-                                       title="See Details">
-                                        <span class="fa fa-list"></span>
-                                    </a>
-                                    <a class="btn btn-danger"
-                                       title="Remove Scheduled Game"
-                                       ng-click="deleteGame(game, $index)"
-                                       confirm="Are you sure you want to delete?">
-                                        <span class="glyphicon glyphicon-remove-sign"></span>
-                                    </a>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </div>

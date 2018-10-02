@@ -47,7 +47,6 @@ module.exports = function(sequelize, DataTypes) {
             associate: function(models) {
                 users.belongsTo(models.user_accounts);
                 users.hasMany(models.auth_token);
-                users.hasMany(models.article);
                 users.hasOne(models.player);
                 users.hasMany(models.device, {foreignKey: 'userId'});
             }, byId: function(id){

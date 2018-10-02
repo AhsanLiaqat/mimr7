@@ -25,6 +25,10 @@
             if (Query.getCookie('user')){
                 $scope.user = Query.getCookie('user');
             }
+            $http.get('/article/articles/all')
+            .then(function(res){
+                $scope.cards = res.data;
+            });
         }
         init();
 
@@ -124,16 +128,16 @@
         $scope.AllnewGameTemplate = function () {
             ModalService.showModal({
                 templateUrl: "views/simulation/game-template/new-game-template-making.html",
-                controller: "NewGameTemplateMakingCtrl",
-                inputs: {
-                    gameId: null
-                }
+                controller: "addArticleModalCtrl",
+                // inputs: {
+                //     gameId: null
+                // }
             }).then(function (modal) {
                 modal.element.modal({ backdrop: 'static', keyboard: false });
                 modal.close.then(function (result) {
+                    console.log('============================',result)
                     if (result) {
-                        $scope.showGraph(0,$scope.cards[0]);
-                        // $scope.gameTemplates.unshift(result);
+                        $scope.cards.push(result);
                     }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');

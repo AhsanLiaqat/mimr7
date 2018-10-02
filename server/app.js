@@ -170,7 +170,8 @@ app.use('/users', require('./routes/users'));
 // app.use('/simulation/games', require('./routes/simulation/games.js'));
 // app.use('/simulation/game-plan-messages', require('./routes/simulation/game-plan-messages.js'));
 // app.use('/simulation/schedule-games', require('./routes/simulation/schedule-games.js'));
-// app.use('/simulation/schedule-game-messages', require('./routes/simulation/schedule-game-messages.js'));
+app.use('/article/articles', require('./routes/article/articles.js'));
+app.use('/article-library/article-libraries', require('./routes/article-library/article-libraries.js'));
 
 
 app.all('/*', function(req, res, next) {

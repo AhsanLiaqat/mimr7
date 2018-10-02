@@ -138,6 +138,8 @@
 		.when('/simulation/home', { templateUrl: 'views/simulation/home.html' })
 		.when('/simulation/players', { templateUrl: 'views/simulation/players/list.html' })
 		.when('/simulation/player-page', { templateUrl: 'views/simulation/active-games/list.html' })
+        .when('/simulation/game-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-libraries/list.html' })
+        
 
         /////////////////Simulation manager routes End/////////////////////
 

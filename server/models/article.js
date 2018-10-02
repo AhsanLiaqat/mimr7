@@ -7,6 +7,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         title: DataTypes.STRING,
         description: DataTypes.STRING,
+        text: DataTypes.TEXT,
         private: DataTypes.BOOLEAN,
         saleable: DataTypes.BOOLEAN,
         isDeleted: {
@@ -18,8 +19,8 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'articles',
         classMethods: {
             associate: function(models) {
-                article.belongsTo(models.user);
-                article.hasMany(models.article_library);
+                article.belongsTo(models.user_accounts);
+                article.hasMany(models.article_library, {foreignKey: 'parentId'});
             }
         }
     });
