@@ -25,7 +25,11 @@ module.exports = {
       updatedAt: {
         type: "TIMESTAMP WITH TIME ZONE",
         allowNull: false
-      }
+      },
+      articleId : {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4
+      },
     })
   },
   down: function(queryInterface, Sequelize) {

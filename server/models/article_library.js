@@ -31,6 +31,8 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 article_library.belongsTo(models.article, {foreignKey: 'parentId'})
+                article_library.belongsTo(models.user_accounts)
+
             }
         }
      });

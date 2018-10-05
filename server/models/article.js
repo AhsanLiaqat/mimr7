@@ -20,6 +20,7 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 article.belongsTo(models.user_accounts);
+                article.hasMany(models.message);
                 article.hasMany(models.article_library, {foreignKey: 'parentId'});
             }
         }

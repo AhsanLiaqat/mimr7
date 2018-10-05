@@ -11,30 +11,30 @@ var Q = require('q');
 var fs = require('fs');
 var s3Library = require('../../lib/aws/s3').library;
 
-router.post('/all/:id', function(req, res, next) {
-    model.article_library.findAll({where: {parentId: req.params.id}}).then(function(media) {
-        res.json(media);
+router.get('/all/:id', function(req, res, next) {
+    model.message.findAll({where: {articleId: req.params.id}}).then(function(msg) {
+        res.send(msg);
     });
 });
 
-router.get('/get', function(req, res, next) {
-    model.article_library.findOne({
-        where: {id: req.query.id}}).then(function(result) {
-        res.send(result);
-    });
-});
+// router.get('/get', function(req, res, next) {
+//     model.article_library.findOne({
+//         where: {id: req.query.id}}).then(function(result) {
+//         res.send(result);
+//     });
+// });
 
-router.post('/update', function(req, res, next) {
-    console.log(req.body.data);
-    model.article_library.update(req.body.data, {where: { id : req.body.data.id }}).then(function(result) {
-        model.article_library.findOne({
-            where: {id: req.body.data.id}}).then(function(result) {
-            res.send(result);
-        });
+// router.post('/update', function(req, res, next) {
+//     console.log(req.body.data);
+//     model.article_library.update(req.body.data, {where: { id : req.body.data.id }}).then(function(result) {
+//         model.article_library.findOne({
+//             where: {id: req.body.data.id}}).then(function(result) {
+//             res.send(result);
+//         });
 
-    });
+//     });
 
-});
+// });
 
 var TYPES = ['image', 'video', 'audio', 'pdf'];
 var getType = function(mime){
@@ -53,16 +53,15 @@ var getType = function(mime){
     return type;
 };
 
-router.post('/save', multipartyMiddleware, function(req, res, next) {
+router.post('/save-libraries', multipartyMiddleware, function(req, res, next) {
     var d = req.body;
-    console.log('666666666666666666666666',d)
     if (d.link != undefined){
         d.url = d.link;
         var parsed = url.parse(d.url);
         d.filename  = path.basename(parsed.pathname);
         d.type = getType(d.url);
         d.userAccountId = req.user.userAccountId;
-        model.article_library.create(d).then(function(item) {
+        model.message_library.create(d).then(function(item) {
             res.json(item);
         });
     }else{
@@ -71,7 +70,7 @@ router.post('/save', multipartyMiddleware, function(req, res, next) {
         d.type = getType(d.mimetype);
         d.filename = file.originalFilename;
         d.userAccountId = req.user.userAccountId;
-        model.article_library.create(d)
+        model.message_library.create(d)
         .then(function(item) {
             var stream = fs.createReadStream(file.path);
             s3Library.writeFile( item.s3Filename, stream, {"ContentType": item.mimetype}).then(function (err) {
@@ -89,12 +88,19 @@ router.post('/save', multipartyMiddleware, function(req, res, next) {
     }
 });
 
+router.post('/save', function(req, res, next) {
+    var d = req.body.data;
+    model.message.create(d).then(function(result) {
+        res.json(result);
+    });
+});
+
 router.delete('/remove/:id', function(req, res, next) {
     var id = req.params.id;
-    model.article_library.destroy({where: {id: id}}).then(function(response) {
+    model.message.destroy({where: {id: id}}).then(function(response) {
         res.send({success:true, msg:response.toString()});
     },function(response){
-        model.article_library.update({isDeleted:true},{where: {id: id}}).then(function(response) {
+        model.message.update({isDeleted:true},{where: {id: id}}).then(function(response) {
             res.send({success:true, msg:response.toString()});
         })
     })

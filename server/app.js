@@ -172,6 +172,7 @@ app.use('/users', require('./routes/users'));
 // app.use('/simulation/schedule-games', require('./routes/simulation/schedule-games.js'));
 app.use('/article/articles', require('./routes/article/articles.js'));
 app.use('/article-library/article-libraries', require('./routes/article-library/article-libraries.js'));
+app.use('/message/messages', require('./routes/message/messages.js'));
 
 
 app.all('/*', function(req, res, next) {

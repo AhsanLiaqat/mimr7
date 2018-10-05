@@ -45,7 +45,7 @@ angular.module('app')
                                 else {
                                     $rootScope.superAdmin = false;
                                     $rootScope.infoProvider = false;
-                                    $location.path("/simulation/home");
+                                    $location.path("/home");
                                 }
                             });
                             deferred.resolve("success")

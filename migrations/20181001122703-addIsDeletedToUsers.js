@@ -2,7 +2,7 @@
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
-    queryInterface.addColumn('users', 'isDeleted', { type: Sequelize.BOOLEAN })
+    queryInterface.addColumn('users', 'isDeleted', { type: Sequelize.BOOLEAN , defaultValue: false})
   },
 
   down: function (queryInterface, Sequelize) {

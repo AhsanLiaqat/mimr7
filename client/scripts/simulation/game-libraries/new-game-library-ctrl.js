@@ -2,10 +2,11 @@
     'use strict';
 
     angular.module('app')
-        .controller('newGameLibraryCtrl', ['$scope', '$http', '$timeout', 'Upload', 'close','ModalService','articleId','contentType', ctrlFunction]);
+        .controller('newGameLibraryCtrl', ['$scope', '$http', '$timeout', 'Upload', 'close','ModalService','articleId','contentType','id','messageId', ctrlFunction]);
 
-    function ctrlFunction($scope, $http, $timeout, Upload, close,ModalService,articleId, contentType) {
+    function ctrlFunction($scope, $http, $timeout, Upload, close,ModalService,articleId, contentType,id , messageId) {
         //fetch initial data
+        $scope.id = id;
         if(contentType == 'article-library'){
             $scope.lib = {
                 parentId: articleId,
@@ -17,24 +18,62 @@
                 parentType : 'Message'
             };
         }
+        $scope.init = function() {
+            $scope.check = {};
+            if(id){
+                var path = '/article-library/article-libraries/get?id=' + id;
+                $scope.lib = {};
+                $http.get(path).then(function(res) {
+                    $scope.lib = res.data;
+                    if($scope.lib.type != null){
+                        $scope.check.file =true;
+                    }else{
+                        $scope.check.link = true
+                    }
+                    $scope.avatar = $scope.lib.filename;
+                });
+            }
+        };
+        $scope.init();
 
         //close modal
         $scope.close = function(result) {
- 	         close(result); // close, but give 500ms for bootstrap to animate
+             close(result); // close, but give 500ms for bootstrap to animate
         };
 
         //save after edit
         $scope.submitLibraryRef = function () {
             if ($scope.lib.links != undefined){
             }
-        	Upload.upload({
-        		url: "/article-library/article-libraries/save" ,
-        		data: $scope.lib
-        	}).then(function (res) {
-                $scope.lib = {};     
-                $scope.close(res.data);
-                toastr.success("Library Reference added successfully.")
-            });
+            if(messageId){
+                Upload.upload({
+                    url: "/message/messages/save-libraries" ,
+                    data: $scope.lib
+                }).then(function (res) {
+                    $scope.lib = {};     
+                    $scope.close(res.data);
+                    toastr.success("Library Reference added successfully.")
+                });
+            }else{
+                if(id){
+                    console.log('-------');
+                    $scope.lib.filename = $scope.avatar;
+                    $http.post("/article-library/article-libraries/update" , { data: $scope.lib }).then(function (res) {
+                        toastr.success("Game Library updated successfully.")
+                        close(res.data);
+
+                    });
+                }else{
+                	Upload.upload({
+                		url: "/article-library/article-libraries/save" ,
+                		data: $scope.lib
+                	}).then(function (res) {
+                        $scope.lib = {};     
+                        $scope.close(res.data);
+                        toastr.success("Library Reference added successfully.")
+                    });
+                }
+            }
         };
 
         //add media

@@ -2,25 +2,18 @@
     <section class="panel panel-default">
         <div class="panel-heading">
             <strong>
-                <span class="glyphicon glyphicon-th"></span> Simulation Messages
+                <span class="glyphicon glyphicon-th"></span> Messages
             </strong>
-            <select chosen ng-model="selected" ng-options = "item.id as item.name for item in selectoptions" ng-change = "managearray(selected)" ng-disabled = "gameIdFound">
-            </select>
             <div class="pull-right header-buttons">
-                <a ng-click="addModal()" class="btn btn-success btn-sm">New Simulation Message</a>
+                <a ng-click="addModal()" class="btn btn-success btn-sm">New Message</a>
             </div>
         </div>
         <div class="panel-body">
-            <table st-pipe="messagesTable" st-table="messageToShow" class="table table-bordered table-striped table-responsive">
+            <table st-pipe="messagesTable" st-table="msg" class="table table-bordered table-striped table-responsive">
                 <thead>
                     <tr>
                         <th class="col-md-2" st-sort="name">Message Name</th>
-                        <th class="col-md-2" st-sort="links">Links</th>
-                        <th class="col-md-2" st-sort="game_library.title">Document Name</th>
-                        <th class="col-md-2" st-sort="roles.name">Roles</th>
-                        <th class="col-md-2" st-sort="type">Type</th>
-                        <th class="col-md-2" st-sort="order">Order</th>
-                        <th class="col-md-2" st-sort="gameTemplate.name">Game Template</th>
+                        <th class="col-md-2" st-sort="description">Description</th>
                         <th class="col-md-2">Actions</th>
                     </tr>
                     <tr>
@@ -28,45 +21,21 @@
                             <input class="form-control" placeholder="Search name" st-search="name"/>
                         </th>
                         <th>
-                            <input class="form-control" placeholder="Search Links" st-search="links"/>
-                        </th>
-                        <th>
-                            <input class="form-control" placeholder="Search Document" st-search="game_library.title"/>
-                        </th>
-                        <th></th>
-                        <th>
-                            <input class="form-control" placeholder="Search Type" st-search="type"/>
-                        </th>
-                        <th>
-                            <input class="form-control" placeholder="Search Order Sequence" st-search="order"/>
-                        </th>
-                        <th>
-                        <input class="form-control" placeholder="Search Game Template" st-search="gameTemplate.name"/>
+                            <input class="form-control" placeholder="Search description" st-search="description"/>
                         </th>
                         <th></th>
                     </tr>
                 </thead>
-                <tbody ng-show="!isLoading">
-                    <tr ng-repeat="record in messageToShow">
+                <tbody>
+                    <tr ng-repeat="record in msg">
                         <td>
-                            <a ng-click="showMessageDetail(record)">
-                                {{record.name}}
+                            <a>
+                                {{record.content}}
                             </a>
                         </td>
-                        <td>{{record.links}}</td>
-                        <td>{{record.game_library.title}}</td>
+                        <td>{{record.description}}</td>
                         <td>
-                            <p ng-repeat = "rec in record.assigned_game_message.roles">
-                                {{rec.game_plan_team.name}} - {{rec.name}},
-                            </p>
-                        </td>
-                        <td>{{record.type}}</td>
-                        <td>{{record.order}}</td>
-                        <td>{{record.game_plan.name}}</td>
-                        <td>
-                            <!-- <a title = "Edit Roles" class="btn btn-sm btn-info" ng-click="assignNewSimMessage(record, $index)"><span class="fa fa-link"></span></a>
-                             -->
-                            <!-- <a title = "Copy Message" class="btn btn-sm btn-info" ng-click="copy(record, $index)"><span class="fa fa-clone"></span></a> -->
+                            <a title = "Add Media" class="btn btn-sm btn-info" ng-click="addMedia(record, $index)"><span class="fa fa-link"></span></a>
                             <a title = "Edit Message" class="btn btn-sm btn-info" ng-click="edit(record, $index)"><span class="fa fa-pencil-square-o"></span></a>
 
                             <a title = "Delete Message" class="btn btn-danger btn-sm" ng-click="deleteMessage(record.id, $index)" confirm="Are you sure you want to delete?">
@@ -76,17 +45,11 @@
                     </tr>
                 </tbody>
 
-                <tbody ng-show="isLoading">
-                <tr>
-                    <td colspan="8" class="text-center">Loading ... </td>
-                </tr>
-                </tbody>
-
-                <tbody ng-show="messageToShow && messageToShow.length === 0">
+                <tbody ng-show="msg && msg.length === 0">
                     <tr class="watermark-text-medium"
                         style="position: inherit; display: table-row; font-size: 30px;">
                         <td colspan="8">
-                            <p>No Game Messages Present</p>
+                            <p>No Messages Present</p>
                         </td>
                     </tr>
                 </tbody>

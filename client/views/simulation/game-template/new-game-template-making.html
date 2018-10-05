@@ -4,7 +4,9 @@
         <div class="modal-content">
             <div class="modal-header" id="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="modal-title">New Content</h4>
+                <h4 class="modal-title" ng-hide = "gameId" id="modal-title">New Content</h4>
+                <h4 class="modal-title" ng-hide = "!gameId" id="modal-title">Edit Content</h4>
+
             </div>
             <div class="modal-body modal_big_height">
                 <section class="panel panel-default modal_third_cal">

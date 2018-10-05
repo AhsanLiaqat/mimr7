@@ -135,11 +135,12 @@
 
         /////////////////Simulation routes Start/////////////////////
 
-		.when('/simulation/home', { templateUrl: 'views/simulation/home.html' })
+		.when('/home', { templateUrl: 'views/home.html' })
 		.when('/simulation/players', { templateUrl: 'views/simulation/players/list.html' })
 		.when('/simulation/player-page', { templateUrl: 'views/simulation/active-games/list.html' })
-        .when('/simulation/game-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-libraries/list.html' })
-        
+        .when('/article/article-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-libraries/list.html' })
+        .when('/message/message-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-messages/list.html' })
+
 
         /////////////////Simulation manager routes End/////////////////////
 
@@ -148,7 +149,7 @@
         //=======================================================================================================================//
 
         /////////////////Default routes Start/////////////////////
-        .when('/', { redirectTo: function () { return '/simulation/home' } })
+        .when('/', { redirectTo: function () { return '/home' } })
         .when('/404', { templateUrl: 'views/pages/404.html' })
 
         /////////////////Default routes End/////////////////////

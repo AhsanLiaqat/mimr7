@@ -10,6 +10,14 @@ router.get('/all', function(req, res, next) {
     });
 });
 
+router.get('/get/:id', function(req, res, next) {
+    model.article.findOne({
+        where: {id: req.params.id }
+    }).then(function(article) {
+        res.send(article);
+    });
+});
+
 router.post('/save', function(req, res, next) {
     var record = req.body.data;
     record.userAccountId = req.user.userAccountId;
@@ -18,15 +26,27 @@ router.post('/save', function(req, res, next) {
     });
 });
 
-// router.delete('/remove/:id', function(req, res, next) {
-//     var id = req.params.id;
-//     model.article.destroy({where: {id: id}}).then(function(response) {
-//         res.send({success:true, msg:response.toString()});
-//     },function(response){
-//         model.capacity.update({isDeleted:true},{where: {id: id}}).then(function(response) {
-//             res.send({success:true, msg:response.toString()});
-//         })
-//     })
-// });
+router.post('/update/:id', function(req, res, next) {
+    model.article.update(req.body.data,
+        {where: { id : req.params.id }})
+        .then(function(result) {
+        	model.article.findOne({
+		        where: {id: req.params.id }
+		    }).then(function(result) {
+		        res.send(result);
+		    });
+        });
+});
+
+router.delete('/remove/:id', function(req, res, next) {
+    var id = req.params.id;
+    model.article.destroy({where: {id: req.params.id}}).then(function(response) {
+        res.send({success:true, msg:response.toString()});
+    },function(response){
+        model.article.update({isDeleted:true},{where: {id: id}}).then(function(response) {
+            res.send({success:true, msg:response.toString()});
+        })
+    })
+});
 
 module.exports = router;
