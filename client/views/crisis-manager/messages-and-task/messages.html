@@ -1,0 +1,39 @@
+<div class = "ip-messages" ng-controller="messageCtrl" >
+    <div class="col-sm-12 col-md-12" style="height:auto; margin-top:20px">
+        <section class="panel panel-default mail-container"  style="overflow: auto; height:80%">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-sm-4"> Message Portal </div>
+                    <div class="col-sm-8 text-right">
+                        <a class="btn btn-sm btn-info"
+                            style="display: inline-block;"
+                            href="#/reference-library/{{user.userAccountId}}"> Reference Libraries</a>
+                        <button class="btn btn-sm btn-info"
+                            style="float: right; margin-left: 10px;"
+                            ng-click="logout()"> LOGOUT</button>
+                    </div>
+                </div>
+            </div>
+
+            <table class="table table-hover table-responsive" >
+                <tr class="mail-read" ng-repeat="record in incidents track by $index">
+                    <td>
+                        <a href="#/message/{{record.id}}"> {{record.name}}</a>
+                    </td>
+                    <td>
+                        <a  class="btn btn-sm btn-info"
+                            href="#/message/{{record.id}}"
+                            style="float: right"> Messages</a>
+                    </td>
+                    <td style="width: 13%;">
+                        <a  class="btn btn-sm btn-info"
+                            href="/#/myTasks/{{record.id}}"
+                            style="float: right"> My Tasks</a>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </div>
+    <br/>
+    <br/>
+</div>

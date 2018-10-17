@@ -1,0 +1,694 @@
+<div class="page page-dashboard information-dashboard" ng-controller="dashboardCtrl">
+
+	<nav class="navbar navbar-default navbar-white">
+		<div class="container-fluid center-text">
+			<!-- Brand and toggle get grouped for better mobile display -->
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav float-left ">
+					<li>
+						<button class="btn btn-sm btn-raised btn-default" ng-click="toggleTimeline()">
+							<span title="Show Timeline">
+								<i class="fa fa-arrow-down" aria-hidden="true"></i>
+							</span>
+						</button>
+					</li>
+
+					<li class="dropdown inf-db-inc" style="width: 250px;">
+						<a class="dropdown-toggle navbar-dashboard-dropdown dropin" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" >
+							<span ng-hide="incident" ng-model="selectIncident">Select Incident</span>
+							<span ng-show="incident">{{incident.name}} </span>
+							<span class="caret" style="float: right;margin-top: 8px;"></span>
+						</a>
+						<ul class="dropdown-menu dashboard-dropdown">
+							<li role="presentation" ng-repeat="record in incidents">
+								<a class="dropdown-cursor" role="menuitem" ng-click="changeIncident(record)"> {{record.name}}</a>
+							</li>
+						</ul>
+					</li>
+
+					<li class="dropdown">
+						<button class="btn btn-sm btn-raised btn-default" title="New Category" data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false" style="margin-right: 10px;">
+						<i class="glyphicon glyphicon-plus"></i>
+					</button>
+					<ul class="dropdown-menu popup">
+						<form ng-submit="addCategory()">
+							<li role="presentation">
+								<input type="text" class="form-control" placeholder="Category Name" ng-model="layout.category">
+							</li>
+							<li role="presentation" style="margin-top:5px;">
+								<div class="pull-right">
+									<button type="button" class="btn btn-sm btn-info" ng-click="closeCategoryForm()" title="Cancel" aria-label="Cancel">
+										<span class="glyphicon glyphicon-remove"></span> Cancel
+									</button>
+									<button type="submit" class="btn btn-sm btn-success" title="Submit" aria-label="Submit">
+										<span class="glyphicon glyphicon-ok"></span> Save
+									</button>
+								</div>
+							</li>
+						</form>
+					</ul>
+				</li>
+
+				<li class="hide-layout">
+					<div class="btn-group hide-layout" data-toggle="buttons">
+						<label class="btn btn-sm btn-raised btn-default" ng-click="layout.page='grid'">
+							<input type="radio"  name="lunch" ng-model="layout.page" ng-value="grid">
+							<i class="ti-layout-grid3"></i>
+						</label>
+						<label class="btn btn-sm btn-raised btn-default active" ng-click="layout.page='flat'">
+							<input 	type="radio"
+							name="lunch"
+							ng-model="layout.page"
+							ng-value="flat"
+							checked> <i class="ti-layout-column3"></i>
+						</label>
+					</div>
+				</li>
+
+				<li>
+					<button class="btn btn-sm btn-raised btn-default" ng-click="toggleMessage()">
+						<span ng-show="layout.inbox" title="Hide Messages">
+							<span class="glyphicon glyphicon-envelope"></span>
+						</span>
+						<span ng-show="!layout.inbox" title="Show Messages">
+							<span class="glyphicon glyphicon-envelope"></span>
+						</span>
+						<span class="badge" ng-show="messages.length > 0">{{messages.length}}</span>
+					</button>
+				</li>
+				
+				<li>
+					<button class="btn btn-sm btn-raised btn-default" ng-click="toggleCheckList()">
+						<span ng-show="layout.list == 'Nothing'" title="Show Checklist">
+							<i class="fa fa-lg fa-check-square-o" aria-hidden="true"></i>
+						</span>
+						<span ng-show="layout.list == 'Check'" title="Show Actionlist">
+							<i class="fa fa-lg fa-check-square-o" aria-hidden="true"></i>
+						</span>
+						<span ng-show="layout.list == 'Action'" title="Hide List">
+							<i class="fa fa-lg fa-check-square-o" aria-hidden="true"></i>
+						</span>
+					</button>
+				</li>
+				<li>
+					<button class="btn btn-sm btn-raised btn-default" ng-click="designDashboard()">
+						<span title="Edit Colors and Fonts">
+							<i class="fa fa-lg fa-paint-brush" aria-hidden="true"></i>
+						</span>
+					</button>
+				</li>
+				<li>
+									</li>
+			</ul>
+			<ul class="nav nav-list navbar-nav float-right">
+
+						<li>
+							<a href="#/actionPlanDashboardV2/{{incident.id}}"
+									style="padding: 0px; padding-top: 3px; padding-right: 5px;"
+									class="btn btn-primary" title="Action Plan Dashboard">
+									<i class="material-icons">check_circle</i>
+							</a>
+						</li>
+						<li>
+							<button class="btn btn-sm btn-raised btn-default" ng-click="showTeams()" title="Teams">
+								<i class="material-icons">group</i> User Status
+							</button>
+						</li>
+						<!-- For information area zoomin/ zoomout -->
+					<!-- 						<li class="hide-layout" style="margin-right: 5px;">
+							<div class="btn-group hide-layout"
+								 data-toggle="buttons">
+								<label class="btn btn-sm btn-primary navbar-btn active"
+									   ng-click="toggleInformationSize()">
+									<input 	type="radio"
+											name="lunch">
+											<i 	class="fa fa-fw"
+												ng-class="toggleZoomClass()"></i>
+								</label>
+							</div>
+						</li> -->
+
+
+						<li>
+							<a href="{{getLcmsUrl()}}"
+							class="btn btn-sm btn-raised btn-default" target="_blank"
+							style="padding-top: 5px; padding-bottom: 5px; margin-left: 5px;">
+							<i class="material-icons">play_circle_filled</i> LCMS
+						</a>
+					</li>
+
+
+					<li class="divider hide-layout" style="width:5px"></li>
+
+					<li class="btn-group-right-top">
+						<button class="btn btn-sm btn-raised btn-default" ng-click="summaryReport()" title="Summary Report">
+							<i class="material-icons">assignment</i> SitRap
+						</button>
+						<!-- 		<button type="button"
+									class="btn btn-sm btn-primary navbar-btn"
+									ng-click="statusReport()">
+									<img src="images/icons/SitRap.svg">
+								</button> -->
+								<button class="btn btn-sm btn-raised btn-default" ng-click="TimeLine()" title="Timeline">
+									<i class="material-icons">timeline</i> Timeline
+								</button>
+						<!-- 		<button type="button"
+									class="btn btn-sm btn-primary navbar-btn"
+									>
+								<span>
+								<i class="fa fa-align-center fa-lg" aria-hidden="true"></i>
+								</span>
+							</button> -->
+							<button type="button" class="btn btn-sm btn-raised btn-default" ng-click="loadMap()" title="Maps">
+								<i class="material-icons">map</i> Map
+							</button>
+							<button type="button" class="btn btn-sm btn-raised btn-default" title="History"
+							ng-click="resetDashboard()">
+							<i class="material-icons">history</i> Reset
+						</button>
+					</li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<div class="container-fluid center-text" ng-show="showTimeline">
+			<div>
+    			<rzslider
+				        rz-slider-model="slider.value"
+				        rz-slider-options="slider.options"
+				></rzslider>
+			</div>
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+
+	<div class="row" style="margin-bottom: 10px;">
+		<div class="col-md-12">
+			<div class="input-group">
+				<input type="text" class="form-control input-sm" style="border-radius: 3px 0 0 3px;" placeholder="Search category, messages, and sender"
+				ng-model="query">
+				<span class="input-group-btn">
+					<button class="btn btn-sm btn-raised btn-default" ><i class="fa fa-search fa-fwearch"></i></button>
+				</span>
+			</div>
+			<!-- /input-group -->
+		</div>
+		<!-- /.col-lg-6 -->
+	</div>
+
+	<div class="incoming col-lg-3 col-md-12 col-sm-12 col-xs-12" ng-show="layout.list == 'Check'">
+		<div class="panel panel-default">
+			<div class="panel-heading clearfix">
+				<strong class="pull-left"><span class="glyphicon glyphicon-list"></span> Checklist</strong>
+
+				<button class="btn btn-sm btn-raised pull-right btn-default"
+				ng-click="openChecklistMenu()"
+				title="Checklist Menu"
+				style="margin-top: -3px;">
+					<i class="glyphicon glyphicon-plus"></i>
+				</button>
+
+				<button class="btn btn-sm btn-raised pull-right btn-default"
+				ng-click="openChecklistModal()"
+				title="Zoom Checlist Menu"
+				style="margin-top: -3px;">
+					<i class="glyphicon glyphicon-zoom-in"></i>
+				</button>
+			</div>
+			<div class="right-panel-holder" style="padding: 2px 0px; overflow-y:scroll; overflow-x: hidden;" data-as-sortable="DragOptionsCheckList"
+			data-ng-model="messages">
+				<section>
+					<div class="panel-body">
+						<uib-accordion close-others="oneAtATime" class = "list-accordian">
+							<div uib-accordion-group class="panel-default to-move"
+							ng-repeat="item in checkedList">
+								<uib-accordion-heading >
+									<div> {{item.name | displayString: 20}}
+										<button class="btn btn-sm pull-right btn-danger  btn-default"
+												ng-click="checklistDelete(item, $event)"
+												title="Delete Checklist"
+												style="margin-top: -7px;height: 15px;">
+												<i class="glyphicon glyphicon-trash"></i>
+										</button>
+									</div>
+
+								</uib-accordion-heading>
+								<table class="table table-striped" style="width: 100%;margin-left: -10px;">
+							                <!-- <thead>
+							                  <tr>
+							                    <th >Task Name</th>
+							                    <th >Status</th>
+							                  </tr>
+							              </thead> -->
+							              <tbody>
+							              	<tr ng-repeat="task in item.tasks">
+							              		<td width="70%" style="font-size: 12px;padding: 0px">
+							              			<button class="btn btn-default btn-sm" title="{{task.title}}" ng-click="taskInfo(task)">
+									                  <span>{{task.title | displayString: 4}}</span>
+									                </button>
+
+							              		</td>
+							              		<td width="30%" style="padding: 0px;">
+							              			<select class="form-control"
+							              			style="width: 108px;font-size: 12px;padding: 5px;"
+							              			ng-model="task.status"
+							              			ng-options="status.value as status.name for status in statusOptions"
+							              			ng-change = "updateStatus(item.id,task)"
+							              			ng-class = "getClass(task.status)"
+							              			>
+							              		</select>
+							              	</td>
+							              </tr>
+							          </tbody>
+							    </table>
+							</div>
+
+						</uib-accordion>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="incoming col-lg-3 col-md-12 col-sm-12 col-xs-12" ng-show="layout.list == 'Action'">
+
+		<div class="panel panel-default incommingMsg" ng-show = "action_lists.length">
+			<div class="panel-heading clearfix">
+				<strong ng-show = "action_lists.length" class="pull-left"><span class="glyphicon glyphicon-list"></span> Action List</strong>
+
+				<button class="btn btn-sm btn-raised pull-right btn-default"
+				ng-click="openChecklistMenu()"
+				title="Checklist Menu"
+				ng-show = "!action_lists.length"
+				style="margin-top: -3px;">
+					<i class="glyphicon glyphicon-plus"></i>
+				</button>
+
+				<button class="btn btn-sm btn-raised pull-right btn-default"
+				ng-click="resetActionList(action_list.id)"
+				title="Reset" confirm="Are you sure you want to reset?"
+				style="margin-top: -3px;">
+					<i class="glyphicon glyphicon-repeat"></i>
+				</button>
+
+				<button class="btn btn-sm btn-raised pull-right btn-default"
+				ng-click="openActionListModal()"
+				title="Zoom Action List Menu"
+				style="margin-top: -3px;">
+					<i class="glyphicon glyphicon-zoom-in"></i>
+				</button>
+			</div>
+			<div style="padding: 5px 7px 6px 5px; overflow-y:scroll; overflow-x: hidden;" data-as-sortable="DragOptionsActionList"
+				data-ng-model="action_list.actions" class="right-panel-holder">
+				<ul style="width:100%;min-height:30px;float:left" class="classlist list-group">
+
+					<li class="list-group-item item msg" style="margin-bottom:5px;" data-as-sortable-item ng-repeat="item in action_list.actions | filter:query | orderBy:item.index"  id={{item.id}}>
+						<div>
+							<div class="row" style="margin:0">
+								<div class="col-xs-1 handle" data-as-sortable-item-handle ng-style="{'background-color': item.selectedColor}">
+									<span class="ti-move"></span>
+								</div>
+								<div class="col-xs-11 " style="padding-left:5px; background-color: #f4f4f4;">
+									<form ng-submit="updateAction(item, action_list)">
+										<div class="row left-padding">
+											<div class="col-xs-12 item-text" ng-dblclick="enableEdit(item)" style="padding: 2px 8px 0px 0px;">
+												<span ng-show="item.edit" class="">
+													<textarea rows="1"
+													class="form-control"
+													msd-elastic
+													ng-model="item.name"
+													ng-textarea-enter="updateMessage(item)">
+													</textarea>
+												</span>
+												<span ng-hide="item.edit" title="{{item.name}}">
+													<pre ng-style="messagesStyle">{{item.name }}</pre>
+												</span>
+											</div>
+										</div>
+										<div class="row left-padding" ng-show="item.edit" style="margin: 0px -3px 5px 4px;">
+											<div class="row item-info col-md-12" ng-show="item.edit" style="margin-bottom: 5px">
+												<input type="date" ng-model = "item.dueDate" class="form-control">
+											</div>
+											<div class="row item-info col-md-12" ng-show="item.edit" style="margin-bottom: 5px">
+												<a href="javascript:void(0)" ng-click="ChangeUserForActionModal(item, action_list)">
+													<span ng-show = "item.user">
+														{{item.user.firstName}}
+													</span>
+													<span ng-hide = "item.user">
+														Assign User
+													</span>
+												</a>
+											</div>
+											<div class="row item-info" ng-show="item.edit" style="margin-bottom: 5px">
+												<div class="col-md-12">
+													<div class="color_divs"
+													ng-repeat="c in colorPalettes"
+													ng-style="{'background-color': c.color}"
+													ng-click="changeColorForAction(item, action_list, c.color)">
+													</div>
+
+													<button type="button" class="btn btn-xs btn-default" ng-click="changeColorForAction(item, action_list, '')" title="Delete" style="margin-top: 0px;">
+														<span class="glyphicon glyphicon-refresh">
+														</span>
+													</button>
+												</div>
+											</div>
+
+											<div class="col-xs-8" style="padding-right:0">
+												<button type="submit" class="btn btn-xs btn-primary" title="Submit" aria-label="Submit">
+													<span class="glyphicon glyphicon-ok"></span>
+												</button>
+													<button type="button" class="btn btn-xs btn-danger" ng-click="deleteAction(item, action_list,$index)" title="Delete">
+														<span class="glyphicon glyphicon-trash">
+													</span>
+												</button>
+												<button type="button" class="btn btn-xs btn-default " ng-click="disableEdit(item)" title="Cancel" aria-label="Cancel">
+													<span class="glyphicon glyphicon-remove"></span>
+												</button>
+											</div>
+										</div>
+										<div class="row item-info left-padding" ng-hide="item.edit">
+											<div class="col-md-5 nopadding">
+												{{item.user.firstName}}
+											</div>
+											<div class="col-md-7 text-right time">
+												<span ng-show = "item.dueDate">
+													{{actionDueDateFormat(item.dueDate)}}
+												</span>
+												<span ng-hide = "item.dueDate">
+													No Due Date Selected
+												</span>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</li>
+					<span ng-show = "!action_list.actions.length" class="no_action_list">
+						No Actions Available
+					</span>
+				</ul>
+			</div>
+
+			<div class="panel-footer">
+				<form class="form" role="form">
+					<div class="input-group">
+						<input style="resize:vertical" maxlength="255" rows="1" class="form-control" ng-model="taskAction" msd-elastic ng-textarea-enter="AddAction(msg)">
+						<span class="input-group-btn" style="vertical-align: bottom;">
+							<button class="btn btn-sm btn-raised btn-default"
+							ng-click="AddAction(taskAction)">
+								<i class="glyphicon glyphicon-send"></i>
+							</button>
+						</span>
+					</div>
+				</form>
+				<div class="message-length-warning" ng-class="{'red-text': msg.length >= 255}">
+					<span>
+						{{msg.length || 0}} / 255 Characters
+					</span>
+				</div>
+			</div>
+		</div>
+		<div ng-show = "!action_lists.length" class="no_action_list">
+			<div class="clearfix text-center">
+				<p>No Action List Present</p>
+				<button class="btn btn-sm btn-raised btn-default"
+				ng-click="addActionList()"
+				title="Checklist Menu"
+				ng-show = "action_lists.length == 0"
+				style="margin-top: 10px;">
+					Add Action List <i class="glyphicon glyphicon-plus"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+
+
+<div class="row box-border" style="position: relative;">
+	<div ng-class="toggleMessageClass()" class="col-lg-9 col-sm-12 col-xs-12 no-brd-right-lg">
+		<div class="category-background">
+			<p class="incident-para" ng-hide="incident">Please select an Incident</p>
+			<p ng-hide="hasIncidentCategory()" class="watermark-text-medium" style="color: #DDDDDD">
+				No Category Present
+			</p>
+			<div ng-class="{outer: layout.page=='flat'}">
+				<ul class="classes" ng-class="toggleInformationZoom()">
+					<li id="category_{{$index}}" class="column" ng-show="class.show" no-drag="!class.edit" ng-repeat="class in data.classes | filter:query">
+						<div class="dragMsg">
+							<div class="panel panel-default">
+								<div class="panel-heading" ng-style="{'background-color' : accountSettings.category_header}" ng-dblclick="editClass(class)">
+									<span ng-dblclick="editClass(class)" ng-hide="class.edit==true" ng-attr-title="{{class.title}}" class="editable editable-click">
+										{{class.title | displayString: 24}}
+									</span>
+									<a class="zoom-in pull-right" ng-click="zoomCategory(class, $index)">
+										<i class="fa fa-search-plus"
+										aria-hidden="true"></i>
+									</a>
+									<form class="form-inline" ng-submit="updateClass(class)" ng-show="class.edit">
+										<div class="editable-controls form-group" ng-class="{'has-error': $error}">
+											<input type="text" ng-click="$event.stopPropagation()" ng-model="class.title" class="form-control input-sm">
+											<span class="editable-button">
+
+												<button type="submit"
+												title="Update"
+												class="btn btn-primary btn-sm btn-raised"
+												aria-label="Submit">
+												<span class="glyphicon glyphicon-ok">
+												</span>
+											</button>
+											<button type="button" class="btn btn-default btn-sm btn-raised" ng-click="cancelEditClass(class)" title="Cancel" aria-label="Cancel">
+												<span class="glyphicon glyphicon-remove">
+												</span>
+											</button>
+											<button type="button" class="btn btn-sm btn-danger btn-raised" title="Delete Category" confirm="Are you sure you want to delete?"
+											ng-click="deleteCategory(class, $index)">
+											<span class="glyphicon glyphicon-trash"></span>
+										</button>
+									</span>
+									<select chosen class="form-control" ng-model="class.index" data-placeholder-text-single="'Select Position'" ng-options="x for x in posArr" ng-change="setClassPosition(class)">
+								</select>
+								</div>
+							</form>
+						</div>
+						<div class="panel-body" data-as-sortable="DragOptionsClass" id="{{class.id}}" data-ng-model="class.messages">
+
+							<ul style="width:100%;min-height:30px;float:left" class="classlist list-group">
+								<!-- ##################################### -->
+								<li class="item">
+									<div style="width:100%;">
+										<div class="row" style="margin:0">
+											<div class="col-xs-1 handle">
+												<span class="ti-move">
+												</span>
+											</div>
+											<div class="col-xs-11 " style="padding-left:5px; background-color: #f4f4f4;" ng-dblclick="editClassSummary(class)">
+												<div class="row left-padding">
+													<div class="col-xs-12 item-text"  style="padding: 2px 8px 0px 0px;">
+														<div ng-hide="class.ex" title="{{item.content}}">
+															<!-- <p>{{htmlToPlaintext(class.summary)}}</p> -->
+
+															<div ng-style="messagesStyle" ng-bind-html="class.summary" style="word-wrap: break-word;white-space: normal;"></div>
+														</div>
+													</div>
+												</div>
+											
+											<div class="row item-info left-padding" ng-hide="class.ex">
+												<div class="col-md-5 nopadding">
+													{{loginUser.firstName}}
+												</div>
+												<div class="col-md-7 text-right time">
+													{{timeFormat(class.createdAt)}}
+												</div>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</li>
+							<hr>
+							<!-- ############################## -->
+							<li class="item" ng-repeat="item in class.messages | filter:query | orderBy:item.index" data-as-sortable-item ng-show="item.showFilter">
+
+								<div style="width:100%;">
+									<div class="row" style="margin:0">
+										<div class="col-xs-1 handle" data-as-sortable-item-handle
+										id={{item.id}}
+										ng-style="{'background-color': item.selectedColor}"
+										>
+											<span class="ti-move">
+											</span>
+										</div>
+										<div class="col-xs-11 " style="padding-left:5px; background-color: #f4f4f4;">
+											<form ng-submit="updateMessage(item, class)">
+												<div class="row left-padding">
+													<div class="col-xs-12 item-text" ng-dblclick="editItem(item, $event)" style="padding: 2px 8px 0px 0px;">
+														<span ng-show="item.edit" class="">
+															<textarea rows="1"
+															class="form-control"
+															msd-elastic
+															ng-model="item.content"
+															ng-textarea-enter="updateMessage(item)">
+															</textarea>
+															<div class="message-length-warning" ng-class="{'red-text': item.content.length >= 5000}">
+																<span>
+																	{{item.content.length || 0}}  Characters
+																</span>
+															</div>
+														</span>
+													<span ng-hide="item.edit" >
+														<pre ng-style="messagesStyle" >{{item.content}}</pre>
+													</span>
+
+												</div>
+											</div>
+											<div class="row left-padding" ng-show="item.edit" style="margin: 0px -3px 5px 4px;">
+												<div class="row item-info col-md-12" ng-show="item.edit" style="margin-bottom: 5px">
+													<a href="javascript:void(0)" ng-click="copyToSummary(class, item)">Copy To Summary</a>
+												</div>
+												<div class="row item-info" ng-show="item.edit" style="margin-bottom: 5px">
+													<div class="col-md-12">
+														<div class="color_divs"
+														ng-repeat="c in colorPalettes"
+														ng-style="{'background-color': c.color}"
+														ng-click="changeColor(item, class, c.color)">
+													</div>
+
+													<button type="button" class="btn btn-xs btn-default" ng-click="changeColor(item, class, '')" title="Delete" style="margin-top: 0px;">
+														<span class="glyphicon glyphicon-refresh">
+														</span>
+													</button>
+
+												</div>
+
+
+											</div>
+											<div class="col-xs-8" style="padding-right:0">
+												<button type="submit" class="btn btn-xs btn-primary" title="Submit" aria-label="Submit">
+													<span class="glyphicon glyphicon-ok"></span>
+												</button>
+													<button type="button" class="btn btn-xs btn-danger" ng-click="deleteMessage(item, class)" title="Delete">
+														<span class="glyphicon glyphicon-trash">
+													</span>
+												</button>
+												<button type="button" class="btn btn-xs btn-default " ng-click="cancelEditItem(item)" title="Cancel" aria-label="Cancel">
+													<span class="glyphicon glyphicon-remove"></span>
+												</button>
+											</div>
+										</div>
+											<div class="row item-info left-padding" ng-hide="item.edit">
+												<div class="col-md-5 nopadding">
+													{{item.user.firstName}}
+												</div>
+												<div class="col-md-7 text-right time">
+													{{timeFormat(item.createdAt)}}
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+					<div class="clearfix">
+					</div>
+				</div>
+				<div class="panel-footer">
+					<form class="form" role="form">
+						<div class="input-group">
+							<input style="resize:vertical" rows="1" class="form-control" ng-model="class.input" msd-elastic ng-textarea-enter="newMessage(class)">
+							<span class="input-group-btn" style="vertical-align: bottom;">
+								<button class="btn btn-sm btn-raised btn-default"
+								ng-click="newMessage(class)">
+								<i class="glyphicon glyphicon-send"></i>
+								</button>
+							</span>
+						</div>
+					</form>
+					<div class="message-length-warning" ng-class="{'red-text': class.input.length >= 5000}">
+						<span>
+							{{class.input.length || 0}} Characters
+						</span>
+					</div>
+				</div>
+		</div>
+	</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="incoming col-lg-3 col-md-12 col-sm-12 col-xs-12" ng-hide="!layout.inbox">
+	<div class="panel panel-default incommingMsg">
+		<div class="panel-heading">
+			<strong><span class="glyphicon glyphicon-envelope"></span> Incoming Messages</strong>
+		</div>
+		<div style="padding: 5px 7px 6px 5px; overflow-y:scroll; overflow-x: hidden;" data-as-sortable="DragOptionsIncome"
+		data-ng-model="messages" class="right-panel-holder">
+		<ul style="width:100%;min-height:30px;float:left" class="classlist list-group">
+			<li class="list-group-item item msg" style="margin-bottom:5px;" data-as-sortable-item ng-repeat="item in messages | filter:query" >
+				<div>
+					<div class="row" style="margin:0">
+						<div class="col-xs-1 handle" data-as-sortable-item-handle>
+							<span class="ti-move"></span>
+						</div>
+						<div class="col-xs-11" style="padding-left:5px; background-color: #f4f4f4;">
+							<div class="row left-padding">
+								<div class="col-xs-12 item-text" style="padding: 2px 8px 0px 0px;">
+									<span ng-hide="item.edit" title="{{item.message}}">
+										<pre ng-style="messagesStyle">{{item.message }}</pre>
+									</span>
+								</div>
+							</div>
+							<div class="row item-info left-padding">
+								<div class="col-md-5 nopadding">
+									{{item.user.firstName || item.game_player.firstName}}
+								</div>
+								<div class="col-md-7 text-right time">
+									{{timeFormat(item.createdAt)}}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div class="panel-footer">
+		<form class="form" role="form">
+			<div class="input-group">
+				<input style="resize:vertical" rows="1" class="form-control" ng-model="msg" msd-elastic ng-textarea-enter="sendMessage(msg)">
+				<span class="input-group-btn" style="vertical-align: bottom;">
+					<button class="btn btn-sm btn-raised btn-default"
+					ng-click="sendMessage(msg)">
+						<i class="glyphicon glyphicon-send"></i>
+					</button>
+				</span>
+			</div>
+		</form>
+		<div class="message-length-warning" ng-class="{'red-text': msg.length >= 5000}">
+			<span>
+				{{msg.length || 0}} Characters
+			</span>
+		</div>
+	</div>
+</div>
+
+<iframe class="shim-iframe" frameborder="0" scrolling="no"></iframe>
+</div>
+</div>
+</div>
+<!-- <script type="text/javascript">
+$( document ).ready(function() {
+    console.log( "ready!" );
+    $($('.btn-tomove').html()).insertAfter('.panel-title');
+    // $('.btn-tomove').remove();
+    // appendTo('to-move');
+	// var buttons = $("h4 a span div")
+	console.log($('.to-move div').first().first());
+});
+</script> -->

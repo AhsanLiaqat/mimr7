@@ -1,0 +1,82 @@
+<div class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div id="modal-header" class="modal-header">
+                <button type="button" class="close" ng-click="close()">&times;</button>
+                <h4 class="modal-title">Location for {{incident.name}}
+                    <for></for>
+                </h4>
+            </div>
+
+            <!-- Body -->
+            <div ng-show="noloc" class="modal-body modal_big_height">
+              <div class="map-header clearfix row">
+                <div class="col-sm-12">
+                  <div class="pull-right">
+                    <button class="btn btn-primary" ng-click="exportPNG()">Export</button>
+					        </div>
+				        </div>
+              </div>
+
+              <div class="box-border location-margin">
+                <div class="panel panel-default maps">
+                  <div>
+                    <input  id="pac-input"
+                            type="text"
+                            class="controls"
+                            placeholder="Search Nearby Locations">
+                    <div id="map" style="min-height:400px"></div>
+                    <div id="legend">
+                      <h4 style="padding:0;margin:0">Legend</h4>
+                      <div ng-repeat="icon in icons"
+                           class="row"
+                           style="margin-top: 8px">
+                        <div class="col-sm-2">
+                          <img src="{{icon.icon}}">
+                        </div>
+                        <div class="col-sm-4"
+                             style="margin:auto">{{icon.name}}</div>
+                        <div class="col-sm-6">
+                          <!-- <toggle ng-model="icon.show" ng-change="doToggle(icon)"></toggle> -->
+                          <switcher ng-model="icon.show"
+                          ng-change="doToggle(icon)">
+                      </switcher>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div ng-show="addloc" class="modal-body modal_small_height">
+            <h4>No Location Found! Please add below </h4>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Location(s) </label>
+                <div ng-repeat="e in data.locations track by $index" style="margin-bottom:10px;">
+                  <div class="input-group">
+                    <input type="text" class="form-control locations" g-places-autocomplete ng-model="data.locations[$index]" />
+                    <span class="input-group-btn">
+                      <button class="btn btn-lg btn-danger" type="button" ng-click="remove($index)">
+                        <span class="glyphicon glyphicon-remove-sign"></span>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+            </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+              <button class="btn btn-info" ng-click="close()" data-dismiss="modal">Cancel</button>
+              <button class="btn btn-info" ng-click="updateIncident()" ng-show="addloc">Update</button>
+              <a ng-show="noloc" class="btn btn-primary" target="_blank" href="#/viewMap/{{incident.id}}">Open in Tab</a>
+            </div>
+        </div>
+    </div>
+</div>

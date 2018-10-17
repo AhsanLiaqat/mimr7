@@ -1,0 +1,36 @@
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Report</h4>
+      </div>
+      <div class="modal-body">
+ <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+
+                        <th >Date</th>
+                        <th >Incident Name</th>
+                        <th >Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="record in reports | orderBy:'record.updatedAt':direction track by record.updatedAt">
+                        <td>{{record.updatedAt | date: "dd/MM/yyyy"}}</td>
+                        <td>{{record.incidentName}}</td>
+                        <td> <a ng-click="StatusReport(record)"><span class="btn">View</span> </a></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="close()" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>

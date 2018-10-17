@@ -1,0 +1,71 @@
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg" id ="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" id = "modal-header">
+        <button type="button" class="close" ng-click="close()" >&times;</button>
+        <h4 class="modal-title"  id = "modal-title">Timeline </h4>
+
+      </div>
+      <div class="modal-body"  id="modal-body">
+        <section  id="print">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2 content" data-mcs-theme="dark">
+              <div>
+                <strong>
+                   <div class="col-md-4 btn">
+                      <select class="form-control" ng-change="loadMessages()" ng-model="category" ng-options="record.id as record.title for record in classes">
+                        <option value="" selected="selected">Select a category</option>
+                      </select>
+                    </div> 
+                  <span class="glyphicon glyphicon-th"></span> Incoming Messages 
+                </strong>
+            <div class="">
+            <span class="full-xs">from:</span>
+            <span class="full-xs">
+              <input  id="datepicker" data-date-format="dd/mm/yyyy" data-provide="datepicker"  ng-model="date.from">
+            </span>
+            <span class="full-xs">to:</span>
+            <span class="full-xs">
+              <input id="datepicker" data-date-format="dd/mm/yyyy" data-provide="datepicker"  ng-model="date.to">
+            </span>  
+            <span class="full-xs">
+            <button class="btn btn-xs btn-primary" ng-click="dateFilter()">Filter</button>
+            <button class="btn btn-xs btn-primary" ng-click="clearfilter()">Clear filters</button>
+          </span>
+            </div>
+            <select chosen
+            multiple 
+            class="form-control"
+            data-placeholder-text-multiple="'select users'"
+            ng-model="selected"
+            ng-change = "onUserSelect()"
+            ng-options="user.id as user.firstName +' '+ user.lastName for user in userList | orderBy:'firstName'">
+          </select>
+              </div>
+              <h4> Incident : {{incident.name}}</h4>
+              <button class="btn btn-success btn-sm" style="margin-bottom: 5px;"
+              ng-click="sortDirection()">Date Sort</button>
+
+
+
+              <ul class="list-group message">
+                <li class="list-group-item msg"
+                    ng-repeat="record in messages | orderBy:'record.createdAt':direction track by record.createdAt"> 
+                  <p ng-if="category == 'incoming'">Message: <strong>{{record.message}}</strong></p>
+                  <p  ng-if="category != 'incoming'">Message: <strong>{{record.content}}</strong></p>
+                  <span style="color: blue">By:  {{userName(record.userId)}}</span> 
+                  <span style="float:right">{{record.createdAt | date: "HH:mm dd-MM-yyyy"}}</span> 
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+        <div class="modal-footer">
+          <a ng-click="object_to_html()" class="btn btn-success">Print</a>
+          <button class="btn btn-primary" ng-click="close()" data-dismiss="modal">close</button>
+        </div>
+      </div>
+    </div>
+  </div>

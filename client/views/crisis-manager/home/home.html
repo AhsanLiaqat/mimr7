@@ -1,0 +1,126 @@
+<div data-ng-controller="homeCtrl">
+    <div class="container-fluid" style="padding-bottom: 10px;">
+        <div class="top_btns_container">
+            <div class="actions_btns">
+                <ul class="list-unstyled list-inline">
+                    <li>
+                        <a href="" class="btn btn-md btn-primary" ng-click="addIncident()" title="Add Incident">
+                            <i class="fa fa-lg fa-exclamation-triangle"></i> Create Incident
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="btn btn-md btn-primary" ng-click="alertTeam()" title="Alert Teams">
+                            <i class="fa fa-lg fa-users"></i> Alert Teams
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="btn btn-md btn-primary" ng-click="showTeams()" title="Team Status" style="height: 36.8px;">
+                            <i class="material-icons">group</i> User Status
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#/actionPlanPage" class="btn btn-md btn-primary" title="Action Plan Library">
+                            <i class="fa fa-lg fa-magic"></i> Action Plan Wizard
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="nav navbar-nav navbar-right" style="font-size: 15px; font-weight: bold; margin-right: 5px;">
+                <li class="dropdown">
+                    <a href="" data-target="" class="dropdown-toggle" data-toggle="dropdown">
+                        <span ng-hide="currentStatus">Incident Status <b class="caret"></b></span>
+                        <span ng-show="currentStatus">{{currentStatus.name}} <b class="caret"></b></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li role="presentation" ng-repeat="status in incidentStatusOptions">
+                            <a class="dropdown-cursor" role="menuitem" ng-click="changeIncidentStatus(status)"> {{status.name}}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row" style="margin: 5px;">
+        <div ng-repeat="incident in incidents | filter:{ active: currentStatus.value }" class="col-md-4" style="margin-bottom: 20px;">
+            <div class="card">
+                <div class="card-content" style="position: static;">
+                    <div ng-if = "incident.form_exists">
+                        <div class="progress custom-progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="70"
+                              aria-valuemin="0" aria-valuemax="100" style="width:{{incident.to_show_percentage}}%">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+                        <div ng-class="(incident.to_show_percentage >= 98) ? 'incident-bar-icon incident-full-progress' : 'incident-bar-icon'" ng-click="fillUpForm(incident)">
+                            <i class="fa fa-star" title = "{{incident.nodata ? 'No Data Submitted' : incident.to_show}}"></i>
+                        </div>
+                    </div>
+                    <div class="card-headline">
+                        <h3>{{incident.name}}
+                            <a ng-click= "openEditModal(incident.id)" class="btn btn-sm btn-info pull-right" ng-show ="currentStatus.value=='Active' || currentStatus.value=='OnHold'" style="margin-top: 1px;">
+                                <i class="material-icons" title = "Edit Incident">edit</i>
+                            </a>
+                            
+                            <a ng-click= "closeIncidentModal(incident)" title = "Close Incident" class="btn btn-sm btn-info pull-right btn-danger" confirm = "Are you sure you want to Close this incident? You will not be able to reactive any closed incident." ng-show ="currentStatus.value=='OnHold'" style="margin-top: 1px;">
+                                <i class="fa fa-times fa-2x" aria-hidden="true"></i>
+                            </a>
+                            <a ng-click= "removeIncident(incident.id)" class="btn btn-sm btn-danger pull-right" title = "Close Incident" ng-show="currentStatus.value!='Active' && currentStatus.value!='OnHold'" style="margin-top: 1px;">
+                                <i class="fa fa-times fa-2x" title = "Delete Incident"></i>
+                            </a>
+                        </h3>
+
+
+                    </div>
+
+                    <div class="card-body">
+                        <p>
+                            <b>Incident Date: </b> {{dateFormat(incident.createdAt)}}
+                            <br>
+                            <b>Incident Plan: </b>
+                             <span ng-repeat="plan in incident.incident_plans">
+                                <a ng-click="openActionPlanActivities(plan,incident.id)"> {{plan.action_plan.name}},</a>
+                            </span>
+                        </p>
+
+                        <a href="#/dashboard/{{incident.id}}" class="btn btn-success"
+                            ng-show="currentStatus.value=='Active'" title="Information Dashboard">
+                            <i class="material-icons">dashboard</i>
+                        </a>
+
+                            <button ng-click="linkActionPlan(incident)" class="btn btn-danger"
+                                ng-hide="checkPlanPresence(incident) || currentStatus.value=='Closed'" title="Link Action Plan">
+                                <i class="material-icons">link</i>
+                            </button>
+                        <span ng-show="currentStatus.value=='Active'">
+                            <a href="#/actionPlanDashboardV2/{{incident.id}}" ng-show="checkPlanPresence(incident)"
+                                class="btn btn-primary" title="Action Plan Dashboard">
+                                <i class="material-icons">check_circle</i>
+                            </a>
+                        </span>
+                        <button type="button" class="btn btn-info" ng-click="loadMap(incident)" title="Maps">
+                            <i class="material-icons">map</i>
+                        </button>
+                        <button href="" ng-click="statusReport(incident)" class="btn btn-info"
+                            ng-show="currentStatus.value=='Active'" title="Status Report">
+                            <i class="material-icons">description</i>
+                        </button>
+
+                        <button ng-click="openTimeLine(incident)" class="btn btn-success"
+                            ng-show="currentStatus.value=='Closed' || currentStatus.value=='OnHold'" title="Timeline">
+                            <i class="material-icons">timeline</i>
+                        </button>
+
+                        <button href="" ng-click="report(incident)" class="btn btn-info btn-sm"
+                        ng-show="currentStatus.value=='Closed' || currentStatus.value=='OnHold'" title="Status Report">
+                        <i class="material-icons">Report</i>
+                    </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p ng-show="checkNoIncident()" class="watermark-text-medium" style="position: inherit;">
+            No <b>{{currentStatus.name}}</b> Present
+        </p>
+    </div>
+</div>

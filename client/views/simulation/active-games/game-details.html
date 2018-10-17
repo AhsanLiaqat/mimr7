@@ -1,0 +1,83 @@
+<div class="page" ng-controller="informationManagerGameCtrl">
+    <section class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-sm-3">
+                    Active Game Details
+                    <br>
+                    <h5>Scheduled at {{dateFormat(playGame.scheduled_date)}}</h5>
+                    <a ng-if = "playGame.incident" class="btn btn-primary" href= "#/dashboard/{{playGame.incident.id}}">
+                        {{playGame.incident.name}}
+                    </a>
+                </div>
+
+                <div class="col-sm-6 text-center" style="margin-top: 40px;">
+                    
+                    <div class="text-center" ng-show = "playGame.status !== 'made' && playGame.status !== 'stop'" style="font-size: 15px;">
+                        Game started At : :
+                        <timer start-time=time>{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+           
+        <div class="panel-body">
+            <div class="container">
+              <div class="tab-content">
+                <div id="message">
+                    <div class="row">
+                        <div class="col-md-12 ">
+                            <div class="form-group">
+                                <label>All Messages</label>
+                                <br><br>
+                                <table class="table table-bordered table-striped table-responsive">
+                                    <thead>
+                                    <tr>
+                                        <th>Message</th>
+                                        <th>Setof Time (Min.)</th>
+                                        <th width="30%">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>   
+                                    <tr ng-repeat="gameMessage in gameMessages">
+                                        <td>
+                                                {{ gameMessage.message }}
+                                        </td>
+                                        <td>
+                                                {{gameMessage.offset}} Minutes
+                                        </td>
+                                        <td>
+                                            <div ng-hide="gameMessage.activated || gameMessage.skip">
+                                                <a class="btn btn-info" ng-click="skipMessage(gameMessage)" >
+                                                    Skip    
+                                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                                </a>
+                                                <a ng-click="sendMessage(gameMessage)"
+                                                   class="btn btn-info"
+                                                   title="Send Message">
+                                                    <span class="glyphicon glyphicon-send"></span>
+                                                </a>
+                                            </div>
+                                            <p ng-show="gameMessage.activated">
+                                                <i>Message sent at <b>{{dateFormat(gameMessage.activated_At)}}</b></i>
+                                            </p>
+                                            <p ng-show="gameMessage.skip">
+                                                <i>Message skipped at <b>{{dateFormat(gameMessage.skipped_At)}}</b></i>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                   <!-- Section for Rounds -->
+                
+              </div>
+            </div>  
+        </div>
+    </section>
+</div>

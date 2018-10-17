@@ -1,0 +1,42 @@
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog" id ="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" id = "modal-header">
+        <h4 class="modal-title"  id = "modal-title">Status Reports </h4>
+      </div>
+    <div class="modal-body"  id="modal-body"> 
+    <section >
+      <div>
+        <strong>
+          <div class="pull-right header-buttons">
+          </div>
+        </strong>
+      </div>
+      <div class="table-responsive">
+        <table st-table="reports" st-safe-src="safeReports" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th st-sort="date">Date</th>
+              <th st-sort="id">Actions</th> 
+            </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="record in reports">
+                <td>{{record.date | date:'HH:mm dd-MM-yyyy'}}</td>
+                <td> <a href="/#/archive/statusReport/{{record.id}}" >
+                        <span class="btn">View</span> 
+                      </a>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+      </section>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-info" ng-click="close()" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

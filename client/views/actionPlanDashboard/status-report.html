@@ -1,0 +1,31 @@
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg" id="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"  id ="modal-header">
+        <h4 class="modal-title" id ="modal-title" >
+          Action Plan Status Report
+          <button type="button" class="close" ng-click="close()" >&times;</button>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div>
+          <section>
+            <div class="panel-body report-editor">
+              <!-- <textarea ui-tinymce="tinymceOptions" ng-model="status_report" 
+                        style="height:320px">
+              </textarea> -->
+              <textarea froala="froalaOptions" ng-model="status_report"></textarea>
+
+              <!-- <text-angular style="height:320px" ng-model="status_report"></text-angular> -->
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-info" ng-click="close()" data-dismiss="modal">Cancel</button>
+        <button ng-click="Printsummary(status_report)" class="btn btn-success">Print</button>
+        <button ng-click="save(status_report)" class="btn btn-success">Save & Send</button>
+      </div>
+    </div>
+  </div>
+</div>

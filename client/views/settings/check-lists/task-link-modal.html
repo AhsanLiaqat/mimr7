@@ -1,0 +1,109 @@
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg modal_big_width">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div id="modal-header" class="modal-header">
+        <button type="button" class="close" ng-click="close()">×</button>
+        <h4 id="modal-title" class="modal-title">Task Library</h4>
+      </div>
+      <div class="col-md-12 modal-body modal_big_height" style=" overflow-y: scroll;">
+        <div class="page">
+        <div class="pull-right">
+            <a ng-click="addModal();" class="btn btn-success btn-sm">Create New Task</a>
+        </div>
+        <div class="pull-left">
+            <button class="btn btn-primary"  data-dismiss="modal">Close</button>
+            <button class="btn btn-primary" ng-click="submit()">Save</button>
+          
+        </div>
+        <div style="clear: both;" 
+        ></div>
+          <section class="panel panel-default">
+            <div class="panel-body">
+              <div class="table-filters">
+                <div class="row">
+                  <div class="col-sm-12 col-xs-6 chosen-full-container" style="margin: 10px;">
+                    <form>
+                      <input type="text"
+                      placeholder="Search task"
+                      class="form-control"
+                      data-ng-model="searchKeywords"
+                      >
+                    </form>
+                </div>
+              </div>
+            </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                            <th>Select</th>
+                                <th>
+                                  <div class="th">
+                                    Name
+                                    <span class="fa fa-angle-up"
+                                    data-ng-click=" order('title') "
+                                    data-ng-class="{active: row == 'title'}"></span>
+                                    <span class="fa fa-angle-down"
+                                    data-ng-click=" order('-title') "
+                                    data-ng-class="{active: row == '-title'}"></span>
+                                  </div></th>
+                                <th>
+                                  <div class="th">
+                                    Description
+                                    <span class="fa fa-angle-up"
+                                    data-ng-click=" order('description') "
+                                    data-ng-class="{active: row == 'description'}"></span>
+                                    <span class="fa fa-angle-down"
+                                    data-ng-click=" order('-description') "
+                                    data-ng-class="{active: row == '-description'}"></span>
+                                  </div></th>
+                                  <th>
+                                    <div class="th">
+                                    Categories
+                                      <span class="fa fa-angle-up"
+                                      data-ng-click=" order('description') "
+                                      data-ng-class="{active: row == 'description'}"></span>
+                                      <span class="fa fa-angle-down"
+                                      data-ng-click=" order('-description') "
+                                      data-ng-class="{active: row == '-description'}"></span>
+                                    </div></th>
+                                    <th>
+                                      <div class="th">
+                                        Type
+                                        <span class="fa fa-angle-up"
+                                        data-ng-click=" order('type') "
+                                        data-ng-class="{active: row == 'type'}"></span>
+                                        <span class="fa fa-angle-down"
+                                        data-ng-click=" order('-type') "
+                                        data-ng-class="{active: row == '-type'}"></span>
+                                      </div></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr id="modal-title"  ng-repeat="task in tasks | filter:searchKeywords">
+                             <td> <input type="checkbox"  ng-click="unselectTask(task)" ng-checked="task.checked"></td>
+                              <td >{{task.title}}</td>
+                              <td >{{task.description}}</td>
+                              <td><a href="" ng-repeat="texts in task.tags"> #{{texts.text}}</a> <br>
+                              </td>
+                              <td >{{task.type}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </section>
+      </div>
+      </div>
+      <div class="modal-footer">
+         
+
+      </div>
+    </div>
+
+  </div>
+</div>

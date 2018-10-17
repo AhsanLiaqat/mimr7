@@ -1,0 +1,11 @@
+'use strict';
+
+module.exports = {
+  up: function (queryInterface, Sequelize) {
+    queryInterface.addColumn('task_lists', 'for_template', {type: Sequelize.BOOLEAN, defaultValue: false})
+  },
+
+  down: function (queryInterface, Sequelize) {
+    queryInterface.removeColumn('task_lists', 'for_template')
+  }
+};

@@ -1,0 +1,64 @@
+<div class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div id="modal-content" class="modal-content">
+
+            <!-- Header -->
+            <div id="modal-header" class="modal-header">
+                <button type="button" class="close" ng-click="close()">&times;</button>
+                <h4 class="modal-title">Compose Message</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-11">
+                        <div id="compose-msg" class="form-group">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>To: </label>
+                                </div>
+                                <div class="col-md-9">
+                                    <tags-input class="scroll"
+                                                name='task_tags'
+                                                placeholder="Enter Emails"
+                                                ng-model="gmails"
+                                                on-tag-select="selected($tag)"
+                                                >
+                                    </tags-input> 
+                                </div> 
+
+                                <div class="col-md-3">
+                                    <label for="inputSubject">Subject</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" ng-model="subject" class="form-control" id="inputSubject" placeholder="subject">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="inputBody">Message</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <textarea class="form-control" ng-model="message" id="inputBody" rows="18"></textarea>
+                                </div>
+
+                            </div><!-- end .row -->
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page Footer -->
+                <hr>
+                <div class="modal-footer">
+                    <button class="btn btn-info"
+                            style="float: left;"
+                            ng-click="close()">
+                        Cancel
+                    </button>
+
+                    <button type="button" ng-click="sendEmails()" class="btn btn-primary ">Send <i class="fa fa-arrow-circle-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

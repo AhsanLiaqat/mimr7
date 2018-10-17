@@ -1,0 +1,78 @@
+<div class="modal fade" role="dialog">
+    <div id="modal-dialog" class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" id="modal-header">
+                <button type="button" class="close" confirm="All data will be lost, Proceed?" ng-click = "closeModal()">&times;</button>
+                <h4 class="modal-title" id="modal-title">New Action Plan : {{data.name}}</h4>
+            </div>
+            <div class="modal-body modal_big_height">
+                <div>
+                    <section class="panel panel-default modal_third_cal">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <div id="home" class="tab-pane fade in active">
+                                        <div class="form-group">
+                                            <label>Name</label><span style="color: red" title="Required"> *</span>
+                                            <input class="form-control" ng-model="data.name">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Incident Type</label>
+                                            <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                                <select ng-change="loadScenario(data.categoryId)" chosen class="form-control" data-placeholder-text-single="'Select Type'" ng-model="data.categoryId" ng-options="type.id as type.name for type in categories">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+                                            <a href="" ng-click="addIncidentType()">Create new Incident Type</a>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Scenario</label>
+                                            <div class="form-group chosen-full-container">
+                                                <select chosen class="form-control" data-placeholder-text-single="'Select Scenario'" ng-model="data.scenarioId" ng-options="scenario.id as scenario.name for scenario in scenarioOptions">
+                                                    <option></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea ng-model="data.description" maxlength="255" class="form-control" id="textArea"></textarea>
+                                            <div class="message-length-warning" ng-class="{'red-text': data.description.length >= 255}">
+                                                <span>
+                                                    {{data.description.length || 0}} / 255 Characters
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Action Plan Type</label>
+                                            <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                                <select chosen class="form-control" data-placeholder-text-single="'Select Kind'" ng-model="data.kind" >
+                                                    <option value="activities">Activities</option>
+                                                    <option value="agendaPoints">Agenda points</option>
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Plan Date<span class="required-custom"> *</span></label>
+                                            <input class="form-control" data-provide="datepicker" ng-change="closePicker()"  data-date-format="dd/mm/yyyy" ng-model="data.plandate">
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" ng-click="save(data, false)" style="float:right; margin-left:5px"> Save  <i class="fa fa-chevron-right fa-lg"></i></button>
+            </div>
+        </div>
+    </div>
+</div>

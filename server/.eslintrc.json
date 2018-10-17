@@ -1,0 +1,10 @@
+{
+    "extends": "eslint:recommended",
+    "rules": {
+        "indent": ["error", 4]
+    },
+    "env":{
+        "amd":true,
+        "node":true
+    }
+}

@@ -1,0 +1,219 @@
+<div class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="panel panel-default">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" ng-click="close()">&times;</button>
+                    <h4 class="modal-title">Assign Task
+                    </h4>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body" style="height: 500px; overflow-y: scroll; overflow-x: auto;">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div id="menu1" class="tab-pane fade in active ui-widget">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <strong>
+                                  <span class="glyphicon glyphicon-th"></span> BASIC INFORMATION
+                                </strong>
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label> Task </label><span style="color: red" title="Required"> *</span>
+                                        <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                            <select chosen
+                                                    class="form-control"
+                                                    ng-model="activity.taskListId"
+                                                    ng-selected="activity.taskListId === task.id"
+                                                    ng-options="task.id as task.title for task in tasks">
+                                            </select>
+                                        </div>
+                                        <a href="" ng-click="addTaskItem()"><i class=""> Create New Task </i></a>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label> Description </label>
+                                        <input class="form-control" ng-model="activity.description">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label> Responsibility Level</label>
+                                        <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                            <select chosen
+                                                    class="form-control"
+                                                    data-placeholder-text-single="'Select Level'"
+                                                    ng-model="activity.responsibility_level"
+                                                    ng-options="role.name as role.name for role in roles">
+                                            </select>
+                                        </div>
+                                        <a href="" ng-click="addRole()">Create Responsibility Level</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <strong>
+                                                <span class="glyphicon glyphicon-th"></span> ROLE INFORMATION
+                                            </strong>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label> Organization </label>
+                                        <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                            <select chosen
+                                                    class="form-control"
+                                                    data-placeholder-text-single="'Select Organization'"
+                                                    ng-model="activity.organizationId"
+                                                    ng-options="org.id as org.name for org in organizations">
+                                            </select>
+                                        </div>
+                                        <a href="" ng-click="addOrg()"><i class=""> Create New Organization </i></a>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Department </label>
+                                        <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                            <select chosen
+                                                    class="form-control"
+                                                    data-placeholder-text-single="'Select Department'"
+                                                    ng-model="activity.departmentId"
+                                                    ng-options="dpt.id as dpt.name for dpt in departments">
+                                            </select>
+                                        </div>
+                                        <a href="" ng-click="addDepartment()"><i class=""> Create New Department </i></a>
+                                    </div>
+                                    <div class="form-group">
+                                        <label> Role </label>
+                                        <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                            <select chosen
+                                                    class="form-control"
+                                                    data-placeholder-text-single="'Select Role'"
+                                                    ng-model="activity.roleId"
+                                                    ng-options="role.id as role.name for role in roles">
+                                            </select>
+                                        </div>
+                                        <a href="" ng-click="addRole()"><i class=""> Create New Role </i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <strong>
+                                      <span class="glyphicon glyphicon-th"></span> ACTOR INFORMATION
+                                      </strong>
+                                </div>
+                                <div class="panel-body">
+
+                                    <div class="form-group">
+                                        <label>Actor </label>
+                                        <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                            <select chosen
+                                                    class="form-control"
+                                                    data-placeholder-text-single="'Select Actor'"
+                                                    ng-model="activity.responseActorId"
+                                                    ng-options="actor.id as displayActorName(actor) for actor in users">
+                                            </select>
+                                        </div>
+                                        <a href="" ng-click="quickAddUser()">Add New Actor</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary" ng-click="additionalInfo=true">Additional Info</button>
+                            <br><br>
+
+                            <div class="panel panel-default" ng-show="additionalInfo">
+                                <div class="panel-heading">
+                                    Additional Info
+                                </div>
+
+                                <div class="panel-body">
+
+                                    <div class="form-group">
+                                        <label> Response Time (minutes)</label>
+                                        <input class="form-control" type="number" ng-model="activity.response_time">
+                                        <!-- <div uib-timepicker ng-model="activity.response_time" show-meridian="ismeridian"></div> -->
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label> Completion Time (minutes)</label>
+                                        <input class="form-control" type="number" ng-model="activity.completion_time">
+                                       <!-- <div uib-timepicker ng-model="activity.completion_time" show-meridian="ismeridian"></div> -->
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label> Backup Actor </label>
+                                        <div class="form-group chosen-full-container">
+                                            <select chosen
+                                                    class="form-control"
+                                                    data-placeholder-text-single="'Select Actor'"
+                                                    ng-model="activity.backupActorId"
+                                                    ng-options="actor.id as displayActorName(actor) for actor in users">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label> Accountable Actor </label>
+                                        <div class="form-group chosen-full-container">
+                                            <select chosen
+                                                    class="form-control"
+                                                    data-placeholder-text-single="'Select Actor'"
+                                                    ng-model="activity.accountableActorId"
+                                                    ng-options="actor.id as displayActorName(actor) for actor in users">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-show="validActivityType()">
+                                <div class="form-group">
+                                    <label>No. of Outcomes</label>
+                                    <input class="form-control" ng-model="outcomesQuantity" placeholder="No. of possible outcomes" disabled="">
+                                </div>
+
+                                <uib-accordion close-others="true">
+                                    <div uib-accordion-group class="panel-default" is-open="expand">
+                                        <uib-accordion-heading>
+                                            Outcomes List <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': expand, 'glyphicon-chevron-right': !expand}"></i>
+                                        </uib-accordion-heading>
+                                        <div ng-repeat="outcome in outcomes track by $index" ng-show="expand">
+                                            <div class="form-group">
+                                                <label> Outcome #{{$index+1}}</label>
+                                                <input class="form-control" type="text" placeholder="Enter outcome title" ng-model="outcome.name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label> Action</label>
+                                                <select class="form-control" ng-model="outcome.outcome_activity_id" ng-options="activity.id as activity.task_list.title for activity in linkingActivities"
+                                                        ng-selected="outcome.outcome_activity_id === activity.id">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </uib-accordion>
+
+                                <button class="btn" ng-click="addOutcome()">Add Outcome</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button class="btn btn-info" ng-click="close()" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-success" ng-click="update()">Save</button>
+            </div>
+        </div>
+    </div>

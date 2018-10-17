@@ -1,0 +1,97 @@
+<div class="modal fade" role="dialog">
+    <div id="modal-dialog" class="modal-dialog">
+        <!-- Modal content-->
+        <div id="modal-content" class="modal-content">
+
+            <!-- Header -->
+            <div id="modal-header" class="modal-header">
+                <button type="button" class="close" ng-click="close()" >&times;</button>
+                <h4 class="modal-title">Schedule New ID Game
+                </h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="text-center">
+                            <label >All Messages without Order Sequence will be ignored.</label>
+                        </div>
+                        <!-- Page 1 -->
+                        <div class="form-group" ng-show="page1">
+                            <label>STEP 1: Game's Basic Info</label>
+                            <br><br>
+                            <div class="chosen-full-container" style="margin: 5px;">
+                                <select chosen
+                                        class="form-control"
+                                        data-placeholder-text-single="'Select Game Template'"
+                                        ng-model="playGame.idGameId"
+                                        ng-disabled="true"
+                                        ng-options="gameTemplate.id as gameTemplate.name for gameTemplate in gameTemplates" >
+                                    <option></option>
+                                </select>
+                            </div>
+                            <br><br>
+                            <h4>Select Date:</h4>
+                            <datepicker date-month-title="selected year" data-date-format='EEEE, dd, MMMM, yyyy' date-min-limit ="{{newDate}}" class = "">
+                                <input ng-model="playGame.scheduled_date" class = "form-control"/>
+                            </datepicker>
+                            <br><br>
+                            
+                            <div class="chosen-full-container play-game-client" style="margin: 5px;">
+                                <h4>Time (Minutes) :</h4>
+                                <input type="number" min="0" ng-model="playGame.time" class="form-control">
+                            </div>
+                        </div>
+
+                        <!-- Page 2 -->
+                        <div class="form-group" ng-show="page2">
+                            <label>STEP 2: Message Offset Assigning</label>
+                            <br><br>
+                            <table class="table table-bordered table-striped table-responsive">
+                                <thead>
+                                <tr>
+                                    <th>Message</th>
+                                    <th>Set Off Time</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="gameMessage in messages">
+                                    <td>{{gameMessage.message}}</td>
+
+                                    <td>
+                                        <input type="number" min="0" ng-model="gameMessage.offset" class="form-control">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page Footer -->
+                <div class="modal-footer">
+                   
+                    <button class="btn btn-success"
+                            style="float: right;"
+                            ng-if = "page1"
+                            ng-click="next()">
+                            Next
+                    </button>
+                    
+                    <button class="btn btn-success"
+                            ng-show="page2"
+                            style="float: right;"
+                            ng-click="scheduleGame()">
+                            Schedule Game & Exit
+                    </button>
+                    <button class="btn btn-warning"
+                            ng-show="!page3 || !page4"
+                            style="float: right;"
+                            ng-click="close()">
+                            Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,133 @@
+<div data-ng-controller="mainHomeCtrl">
+    <div class="container-fluid" style="padding-bottom: 10px;">
+        <div class="top_btns_container">
+            <div class="">
+                <h2>
+                    <strong>
+                        Welcome to CrisisHub!
+                    </strong>
+                </h2>
+                <h3>
+                    CrisisHub is a software platform that helps organizations take control of the chaotic crisis management process.
+                </h3>
+            </div>
+                <!-- <h3>
+                    This system helps you prepare for crisis, manage crisis and exercise your crisis team.
+                </h3> -->
+
+        </div>
+    </div>
+
+    <div class="row" style="margin: 5px;">
+        <div ng-repeat="card in cards" class="col-md-4" style="margin-bottom: 20px;">
+            <div class="card">
+                <div class="card-content" style="position: static;">
+                    <div class="card-headline">
+                        <h2 class="text-center">
+                            <a href = "#/{{card.route}}" style="position: relative;top: 25px;">
+                                {{card.name}}
+                            </a>
+                        </h2>
+
+                    </div>
+
+                    <div class="card-body">
+                        <div class="text-center">
+                            <a ng-click = "showGraph($index,card)" class="btn text-center" style="color: black;   position: relative;top: 25px;" ng-class="{'color_green': card.click}">
+                                <i class="fa fa-caret-down fa-2x "></i>
+                            </a>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="card.click" class="row">
+        <div class="col-md-4" style="position: relative;" ng-if = "card.index == 0" ng-repeat="graph in FirstGraphs">
+            <h3 class="text-center">
+                {{graph.name}}
+            </h3>
+            <div class="text-center graphChange" >
+                {{graph.incidents.length}}
+            </div>
+            <canvas id="doughnut" class="chart chart-doughnut" chart-colors = "colours"
+              chart-data="graph.data" chart-labels="graph.labels">
+            </canvas>
+        </div>
+        <div ng-if = "card.index == 1" class="col-md-4" style="position: relative;">
+            <div >
+                <h3 class="text-center">
+                    {{SecondGraphs[0].name}}
+                </h3>
+                <canvas id="bar" class="chart chart-bar"
+                  chart-data="SecondGraphs[0].data" chart-colors = "colours" chart-options = "options" chart-labels="SecondGraphs[0].labels" >
+                </canvas>
+
+            </div>
+        </div>
+        <div ng-if = "card.index == 1" class="col-md-4" style="position: relative;">
+            <div >
+                <h3 class="text-center">
+                {{SecondGraphs[1].name}}
+                </h3>
+                <div class="text-center graphChange graphChange1" >
+                    {{actions.length}}
+                </div>
+                <canvas id="doughnut" class="chart chart-doughnut"
+                  chart-data="SecondGraphs[1].data" chart-colors = "colours" chart-labels="SecondGraphs[1].labels">
+                </canvas>
+            </div>
+        </div>
+        <div ng-if = "card.index == 1" class="col-md-4" style="position: relative;">
+            <div >
+                <h3 class="text-center">
+                    {{SecondGraphs[2].name}}
+                </h3>
+                <canvas id="bar" class="chart chart-bar graph_low"
+                  chart-data="SecondGraphs[2].data" chart-colors = "colours" chart-options = "options" chart-labels="SecondGraphs[2].labels" >
+                </canvas>
+
+            </div>
+        </div>
+
+
+        <div ng-if = "card.index == 2" class="col-md-4" style="position: relative;">
+            <div >
+                <h3 class="text-center">
+                    {{ThirdGraphs[0].name}}
+                </h3>
+                <canvas id="bar" class="chart chart-bar"
+                  chart-data="ThirdGraphs[0].data" chart-colors = "colours" chart-options = "options" chart-labels="ThirdGraphs[0].labels" >
+                </canvas>
+
+            </div>
+        </div>
+        <div ng-if = "card.index == 2" class="col-md-4" style="position: relative;">
+            <div >
+                <h3 class="text-center">
+                {{ThirdGraphs[1].name}}
+                </h3>
+                <div class="text-center graphChange graphChange1" >
+                    {{gameTemplates.length}}
+                </div>
+                <canvas id="doughnut" class="chart chart-doughnut"
+                  chart-data="ThirdGraphs[1].data" chart-colors = "colours" chart-labels="ThirdGraphs[1].labels">
+                </canvas>
+            </div>
+        </div>
+        <div ng-if = "card.index == 2" class="col-md-4" style="position: relative;">
+            <div >
+                <h3 class="text-center">
+                    {{ThirdGraphs[2].name}}
+                </h3>
+                <canvas id="bar" class="chart chart-bar graph_low"
+                  chart-data="ThirdGraphs[2].data" chart-colors = "colours" chart-options = "options" chart-labels="ThirdGraphs[2].labels" >
+                </canvas>
+
+            </div>
+        </div>
+
+    </div>
+</div>

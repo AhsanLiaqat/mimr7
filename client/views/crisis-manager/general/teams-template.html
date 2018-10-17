@@ -1,0 +1,176 @@
+<div class="modal fade" role="dialog">
+  <div id="modal-dialog" class="modal-dialog modal-lg">
+    <!-- Modal content-->
+    <div id="modal-content" class="modal-content" style="height: 600px;overflow:auto">
+      <div id="modal-header" class="modal-header">
+        <button type="button" class="close" ng-click="close()">×</button>
+        <h4 id="modal-title" class="modal-title">User Status</h4>
+      </div>
+      <div class="col-md-12 modal-body modal_big_height">
+        <div class="page">
+          <section class="panel panel-default">
+            <div class="panel-body">
+              <div class="table-responsive clearfix">
+                <div class="col-md-6" style="display: inline-block;">
+                      <select class=" form-control" ng-model="selected" ng-options="team.id as team.name for team in incidents_teams" ng-change="showUsers(selected)">
+                      </select>
+                </div>
+                <div class="col-md-6">
+                  <input type="text"
+                         placeholder="Search."
+                         class="form-control "
+                         data-ng-model="searchKeywords"
+                         data-ng-keyup="search()"
+                         >
+                </div>
+              <br>
+                <table class="table table-bordered">
+
+                  <thead>
+                    <tr>
+                      <th>
+                        <div class="th">
+                          Name
+                          <a      href=""
+                          class="fa fa-angle-up"
+                          style="text-decoration: none;"
+                          data-ng-click=" order('firstName') "
+                          data-ng-class="{active: row == 'firstName'}">
+                        </a>
+                        <a      href=""
+                          style="text-decoration: none;"
+                          class="fa fa-angle-down"
+                          data-ng-click=" order('-firstName') "
+                          data-ng-class="{active: row == '-firstName'}">
+                        </a>
+                        </div>
+                      </th>
+                        <th>
+                          <div class="th">
+                            Team Name
+                            <!-- <span class="fa fa-angle-up"
+                            data-ng-click=" order('team.name') "
+                            data-ng-class="{active: row == 'team.name'}"></span>
+                            <span class="fa fa-angle-down"
+                            data-ng-click=" order('-team.name') "
+                            data-ng-class="{active: row == '-team.name'}"></span> -->
+                          </div></th>
+                          <th>
+                            <div class="th">
+                              Role
+                              <!-- <span class="fa fa-angle-up"
+                              data-ng-click=" order('role.name') "
+                              data-ng-class="{active: row == 'role.name'}"></span>
+                              <span class="fa fa-angle-down"
+                              data-ng-click=" order('-role.name') "
+                              data-ng-class="{active: row == '-role.name'}"></span> -->
+                            </div></th>
+                            <th><div class="th">
+                              Mobile
+                              <span class="fa fa-angle-up"
+                              data-ng-click=" order('mobilePhone') "
+                              data-ng-class="{active: row == 'mobilePhone'}"></span>
+                              <span class="fa fa-angle-down"
+                              data-ng-click=" order('-mobilePhone') "
+                              data-ng-class="{active: row == '-mobilePhone'}"></span>
+                            </div></th>
+                            <th><div class="th">
+                              Latest Alert
+                              <span class="fa fa-angle-up"
+                              data-ng-click=" order('latestAlert') "
+                              data-ng-class="{active: row == 'latestAlert'}"></span>
+                              <span class="fa fa-angle-down"
+                              data-ng-click=" order('-latestAlert') "
+                              data-ng-class="{active: row == '-latestAlert'}"></span>
+                            </div></th>
+                            <th><div class="th">
+                              Last Login
+                              <span class="fa fa-angle-up"
+                              data-ng-click=" order('lastLogin') "
+                              data-ng-class="{active: row == 'lastLogin'}"></span>
+                              <span class="fa fa-angle-down"
+                              data-ng-click=" order('-lastLogin') "
+                              data-ng-class="{active: row == '-lastLogin'}"></span>
+                            </div></th>
+                            <th>
+                              <div class="th">
+                                Change Status
+                              </div>
+
+                            </th>
+                            <!-- <th>
+                              <div class="th">
+                                Activation Email
+                              </div>
+
+                            </th> -->
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr id="modal-title" ng-class="userStatusClass(user)" ng-repeat="user in filteredActivities | filter: searchKeywords">
+                          <!-- users | filter:searchKeywords -->
+                            <td >{{user.firstName}} {{user.lastName}}</td>
+                            <td><p ng-repeat="team in user.incidents_teams">{{team.name}}</p></td>
+                            <td><p ng-repeat="role in user.roles">{{role.name}}</p></td>
+                            <td>{{user.mobilePhone}}</td>
+                            <td ng-if="user.latestAlert">{{user.latestAlert | date: "HH:mm dd-MM-yyyy"}}</td>
+                            <td ng-if="!user.latestAlert">N/A</td>
+                            <td>{{user.lastLogin  | date: "HH:mm dd-MM-yyyy"}}</td>
+
+                             <td style="line-height: 27px;">
+                             <switcher class="styled" ng-model="user.available"
+                             ng-change="toggle(user)" true-label="" false-label=""
+                               title="{{activity.activatedAt | date:'HH:mm dd-MM-yyyy' }}"
+                               data-toggle="tooltip" data-placement="bottom"
+                               tooltip>
+                             </switcher>
+                            </td>
+                            <!-- <td>{{user.LastEmailActivation | date: "HH:mm dd-MM-yyyy"}}<br>
+                              <a href="javascript:void(0)" ng-click="sendActivation(user)">Send Email</a>
+                            </td> -->
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                  </div>
+                  <br>
+                   <!--  <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                                <span>
+                                    Show
+                                    <select data-ng-model="numPerPage"
+                                            data-ng-options="num for num in numPerPageOpt"
+                                            data-ng-change="onNumPerPageChange()">
+                                    </select>
+                                    records per page
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right pagination-container" style="text-align: center">
+                                <uib-pagination class="pagination-sm"
+                                                style="display: inline-block;"
+                                                ng-model="currentPage"
+                                                total-items="filteredActivities.length"
+                                                max-size="4"
+                                                ng-change="select(currentPage)"
+                                                items-per-page="numPerPage"
+                                                rotate="false"
+                                                previous-text="&lsaquo;" next-text="&rsaquo;"
+                                                boundary-links="true">
+                                </uib-pagination>
+                            </div>
+                        </div>
+                    </footer> -->
+                </section>
+              </div>
+            </div>
+           <!--  <div class="modal-footer">
+             <button class="btn btn-primary" ng-click="close()" data-dismiss="modal">Close</button>
+           </div> -->
+         </div>
+
+       </div>
+     </div>

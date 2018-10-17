@@ -1,0 +1,715 @@
+<div class="modal fade" role="dialog">
+    <div id="modal-dialog" class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header clearfix" id="modal-header" >
+
+                <button type="button" class="close" confirm="All data will be lost, Proceed?" style="display:inline-block; float:right; margin-top:-9px;" ng-click = "closeModal()">&times;</button>
+
+                <div ng-show="page2" style="margin-top: -27px; display:inline-block; float:right;">
+                    <button class="btn btn-success" ng-click="addTasks()" style="float:right">
+                        <span>Next</span>
+                    </button>
+                </div>
+                <div ng-show="page7" style="margin-top: -27px; display:inline-block; float:right;">
+                    <button class="btn btn-success" ng-click="addAgendaPoint()" style="float:right">
+                        <span>Next</span>
+                    </button>
+                </div>
+                <div ng-show="page2" style="margin-top: -27px; display:inline-block; float:right;">
+                    <button class="btn btn-success" ng-click="previousScreen()" style="float:right">
+                        <span>Previous</span>
+                    </button>
+                </div>
+                <div ng-show="page7" style="margin-top: -27px; display:inline-block; float:right;">
+                    <button class="btn btn-success" ng-click="backBtn()" style="float:right">
+                        <span>Previous</span>
+                    </button>
+                </div>
+                <div ng-show="page3" style="display: inline-block; margin-top: -17px;" class="pull-right">
+                  <button class="btn btn-info" ng-click="backToAllCategories()">Back</button>
+                  <button class="btn btn-primary" ng-click="newAssignTask()">Add Task</button>
+
+                    <button class="btn btn-success" ng-click="addSections()" style="float:right">
+                      <span>Next</span>
+                    </button>
+                </div>
+                <div ng-show="page8" style="display: inline-block; margin-top: -17px;" class="pull-right">
+                    <button class="btn btn-success" ng-click="submit()" style="float:right">
+                        <span>Save Action Plan & Exit</span>
+                    </button>
+                    <button class="btn btn-info" ng-click="backToAllCategoriesList()">Back</button>
+                    </button>
+                </div>
+
+                <h4 class="modal-title" id="modal-title" style="display: inline-block; margin-top: -11px;
+                float: left;">Action Plan <span ng-if="data.name">: {{data.name}}</span></h4>
+
+            </div>
+
+            <div  class="modal-body modal_big_height">
+                <section ng-show="page1" class="panel panel-default modal_inner_cal">
+                    <div class="panel-body " >
+                        <div class="row" >
+                            <div class="col-md-8 col-md-offset-2" >
+                                <div id="home" class="tab-pane fade in active" >
+                                    <div class="form-group">
+                                        <label>Name</label><span style="color: red" title="Required"> *</span>
+                                        <input class="form-control" ng-model="data.name">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Incident Type</label>
+                                        <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                            <select ng-change="loadScenario(data.categoryId)" chosen
+                                                    class="form-control"
+                                                    data-placeholder-text-single="'Select Type'"
+                                                    ng-model="data.categoryId"
+                                                    ng-options="type.id as type.name for type in categories">
+                                                    <option></option>
+                                            </select>
+                                        </div>
+                                        <a href="" ng-click="addIncidentType()">Create new Incident Type</a>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Scenario</label>
+                                        <div class="form-group chosen-full-container">
+                                            <select chosen class="form-control" data-placeholder-text-single="'Select Scenario'" ng-model="data.scenarioId" ng-options="scenario.id as scenario.name for scenario in scenarioOptions">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <textarea ng-model="data.description" maxlength="255" class="form-control" id="textArea"></textarea>
+                                        <div class="message-length-warning" ng-class="{'red-text': data.description.length >= 255}">
+                                            <span>
+                                                {{data.description.length || 0}} / 255 Characters
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Plan Date<span class="required-custom"> *</span></label>
+                                        <input class="form-control" data-provide="datepicker" ng-change="closePicker()"  data-date-format="dd/mm/yyyy" ng-model="data.plandate">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+                <section ng-show="page2" class="panel panel-default modal_inner_cal">
+                    <div class="panel-heading">
+                        <strong>
+                          <span class="glyphicon glyphicon-th"></span> Tasklist Categories
+                        </strong>
+                    </div>
+
+                      <table class="table table-bordered table-striped table-responsive">
+                          <thead>
+                          <tr>
+                              <th class="col-md-1"></th>
+                              <th class="col-md-2">
+                                  <div class="th">Category</div>
+                              </th>
+                              <th class="col-md-4">
+                                  <div class="th">Description</div>
+                              </th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="category in allCategories | orderBy: 'position'">
+                                  <td class="col-md-1"><input type="checkbox"
+
+                                    ng-model="category.selected"></td>
+
+                                   <td class="col-md-2">{{category.name}}</td>
+                                   <td class="col-md-4">{{category.description}}</td>
+                            </tr>
+                          </tbody>
+                      </table>
+
+                  </section>
+
+                <section ng-show="page3" class="panel panel-default modal_inner_cal">
+                  <div class="panel-heading" style=" overflow: hidden;">
+                      <strong>
+                        <span class="glyphicon glyphicon-th"></span> Action Plan Tasks
+                      </strong>
+
+                  </div>
+                    <div class="table-filters">
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-6 chosen-full-container" style="margin: 10px;">
+                                <form>
+                                    <input type="text"
+                                           placeholder="Search Task, and Actor"
+                                           class="form-control"
+                                           data-ng-model="searchKeywords"
+                                           data-ng-keyup="search()">
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th class="col-md-1"></th>
+
+                            <th class="col-md-4"><div class="th"> Task
+
+                            </div></th>
+                            <!-- category to be placed here -->
+                            <th class="col-md-2"><div class="th">Category
+                                <a      href=""
+                                        class="fa fa-angle-up"
+                                        style="text-decoration: none;"
+                                        data-ng-click=" orderp('task_list.title') "
+                                        data-ng-class="{active: row == 'task_list.title'}">
+                                </a>
+                                <a      href=""
+                                        style="text-decoration: none;"
+                                        class="fa fa-angle-down"
+                                        data-ng-click=" orderp('-task_list.title') "
+                                        data-ng-class="{active: row == '-task_list.title'}">
+                                </a>
+                            </div></th>
+                        </tr>
+                        </thead>
+
+                        <tbody >
+                        <tr ng-repeat="activity in allActivities | orderBy: 'task_list.all_category.position' | filter: searchKeywords">
+                            <td class="col-md-1"><input type="checkbox" ng-model="activity.selected"
+                             ng-click="selectedActivity(activity,activity.selected)" ></td>
+                            <td class="col-md-4">{{activity.task_list.title}}</td>
+                            <td class="col-md-2">{{activity.task_list.all_category.name}}</td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </section>
+
+                <section ng-show="page4" class="panel panel-default modal_inner_cal">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label> Task </label><span style="color: red" title="Required"> *</span>
+
+                                <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                    <select chosen
+                                            class="form-control"
+                                            data-placeholder-text-single="'Select Task'"
+                                            ng-model="activity.taskListId"
+                                            ng-selected="task.id === activity.taskListId"
+                                            ng-options="task.id as task.title for task in tasks">
+                                    </select>
+                                </div>
+                                <a href="" ng-click="addTaskItem()"><i class=""> Create New Task </i></a>
+                            </div>
+
+                            <div class="form-group">
+                                <label> Description </label>
+                                <input class="form-control" ng-model="activity.description">
+                            </div>
+                            <div class="form-group">
+                                <label> Responsibility Level</label>
+                                <div class="form-group chosen-full-container">
+                                    <select chosen
+                                            class="form-control"
+                                            data-placeholder-text-single="'Select Level'"
+                                            ng-model="activity.responsibility_level"
+                                            ng-options="role.name as role.name for role in roles">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Actor </label>
+                                <div class="form-group chosen-full-container">
+                                    <select chosen
+                                            class="form-control"
+                                            data-placeholder-text-single="'Select Actor'"
+                                            ng-model="activity.responseActorId"
+                                            ng-options="actor.id as displayActorName(actor) for actor in users">
+                                    </select>
+                                </div>
+                        </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section ng-show="page5" class="modal_inner_cal">
+                    <div class="float-right">
+                      <!-- <button class="btn btn-success" ng-click="newSection()">New Section</button> -->
+                    </div>
+                    <br><br><br>
+                    <div class="panel panel-default" style="overflow-y: scroll;">
+                        <div class="panel-heading">
+                            <strong>
+                              <span class="glyphicon glyphicon-th"></span>Activities
+                            </strong>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <div id="menu1" class="tab-pane fade in active ui-widget">
+                                    <ul data-as-sortable="DragOptions1" data-ng-model="selectedActivities">
+                                        <li class="panel-default" is-open="activityExpand"
+                                            ng-repeat="activity in selectedActivities" data-as-sortable-item
+                                            style="margin-bottom: 15px;" id={{section.id}}>
+                                            <div class="col-xs-1 handle" data-as-sortable-item-handle
+                                                    style="margin-top: 10px;" >
+                                                <span class="ti-move">
+                                                </span>
+                                            </div>
+                                            <uib-accordion close-others="true">
+                                                <div uib-accordion-group>
+                                                    <uib-accordion-heading>
+                                                        <button title="Delete Activity" class="btn btn-sm btn-danger ng-isolate-scope" ng-click="deleteActivityFromList(activity, $index)" confirm="Are you sure you want to delete?">
+                                                            <span class="glyphicon glyphicon-remove-sign"></span>
+                                                        </button>
+                                                        {{$index+1}}  - {{activity.task_list.title}}
+                                                        <i class="pull-right glyphicon"
+                                                            ng-class="{'glyphicon-chevron-down': activityExpand, 'glyphicon-chevron-right': !activityExpand}"></i>
+                                                    </uib-accordion-heading>
+                                                    <div>
+                                                        <div class="panel panel-default" style="margin-bottom: 20px;">
+                                                            <div class="panel-heading">
+                                                                <strong>
+                                                                    <span class="glyphicon glyphicon-th"></span> BASIC INFORMATION
+                                                                </strong>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    <label> Default Activity </label>
+                                                                    <input type="checkbox" ng-model="activity.default"
+                                                                           style="margin-left: 10px; margin-top: 4px;
+                                                                       position: absolute;"
+                                                                           ng-change="updateActivity(activity)">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label> Task </label><span style="color: red" title="Required"> *</span>
+                                                                    <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                                                        <select chosen
+                                                                                class="form-control"
+                                                                                ng-model="activity.taskListId"
+                                                                                ng-options="task.id as task.title for task in tasks">
+                                                                        </select>
+                                                                    </div>
+                                                                    <a href="" ng-click="addTaskItem()"><i class=""> Create New Task </i></a>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label> Description </label>
+                                                                    <input class="form-control" ng-model="activity.description">
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label> Responsibility Level</label>
+                                                                    <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                                                        <select chosen
+                                                                                class="form-control"
+                                                                                data-placeholder-text-single="'Select Level'"
+                                                                                ng-model="activity.responsibility_level"
+                                                                                ng-options="role.name as role.name for role in roles">
+                                                                        </select>
+                                                                    </div>
+                                                                    <a href="" ng-click="addRole()">Create Responsibility Level</a>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="panel panel-default" style="margin-bottom: 20px;">
+                                                            <div class="panel-heading">
+                                                                <strong>
+                                                                    <span class="glyphicon glyphicon-th"></span> ROLE INFORMATION
+                                                                </strong>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                <div class="form-group">
+                                                                    <label> Organization </label>
+                                                                    <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                                                        <select chosen
+                                                                                class="form-control"
+                                                                                data-placeholder-text-single="'Select Organization'"
+                                                                                ng-model="activity.organizationId"
+                                                                                ng-options="org.id as org.name for org in organizations">
+                                                                        </select>
+                                                                    </div>
+                                                                    <a href="" ng-click="addOrg()"><i class=""> Create New Organization </i></a>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label> Department </label>
+                                                                    <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                                                        <select chosen
+                                                                                class="form-control"
+                                                                                data-placeholder-text-single="'Select Department'"
+                                                                                ng-model="activity.departmentId"
+                                                                                ng-options="dpt.id as dpt.name for dpt in departments">
+                                                                        </select>
+                                                                    </div>
+                                                                    <a href="" ng-click="addDepartment()"><i class=""> Create New Department </i></a>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label> Role </label>
+                                                                    <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                                                        <select chosen
+                                                                                class="form-control"
+                                                                                data-placeholder-text-single="'Select Role'"
+                                                                                ng-model="activity.roleId"
+                                                                                ng-options="role.id as role.name for role in roles">
+                                                                        </select>
+                                                                    </div>
+                                                                    <a href="" ng-click="addRole()"><i class=""> Create New Role </i></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="panel panel-default" style="margin-bottom: 20px;">
+                                                            <div class="panel-heading">
+                                                                <strong>
+                                                                    <span class="glyphicon glyphicon-th"></span> ACTOR INFORMATION
+                                                                </strong>
+                                                            </div>
+                                                            <div class="panel-body">
+
+                                                                <div class="form-group">
+                                                                    <label>Actor </label>
+                                                                    <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                                                        <select chosen
+                                                                                class="form-control"
+                                                                                data-placeholder-text-single="'Select Actor'"
+                                                                                ng-model="activity.responseActorId"
+                                                                                ng-options="actor.id as displayActorName(actor) for actor in users">
+                                                                        </select>
+                                                                    </div>
+                                                                    <a href="" ng-click="quickAddUser()">Add New Actor</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading">
+                                                                Additional Info
+                                                            </div>
+
+                                                            <div class="panel-body">
+
+                                                                <div class="form-group">
+                                                                    <label> Response Time (minutes)</label>
+                                                                    <input class="form-control" type = "number" min="0" ng-model="activity.response_time"></input>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label> Completion Time (minutes)</label>
+                                                                    <input class="form-control" type ="number" min="0" ng-model="activity.completion_time"></input>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label> Backup Actor </label>
+                                                                    <div class="form-group chosen-full-container">
+                                                                        <select chosen
+                                                                                class="form-control"
+                                                                                data-placeholder-text-single="'Select Actor'"
+                                                                                ng-model="activity.backupActorId"
+                                                                                ng-options="actor.id as displayActorName(actor) for actor in users">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label> Accountable Actor </label>
+                                                                    <div class="form-group chosen-full-container">
+                                                                        <select chosen
+                                                                                class="form-control"
+                                                                                data-placeholder-text-single="'Select Actor'"
+                                                                                ng-model="activity.accountableActorId"
+                                                                                ng-options="actor.id as displayActorName(actor) for actor in users">
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <button class="btn btn-primary" ng-click="updateTaskActivity(activity)"> Update</button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </uib-accordion>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default"
+                          style="margin-bottom: 20px;"
+                          ng-repeat="section in sections">
+                        <div class="panel-heading">
+                            <strong>
+                              <span class="glyphicon glyphicon-th"></span> {{section.name}}
+                            </strong>
+                        </div>
+                        <div class="panel-body">
+                        <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <div id="menu1" class="tab-pane fade in active ui-widget">
+                                <ul data-as-sortable="DragOptions" data-ng-model="section.activities">
+                                    <li class="panel-default" is-open="activityExpand"
+                                        ng-repeat="activity in section.activities" data-as-sortable-item
+                                        style="margin-bottom: 15px;" id={{section.id}}>
+                                        <div class="col-xs-1 handle" data-as-sortable-item-handle
+                                                style="margin-top: 10px;" >
+                                            <span class="ti-move">
+                                            </span>
+                                        </div>
+                                        <uib-accordion close-others="true">
+                                          <div uib-accordion-group>
+                                              <uib-accordion-heading>
+                                                <button title="Delete Activity" class="btn btn-sm btn-danger ng-isolate-scope" ng-click="deleteActivityFromSection(section,activity, $index)" confirm="Are you sure you want to delete?">
+                                                            <span class="glyphicon glyphicon-remove-sign"></span>
+                                                        </button>
+                                                  {{$index+1}}  - {{activity.task_list.title}}
+                                                  <i class="pull-right glyphicon"
+                                                      ng-class="{'glyphicon-chevron-down': activityExpand, 'glyphicon-chevron-right': !activityExpand}"></i>
+                                              </uib-accordion-heading>
+                                          <div class="">
+                                              <div class="panel panel-default" style="margin-bottom: 20px;">
+                                                  <div class="panel-heading">
+                                                      <strong>
+                                                          <span class="glyphicon glyphicon-th"></span> BASIC INFORMATION
+                                                      </strong>
+                                                  </div>
+
+                                                  <div class="panel-body">
+                                                      <div class="form-group">
+                                                          <label> Default Activity </label>
+                                                          <input type="checkbox" ng-model="activity.default"
+                                                          style="margin-left: 10px; margin-top: 4px;
+                                                          position: absolute;"
+                                                          ng-change="updateActivity(activity)">
+                                                      </div>
+
+                                                      <div class="form-group">
+                                                          <label> Task </label><span style="color: red" title="Required"> *</span>
+                                                          <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                                              <select chosen
+                                                              class="form-control"
+                                                              ng-model="activity.taskListId"
+                                                              ng-options="task.id as task.title for task in tasks">
+                                                          </select>
+                                                      </div>
+                                                      <a href="" ng-click="addTaskItem()"><i class=""> Create New Task </i></a>
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                      <label> Description </label>
+                                                      <input class="form-control" ng-model="activity.description">
+                                                  </div>
+
+                                                  <div class="form-group">
+                                                      <label> Responsibility Level</label>
+                                                      <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                                          <select chosen
+                                                          class="form-control"
+                                                          data-placeholder-text-single="'Select Level'"
+                                                          ng-model="activity.responsibility_level"
+                                                          ng-options="role.name as role.name for role in roles">
+                                                      </select>
+                                                  </div>
+                                                  <a href="" ng-click="addRole()">Create Responsibility Level</a>
+
+                                              </div>
+                                          </div>
+                                      </div>
+
+                                  </div>
+                                  </div>
+                                        </uib-accordion>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section ng-show="page6" class="panel panel-default modal_inner_cal">
+                  <div class="panel-heading">
+                      <strong>
+                        <span class="glyphicon glyphicon-th"></span> New Section
+                      </strong>
+                  </div>
+                  <div class="panel-body">
+                      <div class="form-group">
+                          <label> Name </label><span style="color: red" title="Required"> *</span>
+                          <input class="form-control" ng-model="sectionData.name">
+                      </div>
+                        <div class="form-group">
+                            <label> Available Tasks: </label>
+                            <select chosen
+                                      multiple
+                                      class="form-control"
+                                      data-placeholder-text-multiple="'Select Tasks'"
+                                      ng-model="sectionData.tasks"
+                                      ng-options="activityTask as activityTask.task_list.title for activityTask in selectedActivities"
+                                      >
+                                      <option value=""></option>
+                            </select>
+                        </div>
+                  </div>
+                </section>
+                 <section ng-show="page7" class="panel panel-default modal_inner_cal">
+                    <div class="panel-heading">
+                        <strong>
+                          <span class="glyphicon glyphicon-th"></span> All Categories
+                        </strong>
+                    </div>
+
+                      <table class="table table-bordered table-striped table-responsive">
+                          <thead>
+                          <tr>
+                              <th class="col-md-1"></th>
+                              <th class="col-md-2">
+                                  <div class="th">Category</div>
+                              </th>
+                              <th class="col-md-4">
+                                  <div class="th">Description</div>
+                              </th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="category in allCategories | orderBy: 'position'">
+                                  <td class="col-md-1"><input type="checkbox"
+
+                                    ng-model="category.selected"></td>
+
+                                   <td class="col-md-2">{{category.name}}</td>
+                                   <td class="col-md-4">{{category.description}}</td>
+                            </tr>
+                          </tbody>
+                      </table>
+
+                  </section>
+                  <section ng-show="page8" class="panel panel-default modal_inner_cal">
+                  <div class="panel-heading" style=" overflow: hidden;">
+                      <strong>
+                        <span class="glyphicon glyphicon-th"></span> Action Plan Aegnda Points
+                      </strong>
+
+                  </div>
+                    <div class="table-filters">
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-6 chosen-full-container" style="margin: 10px;">
+                                <form>
+                                    <input type="text"
+                                           placeholder="Search AgendaPoints"
+                                           class="form-control"
+                                           data-ng-model="searchKeywords"
+                                           data-ng-keyup="search()">
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th class="col-md-1"></th>
+
+                            <th class="col-md-4"><div class="th"> Agenda Points
+
+                            </div></th>
+                            <!-- category to be placed here -->
+                            <th class="col-md-2"><div class="th">Category
+                                <a      href=""
+                                        class="fa fa-angle-up"
+                                        style="text-decoration: none;"
+                                        data-ng-click=" orderp('task_list.title') "
+                                        data-ng-class="{active: row == 'task_list.title'}">
+                                </a>
+                                <a      href=""
+                                        style="text-decoration: none;"
+                                        class="fa fa-angle-down"
+                                        data-ng-click=" orderp('-task_list.title') "
+                                        data-ng-class="{active: row == '-task_list.title'}">
+                                </a>
+                            </div></th>
+                        </tr>
+                        </thead>
+
+                        <tbody >
+                        <tr ng-repeat="agendaPoint in allActivities | filter: searchKeywords">
+                            <td class="col-md-1"> <input type="checkbox"  ng-click="unselectAgendaPoint(agendaPoint)" ng-checked="agendaPoint.checked"></td>
+                            <td class="col-md-4">{{agendaPoint.name}}</td>
+                            <td class="col-md-2">{{agendaPoint.all_category.name}}</td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+                </section>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-info" ng-show="page1" ng-click="closeModal() " data-dismiss="modal">Cancel</button>
+                <button class="btn btn-success" ng-show="page1" ng-click="save(data, false, true)" style="float:right; margin-left:5px"> Next with agenda points  <i class="fa fa-chevron-right fa-lg"></i></button>
+                <button class="btn btn-success" ng-show="page1" ng-click="save(data, false, false)" style="float:right; margin-left:5px"> Next with Task List categories  <i class="fa fa-chevron-right fa-lg"></i></button>
+
+                <div ng-show="page4">
+                    <button class="btn btn-info" ng-click="backToAllActivities()">Back</button>
+                    <button class="btn btn-success" ng-click="createAssignTask()" style="float:right">
+                        <span>Save</span>
+                    </button>
+                </div>
+
+                <div ng-show="page5">
+                    <button class="btn btn-info" ng-click="backToAllActivities()">Back</button>
+                    <button class="btn btn-success" ng-click="saveActionPlan()" style="float:right">
+                        <span>Save Action Plan & Exit</span>
+                    </button>
+                </div>
+                <div ng-show="page6">
+                    <button class="btn btn-info" ng-click="backToSections()">Back</button>
+                    <button class="btn btn-success" ng-click="createNewSection()" style="float:right">
+                        <span>Save</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style media="screen">
+tbody {
+display:block;
+/*height: 250px;*/
+/*overflow-y: scroll;*/
+}
+thead, tbody tr {
+display:table;
+width:100%;
+table-layout:fixed;/* even columns width , fix width of table too*/
+}
+thead {
+width: calc( 100% - 1em );
+}
+</style>

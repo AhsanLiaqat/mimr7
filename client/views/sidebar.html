@@ -1,0 +1,188 @@
+<div class="nav-wrapper">
+    <ul id="nav"
+        class="nav"
+        data-slim-scroll
+        data-collapse-nav
+        data-highlight-active>
+        <li ng-show="!checkSuperAdmin()">
+            <a ng-href="/#/mainHome" ng-click="clickMenu()"> <i class="fa fa-home" aria-hidden="true"></i> <span data-translate="Home"></span> </a>
+        </li>
+        <li ng-show="checkSuperAdmin()">
+            <a ng-href="/#/superadmin" ng-click="clickMenu()"> <i class="fa fa-home" aria-hidden="true"></i> <span data-translate="Home"></span> </a>
+        </li>
+         <li ng-show="checkSuperAdmin()">
+            <a href=""> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>  <span data-translate="Copy Accounts"></span></a>
+            <ul>
+                <li>
+                    <a ng-href="#/superadmin/copy-accounts" ng-click="clickMenu()"> <i class="fa fa-home" aria-hidden="true"></i> <span data-translate="Copy Details"></span> </a>
+                </li>
+            </ul>
+        </li>
+        <li ng-show="!checkSuperAdmin()">
+            <a href=""> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>  <span data-translate="Crisis Manager"></span></a>
+            <ul>
+                <li>
+                    <a ng-href="/#/home" ng-click="clickMenu()"> <i class="fa fa-home" aria-hidden="true"></i> <span data-translate="Home"></span> </a>
+                </li>
+                <li>
+                    <a href="#/dashboard" ng-click="clickMenu()"> <i class="glyphicon glyphicon-send" aria-hidden="true"></i> <span data-translate="Information Dashboard"></span> </a>
+                </li>
+                <li>
+                    <a href="#/actionPlanDashboardV2" ng-click="clickMenu()"> <i class="fa fa-tachometer" aria-hidden="true"></i> <span data-translate="Action Plan Dashboard"></span></a>
+                </li>
+                <li>
+                    <a href="#/planning-dashboard" ng-click="clickMenu()"> <i class="fa fa-tachometer" aria-hidden="true"></i> <span data-translate="Planning Dashboard"></span></a>
+                </li>
+                <li>
+                    <a href="#/planning-dashboardv2" ng-click="clickMenu()"> <i class="fa fa-tachometer" aria-hidden="true"></i> <span data-translate="Planning Dashboard V2"></span></a>
+                </li>
+                <li>
+                    <a href="#/visualization-dashboard" ng-click="clickMenu()"> <i class="fa fa-tachometer" aria-hidden="true"></i> <span data-translate="Visualization Dashboard"></span></a>
+                </li>
+
+                <li>
+                    <a href="#/capacity-dashboard" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Capacity Dashboard"></span></a>
+                </li>
+                <li>
+                    <a href="#/incidents/view" ng-click="clickMenu()"> <i class="glyphicon glyphicon-bullhorn" aria-hidden="true"></i> <span data-translate="Incidents"></span></a>
+                </li>
+                <li>
+                    <a href="#/archive/view" ng-click="clickMenu()"> <i class="fa fa-archive" aria-hidden="true"></i>  <span data-translate="Archive"></span></a>
+                </li>
+                <li>
+                    <a href="#/timeline" ng-click="clickMenu()"> <i class="fa fa-sort-amount-asc" aria-hidden="true"></i><span data-translate="Timeline"></span></a>
+                </li>
+                <li>
+                    <a href="#/reports" ng-click="clickMenu()"><i class="fa fa-flag" aria-hidden="true"></i><span data-translate="Status Reports"></span></a>
+                </li>
+                <li>
+                    <a href="#/User-status" ng-click="clickMenu()"><i class="fa fa-users" aria-hidden="true"></i><span data-translate="User Status"></span></a>
+                </li>
+                <li>
+                    <a href="#/messages" ng-click="clickMenu()"><i class="glyphicon glyphicon-comment" aria-hidden="true"></i><span data-translate="Messages & Tasks"></span></a>
+                </li>
+                <li>
+                    <a href="#/browser" ng-click="clickMenu()"><i class="fa fa-play-circle" aria-hidden="true"></i><span data-translate="Web Links"></span></a>
+                </li>
+                <li>
+                    <a href="#/team-activation" ng-click="clickMenu()"><i class="fa fa-chain-broken" aria-hidden="true"></i><span data-translate="Email/Alert History"></span></a>
+                </li>
+                <li>
+                    <a href="#/references" ng-click="clickMenu()"><i class="fa fa-paperclip" aria-hidden="true"></i><span data-translate="References"></span></a>
+                </li>
+            </ul>
+        </li>
+        <li ng-show="checkAdmin() && !checkSuperAdmin()">
+            <a href=""> <i class="fa fa-cogs" aria-hidden="true"></i>  <span data-translate="Preparation Manager"></span></a>
+            <ul>
+                <li>
+                    <a href="#/settings/home"  ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Home"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/incident-types" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Incident Types"></span></a>
+                </li>
+                
+                <li>
+                    <a href="#/settings/dashboard-categories" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Dashboard Categories"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/color-palettes" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Dashboard Color Palette"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/capacities" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Capacity"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/scenarios" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Scenario"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/incident-teams" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Teams"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/libraries" ng-click="clickMenu()"> <i class="ti-angle-right"></i><span data-translate="Reference Library"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/message-libraries" ng-click="clickMenu()"> <i class="ti-angle-right"></i><span data-translate="Messages Library"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/task-libraries" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Task Library"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/activities" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Assign Tasks"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/action-plans" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Action Plans"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/all-categories" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="All Categories"></span></a>
+                </li>
+                <li>
+                <a href="#/settings/check-lists" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Checklist"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/account" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Account Profile"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/users" ng-click="clickMenu()"> <i class="ti-angle-right"></i> <span data-translate="Users"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/roles" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Roles"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/departments" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Departments"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/organizations" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="External Organizations"></span></a>
+                </li>
+                <li>
+                    <a href="#/settings/agenda-points" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Agenda Points"></span></a>
+                </li>
+            </ul>
+        </li>
+        <li ng-show="!checkSuperAdmin()">
+            <a href=""> <i class="fa fa-gamepad" aria-hidden="true"></i>  <span data-translate="Simulation Manager"></span></a>
+            <ul>
+                <li>
+                    <a href="#/simulation/home" ng-click="clickMenu()"> <i class="ti-angle-right"></i><span data-translate="Home"></span></a>
+                </li>
+                <li>
+                    <a href="#/simulation/players" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Simulation Players"></span></a>
+                </li>
+                <li>
+                    <a href="#/simulation/player-lists" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Simulation Player Lists"></span></a>
+                </li>
+                <li>
+                    <a href="#/simulation/game-roles" ng-click="clickMenu()"> <i class="ti-angle-right"></i><span data-translate="Simulation Roles"></span></a>
+                </li>
+                <li>
+                    <a href="#/simulation/categories" ng-click="clickMenu()"> <i class="ti-angle-right"></i><span data-translate="Simulation Categories"></span></a>
+                </li>
+                <li>
+                    <a href="#/simulation/id-messages" ng-click="clickMenu()"> <i class="ti-angle-right"></i><span data-translate="ID Messages"></span></a>
+                </li>
+                <li>
+                    <a href="#/simulation/game-libraries" ng-click="clickMenu()"> <i class="ti-angle-right"></i><span data-translate="Simulation Library"></span></a>
+                </li>
+                <li>
+                    <a href="#/simulation/game-messages" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Simulation Messages"></span></a>
+                </li>
+                <li>
+                    <a href="#/simulation/game-template" ng-click="clickMenu()"> <i class="ti-angle-right"></i><span data-translate="Game Templates"></span></a>
+                </li>
+              <!--   <li>
+                    <a href="#/simulation/assign-messages" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Assigned Messages"></span></a>
+                </li>
+                 -->
+                <li>
+                    <a href="#/simulation/scheduled-games" ng-click="clickMenu()"> <i class="ti-angle-right"></i><span data-translate="Scheduled Games"></span></a>
+                </li>
+                <!-- <li>
+                    <a href="#/simulation/player-page" ng-click="clickMenu()"> <i class="ti-angle-right"></i><span data-translate="Player Page"></span></a>
+                </li> -->
+            </ul>
+        </li>
+        <li ng-show="checkAdmin() && !checkSuperAdmin()">
+            <a href="#/dynamic-form" ng-click="clickMenu()"><i class="fa fa-wrench"></i><span data-translate="Assessment Tool"></span></a>
+        </li>
+
+    </ul>
+</div>

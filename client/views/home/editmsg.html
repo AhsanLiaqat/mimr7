@@ -1,0 +1,60 @@
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div id="modal-header" class="modal-header">
+        <button type="button" class="close" ng-click="close()" >&times;</button>
+        <h4 id="modal-title" class="modal-title">View/Edit messages</h4>
+      </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+            
+                    <form role="form">
+                        <div class="form-group">
+                            <label >SMS</label>
+                            <input type="radio" ng-model="radio" value="SMS">
+                          <label>EMAIL</label>
+                          <input type="radio" ng-model="radio" value="EMAIL">
+                        </div>
+                        <div>
+                         <label>{{radio}}</label>
+                         <div class="row">
+                           <div class="col-md-8" ng-show="radio == 'EMAIL'">
+                           <div class="form-group">
+                            <label>Subject</label>
+                            <input class="form-control" ng-model="data.email.subject">
+                          </div>
+                          <div class="form-group">
+                            <label>Content</label>
+                            <textarea rows="6" class="form-control" ng-model="data.email.content"></textarea>
+                          </div>
+                          </div>
+          
+                           <div class="col-md-8" ng-show="radio == 'SMS'">
+                           <div class="form-group">
+                            <label>Subject</label>
+                            <input class="form-control" ng-model="data.sms.subject">
+                          </div>
+                          <div class="form-group">
+                            <label>Content</label>
+                            <textarea rows="6" class="form-control" ng-model="data.sms.content"></textarea>
+                          </div>
+                          </div>
+                        </div>
+                        </div>
+                        
+                    </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="close()" data-dismiss="modal">Save & Close</button>
+      </div>
+
+    </div>
+
+  </div>
+</div>

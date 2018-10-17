@@ -1,0 +1,35 @@
+<div class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <!-- Header -->
+            <div class="panel panel-default">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" ng-click="close()">&times;</button>
+                    <h4 class="modal-title">Action Plans
+                    </h4>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Choose Action Plan</label>
+                    <select chosen
+                    data-placeholder-text-single="'Select Plan'"
+                    no-results-text="'No Matching Result For'"
+                    ng-model="actionPlan"
+                    ng-options="action as action.name for action in actions | filter: arrayFilter">
+                </select>
+
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button class="btn btn-info" ng-click="close()" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-success" ng-click="save()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

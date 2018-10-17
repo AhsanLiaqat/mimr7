@@ -1,0 +1,21 @@
+ <div class="page" ng-controller="reportsViewCtrl">
+    <section class="panel panel-default">
+        <div class="panel-heading">
+        <strong>
+        	<span class="glyphicon glyphicon-th"></span> {{incident.name}}</strong>
+        	<div class="pull-right header-buttons">
+                <a href="#/reports" class="btn btn-primary btn-sm">Cancel</a>
+                <a ng-click="save(status_report)" class="btn btn-success btn-sm">Save</a>
+        	</div>
+        </div>
+        <div class="panel-body report-editor">
+          <!--   <textarea ui-tinymce="tinymceOptions" ng-model="status_report">
+
+            </textarea> -->
+            <textarea froala="froalaOptions" ng-model="status_report"></textarea>
+
+            <!-- <text-angular style="height:320px" ng-model="status_report"></text-angular> -->
+
+        </div>
+    </section>
+ </div>

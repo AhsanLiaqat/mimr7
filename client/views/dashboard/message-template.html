@@ -1,0 +1,24 @@
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="close()" >&times;</button>
+        <h4 class="modal-title">Add New Message</h4>
+      </div>
+      <div class="modal-body">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Message</label>
+                <input type="text" class="form-control" id="exampleInputEmail1" ng-model="message" placeholder="Message..." >
+            </div>
+    
+      </div>
+      <div class="modal-footer">
+          <a ng-click="submit()" ng-hide="notEdit"> <button class="btn btn-success" data-dismiss="modal">Save</button> </a>
+        <button class="btn btn-primary" ng-click="close()" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>

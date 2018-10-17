@@ -1,0 +1,64 @@
+
+<!-- Modal -->
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div id="modal-header" class="modal-header">
+        <button type="button" class="close" ng-click="close()" >&times;</button>
+        <h4 ng-hide ="notEdit" class="modal-title">Add New Reference</h4>
+        <h4 ng-show="notEdit" class="modal-title">View Reference</h4>
+      </div>
+      <div class="modal-body">
+         {{new}}
+        <div class="form-group">
+            <label >Title</label>
+            <input type="text" class="form-control" ng-model="lib.title" placeholder="Enter Title Name" ng-readonly="notEdit">
+        </div>
+        <div class="form-group">
+            <label >Author</label>
+            <input type="text" class="form-control" ng-model="lib.author" placeholder="Enter Author Name" ng-readonly="notEdit">
+        </div>
+        <div class="form-group">
+            <label >Description</label>
+            <textarea name="" ng-model="lib.description" class="form-control" rows="4" ng-readonly="notEdit"></textarea>
+        </div>
+        <div class="form-group">
+            <label ng-hide="check.file">Attach link</label>
+            <input type="checkbox" ng-hide="check.file" ng-model="check.link">
+
+            <label ng-hide="check.link">Attach file</label>
+            <input type="checkbox" ng-hide="check.link" ng-model="check.file">
+        </div>
+
+        <div class="form-group" ng-if="check.link">
+            <label >Links</label>
+            <input type="text" class="form-control" ng-model="lib.links" placeholder="Enter Links" ng-readonly="notEdit">
+        </div>
+        <div class="form-group" ng-if="notEdit  && check.file">
+            <label>File Name</label>
+            <a href="{{lib.filename}}" target="_blank">View</a>
+	            </div>
+
+        <div class="form-group file-input-label"  ng-hide="check.link" ng-if="!notEdit && check.file">
+           <!-- <b> <label >Browse File</label></b> -->
+           <!-- <input type="file" ngf-select ng-model="lib.file" > {{lib.filename}} -->
+              <label>Browse File</label>
+              <input type="file" ngf-select ng-model="lib.file" > {{lib.filename}}
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputPassword1">Tags</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" ng-model="lib.tags" placeholder="Tags" ng-readonly="notEdit">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-info" ng-click="close()" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-success" ng-click="submitLibraryRef()" ng-hide="notEdit">Save</button>
+      </div>
+    </div>
+
+  </div>
+</div>

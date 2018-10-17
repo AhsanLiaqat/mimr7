@@ -1,0 +1,58 @@
+<div ng-controller="DecisionCreateCtrl" style="padding:12px;">
+    <section class="panel panel-default">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Create Action Plan </strong></div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                      <div class="form-group" >
+                                <label> Decision Name </label>
+                                <input class="form-control" ng-model="data1.name">
+                                
+                            </div>  
+
+                            <div class="form-group"> 
+                                <label>Possible outcomes</label>
+                                <input class="form-control" ng-model="data1.possible_outcomes" placeholder="No. of possible outcomes" ng-change="outcomes(data1.possible_outcomes)" type="number">     
+                            </div>
+
+                             <div class="form-group" >
+                                <label> Responsibility Level</label>
+                                <input class="form-control" ng-model="data1.responsibility_level">
+                                
+                            </div>        
+
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea ng-model="data1.description" class="form-control"></textarea>    
+                            </div>
+
+                            <div class="form-group">
+                                <a ng-click="toggleDecision()"> <span class="glyphicon glyphicon-plus">  </span></a>
+                            </div>        
+                            
+                            <div ng-repeat="record in data1.content track by $index" ng-show="expand">
+                                <div class="form-group" >
+                                    <label> Outcome {{$index}}</label>
+                                    <input class="form-control" type="text" placeholder="Enter the outcome" ng-model="data1.content[$index].outcome"
+                                     
+                                    </select>                           
+                               </div>     
+                               <div class="form-group" > 
+                                    <label> Action {{$index}}</label>
+                                        <select class="form-control" ng-model="data1.content[$index].actionId" ng-options="record.id as record.name for record in tasks" ng-selected="record.id === data1.content[$index].actionId">
+                                        </select>                           
+                                </div>     
+                            
+                
+                            </div>
+
+                            <a href="#/decisions"> <button class="btn btn-primary"> Cancel </button> </a>
+
+                        <a href=""> <button class="btn btn-success" ng-click="submit
+                        (data1)"> Save </button>
+                        </a>        
+            </div>
+        </div>
+    </section>
+</div>
+

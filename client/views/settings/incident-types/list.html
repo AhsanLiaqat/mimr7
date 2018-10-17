@@ -1,0 +1,71 @@
+<div class="page" ng-controller="incidentTypesCtrl">
+    <section class="panel panel-default">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"></span> Incident Type</strong>
+                <div class="pull-right header-buttons">
+                    <a href="#/settings/incident-types/edit" class="btn btn-success btn-sm"> <i class="fa fa-plus"></i> ADD</a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table  st-pipe="TypeTable" st-table="categories" class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th class="col-md-3" st-sort="name"> Name</th>
+                            <th class="col-md-3" st-sort="checkLists.name"> Check Lists</th>
+                            <th class="col-md-3" st-sort="default_categories.name"> Dashboard Categories</th>
+                            <th class="col-md-3"> Actions</th>
+                        </tr>
+                        <tr>
+                            <th class="search-group"><i class="fa fa-search"></i><input class="form-control search-field" placeholder="Search" st-search="name"/>
+                            </th>
+                            <th class="search-group"><i class="fa fa-search"></i><input class="form-control search-field" placeholder="Search" st-search="checkLists.name"/></th>
+                            <th class="search-group"><i class="fa fa-search"></i><input class="form-control search-field" placeholder="Search" st-search="default_categories.name"/></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="cat in categories">
+                            <td>{{cat.name}}</td>
+                            <td>
+                                <span ng-repeat="def in cat.checkLists">
+                                    {{def.name}},
+                                </span>
+                            </td>
+                            <td>
+                                <span ng-repeat="def in cat.default_categories">
+                                    {{def.name}},
+                                </span>
+                            </td>
+                            <th>
+                                <a href="#/settings/incident-types/edit/{{cat.id}}" class="btn btn-sm btn-info">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
+                                <button class="btn btn-sm btn-danger" confirm="Are you sure you want to delete?" ng-click="delete(cat.id)">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </button>
+                            </th>
+                        </tr>
+
+                    </tbody>
+                    <tbody ng-show="isLoading">
+                        <tr>
+                            <td colspan="4" class="text-center">Loading ... </td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="table table-striped table-responsive">
+                        <tr>
+                            <td class="text-center" st-pagination="" st-items-by-page="pageItems" colspan="7">
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="col-md-3">
+                    <select class="form-control"
+                    ng-model="pageItems"
+                    ng-options="item.val as item.name for item in items"
+                    ng-selected="item.val === pageItems">
+                </select>
+            </div>
+        </div>
+    </section>
+</div>

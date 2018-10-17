@@ -1,0 +1,31 @@
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="close()" >&times;</button>
+        <h4 class="modal-title">Send Email</h4>
+      </div>
+      <div class="modal-body">
+            <div class="form-group">
+                <label for="exampleInputEmail1">To: </label>
+                <input class="form-control" ng-model="sendTo">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Select Mailing List: </label>
+                 <select class="form-control" ng-model="list">
+                   <option ng-repeat="record in email_list" ng-value="record.emailList"> {{record.name}}</option>
+                 </select>
+            </div>
+    
+      </div>
+
+      <div class="modal-footer">
+          <a ng-click="submit(sendTo, list)" > <button class="btn btn-success">Send</button> </a>
+        <button class="btn btn-primary" ng-click="close()" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>

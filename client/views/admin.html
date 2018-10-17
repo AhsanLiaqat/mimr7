@@ -1,0 +1,189 @@
+<div class="page" ng-controller="adminCtrl">
+
+    <section class="panel panel-default">
+        <div class="panel-heading">
+        <strong>
+        	<span class="glyphicon glyphicon-th"></span> Account Management</strong>
+        	<div class="pull-right header-buttons">
+        	 <a href="#/superadmin/create" class="btn btn-success btn-sm">Add Account </a>
+        	</div>
+        </div>
+
+        <div class="panel-body">
+
+            <!-- <table class="table table-bordered table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th><div class="th">
+                        Account Name
+                        <a      href=""
+                          class="fa fa-angle-up"
+                          style="text-decoration: none;"
+                          data-ng-click=" order('name') "
+                          data-ng-class="{active: row == 'name'}">
+                        </a>
+                        <a      href=""
+                          style="text-decoration: none;"
+                          class="fa fa-angle-down"
+                          data-ng-click=" order('-name') "
+                          data-ng-class="{active: row == '-name'}">
+                        </a>
+                    </div></th>
+                   
+                    <th><div class="th">
+                        Admin Name
+                        <a      href=""
+                          class="fa fa-angle-up"
+                          style="text-decoration: none;"
+                          data-ng-click=" order('adminName') "
+                          data-ng-class="{active: row == 'adminName'}">
+                        </a>
+                        <a      href=""
+                          style="text-decoration: none;"
+                          class="fa fa-angle-down"
+                          data-ng-click=" order('-adminName') "
+                          data-ng-class="{active: row == '-adminName'}">
+                        </a>
+                    </div></th>
+                    <th><div class="th">
+                        Admin Email
+                        <a      href=""
+                          class="fa fa-angle-up"
+                          style="text-decoration: none;"
+                          data-ng-click=" order('email') "
+                          data-ng-class="{active: row == 'email'}">
+                        </a>
+                        <a      href=""
+                          style="text-decoration: none;"
+                          class="fa fa-angle-down"
+                          data-ng-click=" order('-email') "
+                          data-ng-class="{active: row == '-email'}">
+                    </div></th>
+                    <th><div class="th">
+                        Date Created
+                        <span class="fa fa-angle-up"
+                              data-ng-click=" order('role') "
+                              data-ng-class="{active: row == 'role'}"></span>
+                        <span class="fa fa-angle-down"
+                              data-ng-click=" order('-role') "
+                              data-ng-class="{active: row == '-role'}"></span>
+                    </div></th>
+                    <th><div class="th">
+                        Last Login
+                        <span class="fa fa-angle-up"
+                              data-ng-click=" order('role') "
+                              data-ng-class="{active: row == 'role'}"></span>
+                        <span class="fa fa-angle-down"
+                              data-ng-click=" order('-role') "
+                              data-ng-class="{active: row == '-role'}"></span>
+                    </div></th>
+                    <th><div class="th">
+                       Status
+                        <span class="fa fa-angle-up"
+                              data-ng-click=" order('status') "
+                              data-ng-class="{active: row == 'status'}"></span>
+                        <span class="fa fa-angle-down"
+                              data-ng-click=" order('-status') "
+                              data-ng-class="{active: row == '-status'}"></span>
+                    </div></th>
+                    <th><div class="th">
+                        Action
+                    </div></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="record in currentPageActivities">
+                    <td>{{record.name}}</td>
+                    <td>{{record.adminName}}</td>
+                    <td>{{record.email}}</td>
+                    <td>{{dateFormat(record.createdAt)}}</td>
+                    <td>{{dateFormat(record.lastLogin)}}</td>
+                    <td>{{record.status}}  </td>
+                    <td>
+
+                        <a class="btn btn-info btn-sm" href="#/superadmin/create/{{record.id}}"><span class="fa fa-pencil-square-o"></span></a>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select>
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                ng-model="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                ng-change="select(currentPage)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                previous-text="&lsaquo;" next-text="&rsaquo;"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer> -->
+
+        <table st-pipe="AdminTable" st-table="accountsList" class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th st-sort="name">Account Name</th>
+                            <th st-sort="adminName">Admin Name</th>
+                            <th st-sort="email">Admin Email</th>
+                            <th st-sort="createdAt">Date Created</th>
+                            <th st-sort="lastLogin">Last Login</th>
+                            <th st-sort="status">Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="record in accountsList">
+                          <td>{{record.name}}</td>
+                          <td>{{record.adminName}}</td>
+                          <td>{{record.email}}</td>
+                          <td>{{dateFormat(record.createdAt)}}</td>
+                          <td>{{dateFormat(record.lastLogin)}}</td>
+                          <td>{{record.status}}  </td>
+                          <td>
+
+                              <a class="btn btn-info btn-sm" href="#/superadmin/create/{{record.id}}"><span class="fa fa-pencil-square-o"></span></a>
+
+                          </td>
+                      </tr>
+                    </tbody>
+                    <tbody ng-show="isLoading">
+                        <tr>
+                            <td colspan="4" class="text-center">Loading ... </td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="table table-striped table-responsive">
+                        <tr>
+                            <td class="text-center" st-pagination="" st-items-by-page="pageItems" colspan="7">
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="col-md-3">
+                    <select class="form-control"
+                    ng-model="pageItems"
+                    ng-options="item.val as item.name for item in items"
+                    ng-selected="item.val === pageItems">
+                </select>
+
+        </div>
+
+
+    </section>
+
+
+</div>

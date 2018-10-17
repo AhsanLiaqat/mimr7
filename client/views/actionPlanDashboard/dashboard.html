@@ -1,0 +1,259 @@
+<div class="page page-dashboard" ng-controller="actionPlanDashboardCtrl">
+
+  <nav class="navbar navbar-default navbar-white">
+    <div class="container-fluid center-text" style="padding-left: 5px;">
+      <ul class="nav navbar-nav float-left">
+        <li class="dropdown">
+          <a href class="dropdown-toggle navbar-dashboard-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span ng-hide="incident" ng-model="selectIncident">Select Incident</span>
+            <span ng-show="incident">{{incident.name}} </span>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" style="height: 250px; overflow-y: auto">
+            <li role="presentation" ng-repeat="record in incidents">
+              <a class="dropdown-cursor" role="menuitem" ng-click="changeIncident(record)"> {{record.name}}</a>
+            </li>
+          </ul>
+        </li>
+
+        <li style="margin-right: 13px;">
+          <li class="dropdown">
+            <a href class="dropdown-toggle navbar-dashboard-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <span ng-hide="selectedAction" ng-model="selectedAction">Select Action Plan</span>
+              <span ng-show="selectedAction">{{selectedAction.name}}</span>
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" style="height: 250px; overflow-y: auto">
+              <li role="presentation" ng-repeat="record in actions">
+                <a class="dropdown-cursor" role="menuitem" ng-click="changePlan(record)">
+                    {{record.name}}
+                  </a>
+              </li>
+            </ul>
+          </li>
+        </li>
+      </ul>
+
+      <ul class="nav nav-list navbar-nav float-right">
+        <li ng-show="checkLinkedPlan()">
+          <button class="btn btn-sm btn-raised btn-default" title="Add Task" ng-click="addActivity()">
+              <span><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Task</span>
+            </button>
+        </li>
+        <!--<li ng-show="checkLinkedPlan()">-->
+        <!--<button class="btn btn-sm btn-raised btn-default" title="Reset current progress"-->
+        <!--ng-click="resetProgress()" confirm="Are you sure? All information will be lost">-->
+        <!--<span><i class="fa fa-refresh" aria-hidden="true"></i> Reset Progress</span>-->
+        <!--</button>-->
+        <!--</li>-->
+        <li ng-show="checkLinkedPlan()">
+          <button class="btn btn-sm btn-raised btn-default" title="Unlink Plan from Incident" confirm="Are you sure to unlink plan from selected incident?"
+            ng-click="unlinkPlan()">
+              <span><i class="fa fa-chain-broken" aria-hidden="true"></i> Unlink Plan</span>
+          </button>
+        </li>
+        <li style="margin-right: 10px;" ng-show="checkLinkedPlan()">
+          <button class="btn btn-sm btn-raised btn-default" ng-click="statusReport()">
+                  <span><i class="fa fa-file-text" aria-hidden="true"></i> Status Report</span>
+          </button>
+        </li>
+        <li>
+          <button class="btn btn-sm btn-raised btn-default" title="Available Action Plans" ng-click="avilableActionPlans()">
+              <span><i class="fa fa-list" aria-hidden="true"></i> Available Action Plans</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-1">
+          <div class="input-group">
+            <span class="input-group-btn">
+              <button class="btn btn-raised btn-default"
+                      type="button"
+                      ng-click="markActive()"
+                      ng-disabled="selectedActivity()">
+                      Activate
+              </button>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-10" style="margin-left: 60px;">
+          <div class="input-group">
+            <input type="text" class="form-control input-sm" ng-model="searchVal" placeholder="Search task list via Title, Actor, Role, and Status">
+            <span class="input-group-btn">
+                 <button class="btn btn-default btn-raised">
+                    <i class="fa fa-search fa-fwearch"></i>
+                 </button>
+      			  </span>
+          </div>
+        </div>
+
+      </div>
+
+
+        <div style="clear: both">
+
+        </div>
+
+        <br><br>
+
+        <div class="table-responsive">
+        <table st-table="activities" st-safe-src="safeActivities" class="table table-striped table-condensed table-activities"
+          ng-show="checkActivities()">
+          <thead>
+            <tr>
+              <th row-select-all="activities" selected="selected" ng-click="selectAll(activities)" style="width: 5%;">
+              </th>
+              <th class="col-md-2">Checklist Item</th>
+              <th class="col-md-2">Responsibility</th>
+              <th class="col-md-1"></th>
+              <th class="col-md-2">Role</th>
+              <th class="col-md-2">Actor</th>
+              <th class="col-md-1">Status</th>
+              <th class="col-md-1"></th>
+            </tr>
+            <th class="apd-group-select">
+              <select chosen class="form-control" data-placeholder-text-single="'Select'" ng-model="groupingFilter" ng-options="status.value as status.name for status in filterGroups"
+                ng-change="applyGroupingFilter()">
+                  <option></option>
+                </select>
+            </th>
+            <th></th>
+            <th class="apd-level-select">
+              <select chosen class="form-control" data-placeholder-text-single="'Select'" ng-model="levelFilter" ng-options="level.value as level.name for level in responsibilityLevels"
+                ng-change="applyLevelFilter()">
+                  <option></option>
+                </select>
+            </th>
+            <th class="apd-action-select">
+              <select chosen class="form-control" data-placeholder-text-single="'Select'" ng-model="availabilityFilter" ng-options="status.value as status.name for status in filterAvailability"
+                ng-change="applyAvailabilityFilter()">
+                  <option></option>
+                </select>
+            </th>
+            <th></th>
+            <th></th>
+            <th class="apd-status-select">
+              <select chosen multiple class="form-control" data-placeholder-text-multiple="'Select'" ng-model="statusFilter" ng-options="status.value as status.name for status in statusOptions"
+                ng-change="applyStatusFilter()">
+                  <option></option>
+                </select>
+            </th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="activity in activities | filter:searchVal | orderBy: 'id'" ng-show="displayActivity(activity) && (activity.type === 'action' || activity.type === 'decision')">
+
+              <td row-select="activity" ng-model="activity.selected" ng-click="select(activity.id)" ng-class="getDefaultClass(activity.default)">
+              </td>
+
+              <td>
+                <button class="btn btn-default btn-sm" title="{{activity.name}}" ng-click="taskInfo(activity)">
+                  <span>{{activity.name | displayString: 30}}</span>
+                </button>
+              </td>
+
+              <td>{{activity.responsibility_level}}</td>
+
+              <td style="line-height: 27px;">
+                <switcher class="styled" ng-model="activity.activated" ng-change="updateActivityActivation(activity)" true-label="" false-label=""
+                  title="{{activity.activatedAt | date:'HH:mm dd-MM-yyyy' }}" data-toggle="tooltip" data-placement="bottom"
+                  tooltip>
+                </switcher>
+              </td>
+
+              <td>
+                {{displayActivityProperty(activity.role)}} - {{displayActivityProperty(activity.department)}}
+                <br> {{displayActivityProperty(activity.organization)}}
+              </td>
+              <td>
+                <a href="" ng-click="showUserModal(activity)" style="text-decoration: none; color:#626262">
+                  <div>
+                    <img ng-src="{{userStatusImg(activity.response_actor)}}" class="img30_30" alt="No Image" />
+                  </div>
+                  {{displayActorName(activity.response_actor)}}
+                </a>
+              </td>
+
+              <td ng-class="satusClass(activity.status)">
+                <button class="btn status-btn" ng-click="updateActivityStatus(activity)" title="{{activity.statusAt | date:'HH:mm dd-MM-yyyy' }}"
+                  data-toggle="tooltip" data-placement="bottom" tooltip>
+                <span>
+                  {{getStatusName(activity.status)}}
+                </span>
+              </button>
+              </td>
+
+              <td>
+                <button class="btn btn-sm btn-info" ng-click="editActivity(activity, $index)" title="Edit Task">
+                  <span class="glyphicon glyphicon-edit"></span>
+                </button>
+                <button class="btn btn-sm btn-danger" confirm="Are you sure you want to delete??" ng-click="deleteActivity(activity.id)">
+                  <span class="glyphicon glyphicon-remove-sign"></span>
+                </button>
+              </td>
+
+              <!--<td>
+                <div ng-show="checkDecision(incident_plan.activity_status[$index])">
+                  <button class="btn btn-sm btn-warning" title="View Outcomes" ng-click="viewOutcomes(activity, $index)">
+                  <span class="fa fa-television"></span>
+                </button>
+                </div>
+              </td>-->
+
+            </tr>
+          </tbody>
+        </table>
+</div>
+
+
+        <div ng-hide="checkActivities()" class="watermark-text-medium" style="position: relative; font-size: 30px; margin-top: 20px;">
+          <p>No activity present for selected combination of incident & plan</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default" ng-show="showSelectedOutcomes">
+    <div class="panel-heading">
+      Selected Outcomes
+    </div>
+    <div class="panel-body">
+      <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-12">
+          <table class="table table-striped table-responsive">
+            <thead>
+              <tr>
+                <th>Actor</th>
+                <th>Task</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="activity in selectedOutcomes">
+                <td>
+                  <div>
+                    <img ng-class="userStatusClass(activity.response_actor.available)" class="img30_30" alt="No Image" />
+                  </div>
+                  {{activity.response_actor.firstName}} {{activity.response_actor.lastName}}
+                </td>
+                <td>{{activity.task_list.title}}</td>
+                <td>{{activity.description}} </td>
+                <td ng-class="satusClass(activity.status)">
+                  <button class="btn status-btn" ng-click="updateActivityStatus(activity)" title="{{activity.status_timestamp | date:'HH:mm dd-MM-yyyy' }}"
+                    data-toggle="tooltip" data-placement="bottom" tooltip>
+                    <span>{{getStatusName(activity.status)}}</span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

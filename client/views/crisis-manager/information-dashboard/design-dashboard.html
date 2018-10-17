@@ -1,0 +1,65 @@
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg" id="modal-dialog" >
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header clearfix" id="modal-header">
+        <h4 class="modal-title pull-left" id="modal-title">Design Dashboard</h4>
+        <div class="pull-right">
+          <button class="btn btn-sm btn-raised btn-default" ng-click="toggleNotification()">
+            <span ng-show="layout.notification" title="Notification On">
+              <span class="glyphicon glyphicon-bell notification-icon" style="color: green;"></span>
+            </span>
+            <span ng-show="!layout.notification" title="Notification Off">
+              <span class="glyphicon glyphicon-bell notification-icon" style="color: red;"></span>
+            </span>
+          </button>
+          
+        </div>
+      </div>
+      <div class="modal-body modal_big_height" style=" overflow-y: auto">
+        <div>
+          <section>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Category Header</label>
+                    <input colorpicker class="form-control" ng-model="accSetting.category_header">
+                </div>
+                <div class="form-group">
+                    <label>Messages Font Size</label>
+                    <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                        <select chosen
+                                data-placeholder-text-single="'Select Font Size'"
+                                ng-model="accSetting.messages_font_size"
+                                ng-options="x for x in sizes"
+                                >
+                        </select>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+                <div class="form-group">
+                    <label>Messages Font Family</label>
+                    <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                        <!-- <select chosen
+                                data-placeholder-text-single="'Select Font Family'"
+                                ng-model="accSetting.messages_font_family"
+                                ng-options="x for x in family"
+                                >
+                        </select> -->
+                        <select chosen ng-model="accSetting.messages_font_family" class="form-control">
+                          <option value=""></option>
+                          <option ng-repeat="x in family" ng-style="{'font-family': x}">{{x}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" ng-click="reset()" style="float: left;">Reset and Save</button>
+        <button class="btn btn-success" ng-click="save()">Save</button>
+        <button class="btn btn-primary" ng-click="close()" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+ <div class="page" ng-controller="reportViewCtrl">
+    <section class="panel panel-default">
+        <div class="panel-heading">
+        <strong>
+        	<span class="glyphicon glyphicon-th"></span> {{incident.name}}</strong>
+        	<div class="pull-right header-buttons">
+        	 <a ng-click="emailModel()" ng-if = "!show" class="btn btn-info btn-sm">Send as Email</a>
+             <a ng-click="updateReport()"  ng-if = "!show" class="btn btn-success btn-sm">Save</a>
+             <a href="#/reports" class="btn  btn-sm">Cancel</a>
+        	</div>
+        </div>
+        <div class="panel-body report-editor">
+          <!--   <textarea ui-tinymce="tinymceOptions" ng-model="report.content" ng-disabled = "show">
+                
+            </textarea> -->
+            <textarea froala="froalaOptions" ng-model="report.content" ng-disabled = "show"></textarea>
+
+            <!-- <text-angular style="height:320px" ng-model="report.content" ng-disabled = "show"></text-angular> -->
+
+        </div>
+    </section>
+ </div>
+ 

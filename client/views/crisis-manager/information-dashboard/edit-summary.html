@@ -1,0 +1,37 @@
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg" id="modal-dialog" >
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header clearfix" id="modal-header">
+        <h4 class="modal-title pull-left" id="modal-title"></h4>
+     
+      </div>
+      <div class="modal-body modal_big_height" style=" overflow-y: auto">
+        <div>
+          <section>
+            <div class="panel-body">
+                <textarea rows="1"
+                  froala="froalaOptions"   
+                  class="form-control"
+                  msd-elastic
+                  ng-model="Toclass.summary"
+                  style="min-height: 34px !important;"
+                  ng-textarea-enter="updateClass(Toclass)">
+                </textarea>
+                
+                <div class="message-length-warning" ng-class="{'red-text': Toclass.summary.length >= 1000}">
+                  <span>
+                    {{Toclass.summary.length || 0}}  Characters
+                  </span>
+                </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" ng-click="updateClass(Toclass)">Save</button>
+        <button class="btn btn-primary" ng-click="close()" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

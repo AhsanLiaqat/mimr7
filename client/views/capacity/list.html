@@ -1,0 +1,70 @@
+<div class="page" ng-controller="capacityCtrl">
+    <section class="panel panel-default">
+        <div class="panel-heading">
+            <strong>
+            <span class="glyphicon glyphicon-th"></span>Capacities</strong>
+            <div class="pull-right header-buttons">
+                <a ng-click="CreateCapacity();" class="btn btn-success btn-sm">Add New Capacity</a>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table st-pipe="usersTable" st-table="capacity" class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th st-sort="assets">Assets</th>
+                        <th st-sort="description">Description</th>
+                        <th st-sort="max">Max</th>
+                        <th st-sort="availableOnRequest">Available On Request</th>
+                        <th st-sort="available">Available</th>
+						<th st-sort="updatedAt">Last Updated</th>
+						<th>Action</th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <input class="form-control" placeholder="Search Assets" st-search="assets"/>
+                        </th>
+
+                        <th>
+                            <input class="form-control" placeholder="Search description" st-search="description"/>
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="cat in capacity">
+                        <td>{{cat.assets}}</td>
+                        <td>{{cat.description}}</td>
+                       	<td>{{cat.max}}</td>
+                       	<td>{{cat.availableOnRequest}}</td>
+                       	<td>{{cat.available}}</td>
+                       	<td>{{cat.updatedAt}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-info" ng-click="editCapacity(cat, $index)">
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </button>
+                            <button class="btn btn-sm btn-danger" confirm="Are you sure you want to delete?" ng-click="deleteCapacity(cat.id, $index)">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </button>
+                        </td>
+                    </tr>
+
+                </tbody>
+                 <tfoot class="table table-striped table-responsive">
+              <tr>
+                <td class="text-center" st-pagination="" st-items-by-page="pageItems" colspan="7">
+                </td>
+            </tr>
+        </tfoot>
+            </table>
+        </div>
+         <select class="form-control"
+      ng-model="pageItems"
+      ng-options="item.val as item.name for item in items"
+      ng-selected="item.val === pageItems">
+    </section>
+</div>

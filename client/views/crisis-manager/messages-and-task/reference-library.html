@@ -1,0 +1,57 @@
+<div ng-controller="ReferenceLibraryCtrl" >
+    <div class="col-sm-12 col-md-12" style="height:auto; margin-top:20px">
+        <section class="panel panel-default mail-container"  style="overflow: auto; height:80%">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-sm-4"> Reference Library</div>
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-4 text-center">
+                        <a style="float: right;" class="btn btn-sm btn-info" href="#/messages"> Back</a>
+                    </div>
+                </div>
+            </div>
+            
+
+            <table class="table table-hover table-responsive" >
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Desciption</th>
+                        <th>Filename</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="mail-read" ng-repeat="record in libraries track by $index">
+                        <td>
+                            {{record.title}}
+                        </td>
+                        <td>{{record.desciption}}</td>
+                        <td>
+                            <p ng-show="record.mimetype">{{record.filename}}</p>
+                            <p ng-show="!record.mimetype">N/A</p>
+                        </td>
+                        <td>
+                            <button ng-if="record.type" ng-show="record.mimetype"
+                                    class="btn btn-sm btn-default text-center"
+                                    ng-click="preview(record)">
+                                <i class="fa fa-file" aria-hidden="true"></i> View File
+                            </button>
+                            <h4 class="text-center">
+                                <a ng-if="!record.type && !record.links" href="http://{{shortUrl(record.url)}}"
+                                   target="_blank">Download</a>
+                            </h4>
+                            <a ng-show="record.links"
+                               class="btn btn-sm btn-info text-center"
+                               href="http://{{shortUrl(record.links)}}"
+                               target="_blank"> <i class="fa fa-link"></i> Open Link</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+    <br/>
+    <br/>
+</div>

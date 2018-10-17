@@ -1,0 +1,80 @@
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg" id ="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" id = "modal-header">
+        <button type="button" class="close" ng-click="close()" >&times;</button>
+        <h4 class="modal-title"  id = "modal-title"><span class="glyphicon glyphicon-th"></span> Timeline </h4>
+
+      </div>
+      <div class="modal-body modal_big_height"  id="modal-body">
+        <section  id="print">
+          <h4><strong><span class="glyphicon glyphicon-th"></span> Incoming Messages </strong></h4>
+              <h4> Incident : {{incident.name}}</h4>
+          <div class="text-center">
+            from:
+              <input  id="datepicker" data-date-format="dd/mm/yyyy" data-provide="datepicker"  ng-model="date.from">
+            to:
+              <input id="datepicker" data-date-format="dd/mm/yyyy" data-provide="datepicker"  ng-model="date.to">
+            <button class="btn btn-xs btn-primary" ng-click="dateFilter()">Filter</button>
+            <button class="btn btn-xs btn-primary" ng-click="clearfilter()">Clear filters</button>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <select class="form-control" ng-change="loadMessages()" ng-model="category" ng-options="record.id as record.title for record in classes | orderBy:'title'">
+                <option value="" selected="selected">Select a category</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <select chosen
+              multiple
+              class="form-control"
+              data-placeholder-text-multiple="'select users'"
+              ng-model="selected"
+              ng-change = "onUserSelect()"
+              ng-options="user.id as user.firstName +' '+ user.lastName for user in userList | orderBy:'firstName'">
+              </select>
+              <button class="btn btn-success btn-sm" style="margin-bottom: 5px;"
+              ng-click="sortDirection()">Date Sort</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <br>
+            <div class="col-md-12 content" data-mcs-theme="dark">
+              <!-- <ul class="list-group message">
+                <li class="list-group-item msg"
+                    ng-repeat="record in messages | orderBy:'record.createdAt':direction track by record.createdAt">
+                  <p ng-if="category == 'incoming'">Message: <strong>{{record.message}}</strong></p>
+                  <p  ng-if="category != 'incoming'">Message: <strong>{{record.content}}</strong></p>
+                  <span style="color: blue">By:  {{userName(record.userId)}}</span>
+                  <span style="float:right">{{record.createdAt | date: "HH:mm dd-MM-yyyy"}}</span>
+                </li>
+              </ul> -->
+              <timeline>
+                <timeline-event ng-repeat="event in events | orderBy:'event.createdAt':direction" side="{{side}}">
+                  <timeline-badge class="{{event.badgeClass}}">
+                    <i class="glyphicon {{event.badgeIconClass}}"></i>
+                  </timeline-badge>
+                  <timeline-panel class="{{event.badgeClass}}">
+                    <timeline-heading>
+                      <h4 title="{{event.title}}">{{event.date}}</h4>
+                    </timeline-heading>
+                    <p>{{event.title | displayString: 60}}</p>
+                    <timeline-footer>
+                      <span> {{event.content | displayString: 30}}</span>
+                    </timeline-footer>
+                  </timeline-panel>
+                </timeline-event>
+              </timeline>
+            </div>
+          </div>
+        </section>
+      </div>
+        <div class="modal-footer">
+          <a ng-click="object_to_html()" class="btn btn-success">Print</a>
+          <button class="btn btn-primary" ng-click="close()" data-dismiss="modal">close</button>
+        </div>
+      </div>
+    </div>
+  </div>

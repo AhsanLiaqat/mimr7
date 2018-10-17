@@ -1,0 +1,88 @@
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div id="modal-header" class="modal-header">
+        <button type="button" class="close" ng-click="close()">×</button>
+        <h4 id="modal-title" class="modal-title">View CheckList</h4>
+      </div>
+      <div class="col-md-12 modal-body">
+    <div class="page">
+    <p><strong>CheckList Name:</strong>  {{checklist.name}}</p>
+    <p><strong>CheckList Description:</strong>    {{checklist.description}}</p>
+    <p><strong>CheckList Responsibility:</strong>  {{checklist.responsibilityLevel}}</p>
+   
+    <section class="panel panel-default">
+        <div class="panel-body">
+        <h4>Linked Tasks</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                              <div class="th">
+                                Name
+                                <span class="fa fa-angle-up"
+                                data-ng-click=" order('title') "
+                                data-ng-class="{active: row == 'title'}"></span>
+                                <span class="fa fa-angle-down"
+                                data-ng-click=" order('-title') "
+                                data-ng-class="{active: row == '-title'}"></span>
+                              </div></th>
+                            <th>
+                              <div class="th">
+                                Description
+                                <span class="fa fa-angle-up"
+                                data-ng-click=" order('description') "
+                                data-ng-class="{active: row == 'description'}"></span>
+                                <span class="fa fa-angle-down"
+                                data-ng-click=" order('-description') "
+                                data-ng-class="{active: row == '-description'}"></span>
+                              </div></th>
+                              <th>
+                                <div class="th">
+                                  Categories
+                                  <span class="fa fa-angle-up"
+                                  data-ng-click=" order('description') "
+                                  data-ng-class="{active: row == 'description'}"></span>
+                                  <span class="fa fa-angle-down"
+                                  data-ng-click=" order('-description') "
+                                  data-ng-class="{active: row == '-description'}"></span>
+                                </div></th>
+                                <th>
+                                  <div class="th">
+                                    Type
+                                    <span class="fa fa-angle-up"
+                                    data-ng-click=" order('type') "
+                                    data-ng-class="{active: row == 'type'}"></span>
+                                    <span class="fa fa-angle-down"
+                                    data-ng-click=" order('-type') "
+                                    data-ng-class="{active: row == '-type'}"></span>
+                                  </div></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr id="modal-title"  ng-repeat="task in tasks">
+                          <td >{{task.title}}</td>
+                          <td >{{task.description}}</td>
+                          <td><a ng-repeat="texts in task.tags"> #{{texts.text}}</a> <br>
+                          </td>
+                          <td >{{task.type}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+</div>
+      </div>
+      <div class="modal-footer">
+         <button class="btn btn-primary"  data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

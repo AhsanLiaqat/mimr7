@@ -1,0 +1,71 @@
+
+
+
+
+<div class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+
+            <!-- Header -->
+            <div class="panel panel-default">
+                <div class="modal-header panel-heading">
+                    <button type="button" class="close" ng-click="close()">&times;</button>
+                    <h4 class="modal-title">Assign Simulation Message
+                    </h4>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body" style="height: 500px; overflow-y: scroll; overflow-x: auto;">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div id="menu1" class="tab-pane fade in active ui-widget">
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <strong>
+                                  <span class="glyphicon glyphicon-th"></span> BASIC INFORMATION
+                                </strong>
+                                </div>
+
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label> Message </label><span style="color: red" title="Required"> *</span>
+                                        <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                            <select chosen
+                                                    class="form-control"
+                                                    ng-model="assignedMessage.gameMessageId"
+                                                    ng-options="task.id as task.name for task in tasks">
+                                            </select>
+                                        </div>
+                                        <a href="" ng-click="addMessageItem()"><i class=""> Create New Message </i></a>
+                                    </div>
+
+                                    <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                        <label> Roles </label>
+                                        <select chosen
+                                                multiple
+                                                class="form-control"
+                                                data-placeholder-text-multiple="'Select Roles'"
+                                                ng-model="messageRoles"
+                                                ng-options="role.id as role.name for role in roles">
+                                        </select><br>
+
+                                        <a href="" ng-click="addRole()">Create New Role</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button class="btn btn-info" ng-click="close()" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-success" ng-click="save()">Save</button>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,158 @@
+<div class="page" ng-controller="usersCtrl">
+
+    <section class="panel panel-default">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> User Details </strong></div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+
+                    <form role="form" ng-submit="submitUser()">
+                         <div class="form-group">
+                            <label >First Name<span class="required-custom"> *</span></label>
+                            <input type="text" ng-model="data.firstName" class="form-control" placeholder="Enter first name" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label > Middle Name</label>
+                            <input type="text" ng-model="data.middleName" class="form-control" placeholder="Enter middle name">
+                        </div>
+                        <div class="form-group">
+                            <label >Last Name<span class="required-custom"> *</span></label>
+                            <input type="text" ng-model="data.lastName" class="form-control" placeholder="Enter last name" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label >Email address<span class="required-custom"> *</span></label>
+                            <input type="email" ng-model="data.email" class="form-control" placeholder="Enter email" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label > Department {{task.departmentId}} </label>
+
+                            <select class="form-control" ng-model="data.departmentId" ng-options="record.id as record.name for record in departments" ng-selected="record.id === task.departmentId ">
+                            </select>
+                            <a ng-click="departmentModal()">Create Department</a>
+                        </div>
+
+                        <div class="form-group">
+                            <label > Position/Role {{task.departmentId}} </label><br>
+                            <select chosen
+                            multiple
+                            class="form-control"
+                            data-placeholder-text-multiple="'Select roles'"
+                            ng-model="data.roles"
+                            ng-options="record.id as record.name for record in roles">
+                            </select><br>
+
+                            <a ng-click="createRole()">Create Position/Role</a>
+                        </div>
+                        <div class="form-group">
+                            <label >User Type <span class="required-custom"> *</span></label>
+                             <span class="ui-select">
+                        		<select ng-model="data.role">
+	                            	<option value="IP" selected="selected"> Information Provider (IP)</option>
+                                    <option value="CA">Co Admin (CA)</option>
+	                            	<option value="IM">Information Manager (IM)</option>
+                        		</select>
+                    		</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mobilePhone">Office Phone</label>
+                            <input type="tel" class="form-control" ng-model="data.officePhone" id="Ophone">
+                        </div>
+                        <div class="form-group">
+                            <label for="mobilePhone">Mobile Phone</label>
+                           <input type="text" class="form-control" ng-model="data.mobilePhone" id="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city" placeholder="Enter City" ng-model="data.city">
+                        </div>
+                        <div class="form-group">
+                            <label for="state">Region</label>
+                            <input type="text" class="form-control" id="state" placeholder="Enter Region" ng-model="data.state">
+                        </div>
+                        <input type="hidden" value="{{data.countryCode}}" id="code">
+                        <div class="change_pass">
+                            <div class="form-group">
+                                <div class="row" ng-if = "!allow">
+                                    <div class="col-md-3">
+                                        <label >Current Password:</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="password" ng-model="current_pass" class="form-control" maxlength="15" placeholder="Current Password">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label >New Password: <span ng-show = "current_pass.length > 0" class="required-custom"> *</span></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="password" ng-model="new_pass" class="form-control" minlength="8" maxlength="15" placeholder="New Password" ng-required = "current_pass.length > 0">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label >Confirm Password:</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="password" ng-model="confirm_pass" class="form-control" minlength="8" maxlength="15" placeholder="Confirm Password" ng-required = "current_pass.length > 0">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group file-input-label">
+                            <label>Upload Picture</label>
+                            <input type="file"  ngf-select="uploadFiles($file, $invalidFiles)" accept="image/*"> <img  ng-if="data.avatar" src="{{data.avatar}}" width="100" height="100" />
+                        </div>
+                        <input ng-if = "data.avatar" type="button" value="Clear Image" class="btn btn-default" ng-click = "clear_image()">
+                        <br>
+
+                        <a href="#/settings/users" class="btn btn-info">Cancel</a>
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<script>
+setTimeout(function() {
+    var code = $("#code").val();
+    // alert(code);
+      $("#phone").intlTelInput({
+        preferredCountries:['NL'],
+        allowExtensions: true,
+        autoFormat: false,
+        autoHideDialCode: false,
+        autoPlaceholder: true,
+        // defaultCountry: "auto",
+        initialCountry: code,
+        ipinfoToken: "yolo",
+        nationalMode: false,
+        numberType: "MOBILE",
+        preventInvalidNumbers: true,
+        utilsScript: "bower_components/intl-tel-input/build/js/utils.js"
+    })
+}, 1000);
+setTimeout(function() {
+var code = $("#code").val();
+// alert(code);
+  $("#Ophone").intlTelInput(
+{
+preferredCountries:['NL'],
+allowExtensions: true,
+autoFormat: false,
+autoHideDialCode: false,
+autoPlaceholder: true,
+// defaultCountry: "auto",
+initialCountry: code,
+ipinfoToken: "yolo",
+nationalMode: false,
+numberType: "MOBILE",
+preventInvalidNumbers: true,
+utilsScript: "bower_components/intl-tel-input/build/js/utils.js"
+}
+)
+}, 500);
+</script>

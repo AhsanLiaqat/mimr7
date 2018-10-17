@@ -1,0 +1,821 @@
+<div class="page page-dashboard ap-dashboard" ng-controller="apdV2Ctrl">
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-default navbar-white">
+        <div class="container-fluid center-text" style="padding-left: 5px;">
+            <ul class="nav navbar-nav float-left">
+                <li class="dropdown" style="width: 250px;">
+                    <a href class="dropdown-toggle navbar-dashboard-dropdown dropin" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span ng-hide="incident" ng-model="selectIncident">Select Incident</span>
+                        <span ng-show="incident">{{incident.name}} </span>
+                        <span class="caret" style="float: right;margin-top: 8px;"></span>
+                    </a>
+                    <ul class="dropdown-menu" style="height: 250px; overflow-y: auto">
+                        <li role="presentation" ng-repeat="record in incidents">
+                            <a class="dropdown-cursor" role="menuitem" ng-click="changeIncident(record)"> {{record.name}}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav nav-list navbar-nav float-right">
+                <li>
+                        <a href="#/dashboard/{{incident.id}}" class="btn btn-success"
+                        title="Dashboard"
+                        style="padding: 0px;
+                        padding-top: 3px;
+                        padding-right: 9px;"
+                        >
+                        <i class="material-icons">dashboard</i>
+                    </a>
+                </li>
+                <li style="margin-right: 10px;">
+                    <button class="btn btn-sm btn-raised btn-default" ng-click="changeView()">
+                        <span>{{viewTypeName}}</span>
+                    </button>
+                </li>
+                <li style="margin-right: 10px;">
+                    <button class="btn btn-sm btn-raised btn-default" ng-click="togglePlanList()">
+                        <span><i class="fa fa-info" aria-hidden="true"></i> Activated Action Plans</span>
+                        <div class="badge" ng-if="incident.incident_plans.length > 0">
+                            {{incident.incident_plans.length}}
+                        </div>
+                        <div class="badge" ng-if="incident.incident_plans.length == 0">
+                            0
+                        </div>
+                    </button>
+                </li>
+                <li style="margin-right: 10px;">
+                    <button class="btn btn-sm btn-raised btn-default" ng-click="toggleCheckList()">
+                        <span><i class="fa fa-check-square-o" aria-hidden="true"></i> Checklist</span>
+                    </button>
+                </li>
+                <li style="margin-right: 10px;" ng-show="checkLinkedPlan()">
+                    <button class="btn btn-sm btn-raised btn-default" ng-click="statusReport()">
+                        <span><i class="fa fa-file-text" aria-hidden="true"></i> Status Report</span>
+                    </button>
+                </li>
+                <li>
+                    <button class="btn btn-sm btn-raised btn-default" title="Available Action Plans" ng-click="avilableActionPlans()">
+                        <span><i class="fa fa-list" aria-hidden="true"></i> Available Action Plans</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<!-- Navigation Bar Ends -->
+<!-- Cards -->
+
+    <div class="row actionplanv2" style="margin: 5px;height: 300px;">
+        <div class="col-md-3" ng-show = "list == 'Check'">
+            <div class="incoming" >
+                <div class="panel panel-default" >
+                    <div class="panel-heading clearfix">
+                        <strong class="pull-left"><span class="glyphicon glyphicon-list"></span> Checklist</strong>
+                        <span class="ap-dashboard-check">
+                            <button class="btn btn-sm btn-raised pull-right btn-default"
+                                ng-click="openChecklistMenu()"
+                                title="Checklist Menu"
+                                style="margin-top: -3px;">
+                                <i class="glyphicon glyphicon-plus"></i>
+                            </button>
+
+                            <button class="btn btn-sm btn-raised pull-right btn-default"
+                                ng-click="openChecklistModal()"
+                                title="Zoom Checlist Menu"
+                                style="margin-top: -3px;">
+                                <i class="glyphicon glyphicon-zoom-in"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="right-panel-holder" style="padding: 2px 0px; overflow-y:scroll; overflow-x: hidden;" data-as-sortable="DragOptions" data-ng-model="messages">
+                        <section>
+                            <div class="panel-body">
+                                <uib-accordion close-others="oneAtATime" class = "list-accordian">
+                                    <div uib-accordion-group class="panel-default to-move"
+                                    ng-repeat="item in checkedList">
+                                        <uib-accordion-heading >
+                                            <div> {{item.name | displayString: 20}}
+                                                <button class="btn btn-sm pull-right btn-danger  btn-default"
+                                                ng-click="checklistDelete(item, $event)"
+                                                title="Delete Checklist"
+                                                style="margin-top: -7px;height: 15px;">
+                                                    <i class="glyphicon glyphicon-trash"></i>
+                                                </button>
+                                            </div>
+
+                                        </uib-accordion-heading>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                    <!-- <thead>
+                                                      <tr>
+                                                        <th >Task Name</th>
+                                                        <th >Status</th>
+                                                      </tr>
+                                                  </thead> -->
+                                                <tbody>
+                                                    <tr ng-repeat="task in item.tasks">
+                                                        <td width="70%" style="font-size: 12px;">
+                                                            <button class="btn btn-default btn-sm" title="{{task.title}}" ng-click="taskInfo(task)">
+                                                                <span title="{{task.title}}">{{task.title | displayString: 5}}</span>
+                                                            </button>
+                                                        </td>
+                                                        <td width="30%">
+                                                            <select class="form-control"
+                                                            style="width: 115px;font-size: 12px;padding: 5px;"
+                                                            ng-model="task.status"
+                                                            ng-options="status.value as status.name for status in statusOptions"
+                                                            ng-change = "updateStatus(item.id,task)"
+                                                            ng-class = "getClass(task.status)"
+                                                            >
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </uib-accordion>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="panel-footer">
+                        <!-- <form class="form" role="form">
+                            <div class="input-group">
+                            </div>
+                        </form> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+            <div class="incoming col-lg-3 col-md-12 col-sm-12 col-xs-12" ng-show="list == 'Action'">
+
+        <div class="panel panel-default incommingMsg" ng-show = "action_lists.length">
+            <div class="panel-heading clearfix">
+                <strong ng-show = "action_lists.length" class="pull-left"><span class="glyphicon glyphicon-list"></span> Action List</strong>
+
+                <button class="btn btn-sm btn-raised pull-right btn-default"
+                ng-click="openChecklistMenu()"
+                title="Checklist Menu"
+                ng-show = "!action_lists.length"
+                style="margin-top: -3px;">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </button>
+
+                <button class="btn btn-sm btn-raised pull-right btn-default"
+                ng-click="resetActionList(action_list.id)"
+                title="Reset" confirm="Are you sure you want to reset?"
+                style="margin-top: -3px;">
+                    <i class="glyphicon glyphicon-repeat"></i>
+                </button>
+
+                <button class="btn btn-sm btn-raised pull-right btn-default"
+                ng-click="openActionListModal()"
+                title="Zoom Action List Menu"
+                style="margin-top: -3px;">
+                    <i class="glyphicon glyphicon-zoom-in"></i>
+                </button>
+            </div>
+            <div style="padding: 5px 7px 6px 5px; overflow-y:scroll; overflow-x: hidden;" data-as-sortable="DragOptionsActionList"
+                data-ng-model="action_list.actions" class="right-panel-holder">
+                <ul style="width:100%;min-height:30px;float:left" class="classlist list-group">
+
+                    <li class="list-group-item item msg" style="margin-bottom:5px;" data-as-sortable-item ng-repeat="item in action_list.actions | filter:query | orderBy:item.index"  id={{item.id}}>
+                        <div>
+                            <div class="row" style="margin:0">
+                                <div class="col-xs-1 handle" data-as-sortable-item-handle ng-style="{'background-color': item.selectedColor}">
+                                    <span class="ti-move"></span>
+                                </div>
+                                <div class="col-xs-11 " style="padding-left:5px; background-color: #f4f4f4;">
+                                    <form ng-submit="updateAction(item, action_list)">
+                                        <div class="row left-padding">
+                                            <div class="col-xs-12 item-text" ng-dblclick="enableEdit(item)" style="padding: 2px 8px 0px 0px;">
+                                                <span ng-show="item.edit" class="">
+                                                    <textarea rows="1"
+                                                    class="form-control"
+                                                    msd-elastic
+                                                    ng-model="item.name"
+                                                    ng-textarea-enter="updateMessage(item)">
+                                                    </textarea>
+                                                </span>
+                                                <span ng-hide="item.edit" title="{{item.name}}">
+                                                    <pre ng-style="messagesStyle">{{item.name }}</pre>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row left-padding" ng-show="item.edit" style="margin: 0px -3px 5px 4px;">
+                                            <div class="row item-info col-md-12" ng-show="item.edit" style="margin-bottom: 5px">
+                                                <input type="date" ng-model = "item.dueDate" class="form-control">
+                                            </div>
+                                            <div class="row item-info col-md-12" ng-show="item.edit" style="margin-bottom: 5px">
+                                                <a href="javascript:void(0)" ng-click="ChangeUserForActionModal(item, action_list)">
+                                                    <span ng-show = "item.user">
+                                                        {{item.user.firstName}}
+                                                    </span>
+                                                    <span ng-hide = "item.user">
+                                                        Assign User
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="row item-info" ng-show="item.edit" style="margin-bottom: 5px">
+                                                <div class="col-md-12">
+                                                    <div class="color_divs"
+                                                    ng-repeat="c in colorPalettes"
+                                                    ng-style="{'background-color': c.color}"
+                                                    ng-click="changeColorForAction(item, action_list, c.color)">
+                                                    </div>
+
+                                                    <button type="button" class="btn btn-xs btn-default" ng-click="changeColorForAction(item, action_list, '')" title="Delete" style="margin-top: 0px;">
+                                                        <span class="glyphicon glyphicon-refresh">
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-8" style="padding-right:0">
+                                                <button type="submit" class="btn btn-xs btn-primary" title="Submit" aria-label="Submit">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                </button>
+                                                    <button type="button" class="btn btn-xs btn-danger" ng-click="deleteAction(item, action_list,$index)" title="Delete">
+                                                        <span class="glyphicon glyphicon-trash">
+                                                    </span>
+                                                </button>
+                                                <button type="button" class="btn btn-xs btn-default " ng-click="disableEdit(item)" title="Cancel" aria-label="Cancel">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row item-info left-padding" ng-hide="item.edit">
+                                            <div class="col-md-5 nopadding">
+                                                {{item.user.firstName}}
+                                            </div>
+                                            <div class="col-md-7 text-right time">
+                                                <span ng-show = "item.dueDate">
+                                                    {{actionDueDateFormat(item.dueDate)}}
+                                                </span>
+                                                <span ng-hide = "item.dueDate">
+                                                    No Due Date Selected
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <span ng-show = "!action_list.actions.length" class="no_action_list">
+                        No Actions Available
+                    </span>
+                </ul>
+            </div>
+
+            <div class="panel-footer">
+                <form class="form" role="form">
+                    <div class="input-group">
+                        <input style="resize:vertical" maxlength="255" rows="1" class="form-control" ng-model="taskAction" msd-elastic ng-textarea-enter="AddAction(msg)">
+                        <span class="input-group-btn" style="vertical-align: bottom;">
+                            <button class="btn btn-sm btn-raised btn-default"
+                            ng-click="AddAction(taskAction)">
+                                <i class="glyphicon glyphicon-send"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+                <div class="message-length-warning" ng-class="{'red-text': msg.length >= 255}">
+                    <span>
+                        {{msg.length || 0}} / 255 Characters
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div ng-show = "!action_lists.length" class="no_action_list">
+            <div class="clearfix text-center">
+                <p>No Action List Present</p>
+                <button class="btn btn-sm btn-raised btn-default"
+                ng-click="addActionList()"
+                title="Checklist Menu"
+                ng-show = "action_lists.length == 0"
+                style="margin-top: 10px;">
+                    Add Action List <i class="glyphicon glyphicon-plus"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+        <div ng-class="activitiesSectionClass()">
+            <div class="panel panel-default clearfix"
+            style="padding: 10px; min-height: 500px;">
+
+                <div class="row" ng-show = showPlanDetails>
+                    <a  href=""
+                    ng-repeat="plan in incident.incident_plans"
+                    ng-click="checkActionType(plan, 'plan')"
+                    class="col-md-3"
+                    style="margin-bottom: 20px;">
+                        <div  class="card"
+                        ng-class="{'selected-card': plan.selectedCard}"
+                        style="background-color: rgba(14, 118, 165, 0.64)">
+                            <div class="card-content" style="position: static;">
+                                <div class="card-headline">
+                                    <button class="btn btn-sm dashboard-unlink-icon btn-default pull-right" title="Unlink Plan from Incident" confirm="Warning! All information about the status of the tasks will be lost."
+                                    ng-click="unlinkPlan(plan,$index)">
+                                        <span><i class="fa fa-chain-broken" aria-hidden="true"></i></span>
+                                    </button>
+                                    <h3 class = "heading-text">{{plan.action_plan.name}}</h3>
+                                </div>
+
+                                <div class="card-body">
+                                    <p class="activityCardStats">
+                                        <b>Active Tasks: {{plan.records.length - plan.naCount}} ( Total Tasks: {{plan.records.length}} N/A: {{plan.naCount}} )</b>
+
+                                        <!-- <b>Total Tasks: </b> {{plan.incident_activities.length}} -->
+                                        <br>
+                                        <b>No Information: </b>{{plan.niCount}}
+                                        <b>In Progress: </b>{{plan.ipCount}}
+                                        <b>Completed: </b>{{plan.cpCount}}
+                                        <b>Overdue: </b>{{plan.odCount}}
+                                        <!-- <b>N/A: </b>{{plan.naCount}} -->
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <div style="    margin-left: 15px;
+                    margin-top: -10px;">
+                        <button class="btn btn-sm btn-raised btn-default" title="Open Action Plans"
+                            role="button"
+                            ng-click="openActionPlanModal()"
+                            style="margin-right: 10px;">
+                            <i class="glyphicon glyphicon-plus"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+
+        <!-- //////////////////////////Accordian for Agenda Points/////////////////////////// -->
+        <div ng-repeat = "(indexxx,category) in planWithAgendaPoint.categories" ng-show = "selectedIncidentPlan.action_plan.kind == 'agendaPoints'" >
+            <label class="agenda-activity-label clearfix">
+                <span class="pull-left">
+                    {{category.name}}
+                </span>
+                <button class="btn btn-sm pull-right" ng-click="addIncidentAgendaPoint(category,$index)">
+                    <i class="glyphicon glyphicon-plus pull-right"></i>
+                </button>
+            </label>
+            <div id="category_{{$index}}" no-drag="!class.edit" ng-repeat="agendapoint in category.data | filter:query">
+                <uib-accordion close-others="true">
+                    <div uib-accordion-group class="panel-default" is-open="false">
+                        <uib-accordion-heading>
+                            <i class=" glyphicon" ng-class="{'glyphicon-chevron-down': expand, 'glyphicon-chevron-right': !expand}"></i>
+                            {{agendapoint.name | displayString: 100}} 
+                            <div class="accordian-actions-btns">
+                                <a ng-click="removeIncidentAgendaActivities(agendapoint,indexxx,$index,$event)" class="btn btn-danger btn-sm pull-right incident_activity_task">
+                                    <span class="fa fa-remove" title="Delete task"></span>
+                                </a>
+                                <a ng-click="addIncidentAgendaActivities(agendapoint,indexxx,$index,$event)" class="btn btn-sm btn-primary pull-right incident_activity_task">
+                                    <span class="fa fa-link" title="Link Task"></span>
+                                </a>
+                            </div>
+                        </uib-accordion-heading>
+
+                        <div class="panel-body">
+                            <div data-as-sortable="DragOptionsAgendaActivity" id={{agendapoint.id}} data-ng-model="agendapoint.incident_agenda_activities" class="panel-body" >
+                                <div class="row" style="display: block;">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <table st-table="activities" st-safe-src="safeActivities" class="table table-striped table-condensed table-activities"
+                                            >
+                                                 <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th class="col-md-2">Checklist Item</th>
+                                                        <th class="col-md-1">Responsibility</th>
+                                                        <th class="col-md-1"></th>
+                                                        <th class="col-md-2">Role</th>
+                                                        <th class="col-md-2">Actor</th>
+                                                        <th class="col-md-1">Status</th>
+                                                        <th class="col-md-1">Action</th>
+                                                    </tr>
+                                                    <!-- <th class="apd-group-select">
+                                                    </th> -->
+                                                </thead>
+                                                <tbody class="list-group">
+                                         
+                                                    <tr class="item" ng-repeat="activity in agendapoint.incident_agenda_activities | filter:searchVal" data-as-sortable-item ng-show="displayActivity(activity)">
+
+                                                        <td>
+                                                            <div class="col-xs-1 handle" data-as-sortable-item-handle
+                                                                style="margin-top: 10px;">
+                                                                <span class="ti-move">
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-default btn-sm btn-style-text" title="{{activity.name}}" ng-click="taskInfo(activity)">
+                                                                <span>{{activity.name }}</span>
+                                                            </button>
+                                                        </td>
+
+                                                        <td>{{activity.responsibility_level}}</td>
+
+                                                        <td style="line-height: 27px;">
+                                                            <switcher class="styled" ng-model="activity.activated" ng-change="updateAgendaActivityActivation(activity)" true-label="" false-label=""
+                                                                title="{{activity.activatedAt | date:'HH:mm dd-MM-yyyy' }}" data-toggle="tooltip" data-placement="bottom"
+                                                                tooltip>
+                                                            </switcher>
+                                                        </td>
+
+                                                        <td>
+                                                            {{displayActivityProperty(activity.role)}} - {{displayActivityProperty(activity.department)}}
+                                                            <br> {{displayActivityProperty(activity.organization)}}
+                                                        </td>
+                                                        <td>
+                                                            <a href="" ng-click="showAgendaUserModal(activity)" style="text-decoration: none; color:#626262">
+                                                                <div>
+                                                                    <img ng-src="{{userStatusImg(activity.response_actor)}}" class="img30_30" alt="No Image" />
+                                                                </div>
+                                                                {{displayActorName(activity.response_actor)}}
+                                                            </a>
+                                                        </td>
+                                                        <td ng-class="satusClass(activity.status)">
+                                                            <button class="btn status-btn" ng-click="updateAgendaActivityStatus(  activity)" title="{{activity.statusAt | date:'HH:mm dd-MM-yyyy' }}"
+                                                                data-toggle="tooltip" data-placement="bottom" tooltip>
+                                                                <span>
+                                                                    {{getStatusName(activity.status)}}
+                                                                </span>
+                                                            </button>
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-info" ng-click="editAgendaActivity(activity,indexxx, $parent.$index,$index)" title="Edit Task">
+                                                                <span class="glyphicon glyphicon-edit"></span>
+                                                            </button>
+                                                            <button class="btn btn-sm btn-danger" confirm="Are you sure you want to delete?" ng-click="deleteAgendaActivity(activity, indexxx, $parent.$index,$index)">
+                                                                <span class="glyphicon glyphicon-remove-sign"></span>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div ng-hide="agendapoint.incident_agenda_activities.length" class="watermark-text-medium" style="position: relative; font-size: 30px; margin-top: 20px;">
+                                    <p>No activity present.</p>
+                                </div>
+                                <div class="clearfix">
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </uib-accordion>
+            </div>
+        </div>
+
+<!-- ///////////////////////// Accordian table //////////////////////////// -->
+<div class="col-md-12" id="planActivitiesPanel" ng-show = "selectedIncidentPlan.action_plan.kind == 'activities'" >
+    <div>
+        <div ng-show="viewType == 'Section1'">
+            <uib-accordion close-others="true">
+                <div uib-accordion-group class="panel-default" is-open="true">
+                    <uib-accordion-heading>
+                        Activities <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': expand, 'glyphicon-chevron-right': !expand}"></i>
+                    </uib-accordion-heading>
+
+                    <!-- //////////////////// Unrecognized //////////////////////// -->
+                    <div class="panel-body">
+                        <div class="row" style="display: block;">
+                            <div class="col-md-11" style="margin-left: 60px;">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-sm" ng-model="searchVal" placeholder="Search task list via Title, Actor, Role, and Status">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default btn-raised">
+                                            <i class="fa fa-search fa-fwearch"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="col-md-12">
+                                <div class="table-responsive" style=" min-height: 500px;">
+
+                                    <table st-table="activities" st-safe-src="safeActivities" class="table table-striped table-condensed table-activities"
+                                    ng-show="planActivities.incident_activities.length">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th class="col-md-2">Checklist Item</th>
+                                            <th class="col-md-2">Responsibility</th>
+                                            <th class="col-md-1"></th>
+                                            <th class="col-md-2">Role</th>
+                                            <th class="col-md-2">Actor</th>
+                                            <th class="col-md-1">Status</th>
+                                            <th class="col-md-1"></th>
+                                        </tr>
+                                        <th class="apd-group-select">
+                                        </th>
+
+                                        <th></th>
+                                        <th class="apd-level-select">
+                                            <select chosen class="form-control" data-placeholder-text-single="'Select'" ng-model="levelFilter" ng-options="level.value as level.name for level in responsibilityLevels"
+                                            ng-change="applyLevelFilter(levelFilter)">
+                                            <option></option>
+                                        </select>
+                                    </th>
+                                    <th class="apd-action-select">
+                                        <select chosen class="form-control" data-placeholder-text-single="'Select'" ng-model="availabilityFilter" ng-options="status.value as status.name for status in filterAvailability"
+                                        ng-change="applyAvailabilityFilter(availabilityFilter)">
+                                        <option></option>
+                                    </select>
+                                </th>
+                                <th></th>
+                                <th></th>
+                                <th class="apd-status-select">
+                                    <select chosen multiple class="form-control" data-placeholder-text-multiple="'Select'" ng-model="statusFilter" ng-options="status.value as status.name for status in statusOptions"
+                                    ng-change="applyStatusFilter(statusFilter)">
+                                    <option></option>
+                                </select>
+                            </th>
+                        </thead>
+                        <tbody data-as-sortable="DragOptions1" data-ng-model="planActivities.incident_activities">
+                            <tr
+
+                            data-as-sortable-item
+                            ng-repeat="activity in planActivities.incident_activities | filter:searchVal"
+                            ng-show="displayActivity(activity)">
+                            <td>
+                                <div class="col-xs-1 handle" data-as-sortable-item-handle
+                                style="margin-top: 10px;" >
+                                <span class="ti-move">
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-default btn-sm btn-style-text" title="{{activity.name}}" ng-click="taskInfo(activity)">
+                                <span>{{activity.name }}</span>
+                            </button>
+                        </td>
+
+                        <td>{{activity.responsibility_level}}</td>
+
+                        <td style="line-height: 27px;">
+                            <switcher class="styled" ng-model="activity.activated" ng-change="updateActivityActivation(activity)" true-label="" false-label=""
+                            title="{{activity.activatedAt | date:'HH:mm dd-MM-yyyy' }}" data-toggle="tooltip" data-placement="bottom"
+                            tooltip>
+                        </switcher>
+                    </td>
+
+                    <td>
+                        {{displayActivityProperty(activity.role)}} - {{displayActivityProperty(activity.department)}}
+                        <br> {{displayActivityProperty(activity.organization)}}
+                    </td>
+                    <td>
+                        <a href="" ng-click="showUserModal(activity)" style="text-decoration: none; color:#626262">
+                            <div>
+                                <img ng-src="{{userStatusImg(activity.response_actor)}}" class="img30_30" alt="No Image" />
+                            </div>
+                            {{displayActorName(activity.response_actor)}}
+                        </a>
+                    </td>
+
+                    <td ng-class="satusClass(activity.status)">
+                        <button class="btn status-btn" ng-click="updateActivityStatus(activity)" title="{{activity.statusAt | date:'HH:mm dd-MM-yyyy' }}"
+                        data-toggle="tooltip" data-placement="bottom" tooltip>
+                        <span>
+                            {{getStatusName(activity.status)}}
+                        </span>
+                    </button>
+                </td>
+
+                <td>
+                    <button class="btn btn-sm btn-info" ng-click="editActivity(activity, $index)" title="Edit Task">
+                        <span class="glyphicon glyphicon-edit"></span>
+                    </button>
+                    <button class="btn btn-sm btn-danger" confirm="Are you sure you want to delete?" ng-click="deleteActivity(activity, $index)">
+                        <span class="glyphicon glyphicon-remove-sign"></span>
+                    </button>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</div>
+
+<div ng-hide="planActivities.incident_activities.length" class="watermark-text-medium" style="position: relative; font-size: 30px; margin-top: 20px;">
+    <p>No activity present for selected combination of incident & plan</p>
+</div>
+</div>
+</div>
+
+<!-- //////////////////// Unrecognized //////////////////////// -->
+</div>
+</uib-accordion>
+</div>
+
+<div ng-show="viewType == 'Section'">
+    <ul data-as-sortable="DragOptions" data-ng-model="planActivities.sections"
+    style="padding-left: 0px;">
+    <li class="panel-default" is-open="activityExpand"
+    data-as-sortable-item
+    ng-repeat="section in planActivities.sections"
+    style="margin-bottom: 15px; border: none;" >
+    <div class="col-xs-1 handle" data-as-sortable-item-handle
+    style="margin-top: 10px;" >
+    <span class="ti-move">
+    </span>
+</div>
+<uib-accordion close-others="true">
+    <div uib-accordion-group class="panel-default" is-open="expand">
+        <uib-accordion-heading>
+            {{section.name}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': expand, 'glyphicon-chevron-right': !expand}"></i>
+        </uib-accordion-heading>
+        <!-- ///////////////// accordian filter table /////////////// -->
+        <div class="panel-body">
+            <div class="row " style="display: block;">
+                <div class="col-md-2">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-raised btn-default"
+                                type="button"
+                                ng-click="markActive()"
+                                ng-disabled="selectedActivity()">
+                                Activate
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm" ng-model="searchVal" placeholder="Search task list via Title, Actor, Role, and Status">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default btn-raised">
+                                <i class="fa fa-search fa-fwearch"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="table-responsive">
+                <table st-table="activities" st-safe-src="safeActivities" class="table table-striped  table-condensed table-activities"
+                    ng-show="section.incident_activities.length">
+                    <thead>
+                        <tr>
+                            <th class="col-md-2">Checklist Item</th>
+                            <th class="col-md-2">Responsibility</th>
+                            <th class="col-md-1"></th>
+                            <th class="col-md-2">Role</th>
+                            <th class="col-md-2">Actor</th>
+                            <th class="col-md-1">Status</th>
+                            <th class="col-md-1"></th>
+                        </tr>
+                        <th></th>
+                        <th class="apd-level-select">
+                            <select chosen class="form-control" data-placeholder-text-single="'Select'" ng-model="levelFilter" ng-options="level.value as level.name for level in responsibilityLevels"
+                            ng-change="applyLevelFilter(levelFilter)">
+                                <option></option>
+                            </select>
+                        </th>
+                        <th class="apd-action-select">
+                            <select chosen class="form-control" data-placeholder-text-single="'Select'" ng-model="availabilityFilter" ng-options="status.value as status.name for status in filterAvailability"
+                            ng-change="applyAvailabilityFilter(availabilityFilter)">
+                                <option></option>
+                            </select>
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th class="apd-status-select">
+                            <select chosen multiple class="form-control" data-placeholder-text-multiple="'Select'" ng-model="statusFilter" ng-options="status.value as status.name for status in statusOptions"
+                            ng-change="applyStatusFilter(statusFilter)">
+                                <option></option>
+                            </select>
+                        </th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="activity in section.incident_activities | filter:searchVal | orderBy: 'id'" ng-show="displayActivity(activity)">
+                            <td>
+                                <button class="btn btn-default btn-sm" title="{{activity.name}}" ng-click="taskInfo(activity)">
+                                    <span>{{activity.name | displayString: 30}}</span>
+                                </button>
+                            </td>
+                            <td>{{activity.responsibility_level}}</td>
+                            <td style="line-height: 27px;">
+                                <switcher class="styled" ng-model="activity.activated" ng-change="updateActivityActivation(activity)" true-label="" false-label=""
+                                title="{{activity.activatedAt | date:'HH:mm dd-MM-yyyy' }}" data-toggle="tooltip" data-placement="bottom"
+                                tooltip>
+                                </switcher>
+                            </td>
+                            <td>
+                                {{displayActivityProperty(activity.role)}} - {{displayActivityProperty(activity.department)}}
+                                <br> {{displayActivityProperty(activity.organization)}}
+                            </td>
+                            <td>
+                                <a href="" ng-click="showUserModal(activity)" style="text-decoration: none; color:#626262">
+                                    <div>
+                                        <img ng-src="{{userStatusImg(activity.response_actor)}}" class="img30_30" alt="No Image" />
+                                    </div>
+                                    {{displayActorName(activity.response_actor)}}
+                                </a>
+                            </td>
+                            <td ng-class="satusClass(activity.status)">
+                                <button class="btn status-btn" ng-click="updateActivityStatus(activity)" title="{{activity.statusAt | date:'HH:mm dd-MM-yyyy' }}"
+                                data-toggle="tooltip" data-placement="bottom" tooltip>
+                                    <span>
+                                        {{getStatusName(activity.status)}}
+                                    </span>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-info" ng-click="editActivity(activity, $index)" title="Edit Task">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </button>
+                                <button class="btn btn-sm btn-danger" confirm="Are you sure you want to delete?" ng-click="deleteActivity(activity)">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-hide="section.incident_activities.length" class="watermark-text-medium" style="position: relative; font-size: 30px; margin-top: 20px;">
+                <p>No activity present for selected combination of incident & plan</p>
+            </div>
+
+</div>
+
+<!-- ///////////////// accordian filter table /////////////// -->
+</div>
+
+</uib-accordion>
+</li>
+</div>
+</div>
+
+<!--  <div ng-show="currentType==='checklist'">
+</div> -->
+</div>
+</div>
+
+<!-- ///////////////////////// Accordian table //////////////////////////// -->
+
+</div>
+</div>
+
+
+<a href=""
+ng-repeat="checklist in incident.checkLists"
+class="col-md-3"
+ng-click="getActivites(checklist, 'checklist')"
+style="margin-bottom: 20px; display: none">
+<div class="card"
+ng-class="{'selected-card': checklist.selectedCard}"
+style="background-color: rgba(177, 35, 35, 0.52)">
+<div class="card-content" style="position: static;">
+    <div class="card-headline">
+        <h3>{{checklist.name}}</h3>
+    </div>
+
+    <div class="card-body">
+        <p>
+            <b>Type: </b> Checklist
+            <br>
+            <b>Category: </b> {{checklist.all_category.name}}
+        </p>
+    </div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<!-- Cards End -->
+
+<!-- Task Listing Panel -->
+<div style="display: none;"
+class="panel panel-default"
+ng-include="'views/apdV2/activaties-table.html'">
+
+</div>
+
+
+<!-- Task Listing Panel Ends -->
+<style media="screen">
+td {
+    display: table-cell !important;
+}
+tr {
+    display: table-row !important;
+}
+.as-sortable-placeholder {
+    display: block !important;
+    width: 600px !important;
+}
+</style>

@@ -1,0 +1,187 @@
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg" id="modal-dialog" >
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header clearfix" id="modal-header">
+        <button type="button" class="close" ng-click="close()">×</button>
+        <h4 class="modal-title pull-left" id="modal-title">{{actionPlan.action_plan.name}}</h4>
+      </div>
+      <div class="modal-body modal_big_height" style=" overflow-y: auto">
+        <section>
+          <div class="panel-body">
+            <uib-tabset active="active">
+              <uib-tab index="0" heading="Task View" ng-click ="init()" class="custom-tabs">
+                <br><br>
+                <uib-accordion close-others="true">
+                  <div uib-accordion-group class="panel-default" is-open="true">
+                    <uib-accordion-heading>
+                      Activities <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': expand, 'glyphicon-chevron-right': !expand}"></i>
+                    </uib-accordion-heading>
+
+                    <!-- //////////////////// Unrecognized //////////////////////// -->
+                    <div class="panel-body">
+                      <div class="row">
+
+                        <div class="col-md-11" style="margin-left: 60px;">
+                          <div class="input-group">
+                            <input type="text" class="form-control input-sm" ng-model="searchVal" placeholder="Search task list via Title, Actor, Role, and Status">
+                            <span class="input-group-btn">
+                              <button class="btn btn-default btn-raised">
+                                <i class="fa fa-search fa-fwearch"></i>
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <div class="col-md-12">
+                          <div class="table-responsive" style=" min-height: 500px;">
+                            <table st-table="activities" st-safe-src="safeActivities" class="table table-striped table-condensed table-activities"
+                            ng-show="planActivities.incident_activities.length">
+                              <thead>
+                                <tr>
+                                  <th class="col-md-2">Checklist Item</th>
+                                  <th class="col-md-2">Responsibility</th>
+                                  <th class="col-md-1"> Activation Status</th>
+                                  <th class="col-md-2">Role</th>
+                                  <th class="col-md-2">Actor</th>
+                                  <th class="col-md-1">Status</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr ng-repeat="activity in planActivities.incident_activities | filter:searchVal">
+                                
+                                  <td>
+                                    <button class="btn btn-default btn-sm btn-style-text" title="{{activity.name}}" ng-click="taskInfo(activity)">
+                                      <span>{{activity.name }}</span>
+                                    </button>
+                                  </td>
+
+                                  <td>{{activity.responsibility_level}}</td>
+
+                                  <td style="line-height: 27px;">
+                                    <p ng-show = "activity.activated"> Activated</p>
+                                  </td>
+
+                                  <td>
+                                    {{displayActivityProperty(activity.role)}} - {{displayActivityProperty(activity.department)}}
+                                    <br> {{displayActivityProperty(activity.organization)}}
+                                  </td>
+                                 
+                                  <td>
+                                      {{displayActorName(activity.response_actor)}}
+                                  </td>
+
+                                  <td ng-class="satusClass(activity.status)">
+                                    <span>
+                                      {{getStatusName(activity.status)}}
+                                    </span>
+                                  </td>
+
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <div ng-hide="planActivities.incident_activities.length" class="watermark-text-medium" style="position: relative; font-size: 30px; margin-top: 20px;">
+                          <p>No activity present for selected combination of incident & plan</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </uib-accordion>
+              </uib-tab>
+              <uib-tab index="1" heading="Section View" ng-click ="sectionView()" class="custom-tabs">
+                <br><br>
+                <div ng-show="planActivities.sections.length" ng-repeat = "section in planActivities.sections">
+                  <uib-accordion close-others="true">
+                    <div uib-accordion-group class="panel-default" is-open="false">
+                      <uib-accordion-heading>
+                        {{section.name}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': expand, 'glyphicon-chevron-right': !expand}"></i>
+                      </uib-accordion-heading>
+
+                      <!-- //////////////////// Unrecognized //////////////////////// -->
+                      <div class="panel-body">
+                        <div class="row">
+
+                          <div class="col-md-11" style="margin-left: 60px;">
+                            <div class="input-group">
+                              <input type="text" class="form-control input-sm" ng-model="searchVal" placeholder="Search task list via Title, Actor, Role, and Status">
+                              <span class="input-group-btn">
+                                <button class="btn btn-default btn-raised">
+                                  <i class="fa fa-search fa-fwearch"></i>
+                                </button>
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <div class="col-md-12">
+                            <div class="table-responsive" style=" min-height: 500px;">
+                              <table st-table="activities" st-safe-src="safeActivities" class="table table-striped table-condensed table-activities"
+                              ng-show="section.incident_activities.length">
+                                <thead>
+                                  <tr>
+                                    <th class="col-md-2">Checklist Item</th>
+                                    <th class="col-md-2">Responsibility</th>
+                                    <th class="col-md-1"> Activation Status</th>
+                                    <th class="col-md-2">Role</th>
+                                    <th class="col-md-2">Actor</th>
+                                    <th class="col-md-1">Status</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr ng-repeat="activity in section.incident_activities | filter:searchVal">
+                                  
+                                    <td>
+                                      <button class="btn btn-default btn-sm btn-style-text" title="{{activity.name}}" ng-click="taskInfo(activity)">
+                                        <span>{{activity.name }}</span>
+                                      </button>
+                                    </td>
+
+                                    <td>{{activity.responsibility_level}}</td>
+
+                                    <td style="line-height: 27px;">
+                                      <p ng-show = "activity.activated"> Activated</p>
+                                    </td>
+
+                                    <td>
+                                      {{displayActivityProperty(activity.role)}} - {{displayActivityProperty(activity.department)}}
+                                      <br> {{displayActivityProperty(activity.organization)}}
+                                    </td>
+                                   
+                                    <td>
+                                        {{displayActorName(activity.response_actor)}}
+                                    </td>
+
+                                    <td ng-class="satusClass(activity.status)">
+                                      <span>
+                                        {{getStatusName(activity.status)}}
+                                      </span>
+                                    </td>
+
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <div ng-hide="section.incident_activities.length" class="watermark-text-medium" style="position: relative; font-size: 30px; margin-top: 20px;">
+                            <p>No activity present in this section for selected combination of incident & plan</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </uib-accordion>
+                </div>
+                <div ng-hide="planActivities.sections.length" class="watermark-text-medium" style="position: relative; font-size: 30px; margin-top: 20px;">
+                  <p>No Sections present for selected combination of incident & plan</p>
+                </div>
+              </uib-tab>
+            </uib-tabset>
+          </div>
+        </section>
+        <div class="modal-footer">
+          <button class="btn btn-primary" ng-click="close()" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

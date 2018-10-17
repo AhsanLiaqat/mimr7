@@ -1,0 +1,36 @@
+<div class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div id="modal-header" class="modal-header">
+        <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">&times;</button>
+        <h4 id="modal-title" class="modal-title">Action Plan: <strong>{{actionPlan.name}}</strong> is now saved in your Action Plan Library.</h4>
+
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-8 col-md-offset-4">
+              <a class="btn btn-sm btn-info" ng-click="toAssignActionPlan()" data-dismiss="modal"><strong> INCIDENT PAGE</strong></a>
+          </div>
+          <div class="col-md-3 col-md-offset-2">
+              <button title="Edit Plan" ng-click="editNewPlan(actionPlan.id)" class="btn btn-sm btn-success">
+                <span class="glyphicon glyphicon-copyright-mark"> </span>
+                Edit Plan
+              </button>
+          </div>
+          <div class="col-md-3">
+              <button title="Print Plan" class="btn btn-sm btn-success" ng-click="printPlan(actionPlan)">
+                <span class="glyphicon glyphicon-print"> </span>
+                Print Plan
+              </button>
+          </div>
+          <div class="col-md-2">
+              <a class="btn btn-sm btn-danger" ng-click="cancel()" data-dismiss="modal"> Close</a>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <a class="btn btn-sm btn-info" ng-click="cancel()" data-dismiss="modal">Cancel</a> -->
+      </div>
+    </div>
+  </div>
+</div>

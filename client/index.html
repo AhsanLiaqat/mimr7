@@ -1,0 +1,719 @@
+<!doctype html>
+    <!--[if lt IE 8]><html class="no-js lt-ie8"><![endif]-->
+    <!--[if gt IE 8]><!--><html class="no-js"><!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <title>CrisisHub V2</title>
+        <meta name="description" content="Responsive Admin Web App `th Bootstrap and AngularJS">
+        <meta name="keywords" content="angularjs admin, admin templates, admin themes, bootstrap admin">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+        <!-- Needs images, font... therefore can not be part of main.css -->
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,600italic,400,600,300,700' rel='stylesheet' type='text/css'>
+        <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css">
+        <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+        <link rel="stylesheet" href="fonts/themify-icons/themify-icons.min.css">
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+        <link href="bower_components/toastr/toastr.css">
+        <link rel="stylesheet" href="bower_components/weather-icons/css/weather-icons.min.css">
+        <link rel="stylesheet" href="/bower_components/angular-google-places-autocomplete/src/autocomplete.css">
+
+        <!-- BEGIN KENDOUI STYLES -->
+        <link rel="stylesheet" href="kendo/styles/kendo.common.min.css">
+        <link href="kendo/styles/kendo.default.min.css" rel="stylesheet" />
+
+        <link rel="stylesheet" href="/bower_components/angular-google-places-autocomplete/src/autocomplete.css">
+        <link rel="stylesheet" href="/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css">
+        <link rel="stylesheet" href="/bower_components/bootstrap-combobox/css/bootstrap-combobox.css">
+        <!-- end Needs images -->
+
+        <!-- build:css({.tmp,client}) styles/main.css -->
+        <link rel="stylesheet" href="styles/bootstrap.css">
+        <link rel="stylesheet" href="styles/ui.css">
+        <link rel="stylesheet" href="styles/smart-table.css">
+        <link rel="stylesheet" href="bower_components/angular-switcher/dist/angular-switcher.min.css">
+        <link rel="stylesheet" href="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
+        <link rel="stylesheet" href="bower_components/ng-sortable/dist/ng-sortable.min.css">
+        <link rel="stylesheet" href="bower_components/ng-sortable/dist/ng-sortable.style.min.css">
+        <link rel="stylesheet" href="bower_components/chosen/chosen.css">
+        <link rel="stylesheet" href="bower_components/intl-tel-input/build/css/intlTelInput.css">
+        <link rel="stylesheet" href="bower_components/TimelineJS/build/css/timeline.css">
+        <link rel="stylesheet" href="bower_components/TimelineJS/build/css/themes/font/Rancho-Gudea.css">
+        <link rel="stylesheet" href="bower_components/ng-tags-input/ng-tags-input.min.css">
+        <link rel="stylesheet" href="bower_components/angular-circular-timepicker/dist/stylesheets/angular.circular.timepicker.css"/>
+        <link rel="stylesheet" href="bower_components/angular-bootstrap-colorpicker/css/colorpicker.css"/>
+        <link rel="stylesheet" type="text/css" href="/bower_components/angularjs-slider/dist/rzslider.css"/>
+
+         <!-- toggle button -->
+         <link rel="stylesheet" type="text/css" href="angular-bootstrap-toggle-switch/bootstrap2/angular-toggle-switch-bootstrap-2.css">
+
+         <link href="bower_components/angularjs-datepicker/src/css/angular-datepicker.css" rel="stylesheet" type="text/css" />
+
+         <link rel='stylesheet' href='bower_components/textAngular/dist/textAngular.css'>
+        <!--  <link rel="stylesheet" type="text/css" href="angular-bootstrap-toggle-switch/bootstrap3/angular-toggle-switch-bootstrap-3.css"> -->
+
+
+
+
+        <!-- Bootstrap Material Design -->
+        <link rel="stylesheet" type="text/css" href="bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.css">
+        <link rel="stylesheet" type="text/css" href="bower_components/bootstrap-material-design/dist/css/ripples.min.css">
+
+        <!-- Material Theme for Angular Chosen Selectors -->
+        <link rel="stylesheet" type="text/css" href="bower_components/chosen-material-theme/dist/chosen-material-theme.min.css">
+            <!-- Angular Timelie  -->
+        <link rel="stylesheet" type="text/css" href="bower_components/angular-timeline/dist/angular-timeline.css">
+         <link rel="stylesheet" type="text/css" href="bower_components/froala-wysiwyg-editor/css/froala_editor.css">
+         <link rel="stylesheet" type="text/css" href="bower_components/froala-wysiwyg-editor/css/froala_style.css">
+          <link rel="stylesheet" type="text/css" href="bower_components/vis/dist/vis.min.css">
+
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/custom.css">
+        <link rel="stylesheet" href="styles/responsive.css">
+
+        <!-- endbuild -->
+    </head>
+
+    <body   data-ng-app="app"
+            id="app"
+            class="app nav-collapsed-min"
+            data-custom-page
+            data-off-canvas-nav
+            data-ng-controller="appCtrl"
+            data-ng-class="{ 'layout-boxed': admin.layout === 'boxed',
+                            'nav-collapsed-min': admin.menu === 'collapsed' }">
+
+            <!--[if lt IE 9]>
+            <div class="lt-ie9-bg">
+                <p class="browsehappy">You are using an <strong>outdated</strong> browser.</p>
+                <p>Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+            </div>
+            <![endif]-->
+
+        <div class="my-loader-wrap">
+            <div class="my-loader">
+                <div class="my-loader-1 boxx"></div>
+                <div class="my-loader-2 boxx"></div>
+                <div class="my-loader-3 boxx"></div>
+                <div class="my-loader-4 boxx"></div>
+                <div class="my-loader-5 boxx"></div>
+            </div>
+        </div>
+        <header  ng-if= "fixedHeader"
+                 data-ng-include="'views/header.html'"
+                 id="header"
+                 class="header-container "
+                 data-ng-class="{ 'header-fixed': admin.fixedHeader,
+                                  'bg-white': ['11','12','13','14','15','16','21'].indexOf(admin.skin) >= 0,
+                                  'bg-dark': admin.skin === '31',
+                                  'bg-primary': ['22','32'].indexOf(admin.skin) >= 0,
+                                  'bg-success': ['23','33'].indexOf(admin.skin) >= 0,
+                                  'bg-info-alt': ['24','34'].indexOf(admin.skin) >= 0,
+                                  'bg-warning': ['25','35'].indexOf(admin.skin) >= 0,
+                                  'bg-danger': ['26','36'].indexOf(admin.skin) >= 0 }">
+        </header>
+
+        <div class="main-container"
+             data-ng-class="{ 'app-nav-horizontal': admin.menu === 'horizontal' }">
+            <aside ng-if="fixedHeader"
+                   data-ng-include="'views/sidebar.html'"
+                   id="nav-container"
+                   class="nav-container"
+                   data-ng-class="{ 'nav-fixed': admin.fixedSidebar,
+                                    'nav-horizontal': admin.menu === 'horizontal',
+                                    'nav-vertical': admin.menu === 'vertical',
+                                    'bg-white': ['31','32','33','34','35','36'].indexOf(admin.skin) >= 0,
+                                    'bg-dark': ['31','32','33','34','35','36'].indexOf(admin.skin) < 0 }">
+            </aside>
+            <div id="content" class="content-container">
+                <section data-ng-view
+                         class="view-container {{admin.pageTransition.class}}">
+                </section>
+            </div>
+        </div>
+        <script
+         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAE0RStL4E3IFxlQ29PbH94uIm6t_y1x-c&libraries=places,geometry,drawing"
+                async defer>
+        </script>
+
+       <!-- Toggle js -->
+
+         <!-- <script type="text/javascript"
+         src="angular-bootstrap-toggle-switch/angular-toggle-switch.js">
+         </script>   -->
+
+
+       <!-- Toggle js -->
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="bower_components/angular/angular.min.js"></script>
+        <!-- <script type="text/javascript" src="bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.min.js"></script> -->
+        <script src="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.js"></script>
+        <script type="javascript" src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+        <script src="bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.min.js"></script>
+        <script src="bower_components/angular-route/angular-route.min.js"></script>
+        <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+        <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+        <!-- <script src="bower_components/angular-websocket/dist/angular-websocket.min.js"></script> -->
+        <script src="bower_components/angular-smart-table/dist/smart-table.js"></script>
+        <script src="bower_components/cryptojslib/rollups/aes.js"></script>
+        <script src="bower_components/cryptojslib/rollups/pbkdf2.js"></script>
+        <script src="bower_components/angular-cryptography/mdo-angular-cryptography.js"></script>
+        <script src="bower_components/angularjs-datepicker/src/js/angular-datepicker.js"></script>
+        <!-- endbuild -->
+
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+        <script src="externalJs/d3-timeline.js"></script>
+        <script src="bower_components/underscore/underscore-min.js"></script>
+        <script src="bower_components/angular-underscore-module/angular-underscore-module.js"></script>
+        <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+        <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
+
+        <!-- build:js scripts/ui.js -->
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="bower_components/toastr/toastr.min.js"></script>
+        <script src="bower_components/jquery.slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+        <script src="bower_components/angular-scroll/angular-scroll.min.js"></script>
+        <script src="bower_components/flot/jquery.flot.js"></script>
+        <script src="bower_components/flot/jquery.flot.resize.js"></script>
+        <script src="bower_components/flot/jquery.flot.pie.js"></script>
+        <script src="scripts/vendors/jquery.flot.orderBars.js"></script>
+        <script src="bower_components/flot/jquery.flot.stack.js"></script>
+        <script src="bower_components/flot.curvedlines/curvedLines.js"></script>
+        <script src="bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
+        <script src="bower_components/flot/jquery.flot.time.js"></script>
+        <script src="bower_components/jquery.easy-pie-chart/dist/angular.easypiechart.min.js"></script>
+        <script src="scripts/vendors/jquery.sparkline.min.js"></script>
+		<script src="/bower_components/angular-google-places-autocomplete/src/autocomplete.js"></script>
+        <script src="bower_components/ngmap/build/scripts/ng-map.min.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="scripts/vendors/jquery-jvectormap-1.2.2.min.js"></script>
+        <script src="scripts/vendors/jquery-jvectormap-world-mill-en.js"></script>
+        <script src="bower_components/textAngular/dist/textAngular-rangy.min.js"></script>
+        <script src="bower_components/textAngular/dist/textAngular.min.js"></script>
+        <script src="bower_components/textAngular/dist/textAngular-sanitize.min.js"></script>
+        <script src="bower_components/moment/min/moment.min.js"></script>
+        <script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+        <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+        <script src="bower_components/angular-translate/angular-translate.min.js"></script>
+        <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+        <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
+        <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
+        <script src="bower_components/jquery-spinner/dist/jquery.spinner.min.js"></script>
+        <script src="bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
+        <script src="bower_components/jquery-steps/build/jquery.steps.min.js"></script>
+        <script src="bower_components/bootstrap-file-input/bootstrap.file-input.js"></script>
+        <script type="text/javascript" src="bower_components/tinymce/tinymce.min.js"></script>
+        <script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
+        <script src="bower_components/angular-ui-tinymce/dist/tinymce.min.js"></script>
+		<link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+		<script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+        <script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.min.js"></script>
+        <script src="/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+        <script src="bower_components/angular-ui-tinymce/dist/tinymce.min.js"></script>
+        <script src="bower_components/checklist-model/checklist-model.js"></script>
+        <script src="bower_components/angular-confirm-modal/angular-confirm.js"></script>
+        <script src="bower_components/jpkleemans-angular-validate/dist/angular-validate.min.js"></script>
+        <script src="bower_components/angular-switcher/dist/angular-switcher.min.js"></script>
+            <!-- for no html5 browsers support -->
+        <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+        <script src="bower_components/angular-modal-service/dst/angular-modal-service.js"></script>
+        <script src="bower_components/ng-sortable/dist/ng-sortable.min.js"></script>
+        <script src="bower_components/angular-elastic/elastic.js"> </script>
+        <script src="bower_components/ng-textarea-enter/src/ng-textarea-enter.js"> </script>
+        <script src="bower_components/bootstrap-combobox/js/bootstrap-combobox.js"> </script>
+
+        <script src="bower_components/videogular/videogular.js"></script>
+		<script src="bower_components/videogular-controls/vg-controls.js"></script>
+		<script src="bower_components/videogular-overlay-play/vg-overlay-play.js"></script>
+		<script src="bower_components/videogular-poster/vg-poster.js"></script>
+		<script src="bower_components/videogular-buffering/vg-buffering.js"></script>
+        <script src="bower_components/chosen/chosen.jquery.js"></script>
+        <script src="bower_components/angular-chosen-localytics/dist/angular-chosen.min.js"></script>
+        <script src="bower_components/angular-ui-unique/unique.min.js"></script>
+
+        <!-- <script src="bower_components/ng-intl-tel-input/dist/ng-intl-tel-input.min.js"></script> -->
+
+        <script src="bower_components/intl-tel-input/build/js/intlTelInput.js"></script>
+        <script src="bower_components/TimelineJS/build/js/timeline.js"></script>
+        <script src="bower_components/angular-timelinejs/build/angular-timelinejs.js"></script>
+        <script src="bower_components/ng-tags-input/ng-tags-input.min.js"></script>
+        <script src="externalJs/ngCountries.min.js"></script>
+        <script src="bower_components/ng-idle/angular-idle.js"></script>
+        <script src="bower_components/angular-circular-timepicker/dist/javascript/angular.circular.timepicker.js"></script>
+        <script src="bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"></script>
+        <script src="bower_components/humanize-duration/humanize-duration.js"></script>
+        <script src="bower_components/angular-timer/dist/angular-timer.min.js"></script>
+
+        <!-- <script src="bower_components/angular-timer/app/js/_timer.js"></script> -->
+        <script src="bower_components/vis/dist/vis.min.js"></script>
+        <script src="bower_components/angular-visjs/angular-vis.js"></script>
+
+        <script src="bower_components/angular-timeline/dist/angular-timeline.js"></script>
+        <script src="bower_components/angularjs-slider/dist/rzslider.js"></script>
+        <!-- <script src="bower_components/ckeditor/ckeditor.js"></script> -->
+        <!-- <script src="bower_components/angular-ckeditor/angular-ckeditor.js"></script> -->
+        <script src="bower_components/froala-wysiwyg-editor/js/froala_editor.min.js"></script>
+        <!-- <script src="bower_components/froala-wysiwyg-editor/js/plugins/file.min.js"></script> -->
+        <script src="bower_components/froala-wysiwyg-editor/js/plugins/colors.min.js"></script>
+        <script src="bower_components/froala-wysiwyg-editor/js/plugins/image.min.js"></script>
+        <script src="bower_components/froala-wysiwyg-editor/js/plugins/image_manager.min.js"></script>
+        <script src="externalJs/angular-froala.js"></script>
+
+
+        <!-- Kendo UI combined JavaScript -->
+        <script src="kendo/js/kendo.all.min.js"></script>
+        <!-- build:js({.tmp,client}) scripts/app.js -->
+        <!-- endbuild -->
+
+		<script src="/socket.io/socket.io.js"></script>
+        <script src="scripts/constants.js"></script>
+        <script src="scripts/html2canvas.js"></script>
+        <script src="scripts/app-module.js"></script>
+        <script src="services/socket-service.js"></script>
+
+        <script src="scripts/core/config-route.js"></script>
+        <script src="scripts/core/app-ctrl.js"></script>
+        <script src="scripts/core/i18n.js"></script>
+
+        <!--///////////////////////// Services ////////////////////////////-->
+
+        <script src="services/query-service.js"></script>
+        <script src="services/auth-service.js"></script>
+        <script src="services/intercepter.js"></script>
+        
+        <!--/////////////////////// Settings Services ////////////////////////////-->
+
+        <script src="services/settings/dashboard-category-service.js"></script>
+        <script src="services/settings/department-service.js"></script>
+        <script src="services/settings/account-service.js"></script>
+        <script src="services/settings/all-category-service.js"></script>
+        <script src="services/settings/activity-service.js"></script>
+        <script src="services/settings/capacity-service.js"></script>
+        <script src="services/settings/check-list-service.js"></script>
+        <script src="services/settings/color-palette-service.js"></script>
+        <script src="services/settings/incident-team-service.js"></script>
+        <script src="services/settings/incident-type-service.js"></script>
+        <script src="services/settings/library-service.js"></script>
+        <script src="services/settings/organization-service.js"></script>
+        <script src="services/settings/scenario-service.js"></script>
+        <script src="services/settings/role-service.js"></script>
+        <script src="services/settings/location-service.js"></script>
+        <script src="services/settings/custom-message-service.js"></script>
+        <script src="services/settings/tag-service.js"></script>
+        <script src="services/settings/task-service.js"></script>
+        <script src="services/settings/action-plan-service.js"></script>
+        <script src="services/settings/agenda-point-service.js"></script>
+
+        <!--///////////////// Crisis Manager Services ////////////////////////////-->
+
+        <script src="services/crisis-manager/incident-plan-service.js"></script>
+        <script src="services/crisis-manager/incident-activity-service.js"></script>
+        <script src="services/crisis-manager/incident-check-list-service.js"></script>
+        <script src="services/crisis-manager/action-service.js"></script>
+        <script src="services/crisis-manager/decision-service.js"></script>
+        <script src="services/crisis-manager/class-service.js"></script>
+        <script src="services/crisis-manager/dynamic-form-service.js"></script>
+        <script src="services/crisis-manager/incident-shape-service.js"></script>
+        <script src="services/crisis-manager/mail-service.js"></script>
+        <script src="services/crisis-manager/message-history-service.js"></script>
+        <script src="services/crisis-manager/message-service.js"></script>
+        <script src="services/crisis-manager/plan-activity-service.js"></script>
+        <script src="services/crisis-manager/report-service.js"></script>
+        <script src="services/crisis-manager/section-service.js"></script>
+        <script src="services/crisis-manager/incident-service.js"></script>
+        <script src="services/crisis-manager/map-image-service.js"></script>
+        <script src="services/crisis-manager/alert-history-service.js"></script>
+        <script src="services/crisis-manager/email-track-service.js"></script>
+
+    <!--//////////////////////////////// Controllers ////////////////////////////-->
+
+
+        <script src="scripts/crisis-manager/references/ref-lib-ctrl.js"></script>
+        <script src="scripts/crisis-manager/messages-and-task/message-ctrl.js"></script>
+        <script src="scripts/crisis-manager/messages-and-task/reference-library-ctrl.js"></script>
+
+
+        <script src="scripts/user-tasks/user-task-ctrl.js"></script>
+        <script src="scripts/user-tasks/task-detail-ctrl.js"></script>
+        <script src="scripts/admin-ctrl.js"></script>
+        <script src="scripts/admin-create-ctrl.js"></script>
+        <script src="scripts/copy-accounts/copy-messages-ctrl.js"></script>
+
+        <script src="scripts/settings/departments/list-ctrl.js"></script>
+        <script src="scripts/settings/departments/form-ctrl.js"></script>
+
+        <script src="scripts/dynamic-form/dynamic-form-ctrl.js"></script>
+        <script src="scripts/dynamic-form/add-form-type-ctrl.js"></script>
+        <script src="scripts/dynamic-form/form-type-ctrl.js"></script>
+        <script src="scripts/dynamic-form/dynamic-form-create-ctrl.js"></script>
+        <script src="scripts/dynamic-form/dynamic-form-view-ctrl.js"></script>
+        <script src="scripts/dynamic-form/dynamic-form-data-view-ctrl.js"></script>
+
+
+
+        <script src="scripts/chart/chart-module.js"></script>
+        <script src="scripts/chart/chart-ctrl.js"></script>
+        <script src="scripts/chart/chart-directive.js"></script>
+
+        <script src="scripts/form/form-module.js"></script>
+        <script src="scripts/form/form-ctrl.js"></script>
+        <script src="scripts/form/form-directive.js"></script>
+        <script src="scripts/form/form-validation-module.js"></script>
+        <script src="scripts/form/form-validation-ctrl.js"></script>
+        <script src="scripts/form/form-validation-directive.js"></script>
+
+        <script src="scripts/layout/nav-module.js"></script>
+        <script src="scripts/layout/nav-directive.js"></script>
+
+        <script src="scripts/page/page-module.js"></script>
+        <script src="scripts/page/page-ctrl.js"></script>
+        <script src="scripts/page/page-directive.js"></script>
+        <script src="scripts/page/forgot-password-ctrl.js"></script>
+        <script src="scripts/page/invite-ctrl.js"></script>
+        <script src="scripts/page/simulation-login-ctrl.js"></script>
+
+        <script src="scripts/table/table-module.js"></script>
+        <script src="scripts/table/table-ctrl.js"></script>
+
+
+        <script src="scripts/settings/task-libraries/list-ctrl.js"></script>
+        <script src="scripts/settings/task-libraries/add-ctrl.js"></script>
+        <script src="scripts/settings/task-libraries/edit-wizard-ctrl.js"></script>
+
+
+        <script src="scripts/reports/reports-view.js"></script>
+         <script src="scripts/reports/reports-email.js"></script>
+        <script src="scripts/reports/report.js"></script>
+
+        <script src="scripts/activate/quick-add-user-ctrl.js"></script>
+        <script src="scripts/activate/quick-edit-user-ctrl.js"></script>
+
+        <script src="scripts/crisis-manager/home/home-ctrl.js"></script>
+        <script src="scripts/crisis-manager/home/team-alert-acknowledgment-modal-ctrl.js"></script>
+        <script src="scripts/crisis-manager/status-report/reports-ctrl.js"></script>
+        <script src="scripts/crisis-manager/status-report/reports-create.js"></script>
+        <script src="scripts/crisis-manager/status-report/reports-sent-to.js"></script>
+        <script src="scripts/crisis-manager/status-report/report-view-modal-ctrl.js"></script>
+        <script src="scripts/crisis-manager/user-status/activation-ctrl.js"></script>
+        <script src="scripts/crisis-manager/action-plan-dashboard/dashboard-ctrl.js"></script>
+
+        <script src="scripts/crisis-manager/information-dashboard/subclass-ctrl.js"></script>
+        <script src="scripts/crisis-manager/information-dashboard/edit-class-summary-ctrl.js"></script>
+        <script src="scripts/crisis-manager/information-dashboard/class-edit-ctrl.js"></script>
+        <script src="scripts/crisis-manager/information-dashboard/user-assign-to-action-ctrl.js"></script>
+        <script src="scripts/crisis-manager/information-dashboard/summary-report-mail-ctrl.js"></script>
+        <script src="scripts/crisis-manager/information-dashboard/reset-popup-modal.js"></script>
+        <script src="scripts/crisis-manager/information-dashboard/design-dashboard.js"></script>
+        <script src="scripts/crisis-manager/information-dashboard/timeline-ctrl.js"></script>
+        <script src="scripts/crisis-manager/information-dashboard/action-list-summary-report-ctrl.js"></script>
+
+        <script src="scripts/crisis-manager/general/location-map.js"></script>
+        <script src="scripts/crisis-manager/general/location-map-page.js"></script>
+        <script src="scripts/crisis-manager/action-plan-dashboard/action-plan-detail-page.js"></script>
+        <script src="scripts/crisis-manager/action-plan-dashboard/view-outcomes-ctrl.js"></script>
+        <script src="scripts/crisis-manager/general/show-teams.js"></script>
+        <script src="scripts/crisis-manager/status-report/status-report-ctrl.js"></script>
+        <script src="scripts/crisis-manager/status-report/status-report-mail.js"></script>
+        <script src="scripts/crisis-manager/timeline/timeline-ctrl.js"></script>
+        <script src="scripts/crisis-manager/general/incident-check-list-ctrl.js"></script>
+        <script src="scripts/crisis-manager/planning-dashboard/dashboard-ctrl.js"></script>
+        <script src="scripts/crisis-manager/planning-dashboard/new-action-plan-ctrl.js"></script>
+        <script src="scripts/crisis-manager/planning-dashboard-v2/new-action-plan-copy-ctrl.js"></script>
+        <script src="scripts/crisis-manager/planning-dashboard/section-view-modal-ctrl.js"></script>
+        
+        <script src="scripts/crisis-manager/visual-dashboard/visual-dashboard-ctrl.js"></script>
+
+        <script src="scripts/crisis-manager/planning-dashboard-v2/dashboard-ctrl.js"></script>
+
+        <script src="scripts/crisis-manager/home/home-ctrl.js"></script>
+        <script src="scripts/crisis-manager/home/show-action-plan.js"></script>
+        <script src="scripts/crisis-manager/home/show-action-plan-activities-ctrl.js"></script>
+
+        <script src="scripts/home/main-home-ctrl.js"></script>
+        <script src="scripts/home/add-incident-modal-ctrl.js"></script>
+        <script src="scripts/home/alert-team-modal-ctrl.js"></script>
+        <script src="scripts/home/add-team-modal-ctrl.js"></script>
+        <script src="scripts/home/create-incident-type-ctrl.js"></script>
+        <script src="scripts/home/edit-msg-ctrl.js"></script>
+        <script src="scripts/home/closed-report-ctrl.js"></script>
+
+
+<!-- settings controllers -->
+    <!-- Home Page (Preparation Manager Controller) -->
+        <script src="scripts/settings/settings-home-ctrl.js"></script>
+    <!-- Incident-types controllers -->
+        <script src="scripts/settings/incident-types/incident-types-ctrl.js"></script>
+        <script src="scripts/settings/incident-types/incident-types-edit-ctrl.js"></script>
+    <!-- Dashboard categories controllers -->
+        <script src="scripts/settings/dashboard-categories/dashboard-categories-ctrl.js"></script>
+        <script src="scripts/settings/dashboard-categories/dashboard-categories-form-ctrl.js"></script>
+    <!-- Color Palette controllers -->
+        <script src="scripts/settings/color-palettes/color-palettes-ctrl.js"></script>
+        <script src="scripts/settings/color-palettes/color-palettes-edit-ctrl.js"></script>
+    <!-- Capacity controllers -->
+        <script src="scripts/settings/capacities/capacity-ctrl.js"></script>
+        <script src="scripts/settings/capacities/capacity-edit-ctrl.js"></script>
+    <!-- Scenario controllers -->
+        <script src="scripts/settings/scenarios/scenario-ctrl.js"></script>
+        <script src="scripts/settings/scenarios/scenario-edit-ctrl.js"></script>
+    <!-- Libraries controllers -->
+        <script src="scripts/settings/libraries/libraries-ctrl.js"></script>
+        <script src="scripts/settings/libraries/form-ctrl.js"></script>
+        <script src="scripts/settings/libraries/edit-ctrl.js"></script>
+        <script src="scripts/settings/libraries/view-ctrl.js"></script>
+    <!-- Message Library controllers -->
+        <script src="scripts/settings/message-libraries/message-libraries-ctrl.js"></script>
+        <script src="scripts/settings/message-libraries/message-libraries-view-ctrl.js"></script>
+
+        <script src="scripts/settings/account/account-module.js"></script>
+        <script src="scripts/settings/account/account-ctrl.js"></script>
+
+        <script src="scripts/settings/roles/roles-ctrl.js"></script>
+        <script src="scripts/settings/roles/form-ctrl.js"></script>
+        <script src="scripts/settings/all-categories/list-ctrl.js"></script>
+        <script src="scripts/settings/all-categories/form-ctrl.js"></script>
+
+
+        <script src="scripts/settings/check-lists/list-ctrl.js"></script>
+        <script src="scripts/settings/check-lists/create-ctrl.js"></script>
+        <script src="scripts/settings/check-lists/attach-ctrl.js"></script>
+
+        <script src="scripts/settings/agenda-points/list-ctrl.js"></script>
+        <script src="scripts/settings/agenda-points/create-modal-ctrl.js"></script>
+        <script src="scripts/settings/agenda-points/task-list-modal-ctrl.js"></script>
+
+        <script src="scripts/settings/incident-agenda-points/create-modal-ctrl.js"></script>
+
+        <script src="scripts/settings/check-lists/view-ctrl.js"></script>
+        <script src="scripts/settings/check-lists/task-link-modal-ctrl.js"></script>
+
+        <script src="scripts/settings/users/users-module.js"></script>
+        <script src="scripts/settings/users/list-ctrl.js"></script>
+        <script src="scripts/settings/users/create-ctrl.js"></script>
+        <script src="scripts/settings/users/form-ctrl.js"></script>
+        <script src="scripts/settings/users/view-ctrl.js"></script>
+        <script src="scripts/settings/users/department-modal-ctrl.js"></script>
+
+<!-- simulation controllers -->
+
+    <!-- Home Page (Simulation Manager Controller) -->
+        <script src="scripts/simulation/simulation-home-ctrl.js"></script>
+
+    <!-- Player controllers -->
+        <script src="scripts/simulation/players/player-ctrl.js"></script>
+        <script src="scripts/simulation/players/player-modal-ctrl.js"></script>
+
+    <!-- Player List controllers -->
+        <script src="scripts/simulation/player-lists/import-player-list-ctrl.js"></script>
+        <script src="scripts/simulation/player-lists/select-player-list-ctrl.js"></script>
+        <script src="scripts/simulation/player-lists/player-list-ctrl.js"></script>
+        <script src="scripts/simulation/player-lists/player-list-modal-ctrl.js"></script>
+
+    <!-- information - dashboard game controllers -->
+        <script src="scripts/simulation/id-games/schedule-id-game-ctrl.js"></script>
+        <script src="scripts/simulation/id-games/play-id-game-ctrl.js"></script>
+
+    <!-- information - dashboard game message controllers -->
+        <script src="scripts/simulation/id-game-messages/id-message-ctrl.js"></script>
+        <script src="scripts/simulation/id-game-messages/id-message-order-ctrl.js"></script>
+        <script src="scripts/simulation/id-game-messages/id-message-modal-ctrl.js"></script>
+
+    <!-- schedule information - dashboard game controllers -->
+        <script src="scripts/simulation/id-scheduled-games/schedule-id-game-modal-ctrl.js"></script>
+
+    <!-- Category controllers -->
+        <script src="scripts/simulation/categories/new-game-category-ctrl.js"></script>
+        <script src="scripts/simulation/categories/simulation-category-ctrl.js"></script>
+
+    <!-- Game Roles controllers -->
+        <script src="scripts/simulation/game-roles/game-role-ctrl.js"></script>
+        <script src="scripts/simulation/game-roles/game-role-modal-ctrl.js"></script>
+
+    <!-- Game Library controllers -->
+        <script src="scripts/simulation/game-libraries/simulation-library-ctrl.js"></script>
+        <script src="scripts/simulation/game-libraries/new-game-library-ctrl.js"></script>
+        <script src="scripts/simulation/game-libraries/edit-game-library-ctrl.js"></script>
+
+    <!-- Game Message controllers -->
+        <script src="scripts/simulation/game-messages/simulation-message-ctrl.js"></script>
+        <script src="scripts/simulation/game-messages/message-create-ctrl.js"></script>
+        <script src="scripts/simulation/game-messages/order-message-ctrl.js"></script>
+        <script src="scripts/simulation/game-messages/message-show-detail-ctrl.js"></script>
+
+    <!-- Game Template controllers -->
+        <script src="scripts/simulation/game-template/game-template-ctrl.js"></script>
+        <script src="scripts/simulation/game-template/add-team-modal-ctrl.js"></script>
+        <script src="scripts/simulation/game-template/new-game-template-modal-ctrl.js"></script>
+        <script src="scripts/simulation/game-template/edit-game-template-modal-ctrl.js"></script>
+        <script src="scripts/simulation/game-template/add-game-message-modal-ctrl.js"></script>
+        <script src="scripts/simulation/game-template/add-game-template-name-ctrl.js"></script>
+        <script src="scripts/simulation/game-template/game-message-create-modal-ctrl.js"></script>
+        <script src="scripts/simulation/game-template/new-game-template-making-ctrl.js"></script>
+
+    <!-- Coach Page controller -->
+        <script src="scripts/simulation/active-games/view-detail-active-games-ctrl.js"></script>
+
+        <script src="scripts/simulation/active-games/view-detail-message-response-ctrl.js"></script>
+
+    <!-- Player Page controllers -->
+        <script src="scripts/simulation/active-games/active-games-ctrl.js"></script>
+        <script src="scripts/simulation/active-games/game-details-ctrl.js"></script>
+        <script src="scripts/simulation/my-messages/my-messages-ctrl.js"></script>
+
+    <!-- Email generate for active game users controller -->
+        <script src="scripts/simulation/active-games/generate-emails-active-game-ctrl.js"></script>
+
+    <!-- Scheduled Game controllers -->
+        <script src="scripts/simulation/scheduled-games/round-schedule-ctrl.js"></script>
+        <script src="scripts/simulation/scheduled-games/create-assign-message-modal-ctrl.js"></script>
+        <script src="scripts/simulation/scheduled-games/scheduled-games-ctrl.js"></script>
+        <script src="scripts/simulation/scheduled-games/new-scheduled-game-ctrl.js"></script>
+        <script src="scripts/simulation/scheduled-games/play-training-game-ctrl.js"></script>
+        <script src="scripts/simulation/scheduled-games/edit-scheduled-game-ctrl.js"></script>
+        <script src="scripts/simulation/scheduled-games/play-schedule-game-modal-ctrl.js"></script>
+        <script src="scripts/simulation/scheduled-games/second-scheduled-game-ctrl.js"></script>
+
+    <!-- Assign game messages controllers -->
+        <script src="scripts/simulation/assign-game-messages/assign-game-message-ctrl.js"></script>
+        <script src="scripts/simulation/assign-game-messages/add-assign-game-message-ctrl.js"></script>
+        <script src="scripts/simulation/assign-game-messages/edit-assign-game-message-ctrl.js"></script>
+<!-- Simulation END -->
+
+        <script src="scripts/crisis-manager/information-dashboard/dashboard-ctrl.js"></script>
+        <script src="scripts/action-plan-wizard/action-plan-wizard-ctrl.js"></script>
+
+        <script src="scripts/incidents/incidents-module.js"></script>
+        <script src="scripts/crisis-manager/incidents/incidents-ctrl.js"></script>
+        <script src="scripts/crisis-manager/archive/archive-ctrl.js"></script>
+        <script src="scripts/crisis-manager/archive/archive-timeline-ctrl.js"></script>
+        <script src="scripts/crisis-manager/archive/archive-status-report-ctrl.js"></script>
+
+        <!-- <script src="scripts/exercises/exercises-module.js"></script>
+        <script src="scripts/exercises/exercises-ctrl.js"></script> -->
+
+        <script src="scripts/categories/categories-module.js"></script>
+        <script src="scripts/categories/categories-ctrl.js"></script>
+
+
+        <script src="scripts/crisis-manager/web-links/browser-ctrl.js"></script>
+        <script src="scripts/crisis-manager/web-links/media-view-ctrl.js"></script>
+        <script src="scripts/crisis-manager/web-links/media-list-ctrl.js"></script>
+
+
+        <script src="scripts/settings/incident-teams/create-ctrl.js"></script>
+        <script src="scripts/settings/incident-teams/edit-ctrl.js"></script>
+        <script src="scripts/settings/incident-teams/list-ctrl.js"></script>
+        <script src="scripts/settings/incident-teams/view-ctrl.js"></script>
+
+
+        <!-- <script src="scripts/incidents/notification-ctrl.js"></script> -->
+
+        <script src="scripts/incidents/remove-ctrl.js"></script>
+
+        <!-- <script src="scripts/incidents/external-user.js"></script> -->
+
+        <script src="scripts/incidents/link-activity-modal-ctrl.js"></script>
+        <script src="scripts/incidents/remove-incident-modal-ctrl.js"></script>
+
+        <script src="scripts/action-plan/actions.js"></script>
+        <script src="scripts/action-plan/actions-delete.js"></script>
+        <script src="scripts/action-plan/add-action-item.js"></script>
+        <script src="scripts/action-plan/decisions.js"></script>
+        <script src="scripts/action-plan/decisions-create.js"></script>
+        <script src="scripts/action-plan/decisions-delete.js"></script>
+
+        <script src="scripts/settings/action-plans/list-ctrl.js"></script>
+        <script src="scripts/settings/action-plans/view-ctrl.js"></script>
+        <script src="scripts/settings/action-plans/form-page-ctrl.js"></script>
+        <script src="scripts/settings/action-plans/form-add-modal-ctrl.js"></script>
+        <script src="scripts/settings/action-plans/form-edit-modal-ctrl.js"></script>
+        <script src="scripts/settings/action-plans/clone-ctrl.js"></script>
+
+        <script src="scripts/settings/activities/list-ctrl.js"></script>
+        <script src="scripts/settings/activities/edit-ctrl.js"></script>
+        <script src="scripts/settings/activities/add-ctrl.js"></script>
+
+        <script src="scripts/settings/organizations/list-ctrl.js"></script>
+        <script src="scripts/settings/organizations/edit-ctrl.js"></script>
+        <script src="scripts/settings/organizations/details-ctrl.js"></script>
+        <script src="scripts/settings/organizations/user-ctrl.js"></script>
+
+
+        <script src="scripts/crisis-manager/email-history/team-activation-ctrl.js"></script>
+
+        <script src="scripts/wizard/action-plan-modal-ctrl.js"></script>
+        <script src="scripts/wizard/create-department-ctrl.js"></script>
+        <script src="scripts/wizard/create-organization-ctrl.js"></script>
+        <script src="scripts/wizard/incident-type-modal-ctrl.js"></script>
+        <script src="scripts/wizard/new-section-plan-modal-ctrl.js"></script>
+        <script src="scripts/wizard/new-category-plan-modal-ctrl.js"></script>
+        <script src="scripts/wizard/new-action-plan-wizard-ctrl.js"></script>
+        <script src="scripts/wizard/after-save-action-plan-ctrl.js"></script>
+
+        <script src="scripts/crisis-manager/action-plan-dashboard/edit-incident-activity-modal-ctrl.js"></script>
+        <script src="scripts/crisis-manager/action-plan-dashboard/edit-incident-agenda-activity-modal-ctrl.js"></script>
+        <script src="scripts/crisis-manager/action-plan-dashboard/select-activity-status-ctrl.js"></script>
+        <script src="scripts/crisis-manager/action-plan-dashboard/user-info-modal-ctrl.js"></script>
+        <script src="scripts/crisis-manager/action-plan-dashboard/user-agenda-info-modal-ctrl.js"></script>
+        <script src="scripts/crisis-manager/action-plan-dashboard/assign-action-plan-modal-ctrl.js"></script>
+        <script src="scripts/action-plan-dashboard/status-report-ctrl.js"></script>
+        <script src="scripts/action-plan-dashboard/task-info-modal-ctrl.js"></script>
+
+
+        <script src="scripts/capacity/capacity-ctrl.js"></script>
+        <script src="scripts/capacity/edit-ctrl.js"></script>
+        <script src="scripts/capacity/asset-info-modal-ctrl.js"></script>
+
+        <script src="scripts/app/task/task-module.js"></script>
+        <script src="scripts/app/task/task-ctrl.js"></script>
+        <script src="scripts/app/task/task-directive.js"></script>
+        <script src="scripts/app/task/task-service.js"></script>
+        <!-- <script src="scripts/ipscreen/dashboard-category-modal-ctrl.js"></script> -->
+
+        <script src="scripts/app/calendar/calendar-module.js"></script>
+        <script src="scripts/app/calendar/calendar-ctrl.js"></script>
+
+
+        <script src="scripts/plans-timeline/plans-timeline-ctrl.js"></script>
+        <script src="scripts/plans-timeline/timeline-directive.js"></script>
+
+        <script src="scripts/ui/ui-module.js"></script>
+        <script src="scripts/ui/ui-ctrl.js"></script>
+        <script src="scripts/ui/ui-directive.js"></script>
+        <script src="scripts/ui/ui-service.js"></script>
+        <script src="scripts/ui/map-module.js"></script>
+        <script src="scripts/ui/map-ctrl.js"></script>
+        <script src="scripts/ui/map-directive.js"></script>
+
+        <script src="scripts/text-wrap.js"></script>
+        <script src="scripts/filters/display-string.js"></script>
+        <script src="scripts/factories/incident-factory.js"></script>
+        <script src="scripts/directives/row-select-all.js"></script>
+        <script src="scripts/directives/row-select.js"></script>
+        <script src="scripts/directives/tooltip.js"></script>
+        <!-- endbuild -->
+    </body>
+</html>
+<script type="text/ng-template" id="warning-dialog.html">
+  <div class="modal-header">
+     <h3>You're INACTIVE!</h3>
+ </div>
+ <div idle-countdown="countdown" ng-init="countdown=10" class="modal-body">
+     <uib-progressbar max="10" value="10" animate="false" class="progress-striped active">You'll be logged out in {{countdown}} second(s).</uib-progressbar>
+ </div>
+
+</script>
+<script type="text/ng-template" id="timedout-dialog.html">
+  <div class="modal-header">
+     <h3>Session Expired!</h3>
+ </div>
+ <div class="modal-body text-center" >
+ <p>You have been logged out due to inactivity. Please log in again.</p>
+  <button class="btn btn-primary btn-lg" ng-click="out()">OK</button>
+</div>
+</script>

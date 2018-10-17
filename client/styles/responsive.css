@@ -1,0 +1,155 @@
+/*minimal queries*/
+/*******************/
+
+@media all and (max-width:1199px){
+	.view-container p {text-align: left;}
+	.view-container .card-body {text-align: center;}
+	.view-container a, .view-container button  {padding: 8px 10px !important;}
+
+	.view-container .page-dashboard .navbar-white {text-align: center;}
+	.view-container .page-dashboard .navbar-white .nav.float-left {float: none !important; display: inline-block; margin: 0 auto;}
+	.view-container .page-dashboard .navbar-white .nav.float-right {float: none !important; display: inline-block; margin: 0 auto;}
+}
+
+@media all and (max-width:991px){
+	.view-container a, .view-container button  {padding: 8px 10px !important;}
+	.view-container .col-md-4 {width: 50%;}
+	.inf-db-inc li {
+		float: none !important;
+		display: block !important;
+	}
+	.ap-dashboard-check .btn {padding: 5px 10px !important;}
+
+}
+
+@media all and (max-width:767px){
+	.main-logo{
+		top: 10px;
+	}
+	.breadcrumb-wrap {float: none !important; display: block; margin-left: 0px; text-align: center;}
+	.nav-right.pull-right {position: absolute;top: -6px;right: 0px;}
+	.top-nav {text-align: center;}
+	.header-container > .top-header .top-nav .nav-left {float: none;}
+	.header-container > .top-header .top-nav {padding: 66px 0 0 !important;}
+	.breadcrumb {border-radius: 0px;}
+	.custom-breadcrumb{margin-top: 0px !important; padding-bottom: 10px;}
+	.ti-menu{font-size: 24px;}
+	.top-nav .nav-left{position: absolute;top: 19px;left: 15px;}
+	.hidden-xss{display: none;}
+	#new-menu{padding: 10px;box-shadow: none;}
+	.app > .main-container > .nav-container {display: inline-block;}
+	.app > .main-container > .nav-container.nav-fixed {top: 86px !important;}
+
+	.view-container a, .view-container button  {padding: 8px 10px !important;}
+	.view-container .col-md-4 {width: 100%; float: none; clear: both;}
+
+	.view-container .top_btns_container {text-align: center;}
+	.view-container .top_btns_container .actions_btns, .view-container .top_btns_container .navbar-right  {float: none !important;}
+	.view-container .top_btns_container .actions_btns {text-align: center;}
+	.action-plan-wiz-wrap .col-md-4, .action-plan-wiz-wrap .col-sm-4, .action-plan-wiz-wrap .col-xs-12  {margin-bottom: 20px;}	
+	.table {margin-bottom: 20px !important;}
+	.inf-db-inc .dropdown-menu {min-width: 249px;}
+	.inf-db-inc .dropdown-menu li > a:hover, 
+	.inf-db-inc .dropdown-menu li > a:hover, 
+	.inf-db-inc .dropdown-menu li > a:focus, 
+	.inf-db-inc .dropdown-menu li > a:focus {color: #009688 !important; background-color: #eeeeee !important;}
+	.ap-dashboard-check .btn {padding: 5px 10px !important;}
+	.ap-dashboard .actionplanv2 .col-md-3, .ap-dashboard .actionplanv2 .col-md-9 {clear:both; float:none; width:100%;}
+	.ip-messages .col-sm-4, .ip-messages .col-sm-8 {clear:both; float:none; width:100%;}
+	.ip-messages .col-sm-8.text-right {text-align: center;}
+	.ip-messages .col-sm-8.text-right .btn {float: none !important; margin: 0 !important;}
+	.ip-messages {margin-top: -100px;}
+}
+
+@media all and (max-width:480px){
+	.view-container .top_btns_container .actions_btns {text-align: center;}
+	.main-container {padding-top: 96px !important;}
+	.view-container .page-dashboard .navbar-white .nav.float-left li {display: inline-block;}
+
+	.view-container .btn-group-right-top {text-align: center; display: block;}
+	.view-container .btn-group-right-top button {display: inline-block; float: none !important;}
+
+	.full-xs {display: block; width: 100%; clear: both; text-align: center;}
+}
+
+/*extensive queries*/
+/*******************/
+
+@media screen and (max-width: 319px) {
+	
+}
+@media screen and (min-width: 320px) and (max-width: 479px) {
+
+}
+
+@media screen and (min-width: 480px) and (max-width: 639px) {
+	.main-container {padding-top: 96px !important;}
+}
+@media screen and (min-width: 640px) and (max-width: 767px) {
+	.main-container {padding-top: 96px !important;}
+}
+@media screen and (min-width: 768px) and (max-width: 1003px) {
+	.view-container .top_btns_container {text-align: center;}
+	.view-container .top_btns_container .actions_btns, .view-container .top_btns_container .navbar-right  {float: none !important;}
+	.breadcrumb-wrap {display: none;}
+	.ap-dashboard-check .btn {padding: 5px 10px !important;}
+	.ap-dashboard .actionplanv2 .col-md-3, .ap-dashboard .actionplanv2 .col-md-9 {clear:both; float:none; width:100%;}
+
+}
+@media screen and (min-width: 1004px) and (max-width: 1259px) {
+	.view-container .page-dashboard .navbar-white {text-align: center;}
+	.view-container .page-dashboard .navbar-white .nav.float-left {float: none !important; display: inline-block; margin: 0 auto;}
+	.view-container .page-dashboard .navbar-white .nav.float-right {float: none !important; display: inline-block; margin: 0 auto;}
+	.ap-dashboard-check .btn {padding: 5px 10px !important;}
+	.ap-dashboard .actionplanv2 .col-md-3, .ap-dashboard .actionplanv2 .col-md-9 {clear:both; float:none; width:100%;}
+}
+@media screen and (min-width: 1260px) and (max-width: 1279px) {
+	.view-container a, .view-container button  {padding: 8px 20px;}
+	.view-container .page-dashboard .navbar-white {text-align: center;}
+	.view-container .page-dashboard .navbar-white .nav.float-left {float: none !important; display: inline-block; margin: 0 auto;}
+	.view-container .page-dashboard .navbar-white .nav.float-right {float: none !important; display: inline-block; margin: 0 auto;}
+	.ap-dashboard-check .btn {padding: 5px 10px !important;}
+}
+@media screen and (min-width: 1280px) and (max-width: 1365px) {
+	.view-container a, .view-container button  {padding: 8px 20px;}
+	.view-container .page-dashboard .navbar-white {text-align: center;}
+	.view-container .page-dashboard .navbar-white .nav.float-left {float: none !important; display: inline-block; margin: 0 auto;}
+	.view-container .page-dashboard .navbar-white .nav.float-right {float: none !important; display: inline-block; margin: 0 auto;}
+}
+@media screen and (min-width: 1366px) and (max-width: 1599px) {
+	.view-container .page-dashboard .navbar-white {text-align: center;}
+	.view-container .page-dashboard .navbar-white .nav.float-left {float: none !important; display: inline-block; margin: 0 auto;}
+	.view-container .page-dashboard .navbar-white .nav.float-right {float: none !important; display: inline-block; margin: 0 auto;}
+	.modal-lg {width: 85%;}
+	.box-border.location-margin .panel-default {
+		min-height: 0px !important;
+	}
+}
+@media screen and (min-width: 1600px) and (max-width: 1679px) {
+	.modal-lg {width: 85%;}
+	.box-border.location-margin .panel-default {
+		min-height: 0px !important;
+	}
+}
+@media screen and (min-width: 1680px) {
+	.modal-lg {width: 85%;}
+	.box-border.location-margin .panel-default {
+		min-height: 622px !important;
+	}
+}
+@media (max-width: 1259px) {
+	.information-dashboard .col-md-1, 
+	.information-dashboard .col-md-2, 
+	.information-dashboard .col-md-3, 
+	.information-dashboard .col-md-4, 
+	.information-dashboard .col-md-5, 
+	.information-dashboard .col-md-6, 
+	.information-dashboard .col-md-7, 
+	.information-dashboard .col-md-8, 
+	.information-dashboard .col-md-9, 
+	.information-dashboard .col-md-10, 
+	.information-dashboard .col-md-11, 
+	.information-dashboard .col-md-12,
+	.information-dashboard .col-lg-3,
+	.information-dashboard .col-lg-9 {float: none !important; width: 100% !important;}
+}

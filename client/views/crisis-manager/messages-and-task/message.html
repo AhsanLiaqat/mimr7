@@ -1,0 +1,57 @@
+<div ng-controller="messageCtrl" >
+    <div class="col-sm-12 col-md-12"
+         style="height:600px; margin-top:20px">
+        <section class="panel panel-default mail-container"
+                 style="overflow: auto; height:80%">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-sm-6"> {{incident.name}} </div>
+                    <div class="col-sm-4">
+                        <a ng-show="id"
+                            class="btn btn-sm btn-info"
+                            style="float: right;"
+                            href="#/myTasks/{{id}}"> My Tasks</a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a style="float: right;" class="btn btn-sm btn-info" href="#/messages"> Back</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group" style="margin-top: 10px; margin-right: 5px; margin-left: 15px; margin-bottom: 10px;">
+                <input type="text"
+                        maxlength="255" 
+                       class="form-control"
+                       data-ng-model="message"
+                       placeholder="Type Message Here"
+                       autofocus>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-fab btn-fab-mini" ng-click="sendMessage(message)">
+                            <i class="material-icons">send</i>
+                        </button>
+                    </span>
+            </div>
+            <div class="message-length-warning-IP" ng-class="{'red-text': message.length >= 255}">
+                <span>
+                    {{message.length || 0}} / 255 Characters
+                </span>
+            </div>
+
+            <div class="well" style="margin: 10px;">
+                <table class="table table-hover table-responsive" >
+                    <tr class="mail-read" ng-show="noMessage">
+                        <td>No Messages to show </td>
+                        <td><i class="ti-paperclip"></i></td>
+                    </tr>
+                    <tr class="mail-read" ng-repeat="record in messages ">
+                        <td class="col-md-6">{{record.message}}</td>
+                        <td class="col-md-4"><i class="ti-paperclip"></i></td>
+                        <td>{{ dateFormat(record.createdAt) }}</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </div>
+    <br/>
+    <br/>
+</div>
