@@ -29,7 +29,6 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'external_users',
         classMethods: {
             associate: function(models) {
-                users.belongsTo(models.organization);
             }
 
         }

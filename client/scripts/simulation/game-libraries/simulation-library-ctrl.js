@@ -14,6 +14,10 @@
 
         $scope.pageItems = 10;
         $scope.selected = 0;
+        $http.post('/article-library/article-libraries/all/' + $routeParams.gamePlanId)
+        .then(function(res){
+            $scope.media = res.data;
+        });
 
         // fetch and set initial data
         $scope.referencesTable = function (tableState) {
@@ -22,27 +26,26 @@
             $scope.libraryToShow = []
             $scope.isLoading = true;
             $scope.tableState = tableState;
-
-            $http.get("/simulation/game-libraries/all").then(function(response) {
-                $http.get('/simulation/games/all').then(function (resp) {
-                    $scope.gameTemplates = resp.data;
-                    angular.forEach($scope.gameTemplates, function(value) {
-                      $scope.selectoptions.push(value);
-                    });
-                    $scope.libReferences = response.data;
-                    $scope.isLoading = false;
-                    angular.forEach($scope.libReferences, function(value) {
-                      value.gameTemplate = $filter('filter')($scope.gameTemplates, { id: value.gamePlanId})[0]
-                    });
-                    $scope.isLoading = false;
-                    $scope.libraryToShow =  angular.copy($scope.libReferences);
-                    if($routeParams.gamePlanId){
-                        $scope.gameIdFound = true;
-                        $scope.selected = $routeParams.gamePlanId;
-                    }
-                    $scope.managearray($scope.selected);
-                });
-            });
+            // $http.get("/simulation/game-libraries/all").then(function(response) {
+            //     $http.get('/simulation/games/all').then(function (resp) {
+            //         $scope.gameTemplates = resp.data;
+            //         angular.forEach($scope.gameTemplates, function(value) {
+            //           $scope.selectoptions.push(value);
+            //         });
+            //         $scope.libReferences = response.data;
+            //         $scope.isLoading = false;
+            //         angular.forEach($scope.libReferences, function(value) {
+            //           value.gameTemplate = $filter('filter')($scope.gameTemplates, { id: value.gamePlanId})[0]
+            //         });
+            //         $scope.isLoading = false;
+            //         $scope.libraryToShow =  angular.copy($scope.libReferences);
+            //         if($routeParams.gamePlanId){
+            //             $scope.gameIdFound = true;
+            //             $scope.selected = $routeParams.gamePlanId;
+            //         }
+            //         $scope.managearray($scope.selected);
+            //     });
+            // });
         };
 
         // dp pagination
@@ -81,12 +84,13 @@
         }
 
         //add media
-        $scope.addModal = function(id) {
-            if ($scope.gameIdFound){
-                var inputs = {gamePlanId: $routeParams.gamePlanId};
-            }else{
-                var inputs = {gamePlanId: undefined};
-            }
+        $scope.addModal = function() {
+            var inputs = {
+                id: null,
+                articleId: $routeParams.gamePlanId,
+                contentType : 'article-library',
+                messageId : null
+            };
             ModalService.showModal({
                 templateUrl: "views/simulation/game-libraries/form.html",
                 controller: "newGameLibraryCtrl",
@@ -94,31 +98,38 @@
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });
                 modal.close.then(function(result) {
+                    if(result){
+                        $scope.media.push(result);
+                    }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
-                    $scope.referencesTable ($scope.tableState);
-                });
-            });
-        };
-        
-        // show and edit info of media
-        $scope.callAtTimeout = function(id, index) {
-            ModalService.showModal({
-                templateUrl: "views/simulation/game-libraries/form.html",
-                controller: "gameLibEditCtrl",
-                inputs:{
-                    id: id
-                }
-            }).then(function(modal) {
-                modal.element.modal( {backdrop: 'static',  keyboard: false });
-                modal.close.then(function(result) {
-                     $('.modal-backdrop').remove();
-                     $('body').removeClass('modal-open');
-                    $scope.referencesTable ($scope.tableState);
                 });
             });
         };
 
+
+        $scope.callAtTimeout = function(id, index) {
+            ModalService.showModal({
+                templateUrl: "views/simulation/game-libraries/form.html",
+                controller: "newGameLibraryCtrl",
+                inputs:{
+                    id: id,
+                    articleId: null,
+                    contentType : null,
+                    messageId : null
+                }
+            }).then(function(modal) {
+                modal.element.modal( {backdrop: 'static',  keyboard: false });
+                modal.close.then(function(result) {
+                    if(result){
+                        $scope.media[index] = result;
+                    }
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
+            });
+        };
+        
         //show image type media
         var imageModal = function(record){
         	$uibModal.open({
@@ -253,10 +264,10 @@
         };
 
         //delete media
-        $scope.deleteModal = function(id) {
-            $http.post("/simulation/game-libraries/remove", {id: id}).then(function(res) {
+        $scope.deleteModal = function(id,index) {
+            $http.delete('/article-library/article-libraries/remove/' + id).then(function(res) {
                 toastr.success("Delete successful");
-                $scope.referencesTable ($scope.tableState);
+                $scope.media.splice(index,1);
             });
         };
 

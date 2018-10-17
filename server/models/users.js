@@ -46,21 +46,10 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 users.belongsTo(models.user_accounts);
-                users.belongsTo(models.organization);
-                users.hasMany(models.auth_token);
-                users.belongsTo(models.department);
-                users.hasOne(models.game_player);
-                users.hasMany(models.activity, {foreignKey: 'responseActorId'});
-                users.hasMany(models.incident_agenda_activity, {foreignKey: 'responseActorId'});
-                users.hasMany(models.agenda_activity, {foreignKey: 'responseActorId'});
-                users.hasMany(models.incident_activity, {foreignKey: 'responseActorId'});
-                users.belongsToMany(models.incidents_team, {through: 'user_teams'});
 
-                users.belongsToMany(models.role, {through: 'user_roles',foreignKey: 'userId'});
-                users.belongsToMany(models.color_palette, {through: 'user_colors'});
+                users.hasMany(models.auth_token);
+                users.hasOne(models.player);
                 users.hasMany(models.device, {foreignKey: 'userId'});
-                users.hasMany(models.alert_history);
-                users.hasMany(models.game_template_role);
             }, byId: function(id){
                 var deferred = Q.defer();
                 users.findOne({where: {id: id}}).then(function(user){

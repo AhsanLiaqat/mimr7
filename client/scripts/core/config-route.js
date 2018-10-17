@@ -110,20 +110,6 @@
 //=======================================================================================================================//
 
         /////////////////Preparation manager routes Start/////////////////////
-        .when('/settings/home', { templateUrl: 'views/settings/home.html' })
-        .when('/settings/incident-types', { templateUrl: 'views/settings/incident-types/list.html' })
-        .when('/settings/incident-types/edit/:cat_id?', { templateUrl: 'views/settings/incident-types/form.html' })
-        .when('/settings/dashboard-categories/:id?', { templateUrl: 'views/settings/dashboard-categories/list.html' })
-        .when('/settings/color-palettes', { templateUrl: 'views/settings/color-palettes/list.html' })
-        .when('/settings/capacities', { templateUrl: 'views/settings/capacities/list.html' })
-        .when('/settings/scenarios', { templateUrl: 'views/settings/scenarios/list.html' })
-        .when('/settings/libraries/:id?', { templateUrl: 'views/settings/libraries/list.html' })
-        .when('/settings/message-libraries', { templateUrl: 'views/settings/message-libraries/list.html' })
-        .when('/settings/message-libraries/edit/:id', { templateUrl: 'views/settings/message-libraries/form.html' })
-        .when('/settings/task-libraries/:id?', { templateUrl: 'views/settings/task-libraries/list.html' })
-        .when('/settings/activities', { templateUrl: 'views/settings/activities/list.html' })
-        .when('/settings/all-categories', { templateUrl: 'views/settings/all-categories/list.html' })
-        .when('/settings/check-lists', { templateUrl: 'views/settings/check-lists/list.html' })
         .when('/settings/account', {
             controller: "accountCtrl",
             resolve: CountriesService.resolve,
@@ -132,52 +118,15 @@
         .when('/settings/users', { templateUrl: 'views/settings/users/list.html' })
         .when('/settings/users/add', { templateUrl: 'views/settings/users/add.html' })
         .when('/settings/users/edit', { templateUrl: 'views/settings/users/edit.html' })
-        .when('/settings/roles', { templateUrl: 'views/settings/roles/list.html' })
-        .when('/settings/departments', { templateUrl: 'views/settings/departments/list.html' }) //done
-        .when('/settings/departments/edit/:id', { templateUrl: 'views/settings/departments/form.html' })
-        .when('/settings/organizations', { templateUrl: 'views/settings/organizations/list.html' }) 
-        .when('/settings/agenda-points', { templateUrl: 'views/settings/agenda-points/list.html' }) 
-        .when('/settings/organizations/edit/:id?', { templateUrl: 'views/settings/organizations/form.html' })
-        .when('/settings/organizations/details/:id', { templateUrl: 'views/settings/organizations/details.html' })
-        .when('/settings/organizations/:OrgId/users/:id?', { templateUrl: 'views/settings/organizations/user.html' })
-        .when('/settings/incident-teams', { templateUrl: "views/settings/incident-teams/list.html"})
-        .when('/settings/incident-teams/add', { templateUrl: "views/settings/incident-teams/form.html"})
-        .when('/settings/incident-teams/edit/:id', { templateUrl: "views/settings/incident-teams/edit.html"})
-        .when('/settings/action-plans', {templateUrl: "views/settings/action-plans/list.html"})
-        .when('/settings/action-plans/create/:id?', { templateUrl: "views/settings/action-plans/form-page-one.html"})
-        .when('/settings/action-plans/create/:id/step-two', { templateUrl: "views/settings/action-plans/form-page-two.html"})
-
         ///////////////////////////Preparation manager routes End/////////////////////
         //==========================================================================//
         ///////////////////////////Crisis manager routes Start////////////////////////
-        .when('/home', { templateUrl: 'views/crisis-manager/home/home.html' }) //done
-        .when('/actionPlanPage', { templateUrl: 'views/actionplanWizard/index.html' })
-        .when('/wizardActionPlan', { templateUrl: 'views/wizard/new-action-plan-wizard.html' })
-        .when('/dashboard/:id?', { templateUrl: 'views/crisis-manager/information-dashboard/dashboard.html' }) //done
-        .when('/planning-dashboard/:id?', { templateUrl: 'views/crisis-manager/planning-dashboard/dashboard.html' }) //done
-        
-        .when('/planning-dashboardv2/:id?', { templateUrl: 'views/crisis-manager/planning-dashboard-v2/dashboard.html' }) //done
-
-        .when('/visualization-dashboard/:id?', { templateUrl: 'views/crisis-manager/visual-dashboard/dashboard.html' }) //done
-        
-        .when('/actionPlanDashboardV2/:id?', { templateUrl: 'views/crisis-manager/action-plan-dashboard/dashboard.html' }) //done
-        .when('/capacity-dashboard', { templateUrl: 'views/capacity/capacity-dashboard.html' })
-        .when('/archive/view', { templateUrl: 'views/crisis-manager/archive/archive.html' }) //done
-        .when('/timeline', { templateUrl: 'views/crisis-manager/timeline/timeline.html' }) //done
-        .when('/timeline/:id', { templateUrl: 'views/crisis-manager/timeline/timeline.html' }) //done
-        .when('/reports', { templateUrl: 'views/crisis-manager/status-report/reports.html' }) //done
         .when('/reports/view/:incidentId', { templateUrl: 'views/reports/reports.view.html' })
         .when('/reports/edit/:id', { templateUrl: 'views/reports/report.html' })
-        .when('/User-status', { templateUrl: 'views/crisis-manager/user-status/activation.html' }) //done
-        .when('/messages', { templateUrl: 'views/crisis-manager/messages-and-task/messages.html' }) //done
-        .when('/message/:id', { templateUrl: 'views/crisis-manager/messages-and-task/message.html' }) //done
-        .when('/reference-library/:userAccountId', { templateUrl: 'views/crisis-manager/messages-and-task/reference-library.html' }) //done
         .when('/myTasks/:incidentId', { templateUrl: 'views/userTasks/user.task.html' })
         .when('/taskDetail/:taskId', { templateUrl: 'views/userTasks/task.detail.html' })
         .when('/browser', { templateUrl: 'views/crisis-manager/web-links/media-list.html' }) //done
         .when('/browser/:id?', { templateUrl: 'views/crisis-manager/web-links/browse.html' }) //done
-        .when('/team-activation', { templateUrl: 'views/crisis-manager/email-history/team-activation.html' }) //done
-        .when('/references', { templateUrl: 'views/crisis-manager/references/references.html' }) //done
         .when('/incidents/view', { templateUrl: "views/crisis-manager/incidents/view.html"})
 
         /////////////////Crisis manager routes End/////////////////////
@@ -186,55 +135,25 @@
 
         /////////////////Simulation routes Start/////////////////////
 
-		.when('/simulation/home', { templateUrl: 'views/simulation/home.html' })
+		.when('/home', { templateUrl: 'views/home.html' })
 		.when('/simulation/players', { templateUrl: 'views/simulation/players/list.html' })
-		.when('/simulation/player-lists', { templateUrl: 'views/simulation/player-lists/list.html' })
-		.when('/simulation/categories', { templateUrl: 'views/simulation/categories/list.html' })
-
-		.when('/simulation/id-messages/:gameId?', { templateUrl: 'views/simulation/id-messages/list.html' })
-		.when('/simulation/id-game-template/:gameId/message-ordering', { templateUrl: 'views/simulation/id-messages/order-id-message.html' })
-
-		.when('/simulation/game-template', { templateUrl: 'views/simulation/game-template/list.html' })
-		.when('/simulation/game-template/:gamePlanId/message-ordering', { templateUrl: 'views/simulation/game-messages/order-message.html' })
-		.when('/simulation/game-roles/:gamePlanId?', { templateUrl: 'views/simulation/game-roles/list.html' })
-		.when('/simulation/game-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-libraries/list.html' })
-		.when('/simulation/game-messages/:gamePlanId?', { templateUrl: 'views/simulation/game-messages/list.html' })
-
-        .when('/simulation/game-details/:gameId', { templateUrl: 'views/simulation/active-games/game-details.html' })
-		
-        .when('/simulation/active-games/:gameId', { templateUrl: 'views/simulation/active-games/details.html' })
 		.when('/simulation/player-page', { templateUrl: 'views/simulation/active-games/list.html' })
-		.when('/simulation/my-messages/:templateGameId/:userId', { templateUrl: 'views/simulation/my-messages/list.html' })
-		.when('/simulation/scheduled-games/:typeId?', { templateUrl: 'views/simulation/scheduled-games/list.html' })
+        .when('/article/article-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-libraries/list.html' })
+        .when('/message/message-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-messages/list.html' })
 
-		.when('/simulation/assign-messages', { templateUrl: 'views/simulation/assign-game-messages/list.html' })
 
         /////////////////Simulation manager routes End/////////////////////
 
         //=======================================================================================================================//
 
-        /////////////////Assessment tool routes End/////////////////////
-        .when('/dynamic-form', { templateUrl: 'views/dynamic-form/list.html' }) //done
-
-        /////////////////Assessment tool manager routes End/////////////////////
 
         //=======================================================================================================================//
 
         /////////////////Default routes Start/////////////////////
-        .when('/', { redirectTo: function () { return '/mainHome' } })
+        .when('/', { redirectTo: function () { return '/home' } })
         .when('/404', { templateUrl: 'views/pages/404.html' })
 
         /////////////////Default routes End/////////////////////
-
-        //=======================================================================================================================//
-
-        /////////////////Landing page routes Start/////////////////////
-        .when('/mainHome', { templateUrl: 'views/home/mainHome.html' })
-
-        /////////////////Landing page routes End/////////////////////
-
-        //=======================================================================================================================//
-
         /////////////////SuperAdmin routes Start/////////////////////
         .when('/superadmin', { templateUrl: 'views/admin.html' })
         .when('/superadmin/create/:id', { templateUrl: 'views/admin.create.html' })
@@ -246,7 +165,6 @@
 
         /////////////////Others routes Start/////////////////////
         .when('/incident/edit/:id', { templateUrl: 'views/incidents/edit.html' })
-        .when('/actionPlanDashboard/:id?', { templateUrl: 'views/actionPlanDashboard/dashboard.html' })
         .when('/archive/statusReport/:id', { templateUrl: 'views/incidents/archive-report.html' })
         .when('/student',{templateUrl:'views/students/student.html'})
         .when('/studentAll',{templateUrl:'views/students/studentview.html'})
@@ -273,9 +191,6 @@
         })
         .when('/actionDetail', {
             templateUrl: "views/dashboard/action-plan-detail-page.html"
-        })
-        .when('/actionPlanWizard', {
-            templateUrl: "views/wizard/action-plan-wizard.html"
         })
         .otherwise({ redirectTo: '/404' });
         /////////////////Others routes Start/////////////////////
@@ -393,25 +308,13 @@
 
                     console.log(next.originalPath);
                     switch (next.originalPath) {
-                        case '/home':
-                            $rootScope.breadcrumb_2 = false;
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            break;
                         case '/mainHome':
                             $rootScope.breadcrumb_1 = false;
                             $rootScope.breadcrumb_2 = false;
                             break;
-                        case '/actionPlanPage':
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Action Plan Wizard';
-                            break;
                         case '/pages/profile':
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Profile';
-                            break;
-                        case '/dashboard/:id?':
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Information Dashboard';
                             break;
                         case '/archive/statusReport/:id':
                             $rootScope.breadcrumb_3 = true;
@@ -419,25 +322,6 @@
                             $rootScope.breadcrumb_2Heading = 'Archive';
                             $rootScope.breadcrumb_2Link = 'archive/view'
                             $rootScope.breadcrumb_3Heading = 'Status Report';
-                            break;
-                        case '/wizardActionPlan':
-                            $rootScope.breadcrumb_3 = true;
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Action Plan Wizard';
-                            $rootScope.breadcrumb_2Link = 'actionPlanPage';
-                            $rootScope.breadcrumb_3Heading = 'Quick Decision Checklist';
-                            break;
-                        case '/actionPlanDashboard/:id?':
-                            $rootScope.breadcrumb_2 = false;
-                            $rootScope.breadcrumb_1Heading = 'Action Plan Dashboard';
-                            break;
-                        case '/actionPlanWizard':
-                            $rootScope.breadcrumb_2 = false;
-                            $rootScope.breadcrumb_1Heading = 'Build Action Plan';
-                            break;
-                        case '/actionPlanDashboardV2/:id?':
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Action Plan Dashboard';
                             break;
                         case '/incidents/view':
                             $rootScope.breadcrumb_1Heading = 'Crisis Manager';
@@ -513,27 +397,6 @@
                             $rootScope.breadcrumb_1Heading = 'Crisis Manager';
                             $rootScope.breadcrumb_2Heading = 'Capacity Dashboard';
                             break;
-                        
-                        case '/planning-dashboard/:id?':
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Planning Dashboard';
-                            break;
-                        case '/planning-dashboardv2/:id?':
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Planning Dashboard';
-                            break;
-                        case '/visualization-dashboard/:id?':
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Visualization Dashboard';
-                            break;
-
-
-
-
-                        case '/settings/home':
-                            $rootScope.breadcrumb_2 = false;
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            break;
                         case '/settings/incident-types':
                             $rootScope.breadcrumb_1Heading = 'Preparation Manager';
                             $rootScope.breadcrumb_1Link = 'settings/home'
@@ -562,68 +425,15 @@
                                 $rootScope.breadcrumb_3Heading = 'New Type';
                             }
                             break;
-                        case '/settings/dashboard-categories/:id?':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Dashboard Categories';                            
-                            break;
-                        case '/settings/color-palettes':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Color Palettes';
-                            break;
                         case '/settings/capacities':
                             $rootScope.breadcrumb_1Heading = 'Preparation Manager';
                             $rootScope.breadcrumb_1Link = 'settings/home'
                             $rootScope.breadcrumb_2Heading = 'Capacity';
                             break;
-                        case '/settings/scenarios':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Scenario';
-                            break;
-                        case '/settings/libraries/:id?':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Reference Library';
-                            break;
-                        case '/settings/message-libraries':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Message Library';
-                            break;
-                        case '/settings/message-libraries/edit/:id':
-                            $rootScope.breadcrumb_3 = true;
-                            $rootScope.breadcrumb_1Heading = 'Settings';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Message Library';
-                            $rootScope.breadcrumb_2Link = 'messageLibrary';
-                            $rootScope.breadcrumb_3Heading = 'Edit Message';
-                            break;
-                        case '/settings/task-libraries/:id?':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Tasks';
-                            break;
-                        case '/settings/activities':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Assign Task';
-                            break;
                         case '/settings/all-categories':
                             $rootScope.breadcrumb_1Heading = 'Preparation Manager';
                             $rootScope.breadcrumb_1Link = 'settings/home'
                             $rootScope.breadcrumb_2Heading = 'Categories';
-                            break;
-                        case '/settings/check-lists':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'CheckList';
-                            break;
-                        case '/settings/agenda-points':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Agenda Points';
                             break;
                         case '/settings/account':
                             $rootScope.breadcrumb_1Heading = 'Preparation Manager';
@@ -718,35 +528,6 @@
                             // $http.get(path).then(function (res) {
                                 
                             // });
-                            break;
-                        case '/settings/action-plans':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Action Plans';
-                            break;
-                        case '/settings/action-plans/create/:id/step-two':
-                            $rootScope.breadcrumb_3 = true;
-                            $rootScope.breadcrumb_1Heading = 'Settings';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Action Plans';
-                            $rootScope.breadcrumb_2Link = 'settings/action-plans';
-                            if (next.params.id) {
-                                $rootScope.breadcrumb_3Heading = 'Edit Plan';
-                            } else {
-                                $rootScope.breadcrumb_3Heading = 'New Plan';
-                            }
-                            break;
-                        case '/settings/action-plans/create/:id?':
-                            $rootScope.breadcrumb_3 = true;
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Action Plans';
-                            $rootScope.breadcrumb_2Link = 'settings/action-plans';
-                            if (next.params.id) {
-                                $rootScope.breadcrumb_3Heading = 'Edit Plan';
-                            } else {
-                                $rootScope.breadcrumb_3Heading = 'New Plan';
-                            }
                             break;
                         case '/simulation/home':
                             $rootScope.breadcrumb_2 = false;

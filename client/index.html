@@ -182,6 +182,7 @@
         <script src="bower_components/flot/jquery.flot.resize.js"></script>
         <script src="bower_components/flot/jquery.flot.pie.js"></script>
         <script src="scripts/vendors/jquery.flot.orderBars.js"></script>
+
         <script src="bower_components/flot/jquery.flot.stack.js"></script>
         <script src="bower_components/flot.curvedlines/curvedLines.js"></script>
         <script src="bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
@@ -333,32 +334,17 @@
     <!--//////////////////////////////// Controllers ////////////////////////////-->
 
 
-        <script src="scripts/crisis-manager/references/ref-lib-ctrl.js"></script>
-        <script src="scripts/crisis-manager/messages-and-task/message-ctrl.js"></script>
-        <script src="scripts/crisis-manager/messages-and-task/reference-library-ctrl.js"></script>
-
-
         <script src="scripts/user-tasks/user-task-ctrl.js"></script>
         <script src="scripts/user-tasks/task-detail-ctrl.js"></script>
         <script src="scripts/admin-ctrl.js"></script>
         <script src="scripts/admin-create-ctrl.js"></script>
         <script src="scripts/copy-accounts/copy-messages-ctrl.js"></script>
 
-        <script src="scripts/settings/departments/list-ctrl.js"></script>
-        <script src="scripts/settings/departments/form-ctrl.js"></script>
-
-        <script src="scripts/dynamic-form/dynamic-form-ctrl.js"></script>
-        <script src="scripts/dynamic-form/add-form-type-ctrl.js"></script>
-        <script src="scripts/dynamic-form/form-type-ctrl.js"></script>
-        <script src="scripts/dynamic-form/dynamic-form-create-ctrl.js"></script>
-        <script src="scripts/dynamic-form/dynamic-form-view-ctrl.js"></script>
-        <script src="scripts/dynamic-form/dynamic-form-data-view-ctrl.js"></script>
-
-
 
         <script src="scripts/chart/chart-module.js"></script>
         <script src="scripts/chart/chart-ctrl.js"></script>
         <script src="scripts/chart/chart-directive.js"></script>
+        <script src="scripts/article/add-article-modal.js"></script>
 
         <script src="scripts/form/form-module.js"></script>
         <script src="scripts/form/form-ctrl.js"></script>
@@ -380,118 +366,26 @@
         <script src="scripts/table/table-module.js"></script>
         <script src="scripts/table/table-ctrl.js"></script>
 
-
-        <script src="scripts/settings/task-libraries/list-ctrl.js"></script>
-        <script src="scripts/settings/task-libraries/add-ctrl.js"></script>
-        <script src="scripts/settings/task-libraries/edit-wizard-ctrl.js"></script>
-
-
         <script src="scripts/reports/reports-view.js"></script>
          <script src="scripts/reports/reports-email.js"></script>
         <script src="scripts/reports/report.js"></script>
 
         <script src="scripts/activate/quick-add-user-ctrl.js"></script>
         <script src="scripts/activate/quick-edit-user-ctrl.js"></script>
-
-        <script src="scripts/crisis-manager/home/home-ctrl.js"></script>
-        <script src="scripts/crisis-manager/home/team-alert-acknowledgment-modal-ctrl.js"></script>
-        <script src="scripts/crisis-manager/status-report/reports-ctrl.js"></script>
-        <script src="scripts/crisis-manager/status-report/reports-create.js"></script>
-        <script src="scripts/crisis-manager/status-report/reports-sent-to.js"></script>
-        <script src="scripts/crisis-manager/status-report/report-view-modal-ctrl.js"></script>
-        <script src="scripts/crisis-manager/user-status/activation-ctrl.js"></script>
-        <script src="scripts/crisis-manager/action-plan-dashboard/dashboard-ctrl.js"></script>
-
-        <script src="scripts/crisis-manager/information-dashboard/subclass-ctrl.js"></script>
-        <script src="scripts/crisis-manager/information-dashboard/edit-class-summary-ctrl.js"></script>
-        <script src="scripts/crisis-manager/information-dashboard/class-edit-ctrl.js"></script>
-        <script src="scripts/crisis-manager/information-dashboard/user-assign-to-action-ctrl.js"></script>
-        <script src="scripts/crisis-manager/information-dashboard/summary-report-mail-ctrl.js"></script>
-        <script src="scripts/crisis-manager/information-dashboard/reset-popup-modal.js"></script>
-        <script src="scripts/crisis-manager/information-dashboard/design-dashboard.js"></script>
-        <script src="scripts/crisis-manager/information-dashboard/timeline-ctrl.js"></script>
-        <script src="scripts/crisis-manager/information-dashboard/action-list-summary-report-ctrl.js"></script>
-
-        <script src="scripts/crisis-manager/general/location-map.js"></script>
-        <script src="scripts/crisis-manager/general/location-map-page.js"></script>
-        <script src="scripts/crisis-manager/action-plan-dashboard/action-plan-detail-page.js"></script>
-        <script src="scripts/crisis-manager/action-plan-dashboard/view-outcomes-ctrl.js"></script>
-        <script src="scripts/crisis-manager/general/show-teams.js"></script>
-        <script src="scripts/crisis-manager/status-report/status-report-ctrl.js"></script>
-        <script src="scripts/crisis-manager/status-report/status-report-mail.js"></script>
-        <script src="scripts/crisis-manager/timeline/timeline-ctrl.js"></script>
-        <script src="scripts/crisis-manager/general/incident-check-list-ctrl.js"></script>
-        <script src="scripts/crisis-manager/planning-dashboard/dashboard-ctrl.js"></script>
-        <script src="scripts/crisis-manager/planning-dashboard/new-action-plan-ctrl.js"></script>
-        <script src="scripts/crisis-manager/planning-dashboard-v2/new-action-plan-copy-ctrl.js"></script>
-        <script src="scripts/crisis-manager/planning-dashboard/section-view-modal-ctrl.js"></script>
-        
-        <script src="scripts/crisis-manager/visual-dashboard/visual-dashboard-ctrl.js"></script>
-
-        <script src="scripts/crisis-manager/planning-dashboard-v2/dashboard-ctrl.js"></script>
-
-        <script src="scripts/crisis-manager/home/home-ctrl.js"></script>
-        <script src="scripts/crisis-manager/home/show-action-plan.js"></script>
-        <script src="scripts/crisis-manager/home/show-action-plan-activities-ctrl.js"></script>
-
         <script src="scripts/home/main-home-ctrl.js"></script>
-        <script src="scripts/home/add-incident-modal-ctrl.js"></script>
-        <script src="scripts/home/alert-team-modal-ctrl.js"></script>
-        <script src="scripts/home/add-team-modal-ctrl.js"></script>
-        <script src="scripts/home/create-incident-type-ctrl.js"></script>
-        <script src="scripts/home/edit-msg-ctrl.js"></script>
-        <script src="scripts/home/closed-report-ctrl.js"></script>
 
+        <script src="scripts/simulation/game-libraries/simulation-library-ctrl.js"></script>
+        <script src="scripts/simulation/game-libraries/new-game-library-ctrl.js"></script>
+        <script src="scripts/simulation/game-libraries/edit-game-library-ctrl.js"></script>
+        <script src="scripts/simulation/game-messages/simulation-message-ctrl.js"></script>
+
+        <script src="scripts/simulation/game-messages/message-create-ctrl.js"></script>
+        <script src="scripts/simulation/game-messages/order-message-ctrl.js"></script>
+        <script src="scripts/simulation/game-messages/message-show-detail-ctrl.js"></script>
 
 <!-- settings controllers -->
-    <!-- Home Page (Preparation Manager Controller) -->
-        <script src="scripts/settings/settings-home-ctrl.js"></script>
     <!-- Incident-types controllers -->
-        <script src="scripts/settings/incident-types/incident-types-ctrl.js"></script>
-        <script src="scripts/settings/incident-types/incident-types-edit-ctrl.js"></script>
-    <!-- Dashboard categories controllers -->
-        <script src="scripts/settings/dashboard-categories/dashboard-categories-ctrl.js"></script>
-        <script src="scripts/settings/dashboard-categories/dashboard-categories-form-ctrl.js"></script>
-    <!-- Color Palette controllers -->
-        <script src="scripts/settings/color-palettes/color-palettes-ctrl.js"></script>
-        <script src="scripts/settings/color-palettes/color-palettes-edit-ctrl.js"></script>
     <!-- Capacity controllers -->
-        <script src="scripts/settings/capacities/capacity-ctrl.js"></script>
-        <script src="scripts/settings/capacities/capacity-edit-ctrl.js"></script>
-    <!-- Scenario controllers -->
-        <script src="scripts/settings/scenarios/scenario-ctrl.js"></script>
-        <script src="scripts/settings/scenarios/scenario-edit-ctrl.js"></script>
-    <!-- Libraries controllers -->
-        <script src="scripts/settings/libraries/libraries-ctrl.js"></script>
-        <script src="scripts/settings/libraries/form-ctrl.js"></script>
-        <script src="scripts/settings/libraries/edit-ctrl.js"></script>
-        <script src="scripts/settings/libraries/view-ctrl.js"></script>
-    <!-- Message Library controllers -->
-        <script src="scripts/settings/message-libraries/message-libraries-ctrl.js"></script>
-        <script src="scripts/settings/message-libraries/message-libraries-view-ctrl.js"></script>
-
-        <script src="scripts/settings/account/account-module.js"></script>
-        <script src="scripts/settings/account/account-ctrl.js"></script>
-
-        <script src="scripts/settings/roles/roles-ctrl.js"></script>
-        <script src="scripts/settings/roles/form-ctrl.js"></script>
-        <script src="scripts/settings/all-categories/list-ctrl.js"></script>
-        <script src="scripts/settings/all-categories/form-ctrl.js"></script>
-
-
-        <script src="scripts/settings/check-lists/list-ctrl.js"></script>
-        <script src="scripts/settings/check-lists/create-ctrl.js"></script>
-        <script src="scripts/settings/check-lists/attach-ctrl.js"></script>
-
-        <script src="scripts/settings/agenda-points/list-ctrl.js"></script>
-        <script src="scripts/settings/agenda-points/create-modal-ctrl.js"></script>
-        <script src="scripts/settings/agenda-points/task-list-modal-ctrl.js"></script>
-
-        <script src="scripts/settings/incident-agenda-points/create-modal-ctrl.js"></script>
-
-        <script src="scripts/settings/check-lists/view-ctrl.js"></script>
-        <script src="scripts/settings/check-lists/task-link-modal-ctrl.js"></script>
-
         <script src="scripts/settings/users/users-module.js"></script>
         <script src="scripts/settings/users/list-ctrl.js"></script>
         <script src="scripts/settings/users/create-ctrl.js"></script>
@@ -507,167 +401,6 @@
     <!-- Player controllers -->
         <script src="scripts/simulation/players/player-ctrl.js"></script>
         <script src="scripts/simulation/players/player-modal-ctrl.js"></script>
-
-    <!-- Player List controllers -->
-        <script src="scripts/simulation/player-lists/import-player-list-ctrl.js"></script>
-        <script src="scripts/simulation/player-lists/select-player-list-ctrl.js"></script>
-        <script src="scripts/simulation/player-lists/player-list-ctrl.js"></script>
-        <script src="scripts/simulation/player-lists/player-list-modal-ctrl.js"></script>
-
-    <!-- information - dashboard game controllers -->
-        <script src="scripts/simulation/id-games/schedule-id-game-ctrl.js"></script>
-        <script src="scripts/simulation/id-games/play-id-game-ctrl.js"></script>
-
-    <!-- information - dashboard game message controllers -->
-        <script src="scripts/simulation/id-game-messages/id-message-ctrl.js"></script>
-        <script src="scripts/simulation/id-game-messages/id-message-order-ctrl.js"></script>
-        <script src="scripts/simulation/id-game-messages/id-message-modal-ctrl.js"></script>
-
-    <!-- schedule information - dashboard game controllers -->
-        <script src="scripts/simulation/id-scheduled-games/schedule-id-game-modal-ctrl.js"></script>
-
-    <!-- Category controllers -->
-        <script src="scripts/simulation/categories/new-game-category-ctrl.js"></script>
-        <script src="scripts/simulation/categories/simulation-category-ctrl.js"></script>
-
-    <!-- Game Roles controllers -->
-        <script src="scripts/simulation/game-roles/game-role-ctrl.js"></script>
-        <script src="scripts/simulation/game-roles/game-role-modal-ctrl.js"></script>
-
-    <!-- Game Library controllers -->
-        <script src="scripts/simulation/game-libraries/simulation-library-ctrl.js"></script>
-        <script src="scripts/simulation/game-libraries/new-game-library-ctrl.js"></script>
-        <script src="scripts/simulation/game-libraries/edit-game-library-ctrl.js"></script>
-
-    <!-- Game Message controllers -->
-        <script src="scripts/simulation/game-messages/simulation-message-ctrl.js"></script>
-        <script src="scripts/simulation/game-messages/message-create-ctrl.js"></script>
-        <script src="scripts/simulation/game-messages/order-message-ctrl.js"></script>
-        <script src="scripts/simulation/game-messages/message-show-detail-ctrl.js"></script>
-
-    <!-- Game Template controllers -->
-        <script src="scripts/simulation/game-template/game-template-ctrl.js"></script>
-        <script src="scripts/simulation/game-template/add-team-modal-ctrl.js"></script>
-        <script src="scripts/simulation/game-template/new-game-template-modal-ctrl.js"></script>
-        <script src="scripts/simulation/game-template/edit-game-template-modal-ctrl.js"></script>
-        <script src="scripts/simulation/game-template/add-game-message-modal-ctrl.js"></script>
-        <script src="scripts/simulation/game-template/add-game-template-name-ctrl.js"></script>
-        <script src="scripts/simulation/game-template/game-message-create-modal-ctrl.js"></script>
-        <script src="scripts/simulation/game-template/new-game-template-making-ctrl.js"></script>
-
-    <!-- Coach Page controller -->
-        <script src="scripts/simulation/active-games/view-detail-active-games-ctrl.js"></script>
-
-        <script src="scripts/simulation/active-games/view-detail-message-response-ctrl.js"></script>
-
-    <!-- Player Page controllers -->
-        <script src="scripts/simulation/active-games/active-games-ctrl.js"></script>
-        <script src="scripts/simulation/active-games/game-details-ctrl.js"></script>
-        <script src="scripts/simulation/my-messages/my-messages-ctrl.js"></script>
-
-    <!-- Email generate for active game users controller -->
-        <script src="scripts/simulation/active-games/generate-emails-active-game-ctrl.js"></script>
-
-    <!-- Scheduled Game controllers -->
-        <script src="scripts/simulation/scheduled-games/round-schedule-ctrl.js"></script>
-        <script src="scripts/simulation/scheduled-games/create-assign-message-modal-ctrl.js"></script>
-        <script src="scripts/simulation/scheduled-games/scheduled-games-ctrl.js"></script>
-        <script src="scripts/simulation/scheduled-games/new-scheduled-game-ctrl.js"></script>
-        <script src="scripts/simulation/scheduled-games/play-training-game-ctrl.js"></script>
-        <script src="scripts/simulation/scheduled-games/edit-scheduled-game-ctrl.js"></script>
-        <script src="scripts/simulation/scheduled-games/play-schedule-game-modal-ctrl.js"></script>
-        <script src="scripts/simulation/scheduled-games/second-scheduled-game-ctrl.js"></script>
-
-    <!-- Assign game messages controllers -->
-        <script src="scripts/simulation/assign-game-messages/assign-game-message-ctrl.js"></script>
-        <script src="scripts/simulation/assign-game-messages/add-assign-game-message-ctrl.js"></script>
-        <script src="scripts/simulation/assign-game-messages/edit-assign-game-message-ctrl.js"></script>
-<!-- Simulation END -->
-
-        <script src="scripts/crisis-manager/information-dashboard/dashboard-ctrl.js"></script>
-        <script src="scripts/action-plan-wizard/action-plan-wizard-ctrl.js"></script>
-
-        <script src="scripts/incidents/incidents-module.js"></script>
-        <script src="scripts/crisis-manager/incidents/incidents-ctrl.js"></script>
-        <script src="scripts/crisis-manager/archive/archive-ctrl.js"></script>
-        <script src="scripts/crisis-manager/archive/archive-timeline-ctrl.js"></script>
-        <script src="scripts/crisis-manager/archive/archive-status-report-ctrl.js"></script>
-
-        <!-- <script src="scripts/exercises/exercises-module.js"></script>
-        <script src="scripts/exercises/exercises-ctrl.js"></script> -->
-
-        <script src="scripts/categories/categories-module.js"></script>
-        <script src="scripts/categories/categories-ctrl.js"></script>
-
-
-        <script src="scripts/crisis-manager/web-links/browser-ctrl.js"></script>
-        <script src="scripts/crisis-manager/web-links/media-view-ctrl.js"></script>
-        <script src="scripts/crisis-manager/web-links/media-list-ctrl.js"></script>
-
-
-        <script src="scripts/settings/incident-teams/create-ctrl.js"></script>
-        <script src="scripts/settings/incident-teams/edit-ctrl.js"></script>
-        <script src="scripts/settings/incident-teams/list-ctrl.js"></script>
-        <script src="scripts/settings/incident-teams/view-ctrl.js"></script>
-
-
-        <!-- <script src="scripts/incidents/notification-ctrl.js"></script> -->
-
-        <script src="scripts/incidents/remove-ctrl.js"></script>
-
-        <!-- <script src="scripts/incidents/external-user.js"></script> -->
-
-        <script src="scripts/incidents/link-activity-modal-ctrl.js"></script>
-        <script src="scripts/incidents/remove-incident-modal-ctrl.js"></script>
-
-        <script src="scripts/action-plan/actions.js"></script>
-        <script src="scripts/action-plan/actions-delete.js"></script>
-        <script src="scripts/action-plan/add-action-item.js"></script>
-        <script src="scripts/action-plan/decisions.js"></script>
-        <script src="scripts/action-plan/decisions-create.js"></script>
-        <script src="scripts/action-plan/decisions-delete.js"></script>
-
-        <script src="scripts/settings/action-plans/list-ctrl.js"></script>
-        <script src="scripts/settings/action-plans/view-ctrl.js"></script>
-        <script src="scripts/settings/action-plans/form-page-ctrl.js"></script>
-        <script src="scripts/settings/action-plans/form-add-modal-ctrl.js"></script>
-        <script src="scripts/settings/action-plans/form-edit-modal-ctrl.js"></script>
-        <script src="scripts/settings/action-plans/clone-ctrl.js"></script>
-
-        <script src="scripts/settings/activities/list-ctrl.js"></script>
-        <script src="scripts/settings/activities/edit-ctrl.js"></script>
-        <script src="scripts/settings/activities/add-ctrl.js"></script>
-
-        <script src="scripts/settings/organizations/list-ctrl.js"></script>
-        <script src="scripts/settings/organizations/edit-ctrl.js"></script>
-        <script src="scripts/settings/organizations/details-ctrl.js"></script>
-        <script src="scripts/settings/organizations/user-ctrl.js"></script>
-
-
-        <script src="scripts/crisis-manager/email-history/team-activation-ctrl.js"></script>
-
-        <script src="scripts/wizard/action-plan-modal-ctrl.js"></script>
-        <script src="scripts/wizard/create-department-ctrl.js"></script>
-        <script src="scripts/wizard/create-organization-ctrl.js"></script>
-        <script src="scripts/wizard/incident-type-modal-ctrl.js"></script>
-        <script src="scripts/wizard/new-section-plan-modal-ctrl.js"></script>
-        <script src="scripts/wizard/new-category-plan-modal-ctrl.js"></script>
-        <script src="scripts/wizard/new-action-plan-wizard-ctrl.js"></script>
-        <script src="scripts/wizard/after-save-action-plan-ctrl.js"></script>
-
-        <script src="scripts/crisis-manager/action-plan-dashboard/edit-incident-activity-modal-ctrl.js"></script>
-        <script src="scripts/crisis-manager/action-plan-dashboard/edit-incident-agenda-activity-modal-ctrl.js"></script>
-        <script src="scripts/crisis-manager/action-plan-dashboard/select-activity-status-ctrl.js"></script>
-        <script src="scripts/crisis-manager/action-plan-dashboard/user-info-modal-ctrl.js"></script>
-        <script src="scripts/crisis-manager/action-plan-dashboard/user-agenda-info-modal-ctrl.js"></script>
-        <script src="scripts/crisis-manager/action-plan-dashboard/assign-action-plan-modal-ctrl.js"></script>
-        <script src="scripts/action-plan-dashboard/status-report-ctrl.js"></script>
-        <script src="scripts/action-plan-dashboard/task-info-modal-ctrl.js"></script>
-
-
-        <script src="scripts/capacity/capacity-ctrl.js"></script>
-        <script src="scripts/capacity/edit-ctrl.js"></script>
-        <script src="scripts/capacity/asset-info-modal-ctrl.js"></script>
 
         <script src="scripts/app/task/task-module.js"></script>
         <script src="scripts/app/task/task-ctrl.js"></script>
@@ -692,7 +425,6 @@
 
         <script src="scripts/text-wrap.js"></script>
         <script src="scripts/filters/display-string.js"></script>
-        <script src="scripts/factories/incident-factory.js"></script>
         <script src="scripts/directives/row-select-all.js"></script>
         <script src="scripts/directives/row-select.js"></script>
         <script src="scripts/directives/tooltip.js"></script>

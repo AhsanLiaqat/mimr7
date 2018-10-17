@@ -9,23 +9,22 @@ angular.module('app')
                     data.login_detail = '';
                     $http.post("/auth/login", data).then(function (res) {
                         $rootScope.userNam = res.data.name;
-                        LibraryService.getCustomLib(res.data.userAccountId).then(function(response){
-                            console.log('Ref Help: ',response);
 
-                            if (response.data && response.data.url !== null) {
-                                $rootScope.refHelpLink = response.data.url;
-                            }else {
-                                $rootScope.refHelpLink = "https://s3.amazonaws.com/crisishub/library/b8cfc165-aae2-4bba-8301-5e2c2a3b88b7.pdf";
-                            }
-                        },function(err){
-                            if(err)
-                                toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
-                            else
-                                toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
-                        });
-                        // $http.get('/settings/libraries/get-custom-lib/help?userAccountId='+res.data.userAccountId).then(function (response) {
-                            
+                        // LibraryService.getCustomLib(res.data.userAccountId).then(function(response){
+                        //     console.log('Ref Help: ',response);
+
+                        //     if (response.data && response.data.url !== null) {
+                        //         $rootScope.refHelpLink = response.data.url;
+                        //     }else {
+                        //         $rootScope.refHelpLink = "https://s3.amazonaws.com/crisishub/library/b8cfc165-aae2-4bba-8301-5e2c2a3b88b7.pdf";
+                        //     }
+                        // },function(err){
+                        //     if(err)
+                        //         toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
+                        //     else
+                        //         toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
                         // });
+                        
                         user = res.data.token;
                         var exp = new Date(new Date().getTime() + 1000*60*60).toUTCString();
                         Query.setCookie('Auth_token',user,{expires: exp});
@@ -47,7 +46,8 @@ angular.module('app')
                                 else {
                                     $rootScope.superAdmin = false;
                                     $rootScope.infoProvider = false;
-                                    $location.path("/mainHome");
+
+                                    $location.path("/home");
                                 }
                             });
                             deferred.resolve("success")

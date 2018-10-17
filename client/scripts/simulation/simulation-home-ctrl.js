@@ -25,6 +25,11 @@
             if (Query.getCookie('user')){
                 $scope.user = Query.getCookie('user');
             }
+
+            $http.get('/article/articles/all')
+            .then(function(res){
+                $scope.cards = res.data;
+            });
         }
         init();
 
@@ -121,10 +126,11 @@
         /////////////////////methods or functions used in game library cards////////////////////////////
 
         //open modal to create new game
-        $scope.AllnewGameTemplate = function () {
+
+        $scope.newContent = function () {
             ModalService.showModal({
                 templateUrl: "views/simulation/game-template/new-game-template-making.html",
-                controller: "NewGameTemplateMakingCtrl",
+                controller: "addArticleModalCtrl",
                 inputs: {
                     gameId: null
                 }
@@ -132,8 +138,8 @@
                 modal.element.modal({ backdrop: 'static', keyboard: false });
                 modal.close.then(function (result) {
                     if (result) {
-                        $scope.showGraph(0,$scope.cards[0]);
-                        // $scope.gameTemplates.unshift(result);
+
+                        $scope.cards.push(result);
                     }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
@@ -183,7 +189,8 @@
         $scope.editModal = function (id, index) {
             ModalService.showModal({
                 templateUrl: "views/simulation/game-template/new-game-template-making.html",
-                controller: "NewGameTemplateMakingCtrl",
+
+                controller: "addArticleModalCtrl",
                 inputs: {
                     gameId: id
                 }
@@ -191,7 +198,8 @@
                 modal.element.modal({ backdrop: 'static', keyboard: false });
                 modal.close.then(function (result) {
                     if (result && result !== '') {
-                        $scope.gameTemplates[index] = result;
+
+                        $scope.cards[index] = result;
                     }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
@@ -200,20 +208,12 @@
         };
 
         // deletes game from game library
-        $scope.delete = function (index, game) {
-            if(game.type == 0){
-                $http.delete("/simulation/games/remove/" + game.id)
-                .then(function(res){
-                    $scope.gameTemplates.splice(index,1);
-                    toastr.success('Game Template Deleted.', 'Success!');
-                });
-            }else{
-                $http.delete("/simulation/id-games/remove/" + game.id)
-                .then(function(res){
-                    $scope.gameTemplates.splice(index,1);
-                    toastr.success('Game Template Deleted.', 'Success!');
-                });
-            }
+        $scope.delete = function (index, card) {
+            $http.delete('/article/articles/remove/' + card.id)
+            .then(function(res){
+                $scope.cards.splice(index,1);
+                toastr.success('Game Template Deleted.', 'Success!');
+            });
         };
 
         // open modal to play ID game direct

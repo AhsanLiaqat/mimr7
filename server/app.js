@@ -110,91 +110,70 @@ app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
 
 //=====================Crisis Manager API=================================
-app.use('/messages', require('./routes/crisis-manager/message'));
-app.use('/message-history', require('./routes/crisis-manager/message-history'));
-app.use('/alert-history', require('./routes/crisis-manager/alert-histories'));
-app.use('/class', require('./routes/crisis-manager/class'));
-app.use('/api/incidents', require('./routes/crisis-manager/incidents'));
-app.use('/reports', require('./routes/crisis-manager/reports'));
-app.use('/mail', require('./routes/crisis-manager/mail'));
-app.use('/email-track', require('./routes/crisis-manager/email-tracking'));
-app.use('/dynamic-form', require('./routes/crisis-manager/dynamic-form'));
-app.use('/incident-plan', require('./routes/crisis-manager/incident-plan'));
-app.use('/incident-activities', require('./routes/crisis-manager/incident-activities'));
-app.use('/incident-agenda-activities', require('./routes/crisis-manager/incident-agenda-activities'));
-app.use('/plan-activities', require('./routes/crisis-manager/plan-activities'));
-app.use('/actions', require('./routes/crisis-manager/actions'));
-app.use('/decisions', require('./routes/crisis-manager/decisions'));
-app.use('/api/map-images', require('./routes/crisis-manager/map-images'));
-app.use('/incident-check-list', require('./routes/crisis-manager/incident-check-list'));
-app.use('/incident-shapes', require('./routes/crisis-manager/incident-shapes'));
-app.use('/sections', require('./routes/crisis-manager/sections'));
-app.use('/form-types', require('./routes/crisis-manager/form-type'));
-app.use('/dynamic-form-data', require('./routes/crisis-manager/dynamic-form-data'));
+
+// app.use('/messages', require('./routes/crisis-manager/message'));
+// app.use('/message-history', require('./routes/crisis-manager/message-history'));
+// app.use('/api/incidents', require('./routes/crisis-manager/incidents'));
+// app.use('/mail', require('./routes/crisis-manager/mail'));
+// app.use('/email-track', require('./routes/crisis-manager/email-tracking'));
+// app.use('/dynamic-form', require('./routes/crisis-manager/dynamic-form'));
+// app.use('/api/map-images', require('./routes/crisis-manager/map-images'));
+// app.use('/form-types', require('./routes/crisis-manager/form-type'));
+// app.use('/dynamic-form-data', require('./routes/crisis-manager/dynamic-form-data'));
 
 //=====================Settings API=================================
 
-app.use('/settings/scenarios', require('./routes/settings/scenarios.js'));
-app.use('/settings/capacities', require('./routes/settings/capacities.js'));
-app.use('/settings/color-palettes', require('./routes/settings/color-palettes.js'));
-app.use('/settings/action-plans', require('./routes/settings/action-plans.js'));
-app.use('/settings/check-lists', require('./routes/settings/check-lists.js'));
-app.use('/settings/agenda-points', require('./routes/settings/agenda-points.js'));
-app.use('/settings/action-lists', require('./routes/settings/action-lists.js'));
-app.use('/settings/all-categories', require('./routes/settings/all-categories.js'));
-app.use('/settings/custom-messages', require('./routes/settings/custom-messages.js'));
-app.use('/settings/locations', require('./routes/settings/locations.js'));
-app.use('/settings/incident-types', require('./routes/settings/incident-types.js'));
-app.use('/settings/roles', require('./routes/settings/roles.js'));
-app.use('/settings/organizations', require('./routes/settings/organizations.js'));
-app.use('/settings/libraries', require('./routes/settings/libraries.js'));
-app.use('/settings/departments', require('./routes/settings/departments.js'));
-app.use('/settings/agenda-activities', require('./routes/settings/agenda-activity.js'));
-app.use('/settings/activities', require('./routes/settings/activities.js'));
-app.use('/settings/dashboard-categories', require('./routes/settings/dashboard-categories.js'));
-app.use('/settings/tasks', require('./routes/settings/tasks.js'));
-app.use('/settings/accounts', require('./routes/settings/accounts.js'));
-app.use('/settings/tags', require('./routes/settings/tags.js'));
-app.use('/settings/incident-teams', require('./routes/settings/incident-teams.js'));
+// app.use('/settings/all-categories', require('./routes/settings/all-categories.js'));
+// app.use('/settings/custom-messages', require('./routes/settings/custom-messages.js'));
+// app.use('/settings/locations', require('./routes/settings/locations.js'));
+// app.use('/settings/incident-types', require('./routes/settings/incident-types.js'));
+// app.use('/settings/roles', require('./routes/settings/roles.js'));
+// app.use('/settings/organizations', require('./routes/settings/organizations.js'));
+// app.use('/settings/departments', require('./routes/settings/departments.js'));
+// app.use('/settings/dashboard-categories', require('./routes/settings/dashboard-categories.js'));
+// app.use('/settings/accounts', require('./routes/settings/accounts.js'));
+// app.use('/settings/incident-teams', require('./routes/settings/incident-teams.js'));
 
 //=====================Mobile API=================================
-app.use('/api/mobile/task', require('./routes/mobile/taskList.js'));
-app.use('/api/mobile/incident', require('./routes/mobile/incident.js'));
-app.use('/api/mobile/messages', require('./routes/mobile/messages.js'));
-app.use('/api/mobile/activity', require('./routes/mobile/activities.js'));
-app.use('/api/mobile/users', require('./routes/mobile/users.js'));
-app.use('/api/mobile/device', require('./routes/mobile/device.js'));
-app.use('/api/mobile/categories', require('./routes/mobile/categories.js'));
-app.use('/api/mobile/incidentPlan', require('./routes/mobile/incidentPlan.js'));
-app.use('/api/mobile/incidentActivities', require('./routes/mobile/incidentActivities.js'));
-app.use('/api/mobile/reference-libraries', require('./routes/mobile/reference-libraries.js'));
-app.use('/api/Sms', require('./routes/sms.js'));
-app.use('/api/ios', require('./routes/iosPush.js'));
+// app.use('/api/mobile/task', require('./routes/mobile/taskList.js'));
+// app.use('/api/mobile/incident', require('./routes/mobile/incident.js'));
+// app.use('/api/mobile/messages', require('./routes/mobile/messages.js'));
+// app.use('/api/mobile/activity', require('./routes/mobile/activities.js'));
+// app.use('/api/mobile/users', require('./routes/mobile/users.js'));
+// app.use('/api/mobile/device', require('./routes/mobile/device.js'));
+// app.use('/api/mobile/categories', require('./routes/mobile/categories.js'));
+// app.use('/api/mobile/incidentPlan', require('./routes/mobile/incidentPlan.js'));
+// app.use('/api/mobile/incidentActivities', require('./routes/mobile/incidentActivities.js'));
+// app.use('/api/mobile/reference-libraries', require('./routes/mobile/reference-libraries.js'));
+// app.use('/api/Sms', require('./routes/sms.js'));
+// app.use('/api/ios', require('./routes/iosPush.js'));
 
 //======================Simulation Routes=========================================
-app.use('/simulation/id-games', require('./routes/simulation/id-games.js'));
-app.use('/simulation/id-game-messages', require('./routes/simulation/id-game-messages.js'));
-app.use('/simulation/id-schedule-games', require('./routes/simulation/id-schedule-games.js'));
-app.use('/simulation/id-schedule-messages', require('./routes/simulation/id-schedule-messages.js'));
+// app.use('/simulation/id-games', require('./routes/simulation/id-games.js'));
+// app.use('/simulation/id-game-messages', require('./routes/simulation/id-game-messages.js'));
+// app.use('/simulation/id-schedule-games', require('./routes/simulation/id-schedule-games.js'));
+// app.use('/simulation/id-schedule-messages', require('./routes/simulation/id-schedule-messages.js'));
 
-app.use('/simulation/game-players', require('./routes/simulation/game-players.js'));
-app.use('/simulation/game-player-lists', require('./routes/simulation/game-player-lists.js'));
+// app.use('/simulation/game-players', require('./routes/simulation/game-players.js'));
+// app.use('/simulation/game-player-lists', require('./routes/simulation/game-player-lists.js'));
 
-app.use('/simulation/game-roles', require('./routes/simulation/game-roles.js'));
-app.use('/simulation/game-libraries', require('./routes/simulation/game-libraries.js'));
-app.use('/simulation/game-categories', require('./routes/simulation/game-categories.js'));
-app.use('/simulation/game-messages', require('./routes/simulation/game-messages.js'));
-app.use('/simulation/game-assign-messages', require('./routes/simulation/game-assign-messages.js'));
-app.use('/simulation/game-rounds',require('./routes/simulation/game-rounds.js'));
-app.use('/simulation/game-teams', require('./routes/simulation/game-teams.js'));
-app.use('/simulation/read-messages', require('./routes/simulation/read-messages.js'));
-app.use('/simulation/archive-messages', require('./routes/simulation/archive-messages.js'));
-app.use('/simulation/message-responses', require('./routes/simulation/message-responses.js'));
+// app.use('/simulation/game-roles', require('./routes/simulation/game-roles.js'));
+// app.use('/simulation/game-libraries', require('./routes/simulation/game-libraries.js'));
+// app.use('/simulation/game-categories', require('./routes/simulation/game-categories.js'));
+// app.use('/simulation/game-messages', require('./routes/simulation/game-messages.js'));
+// app.use('/simulation/game-assign-messages', require('./routes/simulation/game-assign-messages.js'));
+// app.use('/simulation/game-rounds',require('./routes/simulation/game-rounds.js'));
+// app.use('/simulation/game-teams', require('./routes/simulation/game-teams.js'));
+// app.use('/simulation/read-messages', require('./routes/simulation/read-messages.js'));
+// app.use('/simulation/archive-messages', require('./routes/simulation/archive-messages.js'));
+// app.use('/simulation/message-responses', require('./routes/simulation/message-responses.js'));
 
-app.use('/simulation/games', require('./routes/simulation/games.js'));
-app.use('/simulation/game-plan-messages', require('./routes/simulation/game-plan-messages.js'));
-app.use('/simulation/schedule-games', require('./routes/simulation/schedule-games.js'));
-app.use('/simulation/schedule-game-messages', require('./routes/simulation/schedule-game-messages.js'));
+// app.use('/simulation/games', require('./routes/simulation/games.js'));
+// app.use('/simulation/game-plan-messages', require('./routes/simulation/game-plan-messages.js'));
+// app.use('/simulation/schedule-games', require('./routes/simulation/schedule-games.js'));
+app.use('/article/articles', require('./routes/article/articles.js'));
+app.use('/article-library/article-libraries', require('./routes/article-library/article-libraries.js'));
+app.use('/message/messages', require('./routes/message/messages.js'));
 
 
 app.all('/*', function(req, res, next) {

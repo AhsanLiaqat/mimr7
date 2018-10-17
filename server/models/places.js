@@ -17,10 +17,6 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'places',
         classMethods: {
             associate: function(models) {
-
-                locations.belongsToMany(models.incident,
-                    {as: 'incidents',
-                        through: 'incident_locations'});
                 locations.belongsTo(models.user_accounts);
             },
             byData: function(data) {

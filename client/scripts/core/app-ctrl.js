@@ -47,24 +47,24 @@
             if (response.data !== '') {
   				// var socket = io('http://localhost:8888');
                 $rootScope.userNam = response.data.firstName +' '+response.data.lastName;
-                LibraryService.getCustomLib(response.data.userAccountId).then(function(response){
-                    console.log('Ref Help: ',response);
-                    if (response.data && response.data.url !== null) {
-                        $rootScope.refHelpLink = response.data.url;
-                    }
-                    else {
-                        $rootScope.refHelpLink = "https://s3.amazonaws.com/crisishub/library/b8cfc165-aae2-4bba-8301-5e2c2a3b88b7.pdf";
-                    }
-                },function(err){
-                    if(err)
-                        toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
-                    else
-                        toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
-
-                });
-                // $http.get('/settings/libraries/get-custom-lib/help?userAccountId='+response.data.userAccountId).then(function (response) {
+                // LibraryService.getCustomLib(response.data.userAccountId).then(function(response){
+                //     console.log('Ref Help: ',response);
+                //     if (response.data && response.data.url !== null) {
+                //         $rootScope.refHelpLink = response.data.url;
+                //     }
+                //     else {
+                //         $rootScope.refHelpLink = "https://s3.amazonaws.com/crisishub/library/b8cfc165-aae2-4bba-8301-5e2c2a3b88b7.pdf";
+                //     }
+                // },function(err){
+                //     if(err)
+                //         toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
+                //     else
+                //         toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
 
                 // });
+                // // $http.get('/settings/libraries/get-custom-lib/help?userAccountId='+response.data.userAccountId).then(function (response) {
+
+                // // });
             }
         });
 

@@ -1,0 +1,84 @@
+<div class="page page-table" data-ng-controller="simulationLibraryCtrl">
+
+    <section class="panel panel-default">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"></span> Media Library
+            </strong>
+            <!-- <select chosen ng-model="selected" ng-options = "item.id as item.name for item in selectoptions" ng-change = "managearray(selected)" ng-disabled="gameIdFound">
+            </select> -->
+            <div class="pull-right header-buttons">
+                <a ng-click="addModal();" class="btn btn-success btn-sm">Add Media </a>
+            </div>
+        </div>
+
+        <div class="panel-body">
+
+            <table  st-pipe="referencesTable" st-table="libReferences" class="table table-bordered table-striped table-responsive">
+
+                <thead>
+                <tr>
+                    <th class="col-md-1" st-sort="title">Title</th>
+                    <th class="col-md-1" st-sort="author">Description</th>
+                    <th class="col-md-1" st-sort="filename">File Name</th>
+                    <th class="col-md-2">Actions</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input class="form-control" placeholder="Search Title" st-search="title"/>
+                    </th>
+
+                    <th>
+                        <input class="form-control" placeholder="Search Author"
+                               st-search="author"/>
+                    </th>
+                    <th>
+                        <input class="form-control" placeholder="Search File"
+                               st-search="filename"/>
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr ng-repeat="record in media">
+                    <td>{{record.title}}</td>
+                    <td>{{record.description}}</td>
+                    <td>
+                        <p ng-show="record.mimetype">{{record.filename}}</p>
+                        <p ng-show="!record.mimetype">N/A</p>
+                    </td>
+
+                    <td>
+                        <button ng-show="record.mimetype"
+                                class="btn btn-sm btn-default"
+                                ng-click="preview(record)">
+                            <i class="fa fa-file" aria-hidden="true"></i> View File
+                        </button>
+
+                        <a ng-hide="record.mimetype && record.url"
+                           class="btn btn-sm btn-info"
+                           href="http://{{shortUrl(record.url)}}"
+                           target="_blank"> <i class="fa fa-link"></i> Open Link</a>
+
+                        <a class="btn btn-sm btn-danger" confirm="Are you sure you want to delete?" ng-click="deleteModal(record.id,$index)" ><span class="glyphicon glyphicon-remove-sign" ></span></a>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot class="table table-striped table-responsive">
+                <tr>
+                    <td class="text-center" st-pagination="" st-items-by-page="pageItems" colspan="7">
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+            <div class="col-md-3">
+                <select class="form-control"
+                        ng-model="pageItems"
+                        ng-options="item.val as item.name for item in items"
+                        ng-selected="item.val === pageItems">
+                </select>
+            </div>
+        </div>
+    </section>
+</div>

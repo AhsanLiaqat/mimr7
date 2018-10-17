@@ -66,13 +66,8 @@
         'app.page',
         'app.table',
         'app.users',
-        'app.account',
-        'app.incidents',
-
-        'app.categories',
         'app.task',
-        'app.calendar',
-        'ui.unique'
+        'app.calendar'
     ]).
     value('froalaConfig', {
         toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],

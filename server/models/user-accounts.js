@@ -24,12 +24,10 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'user_accounts',
         classMethods: {
             associate: function(models) {
-                user_accounts.hasMany(models.activity);
-                user_accounts.hasMany(models.incident_activity);
-                user_accounts.hasMany(models.tag);
-                user_accounts.hasMany(models.checkList);
-                user_accounts.hasMany(models.all_category);
-                user_accounts.hasMany(models.dynamic_form);
+
+                user_accounts.hasMany(models.article);
+                user_accounts.hasMany(models.article_library);
+                user_accounts.hasMany(models.message_library);
             }
         }
     });

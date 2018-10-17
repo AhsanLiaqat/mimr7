@@ -80,26 +80,6 @@ module.exports = {
                     "type": "TIMESTAMP WITH TIME ZONE",
                     "allowNull": false
                 },
-                "departmentId": {
-                    "type": "UUID",
-                    "allowNull": true,
-                    "references": {
-                        "model": "departments",
-                        "key": "id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE"
-                },
-                "organizationId": {
-                    "type": "UUID",
-                    "allowNull": true,
-                    "references": {
-                        "model": "organizations",
-                        "key": "id"
-                    },
-                    "onDelete": "SET NULL",
-                    "onUpdate": "CASCADE"
-                },
                 "userAccountId": {
                     "type": "UUID",
                     "allowNull": true,

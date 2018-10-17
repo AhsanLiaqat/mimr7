@@ -1,0 +1,30 @@
+{
+  "name": "angular-chosen-localytics",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/leocaseiro/angular-chosen.git"
+  },
+  "main": "dist/angular-chosen.js",
+  "ignore": [
+    "gulpfile.js",
+    "src",
+    "test"
+  ],
+  "dependencies": {
+    "jquery": "^2.0.3",
+    "chosen": "^1.5.1",
+    "angular": "^1.4.9"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/leocaseiro/angular-chosen",
+  "version": "1.9.0",
+  "_release": "1.9.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.9.0",
+    "commit": "2d3a7de4bfa633235ef13e8fee9f2dd3acca677b"
+  },
+  "_source": "https://github.com/leocaseiro/angular-chosen.git",
+  "_target": "*",
+  "_originalSource": "angular-chosen-localytics"
+}

@@ -5,14 +5,8 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true
         },
-        message: DataTypes.STRING,
-        coords: DataTypes.JSON,
-        type: DataTypes.STRING,
-        status:
-        {
-            type: DataTypes.STRING,
-            defaultValue: "Incoming"
-        },
+        content: DataTypes.STRING,
+        description: DataTypes.STRING,
         isDeleted: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
@@ -21,9 +15,8 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'messages',
         classMethods: {
             associate: function(models) {
-                message.belongsTo(models.incident);
-                message.belongsTo(models.user, {as: 'user'});
-                message.belongsTo(models.game_player);
+                message.belongsTo(models.article);
+                message.hasMany(models.message_library , {foreignKey: 'parentId'});
             }
         }
     });

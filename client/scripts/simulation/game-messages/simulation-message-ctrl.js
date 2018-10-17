@@ -22,27 +22,13 @@
             $scope.tableState = tableState;
 
             $scope.user = Query.getCookie('user');
-            var path = "/simulation/game-messages/all?accountId=" + $scope.user.userAccountId;
 
-            $http.get(path).then(function(response) {
-                $http.get('/simulation/games/all').then(function (resp) {
-                    $scope.gameTemplates = resp.data;
-                    angular.forEach($scope.gameTemplates, function(value) {
-                      $scope.selectoptions.push(value);
-                    });
-                    $scope.messages = response.data;
-                    $scope.messages = _.sortBy($scope.messages, function (o) { return new Date(o.order); });
-                    $scope.safeMessages = angular.copy($scope.messages);
-                    $scope.isLoading = false;
-                    if($routeParams.gamePlanId){
-                        $scope.gameIdFound = true;
-                        $scope.selected = $routeParams.gamePlanId;
-                    }
-                    $scope.messageToShow =  angular.copy($scope.messages);
-                    $scope.managearray($scope.selected);
-                });
-            });
+            
         };
+
+        $http.get('/message/messages/all/' + $routeParams.gamePlanId).then(function (resp) {
+            $scope.msg = resp.data;
+        });
 
         //do pagination
         $scope.paginate = function(arr){
@@ -98,97 +84,56 @@
 
         // add message modal
         $scope.addModal = function() {
-            if ($scope.gameIdFound){
-                ModalService.showModal({
-                    templateUrl: "views/simulation/game-messages/form.html",
-                    controller: "messageCreateCtrl",
-                    inputs:{
-                        message: undefined,
-                        gamePlanId: $routeParams.gamePlanId
-                    }
-                }).then(function(modal) {
-                    modal.element.modal( {backdrop: 'static',  keyboard: false });
-                    modal.close.then(function(result) {
-                        $('.modal-backdrop').remove();
-                        $('body').removeClass('modal-open');
-                        $scope.messagesTable($scope.tableState);
-                        if (result && result !== ''){
-                            // $scope.messages.unshift(result);
-                        }
-                    });
-                });
-            }else{
-                ModalService.showModal({
-                    templateUrl: "views/simulation/game-messages/form.html",
-                    controller: "messageCreateCtrl",
-                    inputs:{
-                        message: undefined,
-                        gamePlanId: undefined
-                    }
-                }).then(function(modal) {
-                    modal.element.modal( {backdrop: 'static',  keyboard: false });
-                    modal.close.then(function(result) {
-                        $('.modal-backdrop').remove();
-                        $('body').removeClass('modal-open');
-                        $scope.messagesTable($scope.tableState);
-                    });
-                });
-            }
-        };
-
-        // edit given message
-        $scope.edit = function(message, index) {
             ModalService.showModal({
                 templateUrl: "views/simulation/game-messages/form.html",
                 controller: "messageCreateCtrl",
                 inputs:{
-                    message: message,
-                    gamePlanId: null
+
+                    articleId: $routeParams.gamePlanId
                 }
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });
                 modal.close.then(function(result) {
+
+                    if(result){
+                        $scope.msg.push(result);
+                    }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
-                    $scope.messagesTable($scope.tableState);
                 });
             });
         };
 
-        //deletes message
-        $scope.deleteMessage = function (id, index) {
-            $http.delete("/simulation/game-messages/remove/" + id)
-                .then(function(res){
-                    $scope.messagesTable($scope.tableState);
-                    toastr.success('Message deleted.', 'Success!');
+        $scope.addMedia = function(record) {
+            var inputs = {
+                id: null,
+                articleId: null,
+                contentType : 'message-library',
+                messageId : record.id
+            };
+            ModalService.showModal({
+                templateUrl: "views/simulation/game-libraries/form.html",
+                controller: "newGameLibraryCtrl",
+                inputs: inputs
+            }).then(function(modal) {
+                modal.element.modal( {backdrop: 'static',  keyboard: false });
+                modal.close.then(function(result) {
+                    // if(result){
+                    //     $scope.media.push(result);
+                    // }
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
                 });
+            });
         };
-
-        //some wanted code for future for copy messages and assign to others
-
-        // $scope.assignNewSimMessage = function (simMessage,ind) {
+        // edit given message
+        // $scope.edit = function(message, index) {
         //     ModalService.showModal({
-        //         templateUrl: "views/assign-game-messages/form.html",
-        //         controller: "assignSimualtionEditCtrl",
-        //         inputs: {
-        //             assignedMessage: simMessage,
-        //         }
-        //     }).then(function (modal) {
-        //         modal.element.modal({ backdrop: 'static', keyboard: false });
-        //         modal.close.then(function (result) {
-        //             $('.modal-backdrop').remove();
-        //             $('body').removeClass('modal-open');
-        //             $scope.messagesTable($scope.tableState);
-        //         });
-        //     });
-        // };
-
-        // $scope.copy = function(message, index) {
-        //     ModalService.showModal({
-        //         templateUrl: "views/simulation/game-messages/copy-simulation-message.html",
-        //         controller: "messageCopyCtrl",
+        //         templateUrl: "views/simulation/game-messages/form.html",
+        //         controller: "messageCreateCtrl",
         //         inputs:{
-        //             message: message
+        //             message: message,
+        //             gamePlanId: null
         //         }
         //     }).then(function(modal) {
         //         modal.element.modal( {backdrop: 'static',  keyboard: false });
@@ -199,6 +144,16 @@
         //         });
         //     });
         // };
+
+
+        //deletes message
+        $scope.deleteMessage = function (id, index) {
+            $http.delete("/message/messages/remove/" + id)
+                .then(function(res){
+                    $scope.msg.splice(index,1);
+                    toastr.success('Message deleted.', 'Success!');
+                });
+        };
     }
 
 
