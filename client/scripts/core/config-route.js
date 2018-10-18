@@ -308,7 +308,7 @@
 
                     console.log(next.originalPath);
                     switch (next.originalPath) {
-                        case '/mainHome':
+                        case '/home':
                             $rootScope.breadcrumb_1 = false;
                             $rootScope.breadcrumb_2 = false;
                             break;

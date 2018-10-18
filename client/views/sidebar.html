@@ -7,7 +7,7 @@
         <li ng-show="checkSuperAdmin()">
             <a ng-href="/#/superadmin" ng-click="clickMenu()"> <i class="fa fa-home" aria-hidden="true"></i> <span data-translate="Home"></span> </a>
         </li>
-         <li ng-show="checkSuperAdmin()">
+        <li ng-show="checkSuperAdmin()">
             <a href=""> <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>  <span data-translate="Copy Accounts"></span></a>
             <ul>
                 <li>
@@ -16,18 +16,9 @@
             </ul>
         </li>
         <li ng-show="!checkSuperAdmin()">
-            <a href=""> <i class="fa fa-gamepad" aria-hidden="true"></i>  <span data-translate="Simulation Manager"></span></a>
-            <ul>
-                <li>
-                    <a href="#/simulation/home" ng-click="clickMenu()"> <i class="ti-angle-right"></i><span data-translate="Home"></span></a>
-                </li>
-                <li>
-                    <a href="#/simulation/players" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Simulation Players"></span></a>
-                </li>
-                <li>
-                    <a href="#/simulation/game-messages" ng-click="clickMenu()"><i class="ti-angle-right"></i><span data-translate="Simulation Messages"></span></a>
-                </li>
-            </ul>
+            <li>
+                <a href="#/home" ng-click="clickMenu()"> <i class="ti-angle-right"></i><span data-translate="Home"></span></a>
+            </li>
         </li>
     </ul>
 </div>
