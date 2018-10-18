@@ -70,21 +70,6 @@
                     
         }
 
-        //filter data to show on basis of gamePlanId
-        $scope.managearray = function(id){
-            if(id == 0){
-                $scope.libraryToShow =  angular.copy($scope.libReferences);
-            }else{
-                $scope.libraryToShow = []
-                angular.forEach($scope.libReferences, function(value) {
-                  if(value.gamePlanId == id){
-                    $scope.libraryToShow.push(value);
-                  }
-                });
-            }
-            $scope.libraryToShow = $scope.paginate($scope.libraryToShow);
-        }
-
         //add media
         $scope.addModal = function() {
             var inputs = {

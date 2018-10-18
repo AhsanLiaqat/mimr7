@@ -3,12 +3,15 @@ angular.module('app')
     // var $http = $injector.get('$http');
         return {
             login: function (data) {
+                console.log('()()()()',data)
                 var deferred = $q.defer();
 
                 // $.get( "http://ip-api.com/json", function( respp ) {
                     data.login_detail = '';
                     $http.post("/auth/login", data).then(function (res) {
+                        console.log('---------?????????????',res.data.name)
                         $rootScope.userNam = res.data.name;
+
                         // LibraryService.getCustomLib(res.data.userAccountId).then(function(response){
                         //     console.log('Ref Help: ',response);
 
@@ -45,6 +48,7 @@ angular.module('app')
                                 else {
                                     $rootScope.superAdmin = false;
                                     $rootScope.infoProvider = false;
+
                                     $location.path("/home");
                                 }
                             });
