@@ -14,6 +14,7 @@
 
         $scope.pageItems = 10;
         $scope.selected = 0;
+
         $http.post('/article-library/article-libraries/all/' + $routeParams.gamePlanId)
         .then(function(res){
             $scope.media = res.data;
@@ -26,6 +27,7 @@
             $scope.libraryToShow = []
             $scope.isLoading = true;
             $scope.tableState = tableState;
+
             // $http.get("/simulation/game-libraries/all").then(function(response) {
             //     $http.get('/simulation/games/all').then(function (resp) {
             //         $scope.gameTemplates = resp.data;
@@ -66,21 +68,6 @@
             tableState.pagination.numberOfPages = Math.ceil(filtered.length / number);
             return result;
                     
-        }
-
-        //filter data to show on basis of gamePlanId
-        $scope.managearray = function(id){
-            if(id == 0){
-                $scope.libraryToShow =  angular.copy($scope.libReferences);
-            }else{
-                $scope.libraryToShow = []
-                angular.forEach($scope.libReferences, function(value) {
-                  if(value.gamePlanId == id){
-                    $scope.libraryToShow.push(value);
-                  }
-                });
-            }
-            $scope.libraryToShow = $scope.paginate($scope.libraryToShow);
         }
 
         //add media
@@ -212,6 +199,7 @@
         	      }
         	});
         };
+
         
         //show video type media
         var videoModal = function(record, size){

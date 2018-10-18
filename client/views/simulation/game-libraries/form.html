@@ -7,7 +7,6 @@
         <div class="modal-content">
             <div id="modal-header" class="modal-header">
                 <button type="button" class="close" ng-click="close()" >&times;</button>
-
                 <h4 ng-hide = "id" class="modal-title">Add New Reference</h4>
                 <h4 ng-show="id" class="modal-title">View Reference</h4>
             </div>
@@ -18,12 +17,10 @@
                     <input type="text" class="form-control" id="exampleInputEmail1" ng-model="lib.title" placeholder="Enter Title Name" ng-readonly="notEdit">
                 </div>
                 <div class="form-group">
-
                     <label for="exampleInputEmail1">Description</label>
                     <textarea name="" ng-model="lib.description" class="form-control" rows="4" ng-readonly="notEdit"></textarea>
                 </div>
                 <div class="form-group">
-
                     <label for="exampleInputEmail1" ng-hide="check.file">Attach link</label>
                     <input type="checkbox" ng-hide="check.file" ng-model="check.link">
 

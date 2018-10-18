@@ -22,7 +22,6 @@
             $scope.tableState = tableState;
 
             $scope.user = Query.getCookie('user');
-
             
         };
 
@@ -88,13 +87,11 @@
                 templateUrl: "views/simulation/game-messages/form.html",
                 controller: "messageCreateCtrl",
                 inputs:{
-
                     articleId: $routeParams.gamePlanId
                 }
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });
                 modal.close.then(function(result) {
-
                     if(result){
                         $scope.msg.push(result);
                     }
@@ -144,7 +141,6 @@
         //         });
         //     });
         // };
-
 
         //deletes message
         $scope.deleteMessage = function (id, index) {

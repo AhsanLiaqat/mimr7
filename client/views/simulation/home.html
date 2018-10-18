@@ -18,13 +18,13 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-4" style="position: relative;" ng-repeat="template in cards">
             <div style="padding: 10px;margin: 0px;">
                 <div class="card" style="background-color: rgba(255, 255, 255, 0.78) !important;">
                     <div class="card-content" style="position: relative;">
                         <div class="card-headline">
+
                             <div>
                                 <h3 style="color: black" >{{template.title}}</h3>
                             </div>
@@ -33,6 +33,7 @@
                         <div class="card-body">
                             <br>
                             <div style="min-height: 50px;" class="text-center">
+
                                 <a href="#/simulation/game-messages/{{template.id}}" class="btn btn-sm color_black">Messages</a>
 
                                 <a href="#/simulation/game-libraries/{{template.id}}" class="btn btn-sm color_black">Documents & Media</a>

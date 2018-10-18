@@ -2,7 +2,6 @@
     'use strict';
 
     angular.module('app')
-
         .controller('messageCreateCtrl', ['$scope', 'close', '$routeParams', '$http', 'AuthService', 'Query', 'filterFilter','articleId','ModalService', addFunction]);
 
     function addFunction($scope, close, $routeParams, $http, AuthService, Query, filterFilter,articleId,ModalService) {
@@ -37,6 +36,7 @@
             });
         }
         init();
+
         $scope.addnewdocument = function () {
             ModalService.showModal({
                 templateUrl: "views/simulation/game-libraries/form.html",
