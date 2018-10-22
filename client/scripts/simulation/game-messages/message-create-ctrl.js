@@ -70,13 +70,11 @@
             $scope.message.articleId = articleId;
             if($scope.msgId){
                 $http.post("/messages/update" , { data: $scope.message }).then(function (res) {
-                    toastr.success("Game Library updated successfully.")
                     close(res.data);
 
                 });
             }else{
                 $http.post("/messages/save" , { data: $scope.message }).then(function (res) {
-                    toastr.success("Game Library updated successfully.")
                     close(res.data);
                 });
             }

@@ -20,13 +20,13 @@
                     if(response.action == "new"){
                         console.log("incoming_message new------",data);
                         $scope.messageToShow.push(data);
-                        toastr.success("New message arrived in incomming messages.");
+                        toastr.success("New message added successfully");
                     }else if(response.action == "update"){
                         console.log("incoming_message update",data);
                         for(var i = 0; i < $scope.messageToShow.length; i++){
                             if($scope.messageToShow[i].id == data.id){
                                 $scope.messageToShow[i] = data;
-                                toastr.success("Incoming message moved to class.");
+                                toastr.success("message updated successfully");
                             }
                         }
                     }else if(response.action == "delete"){
@@ -34,7 +34,7 @@
                         for(var i = 0; i < $scope.messageToShow.length; i++){
                             if($scope.messageToShow[i].id == data.id){
                                 $scope.messageToShow.splice(i,1);
-                                toastr.success("Incoming message moved to class.");
+                                toastr.success("message deleted successfully");
                             }
                         }
                     }else {
