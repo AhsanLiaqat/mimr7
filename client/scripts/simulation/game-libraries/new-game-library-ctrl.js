@@ -21,7 +21,7 @@
         $scope.init = function() {
             $scope.check = {};
             if(id){
-                var path = '/article-library/article-libraries/get?id=' + id;
+                var path = '/article-libraries/get?id=' + id;
                 $scope.lib = {};
                 $http.get(path).then(function(res) {
                     $scope.lib = res.data;
@@ -47,7 +47,7 @@
             }
             if(messageId){
                 Upload.upload({
-                    url: "/message/messages/save-libraries" ,
+                    url: "/messages/save-libraries" ,
                     data: $scope.lib
                 }).then(function (res) {
                     $scope.lib = {};     
@@ -58,19 +58,16 @@
                 if(id){
                     console.log('-------');
                     $scope.lib.filename = $scope.avatar;
-                    $http.post("/article-library/article-libraries/update" , { data: $scope.lib }).then(function (res) {
-                        toastr.success("Game Library updated successfully.")
+                    $http.post("/article-libraries/update" , { data: $scope.lib }).then(function (res) {
                         close(res.data);
-
                     });
                 }else{
                 	Upload.upload({
-                		url: "/article-library/article-libraries/save" ,
+                		url: "/article-libraries/save" ,
                 		data: $scope.lib
                 	}).then(function (res) {
                         $scope.lib = {};     
                         $scope.close(res.data);
-                        toastr.success("Library Reference added successfully.")
                     });
                 }
             }

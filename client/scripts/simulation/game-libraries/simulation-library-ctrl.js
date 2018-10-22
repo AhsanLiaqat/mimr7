@@ -15,40 +15,91 @@
         $scope.pageItems = 10;
         $scope.selected = 0;
 
-        $http.post('/article-library/article-libraries/all/' + $routeParams.gamePlanId)
-        .then(function(res){
-            $scope.media = res.data;
-        });
-
-        // fetch and set initial data
-        $scope.referencesTable = function (tableState) {
-            $scope.selectoptions = []; 
-            $scope.selectoptions.push({id: 0,name: 'All Game Templates'});
-            $scope.libraryToShow = []
-            $scope.isLoading = true;
-            $scope.tableState = tableState;
-
-            // $http.get("/simulation/game-libraries/all").then(function(response) {
-            //     $http.get('/simulation/games/all').then(function (resp) {
-            //         $scope.gameTemplates = resp.data;
-            //         angular.forEach($scope.gameTemplates, function(value) {
-            //           $scope.selectoptions.push(value);
-            //         });
-            //         $scope.libReferences = response.data;
-            //         $scope.isLoading = false;
-            //         angular.forEach($scope.libReferences, function(value) {
-            //           value.gameTemplate = $filter('filter')($scope.gameTemplates, { id: value.gamePlanId})[0]
-            //         });
-            //         $scope.isLoading = false;
-            //         $scope.libraryToShow =  angular.copy($scope.libReferences);
-            //         if($routeParams.gamePlanId){
-            //             $scope.gameIdFound = true;
-            //             $scope.selected = $routeParams.gamePlanId;
-            //         }
-            //         $scope.managearray($scope.selected);
-            //     });
-            // });
+        var setSocketForMedia = function(){
+            $timeout(function () {
+                SOCKET.on('incoming_media:'+$routeParams.gamePlanId, function (response) {
+                    var data = response.data;
+                    if(response.action == "new"){
+                        console.log("incoming_message new------",data);
+                        $scope.messageToShow.push(data);
+                        toastr.success("New media added successful.");
+                    }else if(response.action == "update"){
+                        console.log("incoming_message update",data);
+                        for(var i = 0; i < $scope.messageToShow.length; i++){
+                            if($scope.messageToShow[i].id == data.id){
+                                $scope.messageToShow[i] = data;
+                                toastr.success("Media Updated Successfully");
+                            }
+                        }
+                    }else if(response.action == "delete"){
+                        console.log("incoming_message delete",data);
+                        for(var i = 0; i < $scope.messageToShow.length; i++){
+                            if($scope.messageToShow[i].id == data.id){
+                                $scope.messageToShow.splice(i,1);
+                                toastr.success("Media Deleted Successfully");
+                            }
+                        }
+                    }else {
+                        toastr.error("Something went wrong!");
+                        console.log("incoming_message --> does not match any action incident_class socket.",response);
+                    }
+                    // $scope.messages = Query.sort($scope.messages,'createdAt',true);
+                    $scope.$apply();
+                });
+            });
         };
+
+        function init(){
+            $scope.referencesTable = function (tableState) {
+                $scope.selectoptions = []; 
+                $scope.selectoptions.push({id: 0,title: 'All'});
+                $scope.libraryToShow = []
+                $scope.isLoading = true;
+                $scope.tableState = tableState;
+
+                $http.post('/article-libraries/all?id=' + $routeParams.gamePlanId).then(function(response) {
+                    $http.get('/articles/all').then(function (resp) {
+                        $scope.gameTemplates = resp.data;
+                        angular.forEach($scope.gameTemplates, function(value) {
+                          $scope.selectoptions.push(value);
+                        });
+                        $scope.messages = response.data;
+                        $scope.isLoading = false;
+                        $scope.messages =  angular.copy($scope.messages);
+                        if($routeParams.gamePlanId){
+                            $scope.gameIdFound = true;
+                            $scope.selected = $routeParams.gamePlanId;
+                        }
+                        $scope.messageToShow =  angular.copy($scope.messages);
+                        // $scope.managearray($scope.selected);
+                    });
+                });
+            };
+            setSocketForMedia();
+        }
+
+
+        $scope.managearray = function(id){
+            console.log('--=-=--=-=-=-=-=-',id)
+            if(id == 0){
+                $http.post('/article-libraries/all').then(function (response) {
+                    console.log('==================',response.data);
+                    $scope.allMessages = response.data;
+                    $scope.messageToShow =  angular.copy($scope.allMessages);
+                });
+            }else{
+                $scope.messageToShow = [];
+                $http.post('/article-libraries/all?id=' + id).then(function (response) {
+                    $scope.articleMessage = response.data;
+                    angular.forEach($scope.articleMessage, function(value) {
+                        if(value.parentId == id){
+                            $scope.messageToShow.push(value);
+                        }
+                    });
+                });
+            }
+            // $scope.messageToShow = $scope.paginate($scope.messageToShow);
+        }
 
         // dp pagination
         $scope.paginate = function(arr){
@@ -85,9 +136,9 @@
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });
                 modal.close.then(function(result) {
-                    if(result){
-                        $scope.media.push(result);
-                    }
+                    // if(result){
+                    //     $scope.media.push(result);
+                    // }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
                 });
@@ -108,9 +159,9 @@
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });
                 modal.close.then(function(result) {
-                    if(result){
-                        $scope.media[index] = result;
-                    }
+                    // if(result){
+                    //     $scope.media[index] = result;
+                    // }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
                 });
@@ -253,22 +304,11 @@
 
         //delete media
         $scope.deleteModal = function(id,index) {
-            $http.delete('/article-library/article-libraries/remove/' + id).then(function(res) {
-                toastr.success("Delete successful");
-                $scope.media.splice(index,1);
+            $http.delete('/article-libraries/remove/' + id).then(function(res) {
             });
         };
 
-        //provide short url 
-        $scope.shortUrl = function (url) {
-            if (url.indexOf('https') !== -1){
-                return url.replace('https://','');
-            }else if(url.indexOf('http') !== -1){
-                return url.replace('http://','');
-            }else{
-                return url
-            }
-        };
+        init();  
 
     }
 

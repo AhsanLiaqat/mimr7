@@ -13,52 +13,116 @@
         $scope.pageItems = 10;
         $scope.selected = 0;
 
-        //method associated with table to fetch and set data
-        $scope.messagesTable = function (tableState) {
-            $scope.selectoptions = [];
-            $scope.messageToShow = []
-            $scope.selectoptions.push({id: 0,name: 'All Game Templates'});
-            $scope.isLoading = true;
-            $scope.tableState = tableState;
-
-            $scope.user = Query.getCookie('user');
-            
+        var setSocketForMessages = function(){
+            $timeout(function () {
+                SOCKET.on('incoming_message:'+$routeParams.gamePlanId, function (response) {
+                    var data = response.data;
+                    if(response.action == "new"){
+                        console.log("incoming_message new------",data);
+                        $scope.messageToShow.push(data);
+                        toastr.success("New message arrived in incomming messages.");
+                    }else if(response.action == "update"){
+                        console.log("incoming_message update",data);
+                        for(var i = 0; i < $scope.messageToShow.length; i++){
+                            if($scope.messageToShow[i].id == data.id){
+                                $scope.messageToShow[i] = data;
+                                toastr.success("Incoming message moved to class.");
+                            }
+                        }
+                    }else if(response.action == "delete"){
+                        console.log("incoming_message delete",data);
+                        for(var i = 0; i < $scope.messageToShow.length; i++){
+                            if($scope.messageToShow[i].id == data.id){
+                                $scope.messageToShow.splice(i,1);
+                                toastr.success("Incoming message moved to class.");
+                            }
+                        }
+                    }else {
+                        toastr.error("Something went wrong!");
+                        console.log("incoming_message --> does not match any action incident_class socket.",response);
+                    }
+                    // $scope.messages = Query.sort($scope.messages,'createdAt',true);
+                    $scope.$apply();
+                });
+            });
         };
 
-        $http.get('/message/messages/all/' + $routeParams.gamePlanId).then(function (resp) {
-            $scope.msg = resp.data;
-        });
+
+        function init() {
+
+            $scope.messagesTable = function (tableState) {
+                $scope.selectoptions = [];
+                $scope.messageToShow = []
+                $scope.selectoptions.push({id: 0,title: 'All'});
+                $scope.isLoading = true;
+                $scope.tableState = tableState;
+
+                $scope.user = Query.getCookie('user');
+                $http.get('/messages/all?id=' + $routeParams.gamePlanId).then(function (respp) {
+                    $http.get('/articles/all').then(function (resp) {
+                        $scope.gameTemplates = resp.data;
+                        angular.forEach($scope.gameTemplates, function(value) {
+                          $scope.selectoptions.push(value);
+                        });
+                        $scope.messages = respp.data;
+                        $scope.messages = _.sortBy($scope.messages, function (o) { return new Date(o.content); });
+                        $scope.safeMessages = angular.copy($scope.messages);
+                        $scope.isLoading = false;
+                        if($routeParams.gamePlanId){
+                            $scope.gameIdFound = true;
+                            $scope.selected = $routeParams.gamePlanId;
+                        }
+                        $scope.messageToShow =  angular.copy($scope.messages);
+
+                        // $scope.managearray($scope.selected);
+                    });
+                });
+                
+            };
+            setSocketForMessages();
+        }
+
+
+
 
         //do pagination
-        $scope.paginate = function(arr){
-            $scope.a = _.sortBy(arr, function (o) { return new Date(o.name); });
-            $scope.total = arr.length;
-            var tableState = $scope.tableState;
-            var pagination = tableState.pagination;
-            var start = pagination.start || 0;
-            var number = pagination.number || 10;
-            var filtered = tableState.search.predicateObject ? $filter('filter')($scope.a, tableState.search.predicateObject) : $scope.a;
-            if (tableState.sort.predicate) {
-                filtered = $filter('orderBy')(filtered, tableState.sort.predicate, tableState.sort.reverse);
-            }
-            var result = filtered.slice(start, start + number);
-            tableState.pagination.numberOfPages = Math.ceil(filtered.length / number);
-            return result;
-        }
+        // $scope.paginate = function(arr){
+        //     $scope.a = _.sortBy(arr, function (o) { return new Date(o.name); });
+        //     $scope.total = arr.length;
+        //     var tableState = $scope.tableState;
+        //     var pagination = tableState.pagination;
+        //     var start = pagination.start || 0;
+        //     var number = pagination.number || 10;
+        //     var filtered = tableState.search.predicateObject ? $filter('filter')($scope.a, tableState.search.predicateObject) : $scope.a;
+        //     if (tableState.sort.predicate) {
+        //         filtered = $filter('orderBy')(filtered, tableState.sort.predicate, tableState.sort.reverse);
+        //     }
+        //     var result = filtered.slice(start, start + number);
+        //     tableState.pagination.numberOfPages = Math.ceil(filtered.length / number);
+        //     return result;
+        // }
 
         //filter array to show on gamePlanId
         $scope.managearray = function(id){
+            console.log('--=-=--=-=-=-=-=-',id)
             if(id == 0){
-                $scope.messageToShow =  angular.copy($scope.messages);
+                $http.get('/messages/all').then(function (response) {
+                    console.log('==================',response.data);
+                    $scope.allMessages = response.data;
+                    $scope.messageToShow =  angular.copy($scope.allMessages);
+                });
             }else{
-                $scope.messageToShow = []
-                angular.forEach($scope.messages, function(value) {
-                  if(value.gamePlanId == id){
-                    $scope.messageToShow.push(value);
-                  }
+                $scope.messageToShow = [];
+                $http.get('/messages/all?id=' + id).then(function (response) {
+                    $scope.articleMessage = response.data;
+                    angular.forEach($scope.articleMessage, function(value) {
+                        if(value.articleId == id){
+                            $scope.messageToShow.push(value);
+                        }
+                    });
                 });
             }
-            $scope.messageToShow = $scope.paginate($scope.messageToShow);
+            // $scope.messageToShow = $scope.paginate($scope.messageToShow);
         }
 
 
@@ -87,14 +151,12 @@
                 templateUrl: "views/simulation/game-messages/form.html",
                 controller: "messageCreateCtrl",
                 inputs:{
+                    messageId: null,
                     articleId: $routeParams.gamePlanId
                 }
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });
                 modal.close.then(function(result) {
-                    if(result){
-                        $scope.msg.push(result);
-                    }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
                 });
@@ -123,33 +185,38 @@
                 });
             });
         };
-        // edit given message
-        // $scope.edit = function(message, index) {
-        //     ModalService.showModal({
-        //         templateUrl: "views/simulation/game-messages/form.html",
-        //         controller: "messageCreateCtrl",
-        //         inputs:{
-        //             message: message,
-        //             gamePlanId: null
-        //         }
-        //     }).then(function(modal) {
-        //         modal.element.modal( {backdrop: 'static',  keyboard: false });
-        //         modal.close.then(function(result) {
-        //             $('.modal-backdrop').remove();
-        //             $('body').removeClass('modal-open');
-        //             $scope.messagesTable($scope.tableState);
-        //         });
-        //     });
-        // };
+
+        $scope.edit = function(message, index) {
+            ModalService.showModal({
+                templateUrl: "views/simulation/game-messages/form.html",
+                controller: "messageCreateCtrl",
+                inputs:{
+                    messageId: message.id,
+                    articleId : $routeParams.gamePlanId
+                }
+            }).then(function(modal) {
+                modal.element.modal( {backdrop: 'static',  keyboard: false });
+                modal.close.then(function(result) {
+                    // if(result){
+                    //     $scope.messageToShow[index] = result;
+                    // }
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                    // $scope.messagesTable($scope.tableState);
+                });
+            });
+        };
 
         //deletes message
         $scope.deleteMessage = function (id, index) {
-            $http.delete("/message/messages/remove/" + id)
+            $http.delete("/messages/remove/" + id)
                 .then(function(res){
-                    $scope.msg.splice(index,1);
-                    toastr.success('Message deleted.', 'Success!');
+                   
                 });
         };
+
+        init();
+
     }
 
 

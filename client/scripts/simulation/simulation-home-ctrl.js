@@ -19,7 +19,7 @@
             if (Query.getCookie('user')){
                 $scope.user = Query.getCookie('user');
             }
-            $http.get('/article/articles/all')
+            $http.get('/articles/all')
             .then(function(res){
                 $scope.cards = res.data;
             });
@@ -67,7 +67,7 @@
 
         // deletes game from game library
         $scope.delete = function (index, card) {
-            $http.delete('/article/articles/remove/' + card.id)
+            $http.delete('/articles/remove/' + card.id)
             .then(function(res){
                 $scope.cards.splice(index,1);
                 toastr.success('Game Template Deleted.', 'Success!');

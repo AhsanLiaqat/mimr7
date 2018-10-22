@@ -2,17 +2,24 @@
     'use strict';
 
     angular.module('app')
-        .controller('messageCreateCtrl', ['$scope', 'close', '$routeParams', '$http', 'AuthService', 'Query', 'filterFilter','articleId','ModalService', addFunction]);
+        .controller('messageCreateCtrl', ['$scope', 'close', '$routeParams', '$http', 'AuthService', 'Query', 'filterFilter','articleId','ModalService','messageId', addFunction]);
 
-    function addFunction($scope, close, $routeParams, $http, AuthService, Query, filterFilter,articleId,ModalService) {
+    function addFunction($scope, close, $routeParams, $http, AuthService, Query, filterFilter,articleId,ModalService,messageId) {
 
         //close modal
         $scope.close = function (result) {
             close(result); // close, but give 500ms for bootstrap to animate
         };
+        $scope.msgId = messageId;
         //fetch and set initial data
         function init() {
             $scope.user = Query.getCookie('user');
+            if($scope.msgId){
+                $http.get('/messages/get?id=' + $scope.msgId).then(function (response) {
+                    $scope.message = response.data;
+                });
+                
+            }
         }
         $scope.get_libraries =  function(gameId){
              $http.get('/simulation/game-libraries/all-for-game/'+gameId).then(function (response) {
@@ -61,11 +68,18 @@
         //save new game message
         $scope.submit = function () {
             $scope.message.articleId = articleId;
-            $http.post("/message/messages/save" , { data: $scope.message }).then(function (res) {
-                toastr.success("Game Library updated successfully.")
-                close(res.data);
+            if($scope.msgId){
+                $http.post("/messages/update" , { data: $scope.message }).then(function (res) {
+                    toastr.success("Game Library updated successfully.")
+                    close(res.data);
 
-            });
+                });
+            }else{
+                $http.post("/messages/save" , { data: $scope.message }).then(function (res) {
+                    toastr.success("Game Library updated successfully.")
+                    close(res.data);
+                });
+            }
         };
 
         //validates message input

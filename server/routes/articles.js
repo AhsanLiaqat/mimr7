@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var model = require('../../models');
+var model = require('../models');
 var _ = require('underscore');
 var Q = require('q');
 
