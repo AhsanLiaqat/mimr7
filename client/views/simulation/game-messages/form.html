@@ -20,6 +20,13 @@
                             <label>Message Content</label>
                             <input type="text" class="form-control" ng-model="message.description" ng-readonly="viewTask">
                         </div>
+                        <div class="form-group">
+                            <label>Article</label>
+                            <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                <select chosen ng-model="articleId" ng-options = "item.id as item.title for item in selectoptions" ng-disabled = "articleId">
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

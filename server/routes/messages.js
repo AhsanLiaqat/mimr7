@@ -12,7 +12,7 @@ var fs = require('fs');
 var s3Library = require('../lib/aws/s3').library;
 
 router.get('/all', function(req, res, next) {
-    let condition = req.query.id ? {articleId: req.query.id}: {};
+    let condition = (req.query.id !== "All Messages") ? {articleId: req.query.id}: {};
     model.message.findAll({where: condition}).then(function(msg) {
         res.send(msg);
     });
@@ -34,7 +34,10 @@ router.post('/update', function(req, res, next) {
                 data: result,
                 action: 'update'
             }
+            // console.log('incoming_message:' + req.user.userAccountId)
+            io.emit('incoming_message:' + req.user.userAccountId,xresp)
             io.emit('incoming_message:' + result.articleId,xresp)
+
             res.send(result);
         });
 
@@ -105,7 +108,9 @@ router.post('/save', function(req, res, next) {
                 data: msg,
                 action: 'new'
             }
+            io.emit('incoming_message:' + req.user.userAccountId,xresp)
             io.emit('incoming_message:' + message.articleId,xresp)
+
             res.send(message);
         });
     });
@@ -123,6 +128,7 @@ router.delete('/remove/:id', function(req, res, next) {
                 data: result,
                 action: 'delete'
             }
+            io.emit('incoming_message:' + req.user.userAccountId,xresp)
             io.emit('incoming_message:' + result.articleId,xresp)
             res.send({success:true, msg:response.toString()});
         },function(response){

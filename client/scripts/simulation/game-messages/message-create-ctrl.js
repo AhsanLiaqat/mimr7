@@ -10,13 +10,19 @@
         $scope.close = function (result) {
             close(result); // close, but give 500ms for bootstrap to animate
         };
+        $scope.articleId = articleId;
         $scope.msgId = messageId;
         //fetch and set initial data
         function init() {
             $scope.user = Query.getCookie('user');
+            $http.get('/articles/all').then(function (resp) {
+                $scope.selectoptions = resp.data;
+            });
+
             if($scope.msgId){
                 $http.get('/messages/get?id=' + $scope.msgId).then(function (response) {
                     $scope.message = response.data;
+                    $scope.articleId = $scope.message.articleId;
                 });
                 
             }
@@ -44,30 +50,9 @@
         }
         init();
 
-        $scope.addnewdocument = function () {
-            ModalService.showModal({
-                templateUrl: "views/simulation/game-libraries/form.html",
-                controller: "newGameLibraryCtrl",
-                inputs: {
-                    gamePlanId: gamePlanId
-                }
-            }).then(function(modal) {
-                modal.element.modal( {backdrop: 'static',  keyboard: false });
-                modal.close.then(function(result) {
-                     $('.modal-backdrop').remove();
-                     $('body').removeClass('modal-open');
-					 console.log('message lib',result);
-
-					 if(result && result !== ''){
-						 $scope.documents.push(result)
-                     }
-                });
-            });
-        };
-
         //save new game message
         $scope.submit = function () {
-            $scope.message.articleId = articleId;
+            $scope.message.articleId = $scope.articleId;
             if($scope.msgId){
                 $http.post("/messages/update" , { data: $scope.message }).then(function (res) {
                     close(res.data);

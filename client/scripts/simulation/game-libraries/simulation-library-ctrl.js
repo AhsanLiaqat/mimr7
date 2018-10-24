@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('app')
-    .controller('simulationLibraryCtrl', [ '$scope', '$timeout', '$location', 'ModalService', '$uibModal', '$filter', '$http', '$rootScope', '$route', 'AuthService','$routeParams', libraryFunc]); 
+    .controller('simulationLibraryCtrl', [ '$scope', '$timeout', '$location', 'ModalService', '$uibModal', '$filter', '$http', '$rootScope', '$route', 'AuthService','$routeParams','Query', libraryFunc]); 
     
-    function libraryFunc($scope, $timeout, $location, ModalService, $uibModal, $filter, $http, $rootScope, $route, AuthService,$routeParams) {
+    function libraryFunc($scope, $timeout, $location, ModalService, $uibModal, $filter, $http, $rootScope, $route, AuthService,$routeParams,Query) {
 
 
         $scope.items = [{name: '10 items per page', val: 10},
@@ -14,89 +14,212 @@
 
         $scope.pageItems = 10;
         $scope.selected = 0;
+        $scope.selectoptions = [];
+        $scope.messageToShow = [];
 
-        var setSocketForMedia = function(){
+        // var setSocketForMedia = function(){
+        //     $timeout(function () {
+        //         SOCKET.on('incoming_media:'+$routeParams.gamePlanId, function (response) {
+        //             var data = response.data;
+        //             if(response.action == "new"){
+        //                 console.log("incoming_message new------",data);
+        //                 $scope.messageToShow.push(data);
+        //                 toastr.success("New media added successful.");
+        //             }else if(response.action == "update"){
+        //                 console.log("incoming_message update",data);
+        //                 for(var i = 0; i < $scope.messageToShow.length; i++){
+        //                     if($scope.messageToShow[i].id == data.id){
+        //                         $scope.messageToShow[i] = data;
+        //                         toastr.success("Media Updated Successfully");
+        //                     }
+        //                 }
+        //             }else if(response.action == "delete"){
+        //                 console.log("incoming_message delete",data);
+        //                 for(var i = 0; i < $scope.messageToShow.length; i++){
+        //                     if($scope.messageToShow[i].id == data.id){
+        //                         $scope.messageToShow.splice(i,1);
+        //                         toastr.success("Media Deleted Successfully");
+        //                     }
+        //                 }
+        //             }else {
+        //                 toastr.error("Something went wrong!");
+        //                 console.log("incoming_message --> does not match any action incident_class socket.",response);
+        //             }
+        //             // $scope.messages = Query.sort($scope.messages,'createdAt',true);
+        //             $scope.$apply();
+        //         });
+        //     });
+        // };
+
+        var setSocketForMessages = function(){
+            console.log('[][][][][][]',$scope.selected)
             $timeout(function () {
-                SOCKET.on('incoming_media:'+$routeParams.gamePlanId, function (response) {
-                    var data = response.data;
-                    if(response.action == "new"){
-                        console.log("incoming_message new------",data);
-                        $scope.messageToShow.push(data);
-                        toastr.success("New media added successful.");
-                    }else if(response.action == "update"){
-                        console.log("incoming_message update",data);
-                        for(var i = 0; i < $scope.messageToShow.length; i++){
-                            if($scope.messageToShow[i].id == data.id){
-                                $scope.messageToShow[i] = data;
-                                toastr.success("Media Updated Successfully");
+                if($scope.selected != 0){
+                    $scope.valid = false;
+                    console.log('listening----incoming_message:'+$scope.selected)
+                    SOCKET.on('incoming_message:'+$scope.selected, function (response) {
+                        var data = response.data;
+                        if(response.action == "new"){
+                            console.log("incoming_message new------",data);
+                            $scope.messages.push(data);
+                            $scope.managearray($scope.selected,true);
+                            toastr.success("New message added successfully");
+                        }else if(response.action == "update"){
+                            console.log("incoming_message update",data);
+                            // var messageToShow = Query.filter($scope.messages , {articleId : data.articleId},false)
+                            for(var i = 0; i < $scope.messages.length; i++){
+                                if($scope.messages[i].id == data.id){
+
+                                    $scope.messages[i] = data;
+                                    $scope.managearray($scope.selected,true);
+
+                                    toastr.success("message updated successfully");
+                                    break;
+                                }
                             }
-                        }
-                    }else if(response.action == "delete"){
-                        console.log("incoming_message delete",data);
-                        for(var i = 0; i < $scope.messageToShow.length; i++){
-                            if($scope.messageToShow[i].id == data.id){
-                                $scope.messageToShow.splice(i,1);
-                                toastr.success("Media Deleted Successfully");
+                        }else if(response.action == "delete"){
+                            console.log("incoming_message delete",data);
+                            // var messageToShow = Query.filter($scope.messages , {articleId : data.articleId},false)
+                            for(var i = 0; i < $scope.messages.length; i++){
+                                if($scope.messages[i].id == data.id){
+                                    $scope.messages.splice(i,1);
+                                    $scope.managearray($scope.selected,true);
+                                    toastr.success("message deleted successfully");
+                                    break;
+                                }
                             }
+                        }else {
+                            toastr.error("Something went wrong!");
+                            console.log("incoming_message --> does not match any action incident_class socket.",response);
                         }
-                    }else {
-                        toastr.error("Something went wrong!");
-                        console.log("incoming_message --> does not match any action incident_class socket.",response);
-                    }
-                    // $scope.messages = Query.sort($scope.messages,'createdAt',true);
-                    $scope.$apply();
-                });
+                        // $scope.messages = Query.sort($scope.messages,'createdAt',true);
+                        $scope.$apply();
+                    });
+                }else{
+                    $scope.valid = true;
+                    console.log('listening----incoming_message:'+$scope.user.userAccountId)
+                    SOCKET.on('incoming_message:'+$scope.user.userAccountId, function (response) {
+                        var data = response.data;
+                        if($scope.valid){
+                            if(response.action == "new"){
+                                console.log("incoming_message new------",data);
+                                $scope.messageToShow.push(data);
+                                toastr.success("New message added successfully");
+                            }else if(response.action == "update"){
+                                console.log("incoming_message update",data);
+                                for(var i = 0; i < $scope.messages.length; i++){
+                                    if($scope.messageToShow[i].id == data.id){
+                                        $scope.messageToShow[i] = data;
+                                        toastr.success("message updated successfully");
+                                    }
+                                }
+                            }else if(response.action == "delete"){
+                                console.log("incoming_message delete",data);
+                                for(var i = 0; i < $scope.messages.length; i++){
+                                    if($scope.messageToShow[i].id == data.id){
+                                        $scope.messageToShow.splice(i,1);
+                                        toastr.success("message deleted successfully");
+                                    }
+                                }
+                            }else {
+                                toastr.error("Something went wrong!");
+                                console.log("incoming_message --> does not match any action incident_class socket.",response);
+                            }
+                            // $scope.messages = Query.sort($scope.messages,'createdAt',true);
+                            $scope.$apply();
+                        }
+                    });
+                }
             });
         };
 
         function init(){
             $scope.referencesTable = function (tableState) {
-                $scope.selectoptions = []; 
+                // $scope.selectoptions = []; 
+                // $scope.selectoptions.push({id: 0,title: 'All'});
+                // $scope.libraryToShow = []
+                // $scope.isLoading = true;
+                // $scope.tableState = tableState;
+
+                // $http.post('/article-libraries/all?id=' + $routeParams.gamePlanId).then(function(response) {
+                //     $http.get('/articles/all').then(function (resp) {
+                //         $scope.gameTemplates = resp.data;
+                //         angular.forEach($scope.gameTemplates, function(value) {
+                //           $scope.selectoptions.push(value);
+                //         });
+                //         $scope.messages = response.data;
+                //         $scope.isLoading = false;
+                //         $scope.messages =  angular.copy($scope.messages);
+                //         if($routeParams.gamePlanId){
+                //             $scope.gameIdFound = true;
+                //             $scope.selected = $routeParams.gamePlanId;
+                //         }
+                //         $scope.messageToShow =  angular.copy($scope.messages);
+                //         // $scope.managearray($scope.selected);
+                //     });
+                // });
+
                 $scope.selectoptions.push({id: 0,title: 'All'});
-                $scope.libraryToShow = []
                 $scope.isLoading = true;
                 $scope.tableState = tableState;
-
-                $http.post('/article-libraries/all?id=' + $routeParams.gamePlanId).then(function(response) {
-                    $http.get('/articles/all').then(function (resp) {
-                        $scope.gameTemplates = resp.data;
-                        angular.forEach($scope.gameTemplates, function(value) {
-                          $scope.selectoptions.push(value);
-                        });
-                        $scope.messages = response.data;
+                var params = 'id=';
+                $scope.user = Query.getCookie('user');
+                $http.get('/articles/all').then(function (resp) {
+                    $scope.articles = resp.data;
+                    if($routeParams.gamePlanId){
+                        params += $routeParams.gamePlanId;
+                    }else{
+                        params += 'All Messages';
+                    }
+                    $http.post('/article-libraries/all?' + params).then(function (respp) {
+                        $scope.selectoptions = $scope.selectoptions.concat($scope.articles);
+                        $scope.messages = respp.data;
+                        console.log('//////////////////////',$scope.messages)
+                        $scope.messages = _.sortBy($scope.messages, function (o) { return new Date(o.content); });
+                        $scope.safeMessages = angular.copy($scope.messages);
                         $scope.isLoading = false;
-                        $scope.messages =  angular.copy($scope.messages);
                         if($routeParams.gamePlanId){
                             $scope.gameIdFound = true;
                             $scope.selected = $routeParams.gamePlanId;
                         }
                         $scope.messageToShow =  angular.copy($scope.messages);
-                        // $scope.managearray($scope.selected);
+                        $scope.managearray($scope.selected);
                     });
                 });
+
             };
-            setSocketForMedia();
+            // setSocketForMedia();
         }
 
 
-        $scope.managearray = function(id){
+        $scope.managearray = function(id,DontSet){
             console.log('--=-=--=-=-=-=-=-',id)
+            // if(id == 0){
+            //     $http.post('/article-libraries/all').then(function (response) {
+            //         console.log('==================',response.data);
+            //         $scope.allMessages = response.data;
+            //         $scope.messageToShow =  angular.copy($scope.allMessages);
+            //     });
+            // }else{
+            //     $scope.messageToShow = [];
+            //     $http.post('/article-libraries/all?id=' + id).then(function (response) {
+            //         $scope.articleMessage = response.data;
+            //         angular.forEach($scope.articleMessage, function(value) {
+            //             if(value.parentId == id){
+            //                 $scope.messageToShow.push(value);
+            //             }
+            //         });
+            //     });
+            // }
+
             if(id == 0){
-                $http.post('/article-libraries/all').then(function (response) {
-                    console.log('==================',response.data);
-                    $scope.allMessages = response.data;
-                    $scope.messageToShow =  angular.copy($scope.allMessages);
-                });
+                $scope.messageToShow =  angular.copy($scope.messages);
             }else{
-                $scope.messageToShow = [];
-                $http.post('/article-libraries/all?id=' + id).then(function (response) {
-                    $scope.articleMessage = response.data;
-                    angular.forEach($scope.articleMessage, function(value) {
-                        if(value.parentId == id){
-                            $scope.messageToShow.push(value);
-                        }
-                    });
-                });
+                $scope.messageToShow = Query.filter($scope.messages , {parentId: $scope.selected},false);
+            }
+            $scope.messageToShow = $scope.paginate($scope.messageToShow);
+            if(!DontSet){
+                setSocketForMessages();
             }
             // $scope.messageToShow = $scope.paginate($scope.messageToShow);
         }
@@ -124,10 +247,9 @@
         //add media
         $scope.addModal = function() {
             var inputs = {
-                id: null,
-                articleId: $routeParams.gamePlanId,
-                contentType : 'article-library',
-                messageId : null
+                record: {},
+                parentId: $scope.selected,
+                contentType : 'article-library'
             };
             ModalService.showModal({
                 templateUrl: "views/simulation/game-libraries/form.html",
@@ -146,15 +268,15 @@
         };
 
 
-        $scope.callAtTimeout = function(id, index) {
+        $scope.callAtTimeout = function(record, index) {
+            console.log('sadasda');
             ModalService.showModal({
                 templateUrl: "views/simulation/game-libraries/form.html",
                 controller: "newGameLibraryCtrl",
                 inputs:{
-                    id: id,
-                    articleId: null,
-                    contentType : null,
-                    messageId : null
+                    record: record,
+                    parentId: record.parentId,
+                    contentType: 'article-library'
                 }
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });

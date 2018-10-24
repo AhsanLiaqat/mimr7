@@ -18,8 +18,27 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Description</label>
-                    <textarea name="" ng-model="lib.description" class="form-control" rows="4" ng-readonly="notEdit"></textarea>
+                    <textarea name="" ng-model="lib.description" class="form-control" ng-readonly="notEdit"></textarea>
                 </div>
+                <div class="form-group">
+                    <label>Media Type</label>
+                    <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                        <select chosen class="form-control" data-placeholder-text-single="'Select Kind'" ng-model="lib.kind" ng-disabled = "parentId" ng-change = getMessageAndArtcile(lib.kind)>
+                            <option></option>
+                            <option value="article-library">Article</option>
+                            <option value="message-library">Message</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>{{lib.parentType}}s</label>
+                    <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                         <select class = "form-control" chosen ng-model="lib.parentId" ng-options = "item.id as item.show for item in records" >
+                    </select>
+                    </div>
+                </div>
+                
                 <div class="form-group">
                     <label for="exampleInputEmail1" ng-hide="check.file">Attach link</label>
                     <input type="checkbox" ng-hide="check.file" ng-model="check.link">

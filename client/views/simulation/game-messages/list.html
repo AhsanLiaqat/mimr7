@@ -4,7 +4,7 @@
             <strong>
                 <span class="glyphicon glyphicon-th"></span> Messages
             </strong>
-            <select chosen ng-model="selected" ng-options = "item.id as item.title for item in selectoptions" ng-change = "managearray(selected)">
+            <select chosen ng-model="selected" ng-options = "item.id as item.title for item in selectoptions" ng-change = "managearray(selected)" ng-disabled = "gameIdFound">
             </select>
             <div class="pull-right header-buttons">
                 <a ng-click="addModal()" class="btn btn-success btn-sm">New Message</a>

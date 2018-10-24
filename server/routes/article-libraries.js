@@ -12,7 +12,8 @@ var fs = require('fs');
 var s3Library = require('../lib/aws/s3').library;
 
 router.post('/all', function(req, res, next) {
-    let condition = req.query.id ? {parentId: req.query.id}: {};
+    // let condition = req.query.id ? {parentId: req.query.id}: {};
+    let condition = (req.query.id !== "All Messages") ? {parentId: req.query.id}: {};
     model.article_library.findAll({where: condition}).then(function(msg) {
         res.send(msg);
     });
@@ -35,7 +36,9 @@ router.post('/update', function(req, res, next) {
                 data: result,
                 action: 'update'
             }
-            io.emit('incoming_media:' + result.parentId,xresp)
+            // io.emit('incoming_media:' + result.parentId,xresp)
+            io.emit('incoming_message:' + req.user.userAccountId,xresp)
+            io.emit('incoming_message:' + result.parentId,xresp)
             res.send(result);
         });
 
@@ -78,7 +81,9 @@ router.post('/save', multipartyMiddleware, function(req, res, next) {
                     data: media,
                     action: 'new'
                 }
-                io.emit('incoming_media:' + item.parentId,xresp)
+                // io.emit('incoming_media:' + item.parentId,xresp)
+                io.emit('incoming_message:' + req.user.userAccountId,xresp)
+                io.emit('incoming_message:' + item.parentId,xresp)
                 res.send(item);
             });
         });
@@ -125,7 +130,9 @@ router.delete('/remove/:id', function(req, res, next) {
                 data: resp,
                 action: 'delete'
             }
-            io.emit('incoming_media:' + resp.parentId,xresp)
+            // io.emit('incoming_media:' + resp.parentId,xresp)
+            io.emit('incoming_message:' + req.user.userAccountId,xresp)
+            io.emit('incoming_message:' + resp.parentId,xresp)
             res.send({success:true, msg:response.toString()});
         },function(response){
             model.article_library.update({isDeleted:true},{where: {id: id}}).then(function(response) {

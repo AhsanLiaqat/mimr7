@@ -2,39 +2,35 @@
     'use strict';
 
     angular.module('app')
-        .controller('newGameLibraryCtrl', ['$scope', '$http', '$timeout', 'Upload', 'close','ModalService','articleId','contentType','id','messageId', ctrlFunction]);
+        .controller('newGameLibraryCtrl', ['$scope', '$http', '$timeout', 'Upload', 'close','ModalService','record','contentType','parentId', ctrlFunction]);
 
-    function ctrlFunction($scope, $http, $timeout, Upload, close,ModalService,articleId, contentType,id , messageId) {
+    function ctrlFunction($scope, $http, $timeout, Upload, close,ModalService,record, contentType, parentId) {
         //fetch initial data
-        $scope.id = id;
-        if(contentType == 'article-library'){
-            $scope.lib = {
-                parentId: articleId,
-                parentType : 'Article'
-            };
-        }else{
-            $scope.lib = {
-                parentId: messageId,
-                parentType : 'Message'
-            };
-        }
         $scope.init = function() {
-            $scope.check = {};
-            if(id){
-                var path = '/article-libraries/get?id=' + id;
-                $scope.lib = {};
-                $http.get(path).then(function(res) {
-                    $scope.lib = res.data;
-                    if($scope.lib.type != null){
-                        $scope.check.file =true;
-                    }else{
-                        $scope.check.link = true
-                    }
-                    $scope.avatar = $scope.lib.filename;
-                });
+            $scope.parentId = parentId;
+            console.log('()()()()()()',record != {});
+            // console.log('()()()()()()',parentId);
+            if(record && Object.keys(record).length > 0){
+                $scope.lib = angular.copy(record);
+            }else{
+                $scope.lib = {parentId: parentId};
             }
+            console.log('()()()()()()',$scope.lib);
+            $scope.lib.kind = contentType;
+            if(contentType == 'article-library'){
+                $scope.lib.parentType = 'Article';
+            }else{
+                $scope.lib.parentType = 'Message';
+            }
+            $scope.check = {};
+            if($scope.lib.type != null){
+                $scope.check.file =true;
+            }else{
+                $scope.check.link = true
+            }
+            $scope.avatar = $scope.lib.filename;
+            $scope.getMessageAndArtcile($scope.lib.kind);
         };
-        $scope.init();
 
         //close modal
         $scope.close = function(result) {
@@ -45,56 +41,86 @@
         $scope.submitLibraryRef = function () {
             if ($scope.lib.links != undefined){
             }
-            if(messageId){
-                Upload.upload({
-                    url: "/messages/save-libraries" ,
-                    data: $scope.lib
-                }).then(function (res) {
-                    $scope.lib = {};     
-                    $scope.close(res.data);
-                    toastr.success("Library Reference added successfully.")
-                });
-            }else{
-                if(id){
-                    console.log('-------');
+            if($scope.lib.id){
+                if(contentType == 'article-library'){
                     $scope.lib.filename = $scope.avatar;
                     $http.post("/article-libraries/update" , { data: $scope.lib }).then(function (res) {
                         close(res.data);
                     });
                 }else{
-                	Upload.upload({
-                		url: "/article-libraries/save" ,
-                		data: $scope.lib
-                	}).then(function (res) {
+                    // Upload.upload({
+                    //     url: "/messages/save-libraries" ,
+                    //     data: $scope.lib
+                    // }).then(function (res) {
+                    //     $scope.lib = {};     
+                    //     $scope.close(res.data);
+                    //     toastr.success("Library Reference added successfully.")
+                    // });
+                }
+            }else{
+               if(contentType == 'article-library'){
+                    Upload.upload({
+                        url: "/article-libraries/save" ,
+                        data: $scope.lib
+                    }).then(function (res) {
                         $scope.lib = {};     
                         $scope.close(res.data);
                     });
-                }
+                }else{
+                    Upload.upload({
+                        url: "/messages/save-libraries" ,
+                        data: $scope.lib
+                    }).then(function (res) {
+                        $scope.lib = {};     
+                        $scope.close(res.data);
+                        toastr.success("Library Reference added successfully.")
+                    });
+                } 
             }
         };
+        $scope.getMessageAndArtcile = function(type){
+            if(type == "article-library"){
+                $scope.lib.parentType = 'Article';
+                $http.get('/articles/all').then(function (resp) {
+                    $scope.records = resp.data;
+                    angular.forEach($scope.records, function(value,ind) {
+                        value.show = value.title;
+                    });
+                });
+            }else{
+                $scope.lib.parentType = 'Message';
+                $http.get('/messages/all?id=All Messages').then(function (respp) {
+                    $scope.records = respp.data;
+                    angular.forEach($scope.records, function(value,ind) {
+                        value.show = value.content;
+                    });
+                });
+            }
+        }
 
         //add media
         $scope.uploadFiles = function(file, errFiles) {
-			var avatar = file;
-			if(avatar) {
-				avatar.upload = Upload.upload({
-					url: '/simulation/game-libraries/avatar',
-					data: { file: avatar }
-    			});
+            var avatar = file;
+            if(avatar) {
+                avatar.upload = Upload.upload({
+                    url: '/simulation/game-libraries/avatar',
+                    data: { file: avatar }
+                });
 
-				avatar.upload.then(function (response) {
-					$timeout(function () {
-						$scope.avatar = response.data.path;
-					});
-				}, function (response) {
-					if (response.status > 0)
-						$scope.errorMsg = response.status + ': ' + response.data;
-				}, function (evt) {
-					avatar.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-				});
-			}
+                avatar.upload.then(function (response) {
+                    $timeout(function () {
+                        $scope.avatar = response.data.path;
+                    });
+                }, function (response) {
+                    if (response.status > 0)
+                        $scope.errorMsg = response.status + ': ' + response.data;
+                }, function (evt) {
+                    avatar.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+                });
+            }
 
-		}
+        }
+        $scope.init();
     }
 
 

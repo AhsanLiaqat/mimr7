@@ -121,13 +121,13 @@
         ///////////////////////////Preparation manager routes End/////////////////////
         //==========================================================================//
         ///////////////////////////Crisis manager routes Start////////////////////////
-        .when('/reports/view/:incidentId', { templateUrl: 'views/reports/reports.view.html' })
-        .when('/reports/edit/:id', { templateUrl: 'views/reports/report.html' })
-        .when('/myTasks/:incidentId', { templateUrl: 'views/userTasks/user.task.html' })
-        .when('/taskDetail/:taskId', { templateUrl: 'views/userTasks/task.detail.html' })
-        .when('/browser', { templateUrl: 'views/crisis-manager/web-links/media-list.html' }) //done
-        .when('/browser/:id?', { templateUrl: 'views/crisis-manager/web-links/browse.html' }) //done
-        .when('/incidents/view', { templateUrl: "views/crisis-manager/incidents/view.html"})
+        // .when('/reports/view/:incidentId', { templateUrl: 'views/reports/reports.view.html' })
+        // .when('/reports/edit/:id', { templateUrl: 'views/reports/report.html' })
+        // .when('/myTasks/:incidentId', { templateUrl: 'views/userTasks/user.task.html' })
+        // .when('/taskDetail/:taskId', { templateUrl: 'views/userTasks/task.detail.html' })
+        // .when('/browser', { templateUrl: 'views/crisis-manager/web-links/media-list.html' }) //done
+        // .when('/browser/:id?', { templateUrl: 'views/crisis-manager/web-links/browse.html' }) //done
+        // .when('/incidents/view', { templateUrl: "views/crisis-manager/incidents/view.html"})
 
         /////////////////Crisis manager routes End/////////////////////
         //=======================================================================================================================//
@@ -138,8 +138,8 @@
 		.when('/home', { templateUrl: 'views/home.html' })
 		.when('/simulation/players', { templateUrl: 'views/simulation/players/list.html' })
 		.when('/simulation/player-page', { templateUrl: 'views/simulation/active-games/list.html' })
-        .when('/article/article-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-libraries/list.html' })
-        .when('/message/message-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-messages/list.html' })
+        .when('/article-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-libraries/list.html' })
+        .when('/message-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-messages/list.html' })
 
 
         /////////////////Simulation manager routes End/////////////////////

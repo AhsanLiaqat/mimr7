@@ -5,7 +5,7 @@
             <strong>
                 <span class="glyphicon glyphicon-th"></span> Media Library
             </strong>
-            <select chosen ng-model="selected" ng-options = "item.id as item.title for item in selectoptions" ng-change = "managearray(selected)">
+            <select chosen ng-model="selected" ng-options = "item.id as item.title for item in selectoptions" ng-change = "managearray(selected)" ng-disabled = "gameIdFound">
             </select>
             <div class="pull-right header-buttons">
                 <a ng-click="addModal()" class="btn btn-success btn-sm">Add Media </a>
@@ -60,7 +60,7 @@
                            class="btn btn-sm btn-info"
                            href="http://{{(record.url)}}"
                            target="_blank"> <i class="fa fa-link"></i> Open Link</a>
-                        <a class="btn btn-sm btn-info" ng-click="callAtTimeout(record.id,$index)"><span class="glyphicon glyphicon-edit"></span></a>
+                        <a class="btn btn-sm btn-info" ng-click="callAtTimeout(record,$index)"><span class="glyphicon glyphicon-edit"></span></a>
 
                         <a class="btn btn-sm btn-danger" confirm="Are you sure you want to delete?" ng-click="deleteModal(record.id,$index)" ><span class="glyphicon glyphicon-remove-sign" ></span></a>
                     </td>
