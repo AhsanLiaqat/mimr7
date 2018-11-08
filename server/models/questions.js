@@ -1,25 +1,24 @@
 module.exports = function(sequelize, DataTypes) {
-    var message = sequelize.define("message", {
+    var question = sequelize.define("question", {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true
         },
-        content: DataTypes.STRING,
-        description: DataTypes.STRING,
+        name: DataTypes.STRING,
+        number: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         isDeleted: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         }
     },{
-        tableName: 'messages',
+        tableName: 'questions',
         classMethods: {
             associate: function(models) {
-                message.belongsTo(models.article);
-                message.hasMany(models.message_library , {foreignKey: 'parentId'});
-                message.hasMany(models.question);
+                question.belongsTo(models.message);
             }
         }
     });
-    return message;
+    return question;
 }

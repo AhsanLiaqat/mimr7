@@ -9,27 +9,38 @@
         </div>
         <div class="modal-body" style="overflow-y: auto;">
             <div class="panel panel-default">
+                <div class="panel-heading">Basic Info</div>
                 <div class="panel-body">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="form-group">
-                            <label>Message Name</label>
-                            <span  style="color: red" title="Required"> *</span>
-                            <input type="text" class="form-control" ng-model="message.content" ng-readonly="viewTask">
-                        </div>
-                        <div class="form-group">
-                            <label>Message Content</label>
-                            <input type="text" class="form-control" ng-model="message.description" ng-readonly="viewTask">
-                        </div>
-                        <div class="form-group">
-                            <label>Article</label>
-                            <div class="form-group chosen-full-container" style="margin-bottom:10px;">
-                                <select chosen ng-model="articleId" ng-options = "item.id as item.title for item in selectoptions" ng-disabled = "articleId">
-                                </select>
-                            </div>
+                    <div class="form-group">
+                        <label>Message Name</label>
+                        <span  style="color: red" title="Required"> *</span>
+                        <input type="text" class="form-control" ng-model="message.content" ng-readonly="viewTask">
+                    </div>
+                    <div class="form-group">
+                        <label>Article</label>
+                        <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                            <select chosen ng-model="articleId" ng-options = "item.id as item.title for item in selectoptions" ng-disabled = "articleId">
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Message Content Info</div>
+                <div class="panel-body">
+                    <div class="form-group report-editor">
+                        <label>Message Content</label>
+                       <!--  <textarea ui-tinymce="tinymceOptions" ng-model="message.context" 
+                                    style="height:320px">
+                          </textarea> -->
+                        <!-- <text-angular style="height:320px" ng-model="message.context"></text-angular> -->
+                        <textarea froala="froalaOptions" ng-model="message.description"></textarea>
+
+                    </div>
+
+                </div>
+            </div>
+
         </div>
 
         <div class="modal-footer">

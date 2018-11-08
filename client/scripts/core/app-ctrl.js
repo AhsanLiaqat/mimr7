@@ -21,6 +21,12 @@
             }
         };
 
+        $('.main-container').click(function(event){
+            if($(event.target).parents('.nav').length == 0 && $('#nav-container').offset().left == 0){
+                $scope.clickMenu();
+            }
+        });
+
         $scope.checkSuperAdmin = function () {
             $scope.getUser();
             if ($scope.user && ($scope.user.role === 'superadmin')) {

@@ -226,6 +226,26 @@
             });
         };
 
+        $scope.addQuestions = function(record) {
+            var inputs = {
+                messageId : record.id
+            };
+            ModalService.showModal({
+                templateUrl: "views/simulation/game-libraries/question.html",
+                controller: "newQuestionCtrl",
+                inputs: inputs
+            }).then(function(modal) {
+                modal.element.modal( {backdrop: 'static',  keyboard: false });
+                modal.close.then(function(result) {
+                    // if(result){
+                    //     $scope.media.push(result);
+                    // }
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
+            });
+        };
+
         $scope.edit = function(message, index) {
             ModalService.showModal({
                 templateUrl: "views/simulation/game-messages/form.html",

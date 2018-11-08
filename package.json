@@ -54,8 +54,8 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-nodemon": "^2.1.0",
-    "nodemon": "^1.18.4",
+    "gulp-nodemon": "*",
+    "nodemon": "*",
     "sequelize-erd": "^1.0.7"
   }
 }

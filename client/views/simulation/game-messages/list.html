@@ -35,8 +35,9 @@
                                 {{record.content}}
                             </a>
                         </td>
-                        <td>{{record.description}}</td>
+                        <td ng-bind-html= "record.description"></td>
                         <td>
+                            <a title = "Add Questions" class="btn btn-info" ng-click="addQuestions(record, $index)"><span class="fa fa-question-circle"></span></a>
                             <a title = "Add Media" class="btn btn-sm btn-info" ng-click="addMedia(record, $index)"><span class="fa fa-link"></span></a>
                             <a title = "Edit Message" class="btn btn-sm btn-info" ng-click="edit(record, $index)"><span class="fa fa-pencil-square-o"></span></a>
 

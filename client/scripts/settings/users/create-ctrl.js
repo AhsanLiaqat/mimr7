@@ -96,19 +96,18 @@
                     }
                 });
             }else { 
+                if($scope.data.role != undefined){
+                    $http.post('/users/create', {data: $scope.data}).then(function(res) {
+                        toastr.success("User added successfully");
+                        $location.path('/settings/users');
+                        $scope.data = '';
+                    });
+                }else{
+                    toastr.error("please fill require fields");
+                }
 
-            if($scope.data.role != undefined){
-            $http.post('/users/create', {data: $scope.data}).then(function(res) {
-                toastr.success("User added successfully");
-                $location.path('/settings/users');
-                $scope.data = '';
-            });
-        }else{
-            toastr.error("please fill require fields");
+            }
         }
-
-        }
-    }
         $scope.departmentModal = function () {
             ModalService.showModal({
                 templateUrl: "views/settings/departments/form.html",

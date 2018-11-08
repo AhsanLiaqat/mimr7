@@ -23,26 +23,7 @@
                             <label >Email address<span class="required-custom"> *</span></label>
                             <input type="email" ng-model="data.email" class="form-control" placeholder="Enter email" required="required">
                         </div>
-                        <div class="form-group">
-                            <label > Department {{task.departmentId}} </label>
-
-                            <select class="form-control" ng-model="data.departmentId" ng-options="record.id as record.name for record in departments" ng-selected="record.id === task.departmentId ">
-                            </select>
-                            <a ng-click="departmentModal()">Create Department</a>
-                        </div>
-
-                        <div class="form-group">
-                            <label > Position/Role {{task.departmentId}} </label><br>
-                            <select chosen
-                            multiple
-                            class="form-control"
-                            data-placeholder-text-multiple="'Select roles'"
-                            ng-model="data.roles"
-                            ng-options="record.id as record.name for record in roles">
-                            </select><br>
-
-                            <a ng-click="createRole()">Create Position/Role</a>
-                        </div>
+                        
                         <div class="form-group">
                             <label >User Type <span class="required-custom"> *</span></label>
                              <span class="ui-select">

@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('app')
-    .controller('simulationHomeCtrl', ['$scope', '$routeParams', '$http', 'AuthService', 'ModalService', '$location', 'filterFilter','$filter','Query', homeFunction]);
+    .controller('homeCtrl', ['$scope', '$routeParams', '$http', 'AuthService', 'ModalService', '$location', 'filterFilter','$filter','Query', homeFunction]);
 
     function homeFunction($scope, $routeParams, $http, AuthService, ModalService, $location, filterFilter,$filter,Query) {
         // formats date in some given format

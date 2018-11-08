@@ -292,6 +292,7 @@
         
         //show image type media
         var imageModal = function(record){
+            console.log('909090909090909090',record)
         	$uibModal.open({
         	      templateUrl: 'views/settings/libraries/lib-image.html',
         	      size: 'lg',
@@ -408,6 +409,7 @@
         
         //show and categorize media
         $scope.preview = function(record){
+            console.log('++++++++++++++++++++++++',record)
         	switch (record.type){
         		case "image":
         			imageModal(record);

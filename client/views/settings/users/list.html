@@ -15,17 +15,11 @@
         <thead>
           <tr>
             <th st-sort="firstName">Name</th>
-            <th st-sort="department.name">Department</th>
-            <th st-sort="roles.name">Position/Role</th>
             <th st-sort="role">User Type</th>
             <th style="width: 16%">Actions</th>
           </tr>
           <tr>
             <th class="search-group"><i class="fa fa-search"></i><input class="form-control search-field" placeholder="Search" st-search="firstName"/>
-            </th>
-            <th class="search-group"><i class="fa fa-search"></i><input class="form-control search-field" placeholder="Search" st-search="department.name"/>
-            </th>
-            <th class="search-group"><i class="fa fa-search"></i><input class="form-control search-field" placeholder="Search" st-search="roles.name"/>
             </th>
             <th class="search-group"><i class="fa fa-search"></i><input class="form-control search-field" placeholder="Search" st-search="role"/>
             </th>
@@ -35,8 +29,6 @@
         <tbody ng-show="!isLoading">
           <tr ng-repeat="user in users">
             <td>{{user.firstName}} {{user.middleName}} {{user.lastName}}</td>
-            <td>{{user.department.name}}</td>
-            <td><p ng-repeat="role in user.roles">{{role.name}}</p></td>
             <td>{{user.role}}</td>
             <td>
              <!--  <a class="btn btn-primary btn-sm" ng-click="viewModal(user.id)"><span class="fa fa-television"></span></a> -->

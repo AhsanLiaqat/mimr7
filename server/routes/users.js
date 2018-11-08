@@ -54,20 +54,7 @@ router.get('/me', function (req, res, next) {
 router.get('/list', function (req, res) {
     model.user.findAll({
         where: { userAccountId: req.user.userAccountId, userType: null ,isDeleted:false},
-        order: [['firstName', 'ASC']],
-        include: [{
-            model: model.department,
-            attributes: ['name'],
-            required: false
-        },{
-            model: model.role,
-            required: false,
-            attributes: ['name']
-        },
-        {
-            model: model.incidents_team,
-            attributes: ['name']
-        }]
+        order: [['firstName', 'ASC']]
     }).then(function (users) {
         res.send(users);
     });
@@ -250,21 +237,22 @@ router.post('/create', function (req, res, next) {
     user.userAccountId = req.user.userAccountId;
     model.user.create(user).then(function (user) {
         // res.send(user);
-        if(req.body.data.roles != undefined){
-            var roles = [];
-            _.each(req.body.data.roles, function (u) {
-                roles.push(model.role.findOrCreate({
-                    where: { id: u }
-                }));
-            });
-            Q.allSettled(roles).then(function (res) {
-                var role = _.map(res, function (u) { return u.value[0] });
-                user.addRoles(role);
-            });
-            res.send(user);
-        }else{
-            res.send(user);
-        }
+        // if(req.body.data.roles != undefined){
+        //     var roles = [];
+        //     _.each(req.body.data.roles, function (u) {
+        //         roles.push(model.role.findOrCreate({
+        //             where: { id: u }
+        //         }));
+        //     });
+        //     Q.allSettled(roles).then(function (res) {
+        //         var role = _.map(res, function (u) { return u.value[0] });
+        //         user.addRoles(role);
+        //     });
+        //     res.send(user);
+        // }else{
+        //     res.send(user);
+        // }
+        res.send(user);
 
     });
 });
@@ -288,29 +276,30 @@ var userUpdate = function(user,id,sent_roles,res){
     console.log('---------------------------',user);
 
     model.user.update(user, { where: { id: id }}).then(function (user) {
-        var data = { type: "user_update", user: user};
-        socket.broadcast(user.userAccountId, data);
-        if (sent_roles != undefined) {
-            var roles = [];
-            _.each(sent_roles, function (u) {
-                roles.push(model.role.findOrCreate({
-                    where: { id: u }
-                }));
-            });
-            Q.allSettled(roles).then(function (resp) {
+        // var data = { type: "user_update", user: user};
+        // socket.broadcast(user.userAccountId, data);
+        // if (sent_roles != undefined) {
+        //     var roles = [];
+        //     _.each(sent_roles, function (u) {
+        //         roles.push(model.role.findOrCreate({
+        //             where: { id: u }
+        //         }));
+        //     });
+        //     Q.allSettled(roles).then(function (resp) {
 
-                var role = _.map(resp, function (u) { return u.value[0] });
-                var roleIds = _.map(role, function (u) { return u.id });
-                model.user.findOne({
-                    where: { id: id }
-                }).then(function (n) {
-                    n.setRoles(roleIds);
-                });
-            });
-            res.send(user)
-        }else{
-            res.send(user);
-        }
+        //         var role = _.map(resp, function (u) { return u.value[0] });
+        //         var roleIds = _.map(role, function (u) { return u.id });
+        //         model.user.findOne({
+        //             where: { id: id }
+        //         }).then(function (n) {
+        //             n.setRoles(roleIds);
+        //         });
+        //     });
+        //     res.send(user)
+        // }else{
+        //     res.send(user);
+        // }
+        res.send(user);
     });
 };
 
@@ -366,16 +355,12 @@ router.post('/update', function (req, res, next) {
 
 router.post('/get', function (req, res, next) {
     model.user.findOne({
-        attributes: ['id','email','avatar','firstName','lastName','role','officePhone','userType','enabled','available','createdAt','updatedAt','userAccountId', 'middleName','departmentId','mobilePhone', 'countryCode'],
+        attributes: ['id','email','avatar','firstName','lastName','role','officePhone','userType','enabled','available','createdAt','updatedAt','userAccountId', 'middleName','mobilePhone', 'countryCode'],
         where: { id: req.body.id,isDeleted:false },
         include: [
             {
                 model: model.user_accounts,
                 attributes: ['id','organizationName','type','category_header','messages_font_size','messages_font_family','status','createdAt','updatedAt']
-            },{
-                model: model.role,
-                attributes: ['id','name','createdAt','updatedAt','userAccountId']
-
             }
         ]
     }).then(function (user) {

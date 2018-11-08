@@ -96,6 +96,7 @@ router.post('/save', multipartyMiddleware, function(req, res, next) {
         model.article_library.create(d)
         .then(function(item) {
             var stream = fs.createReadStream(file.path);
+            console.log(item,'-----------------', stream, {"ContentType": item.mimetype})
             s3Library.writeFile( item.s3Filename, stream, {"ContentType": item.mimetype}).then(function (err) {
                 fs.unlink(file.path, function (err) {
                     if (err) {
@@ -112,7 +113,8 @@ router.post('/save', multipartyMiddleware, function(req, res, next) {
                             data: media,
                             action: 'new'
                         }
-                        io.emit('incoming_media:' + item.parentId,xresp)
+                        io.emit('incoming_message:' + req.user.userAccountId,xresp)
+                        io.emit('incoming_message:' + item.parentId,xresp)
                         res.send(item);
                     });
                 })

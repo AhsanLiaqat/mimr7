@@ -118,37 +118,19 @@
         .when('/settings/users', { templateUrl: 'views/settings/users/list.html' })
         .when('/settings/users/add', { templateUrl: 'views/settings/users/add.html' })
         .when('/settings/users/edit', { templateUrl: 'views/settings/users/edit.html' })
-        ///////////////////////////Preparation manager routes End/////////////////////
-        //==========================================================================//
-        ///////////////////////////Crisis manager routes Start////////////////////////
-        // .when('/reports/view/:incidentId', { templateUrl: 'views/reports/reports.view.html' })
-        // .when('/reports/edit/:id', { templateUrl: 'views/reports/report.html' })
-        // .when('/myTasks/:incidentId', { templateUrl: 'views/userTasks/user.task.html' })
-        // .when('/taskDetail/:taskId', { templateUrl: 'views/userTasks/task.detail.html' })
-        // .when('/browser', { templateUrl: 'views/crisis-manager/web-links/media-list.html' }) //done
-        // .when('/browser/:id?', { templateUrl: 'views/crisis-manager/web-links/browse.html' }) //done
-        // .when('/incidents/view', { templateUrl: "views/crisis-manager/incidents/view.html"})
-
-        /////////////////Crisis manager routes End/////////////////////
-        //=======================================================================================================================//
-
-
-        /////////////////Simulation routes Start/////////////////////
 
 		.when('/home', { templateUrl: 'views/home.html' })
-		.when('/simulation/players', { templateUrl: 'views/simulation/players/list.html' })
-		.when('/simulation/player-page', { templateUrl: 'views/simulation/active-games/list.html' })
         .when('/article-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-libraries/list.html' })
         .when('/message-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-messages/list.html' })
-
-
-        /////////////////Simulation manager routes End/////////////////////
-
-        //=======================================================================================================================//
-
-        //=======================================================================================================================//
-
-        /////////////////Default routes Start/////////////////////
+        .when('/settings/users', { templateUrl: 'views/settings/users/list.html' })
+        .when('/settings/users/add', { templateUrl: 'views/settings/users/add.html' })
+        .when('/settings/users/edit', { templateUrl: 'views/settings/users/edit.html' })
+        .when('/settings/organizations', { templateUrl: 'views/settings/organizations/list.html' }) 
+        .when('/settings/organizations/edit/:id?', { templateUrl: 'views/settings/organizations/form.html' })
+        .when('/settings/organizations/details/:id', { templateUrl: 'views/settings/organizations/details.html' })
+        .when('/settings/organizations/:OrgId/users/:id?', { templateUrl: 'views/settings/organizations/user.html' })
+        // .when('/simulation/player-page', { templateUrl: 'views/simulation/active-games/list.html' })
+		// .when('/simulation/players', { templateUrl: 'views/simulation/players/list.html' })
         .when('/', { redirectTo: function () { return '/home' } })
         .when('/404', { templateUrl: 'views/pages/404.html' })
 
@@ -298,7 +280,7 @@
                 Query.setCookie('Auth_token',token,{expires: exp});
                 Idle.watch();
                 if (next !== undefined) {
-                    $rootScope.breadcrumb_0Link = 'mainHome'
+                    $rootScope.breadcrumb_0Link = 'home'
                     $rootScope.breadcrumb_0 = true;
                     $rootScope.breadcrumb_1 = true;
                     $rootScope.breadcrumb_2 = true;
@@ -315,92 +297,6 @@
                         case '/pages/profile':
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Profile';
-                            break;
-                        case '/archive/statusReport/:id':
-                            $rootScope.breadcrumb_3 = true;
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Archive';
-                            $rootScope.breadcrumb_2Link = 'archive/view'
-                            $rootScope.breadcrumb_3Heading = 'Status Report';
-                            break;
-                        case '/incidents/view':
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Incidents';
-                            break;
-                        case '/incidents/edit':
-                            $rootScope.breadcrumb_1Heading = 'Incidents';
-                            $rootScope.breadcrumb_1Link = 'incidents/view'
-                            $rootScope.breadcrumb_2Heading = 'New Incident';
-                            break;
-                        case '/incident/edit/:id':
-                            $rootScope.breadcrumb_1Heading = 'Incidents';
-                            $rootScope.breadcrumb_1Link = 'incidents/view'
-                            IncidentService.get(next.params.id).then(function(res){
-                                $rootScope.breadcrumb_2Heading = res.data.name;
-                            },function(err){
-                                if(err)
-                                    toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
-                                else
-                                    toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
-                            });
-                            // var path = "/api/incidents/get?id=" + next.params.id;
-                            // $http.get(path).then(function (res) {
-                                
-                            // });
-                            break;
-                        case '/archive/view':
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Archive';
-                            break;
-                        case '/timeline':
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Timeline';
-                            break;
-                        case '/reports':
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Status Reports';
-                            break;
-                        case '/reports/view/:incidentId':
-                            $rootScope.breadcrumb_1Heading = 'Reports';
-                            $rootScope.breadcrumb_1Link = 'reports'
-                            $rootScope.breadcrumb_2Heading = 'New Report';
-                            break;
-                        case '/reports/edit/:id':
-                            $rootScope.breadcrumb_1Heading = 'Reports';
-                            $rootScope.breadcrumb_1Link = 'reports'
-                            ReportService.get(next.params.id).then(function(res){
-                                $rootScope.breadcrumb_2Heading = res.data.incidentName;
-                            },function(err){
-                                if(err)
-                                    toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
-                                else
-                                    toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
-                            });
-                            // var path = '/reports/get?id=' + next.params.id;
-                            // $http.get(path).then(function (res) {
-                                
-                            // });
-                            break;
-                        case '/User-status':
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'User Status';
-                            break;
-                        case '/browser':
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Web Links';
-                            break;
-                        case '/team-activation':
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Email/Alert history';
-                            break;
-                        case '/capacity-dashboard':
-                            $rootScope.breadcrumb_1Heading = 'Crisis Manager';
-                            $rootScope.breadcrumb_2Heading = 'Capacity Dashboard';
-                            break;
-                        case '/settings/incident-types':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Incident Types';
                             break;
                         case '/settings/incident-types/edit/:cat_id?':
                             $rootScope.breadcrumb_3 = true;
@@ -425,30 +321,25 @@
                                 $rootScope.breadcrumb_3Heading = 'New Type';
                             }
                             break;
-                        case '/settings/capacities':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Capacity';
+                        case '/message-libraries/:gamePlanId?':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Messages';
                             break;
-                        case '/settings/all-categories':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Categories';
+                        case '/article-libraries/:gamePlanId?':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Articles';
                             break;
                         case '/settings/account':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
+                            $rootScope.breadcrumb_1Heading = 'Settings';
                             $rootScope.breadcrumb_2Heading = 'Account';
                             break;
                         case '/settings/users':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
+                            $rootScope.breadcrumb_1Heading = 'Settings';
                             $rootScope.breadcrumb_2Heading = 'Users';
                             break;
                         case '/settings/users/add':
                             $rootScope.breadcrumb_3 = true;
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
+                            $rootScope.breadcrumb_1Heading = 'Settings';
                             $rootScope.breadcrumb_2Heading = 'Users';
                             $rootScope.breadcrumb_2Link = 'settings/users';
                             $rootScope.breadcrumb_3Heading = 'New User';
@@ -461,25 +352,14 @@
                             $rootScope.breadcrumb_2Link = 'settings/users';
                             $rootScope.breadcrumb_3Heading = 'Edit User';
                             break;
-                        case '/settings/roles':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Roles';
-                            break;
-                        case '/settings/departments':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Departments';
-                            break;
                         case '/settings/organizations':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
+                            $rootScope.breadcrumb_2 = true;
+                            $rootScope.breadcrumb_1Heading = 'Settings';
                             $rootScope.breadcrumb_2Heading = 'External Organizations';
                             break;
                         case '/settings/organizations/edit/:id?':
                             $rootScope.breadcrumb_3 = true;
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
+                            $rootScope.breadcrumb_1Heading = 'Settings';
                             $rootScope.breadcrumb_2Heading = 'External Organizations';
                             $rootScope.breadcrumb_2Link = 'settings/organizations';
                             if (next.params.id) {
@@ -490,121 +370,11 @@
                             break;
                         case '/settings/organizations/details/:id':
                             $rootScope.breadcrumb_3 = true;
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
+                            $rootScope.breadcrumb_1Heading = 'Settings';
                             $rootScope.breadcrumb_2Heading = 'External Organizations';
                             $rootScope.breadcrumb_2Link = 'settings/organizations';
                             $rootScope.breadcrumb_3Heading = 'Users';
                             break;
-                        case '/settings/incident-teams':
-                            $rootScope.breadcrumb_1Heading = 'Preparation Manager';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Teams';
-                            break;
-                        case '/settings/incident-teams/add':
-                            $rootScope.breadcrumb_3 = true;
-                            $rootScope.breadcrumb_1Heading = 'Settings';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Teams';
-                            $rootScope.breadcrumb_2Link = 'settings/incident-teams';
-                            $rootScope.breadcrumb_3Heading = 'New Team';
-                            break;
-                        case '/settings/incident-teams/edit/:id':
-                            $rootScope.breadcrumb_3 = true;
-                            $rootScope.breadcrumb_1Heading = 'Settings';
-                            $rootScope.breadcrumb_1Link = 'settings/home'
-                            $rootScope.breadcrumb_2Heading = 'Teams';
-                            $rootScope.breadcrumb_2Link = 'settings/incident-teams';
-                            IncidentTeamService.get(next.params.id).then(function(res){
-                                $rootScope.breadcrumb_3Heading = res.data.name;
-                            },function(err){
-                                if(err)
-                                    toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
-                                else
-                                    toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
-
-                            });
-                            // var path = '/settings/incident-teams/get?id=' + next.params.id;
-                            // $http.get(path).then(function (res) {
-                                
-                            // });
-                            break;
-                        case '/simulation/home':
-                            $rootScope.breadcrumb_2 = false;
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            break;
-                        case '/simulation/players':
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            $rootScope.breadcrumb_1Link = 'simulation/home'
-                            $rootScope.breadcrumb_2Heading = 'Players';
-                            break;
-                        case '/simulation/player-lists':
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            $rootScope.breadcrumb_1Link = 'simulation/home'
-                            $rootScope.breadcrumb_2Heading = 'Player Lists';
-                            break;
-                        case '/simulation/id-messages/:gameId?':
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            $rootScope.breadcrumb_1Link = 'simulation/home'
-                            $rootScope.breadcrumb_2Heading = 'ID Messages';
-                            break;
-                        case '/simulation/categories':
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            $rootScope.breadcrumb_1Link = 'simulation/home'
-                            $rootScope.breadcrumb_2Heading = 'Simulation Categories';
-                            break;
-                        case '/simulation/game-roles/:gamePlanId?':
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            $rootScope.breadcrumb_1Link = 'simulation/home'
-                            $rootScope.breadcrumb_2Heading = 'Simulation Roles';
-                            break;
-                        case '/simulation/game-libraries/:gamePlanId?':
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            $rootScope.breadcrumb_1Link = 'simulation/home'
-                            $rootScope.breadcrumb_2Heading = 'Simulation Documents & Media';
-                            break;
-                        case '/simulation/game-messages/:gamePlanId?':
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            $rootScope.breadcrumb_1Link = 'simulation/home'
-                            $rootScope.breadcrumb_2Heading = 'Simulation Messages';
-                            break;
-                        case '/simulation/game-template':
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            $rootScope.breadcrumb_1Link = 'simulation/home'
-                            $rootScope.breadcrumb_2Heading = 'Game Template';
-                            break;
-                        case '/simulation/player-page':
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            $rootScope.breadcrumb_1Link = 'simulation/home'
-                            $rootScope.breadcrumb_2Heading = 'Player Page';
-                            break;
-                        case '/simulation/active-games/:gameId':
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            $rootScope.breadcrumb_1Link = 'simulation/home'
-                            $rootScope.breadcrumb_2Heading = 'Active Games';
-                            break;
-                        case '/simulation/scheduled-games/:typeId?':
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            $rootScope.breadcrumb_1Link = 'simulation/home'
-                            $rootScope.breadcrumb_2Heading = 'Scheduled Games';
-                            break;
-                        case '/simulation/assign-messages':
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            $rootScope.breadcrumb_1Link = 'simulation/home'
-                            $rootScope.breadcrumb_2Heading = 'Assign Messages';
-                            break;
-                        case '/simulation/game-details/:gameId':
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            $rootScope.breadcrumb_1Link = 'simulation/home'
-                            $rootScope.breadcrumb_2Heading = 'Game Details';
-                            break;
-                        case '/simulation/my-messages/:templateGameId/:userId':
-                            $rootScope.breadcrumb_1Heading = 'Simulation Manager';
-                            $rootScope.breadcrumb_1Link = 'simulation/home'
-                            $rootScope.breadcrumb_2Heading = 'Player Page';
-                            break;
-
-
 
                         case '/superadmin':
                             $rootScope.breadcrumb_1 = false;
@@ -621,12 +391,6 @@
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Copy Accounts';
                             break;
-
-                        case '/dynamic-form':
-                            $rootScope.breadcrumb_2 = false;
-                            $rootScope.breadcrumb_1Heading = 'Assessment Tools';
-                            break;
-
                         default:
                         console.log(next.originalPath)
                     }
