@@ -17,6 +17,17 @@
                         <input type="text" class="form-control" ng-model="message.content" ng-readonly="viewTask">
                     </div>
                     <div class="form-group">
+                        <label>Message Order Sequence</label>
+                        <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                            <select chosen
+                                data-placeholder-text-single="'Select Message Order Sequence'"
+                                ng-model = "message.order"
+                                ng-options="msg.id as msg.value for msg in orderSequence">
+                                <option value="" ></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label>Article</label>
                         <div class="form-group chosen-full-container" style="margin-bottom:10px;">
                             <select chosen ng-model="articleId" ng-options = "item.id as item.title for item in selectoptions" ng-disabled = "articleId">

@@ -26,6 +26,10 @@
                 });
                 
             }
+            $scope.orderSequence = [];
+            for(var i = 0 ; i < 100 ; i++){
+                $scope.orderSequence.push({id: i, value: i});
+            }
         }
         $scope.get_libraries =  function(gameId){
              $http.get('/simulation/game-libraries/all-for-game/'+gameId).then(function (response) {

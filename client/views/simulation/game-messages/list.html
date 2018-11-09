@@ -16,6 +16,8 @@
                     <tr>
                         <th class="col-md-2" st-sort="name">Message Name</th>
                         <th class="col-md-2" st-sort="description">Description</th>
+                        <th class="col-md-2" st-sort="order">Order</th>
+                        <th class="col-md-1" st-sort="description">Total Questions</th>
                         <th class="col-md-2">Actions</th>
                     </tr>
                     <tr>
@@ -24,6 +26,9 @@
                         </th>
                         <th>
                             <input class="form-control" placeholder="Search description" st-search="description"/>
+                        </th>
+                        <th>
+                            <input class="form-control" placeholder="Search Order Sequence" st-search="order"/>
                         </th>
                         <th></th>
                     </tr>
@@ -36,6 +41,8 @@
                             </a>
                         </td>
                         <td ng-bind-html= "record.description"></td>
+                        <td>{{record.order}}</td>
+                        <td>{{record.questions.length}}</td>
                         <td>
                             <a title = "Add Questions" class="btn btn-info" ng-click="addQuestions(record, $index)"><span class="fa fa-question-circle"></span></a>
                             <a title = "Add Media" class="btn btn-sm btn-info" ng-click="addMedia(record, $index)"><span class="fa fa-link"></span></a>

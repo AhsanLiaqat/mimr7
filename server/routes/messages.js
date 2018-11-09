@@ -13,7 +13,11 @@ var s3Library = require('../lib/aws/s3').library;
 
 router.get('/all', function(req, res, next) {
     let condition = (req.query.id !== "All Messages") ? {articleId: req.query.id}: {};
-    model.message.findAll({where: condition}).then(function(msg) {
+    model.message.findAll({where: condition,
+            include : [{
+                model : model.question
+            }]
+        }).then(function(msg) {
         res.send(msg);
     });
 });

@@ -7,6 +7,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         content: DataTypes.STRING,
         description: DataTypes.STRING,
+        order: DataTypes.INTEGER,
         isDeleted: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
