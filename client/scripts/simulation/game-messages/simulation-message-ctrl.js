@@ -125,6 +125,7 @@
                             $scope.selected = $routeParams.gamePlanId;
                         }
                         $scope.messageToShow =  angular.copy($scope.messages);
+                        console.log('======================',$scope.messageToShow)
                         $scope.managearray($scope.selected);
                     });
                 });
@@ -226,7 +227,7 @@
             });
         };
 
-        $scope.addQuestions = function(record) {
+        $scope.addQuestions = function(record,index) {
             var inputs = {
                 messageId : record.id
             };
@@ -237,9 +238,9 @@
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });
                 modal.close.then(function(result) {
-                    // if(result){
-                    //     $scope.media.push(result);
-                    // }
+                    if(result){
+                        $scope.messageToShow[index].questions.push(result);
+                    }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
                 });

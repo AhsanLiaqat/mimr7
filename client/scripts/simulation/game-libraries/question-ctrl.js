@@ -14,7 +14,7 @@
                 $scope.data = res.data;
                 console.log('-=-=-=-==',$scope.data)
                 toastr.success('Content Added.', 'Success!');
-                $scope.close();
+                close(res.data);
             });
                 
         };
