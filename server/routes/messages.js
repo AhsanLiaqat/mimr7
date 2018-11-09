@@ -32,7 +32,11 @@ router.get('/get', function(req, res, next) {
 router.post('/update', function(req, res, next) {
     model.message.update(req.body.data, {where: { id : req.body.data.id }}).then(function(result) {
         model.message.findOne({
-            where: {id: req.body.data.id}}).then(function(result) {
+            where: {id: req.body.data.id},
+            include : [{
+                model : model.question
+            }]
+        }).then(function(result) {
             var io = req.app.get('io');
             var xresp = {
                 data: result,
@@ -105,7 +109,10 @@ router.post('/save', function(req, res, next) {
     var d = req.body.data;
     model.message.create(d).then(function(message) {
         model.message.findOne({
-            where: {id: message.id}
+            where: {id: message.id},
+            include : [{
+                model : model.question
+            }]
         }).then(function(msg) {
             var io = req.app.get('io');
             var xresp = {
