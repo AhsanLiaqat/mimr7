@@ -1,0 +1,70 @@
+var express = require('express');
+var router = express.Router();
+var model = require('../../models');
+
+router.get('/get/:id', function(req, res, next) {
+    model.player_list.findOne({
+        where: {
+            id: req.params.id
+        },
+        include:[{
+            model: model.organization
+        }]
+    }).then(function(response) {
+        res.send(response);
+    });
+});
+
+router.get('/all', function(req, res, next) {
+    model.player_list.findAll({
+    include: [
+        {model: model.organization},
+        {model: model.user}
+    ]}).then(function(response) {
+        res.send(response);
+    });
+});
+
+router.post('/import-players', function(req, res, next) {
+    console.log('---------------<><><><><><><>',req.body.data)
+    var record = req.body.data;
+    model.player_list.findOne({where: {id: req.body.listId},
+        include : [{
+            model: model.user
+        }]
+    }).then(function(item) {
+        console.log('---------------',item)
+        var ids = record.map(function(item, index) {
+            return item.id;
+        });
+        console.log('***************************************',ids)
+        item.addUsers(ids);
+        res.send(item);
+    });
+});
+
+router.post('/save', function(req, res, next) {
+    var record = req.body.data;
+    record.userAccountId = req.user.userAccountId;
+    model.player_list.create(record).then(function(response) {
+        res.send(response);
+    });
+});
+
+router.put('/update', function(req, res, next) {
+    model.player_list.update(req.body.data, {where: { id : req.body.data.id }}).then(function(response) {
+        res.send(response);
+    });
+});
+
+router.delete("/remove/:id", function(req, res, next) {
+    model.player_list.destroy({where: {id: req.params.id}}).then(function(response) {
+        res.send({success:true, msg:response.toString()});
+    },function(response){
+        model.player_list.update({isDeleted:true},{where: {id: req.params.id}}).then(function(response) {
+            res.send({success:true, msg:response.toString()});
+        })
+    });
+});
+
+module.exports = router;

@@ -1,0 +1,75 @@
+<div class="modal fade" role="dialog">
+    <div id="modal-dialog" class="modal-dialog">
+        <!-- Modal content-->
+        <div id="modal-content" class="modal-content">
+
+            <!-- Header -->
+            <div id="modal-header" class="modal-header">
+                <button type="button" ng-hide= "page3 || page4" class="close" ng-click="close()" >&times;</button>
+                <h4 class="modal-title">Schedule New Content
+                    <for></for>
+                </h4>
+            </div>
+            <!-- <div class="pu">
+                
+            </div> -->
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <!-- <div class="text-center">
+                            <label >All Messages without Roles or Order Sequence will be ignored.</label>
+                        </div> -->
+                        <!-- Page 1 -->
+                        <div class="form-group">
+                            <label>STEP 1: Content Basic Info</label>
+                            <br><br>
+                            <div class="chosen-full-container" style="margin: 5px;">
+                                <select chosen
+                                        class="form-control"
+                                        data-placeholder-text-single="'Select Game Template'"
+                                        ng-model="playGame.articleId"
+                                        ng-disabled="true"
+                                        ng-options="article.id as article.title for article in articles" >
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="chosen-full-container play-game-client" style="margin: 5px;">
+                                <label>Organization List: </label>
+                                <select chosen
+                                        ng-model="playGame.organizationId"
+                                        ng-change = "getPlayerList()"
+                                        ng-options="organization.id as organization.name for organization in organizationList">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                            <div class="chosen-full-container play-game-client" ng-if = "playGame.organizationId" style="margin: 5px;">
+                                <label>Player List </label>
+                                <select chosen
+                                        ng-model="playGame.playerListId"
+                                        ng-options="playerList.id as playerList.name for playerList in organization.player_lists">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Page Footer -->
+                <hr>
+                <div class="modal-footer">
+                    <button class="btn btn-success"
+                            style="float: right;"
+                            ng-click="scheduleContent()">
+                            Schedule Content & Exit
+                    </button>
+                    <button class="btn btn-warning"
+                            style="float: right;"
+                            ng-click="close()">
+                            Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

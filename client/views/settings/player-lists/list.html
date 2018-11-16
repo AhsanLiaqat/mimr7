@@ -1,0 +1,95 @@
+<div class="page" ng-controller="playerListCtrl">
+    <section class="panel panel-default">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"></span> Player Lists
+            </strong>
+
+            <div class="pull-right header-buttons">
+                <a href="" ng-click="CreatePlayerList()" class="btn btn-success btn-sm">New Player List</a>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table st-pipe="playerListTable" st-table="playerlists" class="table table-bordered table-striped table-responsive">
+                <thead>
+                <tr>
+                    <th st-sort="name">Name</th>
+                    <th st-sort="email">Description</th>
+                    <th st-sort="game_players.name">Oragnizations</th>
+                    <th st-sort="game_players.name">Users</th>
+                    <th>Actions</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input class="form-control" placeholder="Search Name" st-search="name"/>
+                    </th>
+                    <th>
+                        <input class="form-control" placeholder="Search Description" st-search="description"/>
+                    </th>
+                    <th>
+                        <input class="form-control" placeholder="Search Oragnization" st-search="organization.name"/>
+                    </th>
+                    <th>
+                        <input class="form-control" placeholder="Search User" st-search="firstName"/>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="record in roleToShow">
+                    <td>{{record.name}}</td>
+                    <td>{{record.description}}</td>
+                    <td>{{record.organization.name}}</td>
+                    <td ng-if = "record.users.length == 0">N/A</td>
+                    <td ng-if = "record.users.length > 0">
+                        <span ng-repeat = "player in record.users">
+                            {{player.firstName}} {{player.lastName}},
+                        </span>
+                    </td>
+                    <td>
+                        <a ng-click="importPlayers(record.id,record.users)" title = "Import players" class="btn btn-info">
+                            <span class="glyphicon glyphicon-import"></span>
+                        <a ng-click="editPlayerList(record, $index)" class="btn btn-info" title="update">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                        </a>
+                        <a class="btn btn-danger btn-sm" title="delete" ng-click="deletePlayerList(record.id, $index)" confirm="Are you sure you want to delete?">
+                            <span class="glyphicon glyphicon-remove-sign"></span>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+
+                <tbody ng-show="isLoading">
+                <tr>
+                    <td colspan="4" class="text-center">Loading ... </td>
+                </tr>
+                </tbody>
+
+                <tbody ng-show="roleToShow && roleToShow.length === 0">
+                <tr class="watermark-text-medium"
+                    style="position: inherit; display: table-row; font-size: 30px;">
+                    <td colspan="8">
+                        <p>No Player List Present</p>
+                    </td>
+                </tr>
+                </tbody>
+
+                <tfoot class="table table-striped table-responsive">
+                <tr>
+                    <td class="text-center" st-pagination="" st-items-by-page="pageItems" colspan="7">
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+            <div class="col-md-3">
+                <select class="form-control"
+                        ng-model="pageItems"
+                        ng-options="item.val as item.name for item in items"
+                        ng-selected="item.val === pageItems">
+                </select>
+            </div>
+        </div>
+    </section>
+</div>

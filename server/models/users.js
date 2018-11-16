@@ -49,6 +49,7 @@ module.exports = function(sequelize, DataTypes) {
                 users.belongsTo(models.organization);
                 users.hasMany(models.auth_token);
                 users.hasOne(models.player);
+                users.belongsToMany(models.player_list, {through: 'player_lists_users'});
                 users.hasMany(models.device, {foreignKey: 'userId'});
             }, byId: function(id){
                 var deferred = Q.defer();

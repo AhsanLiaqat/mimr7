@@ -129,6 +129,8 @@
         .when('/settings/organizations/edit/:id?', { templateUrl: 'views/settings/organizations/form.html' })
         .when('/settings/organizations/details/:id', { templateUrl: 'views/settings/organizations/details.html' })
         .when('/settings/organizations/:OrgId/users/:id?', { templateUrl: 'views/settings/organizations/user.html' })
+        .when('/settings/player-lists', { templateUrl: 'views/settings/player-lists/list.html' })
+
         // .when('/simulation/player-page', { templateUrl: 'views/simulation/active-games/list.html' })
 		// .when('/simulation/players', { templateUrl: 'views/simulation/players/list.html' })
         .when('/', { redirectTo: function () { return '/home' } })

@@ -82,6 +82,8 @@ app.use('/users', require('./routes/users'));
 
 app.use('/settings/locations', require('./routes/settings/locations.js'));
 app.use('/settings/organizations', require('./routes/settings/organizations.js'));
+app.use('/settings/player-lists', require('./routes/settings/player-list.js'));
+app.use('/content-plan-templates', require('./routes/content-plan-template.js'));
 app.use('/settings/accounts', require('./routes/settings/accounts.js'));
 app.use('/articles', require('./routes/articles.js'));
 app.use('/article-libraries', require('./routes/article-libraries.js'));

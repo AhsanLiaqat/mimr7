@@ -13,13 +13,38 @@
                     </h3>
                 </div>
                 <div class="col-md-1">
-                    <button ng-click="newContent()" style="margin-top:25px;" class="btn btn-success btn-sm pull-right"> New Content </button>
+                    <button ng-click="newContent()" ng-if="card.index == 0" style="margin-top:25px;" class="btn btn-success btn-sm pull-right"> New Content </button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-4" style="position: relative;" ng-repeat="template in cards">
+
+    <div class="row" style="margin: 5px;">
+        <div ng-repeat="card in cardsToShow" class="col-md-3" style="margin-bottom: 20px;">
+            <div class="card">
+                <div class="card-content" style="position: static;">
+                    <div class="card-headline">
+                        <h2 class="text-center">
+                            <a ng-click = "showContents($index,card)" style="position: relative;top: 25px;color: #009688;" href = "">
+                                {{card.name}}
+                            </a>
+                        </h2>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="text-center">
+                            <a ng-click = "showContents($index,card)" class="btn text-center" style="color: black;   position: relative;top: 25px;" ng-class="{'color_green': card.click}">
+                                <i class="fa fa-caret-down fa-2x "></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div ng-show="card.click" class="row">
+        <div class="col-md-4" style="position: relative;" ng-if="card.index == 0" ng-repeat="template in cards">
             <div style="padding: 10px;margin: 5px;">
                 <div class="card" style="background-color: rgba(255, 255, 255, 0.78) !important;">
                     <div class="card-content" style="position: relative;">
@@ -38,6 +63,10 @@
 
                                 <a href="#/article-libraries/{{template.id}}" class="btn btn-sm color_black">Documents & Media</a>
 
+                                <button title="Schedule Game" class="btn btn-sm btn-success" style="position: absolute;right: 110px;top:0;" ng-click="scheduleGame(template)">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+                                
                                 <button title="Edit Game" class="btn btn-sm btn-info" style="position: absolute;right: 60px;top:0;" ng-click="editModal(template.id, $index)">
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </button>

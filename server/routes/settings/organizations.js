@@ -2,17 +2,13 @@ var express = require('express');
 var router = express.Router();
 var model = require('../../models');
 
-router.get('/get', function(req, res, next) {
+router.get('/get/:id', function(req, res, next) {
     model.organization.findOne({
         where: {
-            id: req.query.id,isDeleted:false
+            id: req.params.id,isDeleted:false
         },
         include:[{
-            required: false,
-            model: model.user,
-            where: {
-                isDeleted:false
-            }
+            model: model.player_list
         }]
     }).then(function(response) {
         res.send(response);
@@ -30,6 +26,7 @@ router.get('/all', function(req, res, next) {
         model: model.user,
         require: false
     }]}).then(function(response) {
+        console.log('----------',response)
         res.send(response);
     });
 });

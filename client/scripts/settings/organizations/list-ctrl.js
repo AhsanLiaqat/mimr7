@@ -49,6 +49,24 @@
                 
             // });
         };
+
+        $scope.addPlayerList = function (organizationId) {
+             ModalService.showModal({
+                templateUrl: "views/settings/player-lists/form.html",
+                controller: "playerListModalCtrl",
+                inputs: {
+                    list: null,
+                    organizationId : organizationId
+                }
+            }).then(function (modal) {
+                modal.element.modal({ backdrop: 'static', keyboard: false });
+                modal.close.then(function (result) {
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
+            });
+        };
+
         $scope.deleteOrganization = function (org,index) { // tick
             ModalService.showModal({
                 templateUrl: "views/incidents/delete-incident-popup.html",
