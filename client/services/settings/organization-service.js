@@ -2,7 +2,7 @@ angular.module('app').factory('OrganizationService', ['Query','$injector','$apiR
 
     var OrganizationService = {
         get : function (routeId) {
-            return Query.request('GET',$apiRootSettings+'organizations/get?id=' + routeId,{});
+            return Query.request('GET',$apiRootSettings+'organizations/get/' + routeId,{});
         },
         all : function (userAccountId) {
             return Query.request('GET',$apiRootSettings+'organizations/all?userAccountId=' + userAccountId,{});

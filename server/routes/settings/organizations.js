@@ -9,7 +9,7 @@ router.get('/get/:id', function(req, res, next) {
         },
         include:[{
             model: model.player_list
-        }]
+        },{model :model.user}]
     }).then(function(response) {
         res.send(response);
     });

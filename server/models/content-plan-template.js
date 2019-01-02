@@ -23,6 +23,8 @@ module.exports = function(sequelize, DataTypes) {
             associate: function(models) {
                 content_plan_template.belongsTo(models.article);
                 content_plan_template.belongsTo(models.player_list);
+                content_plan_template.hasMany(models.question_scheduling);
+                content_plan_template.hasMany(models.answer);
             }
         }
     });

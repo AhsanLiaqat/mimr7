@@ -25,6 +25,9 @@
             if (Query.getCookie('user')){
                 $scope.user = Query.getCookie('user');
             }
+            $http.get('/users/list2').then(function(res){
+                $scope.users = res.data;
+            });
             
         }
         init();
@@ -44,12 +47,10 @@
                 });
             }else if( card.click == true){
                 // card of other 3 game types
-                $http.get('/simulation/schedule-games/all')
+                $http.get('/content-plan-templates/all')
                 .then(function (response) {
-                    $scope.games = response.data;
-                    $http.get('/simulation/id-schedule-games/all')
-                    .then(function (resp) {
-                        $scope.id_schedule_games = resp.data;
+                    $scope.contents = response.data;
+                    console.log('-------------------',$scope.contents)
                         if(index == 1){
                             $scope.gamesSelected = 'schedule';
                         }else if(index == 2){
@@ -59,8 +60,29 @@
                         }
                         $scope.managearray();
                     });
-                });
             }
+        }
+
+        $scope.managearray = function(){
+            $scope.gameToShow = []
+            angular.forEach($scope.contents, function(value) {
+                // value.Gname = value.game_plan.name;
+                if($scope.gamesSelected == 'schedule'){
+                    if(value.content_activated == false){
+                        $scope.gameToShow.push(value);
+                    }
+                }else if($scope.gamesSelected == 'active'){
+                    if(value.content_activated == true && value.status != 'stop'){
+                        $scope.gameToShow.push(value);
+                    }
+                }
+                else{
+                    if(value.status == 'stop'){
+                        $scope.gameToShow.push(value);
+                    }
+                }
+            });
+            // $scope.gameToShow = $filter('orderBy')($scope.gameToShow, 'Gname');
         }
 
         $scope.scheduleGame = function (game) {
@@ -129,23 +151,27 @@
             });
         };
 
-        $scope.GenerateEmail = function (Id) {
-            ModalService.showModal({
-                templateUrl: "views/simulation/active-games/generate-emails-active-games.html",
-                controller: "generateEmailsActiveGamesCtrl",
-                inputs: {
-                    gameId: Id
-                }
-            }).then(function (modal) {
-                modal.element.modal({ backdrop: 'static', keyboard: false });
-                modal.close.then(function (result) {
-                    if (result && result !== '') {
-                    }
-                    $('.modal-backdrop').remove();
-                    $('body').removeClass('modal-open');
+        $scope.sendQuestions = function(game){
+            $http.get('/content-plan-templates/get/'+game.id).then(function(response) {
+                $scope.data = response.data;
+                console.log('-------------=====',$scope.data)
+            });
+            $http.post('/content-plan-templates/update/'+game.id, {content_activated: true,play_date: new Date(),start_time : new Date()})
+            .then(function(response){
+                console.log('===================',$scope.data)
+                angular.forEach($scope.data, function(question) {
+                    var dataMessage = {setOffTime : new Date()};
+                    $http.post('/question-scheduling/update-message-off-set/'+question.id,{data:dataMessage}).then(function(res){
+                        $http.get('/content-plan-templates/all')
+                        .then(function (response) {
+                            $scope.contents = response.data;
+                            $scope.gamesSelected = 'schedule';
+                            $scope.managearray();
+                        });
+                    });
                 });
             });
-        };
+        }
 
     }
 }());

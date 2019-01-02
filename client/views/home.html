@@ -84,6 +84,60 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-4" style="position: relative;" ng-if = "card.index == 1 || card.index == 2 || card.index == 3" ng-repeat="game in gameToShow ">
+            <div style="padding: 10px;margin: 0px;">
+                <div class="card" style="background-color: rgba(255, 255, 255, 0.78) !important;">
+                    <div class="card-content" style="position: relative;">
+                        <div class="card-headline">
+
+                            <h3 style="color: black" >{{game.article.title}}</h3>
+
+                            <p ng-if = "gamesSelected == 'schedule' && game.scheduled_date">Content Schedule Date: {{dateTimeFormat(game.scheduled_date)}}</p>
+                            <p ng-if = "gamesSelected == 'active' && game.play_date">Content Played Date: {{dateTimeFormat(game.play_date)}}</p>
+                            <p ng-if = "gamesSelected == 'stop' && game.start_time">Content Started Date: {{dateTimeFormat(game.start_time)}}</p>
+                            Player List: {{game.player_list.name || "No List attached"}} 
+                        </div>
+
+                        <div class="card-body">
+                            <div style="min-height: 50px;" class="text-center">
+                                <a ng-click="sendQuestions(game)"
+                                    ng-if = "gamesSelected == 'schedule'"
+                                    confirm = "Do you want to Play Game.?"
+                                    class="btn btn-success"
+                                    title="Send Content">
+                                    <span class="glyphicon glyphicon-play"></span>
+                                </a>
+
+                                 <!-- <a href="#/simulation/active-games/{{game.id}}"
+                                    ng-if = "gamesSelected == 'active' || gamesSelected == 'stop'"
+                                   class="btn btn-success"
+                                   title="See Details">
+                                    <span class="fa fa-list"></span>
+                                </a> -->
+                                <!--  <button title="Generate Emails" class="btn btn-sm btn-success" style="position: absolute;right: 0px;top:0;"
+                                ng-if = "gamesSelected == 'active'"
+                                 ng-click="GenerateEmail(game.id)">
+                                    <i class="fa fa-reply-all fa-2x"></i>
+                                </button> -->
+                                <!-- <a ng-click="editGame(game.id, $index)"
+                                   class="btn btn-info"
+                                   ng-hide = "gamesSelected == 'stop'"
+                                   title="Edit Scheduled Game">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a> -->
+                                <a class="btn btn-danger"
+                                   title="Remove Scheduled Game"
+                                   ng-hide = "card.index == 2"
+                                   ng-click="deleteGame(game, $index)"
+                                   confirm="Are you sure you want to delete?">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>

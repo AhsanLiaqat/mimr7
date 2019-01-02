@@ -48,7 +48,8 @@ require('./local-strategy')(passport);
 app.use(function(req, res, next) {
     // check header or url parameters or post parameters for token
     // req.headers && (req.url.indexOf('/auth/login') !== -1 || ( req.headers['upper-url'] && (req.headers['upper-url'] == '/pages/simulationLogin' || (req.headers['upper-url'] == '/pages/signin' && req.url.indexOf('/auth/confirm-login') == -1 ) )))
-    if(req.url.indexOf('/users/editorImage') !== -1 || (req.headers && (req.url.indexOf('/auth/login') !== -1 || ( req.headers['upper-url'] && (req.headers['upper-url'] == '/pages/simulationLogin' || (req.headers['upper-url'] == '/pages/signin' && req.url.indexOf('/auth/confirm-login') == -1 ) ))))){
+    console.log();
+    if(req.url.indexOf('/users/editorImage') !== -1 || (req.headers && (req.url.indexOf('/auth/login') !== -1 || ( req.headers['upper-url'] && (req.headers['upper-url'].indexOf('/pages/content-questions') !== -1 || (req.headers['upper-url'] == '/pages/signin' && req.url.indexOf('/auth/confirm-login') == -1 ) ))))){
         next();
     }
     else if(req.url.indexOf('.map') == -1 ){
@@ -84,11 +85,14 @@ app.use('/settings/locations', require('./routes/settings/locations.js'));
 app.use('/settings/organizations', require('./routes/settings/organizations.js'));
 app.use('/settings/player-lists', require('./routes/settings/player-list.js'));
 app.use('/content-plan-templates', require('./routes/content-plan-template.js'));
+app.use('/question-scheduling', require('./routes/question-scheduling.js'));
 app.use('/settings/accounts', require('./routes/settings/accounts.js'));
 app.use('/articles', require('./routes/articles.js'));
 app.use('/article-libraries', require('./routes/article-libraries.js'));
 app.use('/messages', require('./routes/messages.js'));
 app.use('/questions', require('./routes/question.js'));
+app.use('/content-questions', require('./routes/content-questions.js'));
+
 
 
 app.all('/*', function(req, res, next) {

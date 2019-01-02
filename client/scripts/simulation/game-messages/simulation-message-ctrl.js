@@ -229,7 +229,8 @@
 
         $scope.addQuestions = function(record,index) {
             var inputs = {
-                messageId : record.id
+                messageId : record.id,
+                articleId : record.articleId
             };
             ModalService.showModal({
                 templateUrl: "views/simulation/game-libraries/question.html",

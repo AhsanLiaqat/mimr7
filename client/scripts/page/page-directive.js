@@ -30,7 +30,7 @@
                         return $element.addClass('body-wide body-err');
                     case '/pages/signin':
                     case '/pages/invite':
-                    case '/pages/simulationLogin':
+                    case '/pages/content-questions/:userId/:scheduled_questionId?':
                     case '/pages/signup':
                     case '/pages/forgot-password':
                         return $element.addClass('body-wide body-auth');

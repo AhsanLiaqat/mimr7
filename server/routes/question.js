@@ -18,9 +18,9 @@ router.get('/all', function(req, res, next) {
     });
 });
 
-router.get('/get', function(req, res, next) {
-    model.message.findOne({
-        where: {id: req.query.id}}).then(function(result) {
+router.get('/get/:id', function(req, res, next) {
+    model.question.findAll({
+        where: {articleId: req.params.id}}).then(function(result) {
         res.send(result);
     });
 });
@@ -66,6 +66,15 @@ router.post('/save', function(req, res, next) {
 
 
 
+});
+
+router.get('/one/:id', function(req, res, next) {
+    model.question.findOne({
+        where: {id: req.params.id},
+        include : [{model : model.answer}]
+    }).then(function(result) {
+        res.send(result);
+    });
 });
 
 router.delete('/remove/:id', function(req, res, next) {

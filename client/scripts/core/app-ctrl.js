@@ -102,7 +102,7 @@
             menu: 'vertical',                               // 'horizontal', 'vertical', 'collapsed'
             fixedHeader: true,                              // true, false
             fixedSidebar: true,                             // true, false
-            pageTransition: $scope.pageTransitionOpts[0],   // unlimited
+            pageTransition: $scope.pageTransitionOpts[1],   // unlimited
             skin: '12'                                      // 11,12,13,14,15,16; 21,22,23,24,25,26; 31,32,33,34,35,36
         };
 

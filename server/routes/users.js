@@ -232,6 +232,15 @@ router.get('/list2', function (req, res) {
     });
 });
 
+router.get('/get-organization-employ/:organizationId', function (req, res) {
+    var data = req.params.organizationId;
+    model.user.findAll({
+        where: { organizationId: data}
+    }).then(function (organizationEmploy) {
+        res.send(organizationEmploy);
+    });
+});
+
 router.post('/create', function (req, res, next) {
     var user = req.body.data;
     user.userAccountId = req.user.userAccountId;

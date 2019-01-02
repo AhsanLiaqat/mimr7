@@ -21,6 +21,7 @@ module.exports = function(sequelize, DataTypes) {
             associate: function(models) {
                 article.belongsTo(models.user_accounts);
                 article.hasMany(models.message);
+                article.hasMany(models.question);
                 article.hasMany(models.content_plan_template);
                 article.hasMany(models.article_library, {foreignKey: 'parentId'});
             }

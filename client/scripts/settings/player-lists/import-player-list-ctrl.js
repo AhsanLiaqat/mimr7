@@ -22,13 +22,22 @@
                           listId,
                           players_list
     ) {
-        $http.get('/users/list2')
-        .then(function(response){
-            $scope.users = response.data;
-            angular.forEach($scope.users, function (elem) {
-                elem.selected = false;
+
+        function init(){
+            $http.get('/settings/player-lists/get/' + listId).then(function(response){
+                $scope.organization_player_list = response.data;
+                console.log('>>>>>>>>>>>>><<<<<<<<<',$scope.organization_player_list)
+                $http.get('/users/get-organization-employ/' + $scope.organization_player_list.organizationId)
+                .then(function(response){
+                    $scope.users = response.data;
+                    console.log('-=-=-=-=-=-=-=-=-=-=-',$scope.users); 
+                    angular.forEach($scope.users, function (elem) {
+                        elem.selected = false;
+                    });
+                }); 
             });
-        }); 
+        }
+        init();
         $scope.game_players = [];
         angular.forEach(players_list, function(itm){ 
             $scope.game_players.push(itm.player_lists_users.userId) 

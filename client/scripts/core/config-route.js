@@ -82,7 +82,7 @@
             'forms/elements', 'forms/layouts', 'forms/validation', 'forms/wizard',
             'charts/charts', 'charts/flot',
             'pages/404', 'pages/500', 'pages/blank', 'pages/forgot-password', 'pages/invoice',
-            'pages/lock-screen', 'pages/profile', 'pages/invoice', 'pages/signin', 'pages/signup', 'pages/simulationLogin',
+            'pages/lock-screen', 'pages/profile', 'pages/invoice', 'pages/signin', 'pages/signup','pages/content-questions',
             'mail/compose', 'mail/inbox', 'mail/single', 
             'app/tasks', 'app/calendar', 'incidents/edit', 'IdleProvider', 'KeepaliveProvider', 'pages/invite'
         ]
@@ -90,7 +90,11 @@
         IdleProvider.timeout(10); // in seconds
         setRoutes = function (route) {
             var config, url;
-            url = '/' + route;
+            if(route == 'pages/content-questions'){
+                url = '/' + 'pages/content-questions/:userId/:scheduledQuestionId';
+            }else{
+                url = '/' + route;
+            }
             config = {
                 templateUrl: 'views/' + route + '.html'
             };
@@ -130,6 +134,8 @@
         .when('/settings/organizations/details/:id', { templateUrl: 'views/settings/organizations/details.html' })
         .when('/settings/organizations/:OrgId/users/:id?', { templateUrl: 'views/settings/organizations/user.html' })
         .when('/settings/player-lists', { templateUrl: 'views/settings/player-lists/list.html' })
+        // .when('/content-questions/:userId/:scheduled_questionId?', { templateUrl: 'views/simulation/schedule-content/content-questions.html' })
+
 
         // .when('/simulation/player-page', { templateUrl: 'views/simulation/active-games/list.html' })
 		// .when('/simulation/players', { templateUrl: 'views/simulation/players/list.html' })
@@ -248,10 +254,9 @@
 
     // register listener to watch route changes
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
-
         $http.get('/auth/confirm-login').then(function (res) {
             var uu = res.data;
-            if (uu == {}) {
+            if (Object.keys(uu).length == 0) {
                 // no logged user, we should be going to #login
                 if (next.templateUrl == "views/pages/signin.html") {
                     $rootScope.superAdmin = false;
@@ -264,8 +269,12 @@
                 else if (next.templateUrl == "views/pages/invite.html") {
                     $location.path("/pages/invite");
                 }
-                else if (next.templateUrl == "views/pages/simulationLogin.html") {
-                    $location.path("/pages/simulationLogin");
+                else if (next.templateUrl == "views/pages/content-questions.html") {
+                    var str = '/pages/content-questions/';
+                    if(next.params && next.params.userId && next.params.scheduledQuestionId){
+                        str += next.params.userId + '/' + next.params.scheduledQuestionId;
+                        $location.path(str);
+                    }
                 }
                 else {
                     // not going to #login, we should redirect now
@@ -359,6 +368,11 @@
                             $rootScope.breadcrumb_1Heading = 'Settings';
                             $rootScope.breadcrumb_2Heading = 'External Organizations';
                             break;
+                        case '/settings/player-lists':
+                            $rootScope.breadcrumb_2 = true;
+                            $rootScope.breadcrumb_1Heading = 'Settings';
+                            $rootScope.breadcrumb_2Heading = 'Player List';
+                            break;
                         case '/settings/organizations/edit/:id?':
                             $rootScope.breadcrumb_3 = true;
                             $rootScope.breadcrumb_1Heading = 'Settings';
@@ -397,14 +411,12 @@
                         console.log(next.originalPath)
                     }
                 }
-
                 if (next.templateUrl == "views/pages/signin.html") {
                     $location.path("/");
-                } else if (next.originalPath == "/reference-library/:userAccountId" || next.originalPath == "/message/:id" || next.originalPath == '/messages' || next.originalPath == '/myTasks/:incidentId' || next.originalPath == '/taskDetail/:taskId' || next.originalPath == '/active-games' || next.originalPath == '/my-messages/:templateGameId/:userId') {
+                } else if (next.originalPath == '/pages/content-questions/:userId/:scheduledQuestionId' || next.originalPath == "/reference-library/:userAccountId" || next.originalPath == "/message/:id" || next.originalPath == '/messages' || next.originalPath == '/myTasks/:incidentId' || next.originalPath == '/taskDetail/:taskId' || next.originalPath == '/active-games' || next.originalPath == '/my-messages/:templateGameId/:userId') {
                     $rootScope.fixedHeader = false;
                 }
-                if ($rootScope.infoProvider === true || localStorage['role'] === 'IP') {
-                    console.log('--->>>>>>>>>>>>',next.originalPath);
+                else if ($rootScope.infoProvider === true || localStorage['role'] === 'IP') {
                     if (next.originalPath == "/reference-library/:userAccountId" || next.originalPath == "/message/:id" || next.originalPath == '/messages' || next.originalPath == '/myTasks/:incidentId' || next.originalPath == '/taskDetail/:taskId' || next.originalPath == '/active-games' || next.originalPath == '/my-messages/:templateGameId/:userId') {
                         $rootScope.fixedHeader = false;
                     }
@@ -420,7 +432,6 @@
                         $location.path("/superAdmin");
                         $rootScope.fixedHeader = true;
                     }
-
                 }
                 else {
                     if (next.originalPath == "/reference-library/:userAccountId" || next.originalPath == "/message/:id" || next.originalPath == '/messages' || next.originalPath == '/myTasks/:incidentId' || next.originalPath == '/taskDetail/:taskId' || next.originalPath == '/active-games' || next.originalPath == '/my-messages/:templateGameId/:userId') {

@@ -17,6 +17,8 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 question.belongsTo(models.message);
+                question.belongsTo(models.article);
+                question.hasOne(models.answer);
             }
         }
     });
