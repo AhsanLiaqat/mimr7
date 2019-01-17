@@ -45,15 +45,6 @@
             $scope.contentToShow = $scope.paginate($scope.plan_contents);
         }
 
-        //delete game
-        $scope.deleteGame = function (gameId, index) {
-            $http.delete("/simulation/schedule-games/remove/" + gameId)
-                .then(function(res){
-                    $scope.games.splice(index,1);
-                    toastr.success('Game deleted.', 'Success!');
-                });
-        };
-
         $scope.dateTimeFormat = function(dat){
             return moment(dat).utc().local().format('HH:mm DD-MM-YYYY');
         };
