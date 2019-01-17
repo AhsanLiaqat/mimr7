@@ -58,15 +58,17 @@
                 <div class="form-group" ng-show="page2">
                     <table class="table table-bordered table-striped table-responsive">
                         <thead>
-                        <tr>
-                            <th>Questions</th>
-                        </tr>
+                            <tr>
+                                <th>Questions</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            <!-- remainingMessages -->
-                        <tr ng-repeat="question in questions">
-                            <td>{{question.name}}</td>
-                        </tr>
+                            <tr ng-show = "questions.length" ng-repeat="question in questions">
+                                <td>{{question.name}}</td>
+                            </tr>
+                            <tr ng-show = "!questions.length">
+                                <td>No Question Present</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

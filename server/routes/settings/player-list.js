@@ -7,9 +7,8 @@ router.get('/get/:id', function(req, res, next) {
         where: {
             id: req.params.id
         },
-        include:[{
-            model: model.organization
-        }]
+        include:[{model: model.organization},
+            {model : model.user}]
     }).then(function(response) {
         res.send(response);
     });

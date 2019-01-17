@@ -1,0 +1,67 @@
+<div class="page" ng-controller="closedContentsCtrl">
+    <section class="panel panel-default">
+        <div class="panel-heading">
+            <strong>
+                <span class="glyphicon glyphicon-th"></span> Closed Contents </strong>
+        </div>
+        <div class="panel-body">
+            <table st-pipe="contentTable" st-table="games" class="table table-bordered table-striped table-responsive">
+                <thead>
+                <tr>
+                    <th st-sort="game_plan.name">Content Template</th>
+                    <th st-sort="scheduled_date">Scheduled Date</th>
+                    <th st-sort="createdAt">Created At</th>
+                </tr>
+                <tr>
+                    <th>
+                        <input class="form-control" placeholder="Search Template" st-search="article.title"/>
+                    </th>
+                    <th>
+                        <input class="form-control" placeholder="Search Scheduled Date" st-search="scheduled_date"/>
+                    </th>
+                    <th>
+                        <input class="form-control" placeholder="Search Creation Date" st-search="createdAt"/>
+                    </th>
+                </tr>
+                </thead>
+                <tbody >
+                    <tr ng-repeat="art in contentToShow ">
+                        <td>{{art.article.title}}</td>
+                        <td>{{dateTimeFormat(art.scheduled_date)}}</td>
+                        <td>{{dateFormat(art.createdAt)}}</td>
+                    </tr>
+                </tbody>
+
+
+                <tbody ng-show="isLoading">
+                <tr>
+                    <td colspan="4" class="text-center">Loading ... </td>
+                </tr>
+                </tbody>
+
+                <tbody ng-show="plan_contents && plan_contents.length === 0">
+                <tr class="watermark-text-medium"
+                    style="position: inherit; display: table-row; font-size: 30px;">
+                    <td colspan="8">
+                        <p>No Closed Content</p>
+                    </td>
+                </tr>
+                </tbody>
+
+                <tfoot class="table table-striped table-responsive">
+                <tr>
+                    <td class="text-center" st-pagination="" st-items-by-page="pageItems" colspan="7">
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+            <div class="col-md-3">
+                <select class="form-control"
+                        ng-model="pageItems"
+                        ng-options="item.val as item.name for item in items"
+                        ng-selected="item.val === pageItems">
+                </select>
+            </div>
+        </div>
+    </section>
+</div>

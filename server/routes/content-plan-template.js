@@ -20,10 +20,8 @@ router.get('/get/:id', function(req, res, next) {
         {model: model.player_list, attributes: ['id', 'name','description']},
         {model: model.question_scheduling, attributes: ['id', 'setOffTime','offset','index']}]
     }).then(function(contentPlanTmplate) {
-        // console.log('-=-=-=-=->>>><><><><>',contentPlanTmplate.question_schedulings.length);
-        var unique_questions = _.uniq(contentPlanTmplate.question_schedulings,'offset');
-        console.log('-=-=-=-=-=-=-=-=-=-=-=-=',unique_questions)
-        res.send(unique_questions);
+        // var unique_questions = _.uniq(contentPlanTmplate.question_schedulings,'offset');
+        res.send(contentPlanTmplate);
     });
 });
 
@@ -38,20 +36,29 @@ router.post('/update/:id', function(req, res, next) {
                 order: [['createdAt', 'DESC']],
                 include: []
             }).then(function(game) {
-                // var io = req.app.get('io');
-                // var data = {
-                //     data: game,
-                //     action: 'update'
-                // }
-                // io.emit('simulation_active_game:' + game.id,data)
                 res.send(game);
             });
         });
 });
 
 
+router.get('/play-content-summary/:id', function(req, res, next) {
+    model.content_plan_template.findOne({
+        where: {id: req.params.id},
+        order: [['createdAt', 'DESC']],
+        include: [
+        {model: model.question_scheduling,
+            include : [{model : model.question},
+                        {model : model.user}]
+        }]
+    }).then(function(contentPlanTmplate) {
+        res.send(contentPlanTmplate);
+    });
+});
+
+
 router.get('/all', function(req, res, next) {
-    model.content_plan_template.findAll({
+    model.content_plan_template.findAll({ where : {isDeleted : false},
         attributes: ['id', 'scheduled_date', 'content_activated', 'createdAt','status','start_time','play_date'],
         order: [['createdAt', 'DESC']],
         include: [
@@ -69,6 +76,27 @@ router.get('/all', function(req, res, next) {
         });
 });
 
+router.post('/cancel-content/:id', function(req, res, next) {
+    model.content_plan_template.update(req.body,
+        {where: { id : req.params.id }
+    }).then(function(scheduledQuestion) {
+        model.content_plan_template.findOne({where : {id : req.params.id},
+            include : [{
+                model : model.question_scheduling
+            }]
+        }).then(function(resp){
+            resp.question_schedulings.forEach(function(ques) {
+                model.question_scheduling.update({activated: true},{
+                    where: {id: ques.id}
+                }).then(function(response) {
+                    res.send(response);
+                });
+            });
+        });
+    });
+});
+
+
 router.post('/create', function(req, res, next) {
     var record = req.body;
     record.userAccountId = req.user.userAccountId;
@@ -77,23 +105,25 @@ router.post('/create', function(req, res, next) {
     });
 });
 
-router.delete('/remove/:id', function(req, res, next) {
-    var id = req.params.id;
-    model.message.findOne({where : {id : id}}).then(function(result){
-        model.message.destroy({where: {id: id}}).then(function(response) {
-            var io = req.app.get('io');
-            var xresp = {
-                data: result,
-                action: 'delete'
-            }
-            io.emit('incoming_message:' + req.user.userAccountId,xresp)
-            io.emit('incoming_message:' + result.articleId,xresp)
-            res.send({success:true, msg:response.toString()});
-        },function(response){
-            model.message.update({isDeleted:true},{where: {id: id}}).then(function(response) {
-                res.send({success:true, msg:response.toString()});
-            })
+router.get('/closed-contents', function(req, res, next) {
+    model.content_plan_template.findAll({where : {status : 'stop'},
+        include : [{
+            model : model.article
+        }]
+    }).then(function(result) {
+            res.send(result);
         });
+});
+
+router.delete('/remove/:id', function(req, res, next) {
+    model.content_plan_template.destroy({where: {id: req.params.id}})
+    .then(function(response) {
+        res.send({success:true, msg:response.toString()});
+    },function(response){
+        model.content_plan_template.update({isDeleted:true},{where: {id: req.params.id}})
+        .then(function(response) {
+            res.send({success:true, msg:response.toString()});
+        })
     });
 });
 

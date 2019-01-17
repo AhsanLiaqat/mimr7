@@ -134,6 +134,8 @@
         .when('/settings/organizations/details/:id', { templateUrl: 'views/settings/organizations/details.html' })
         .when('/settings/organizations/:OrgId/users/:id?', { templateUrl: 'views/settings/organizations/user.html' })
         .when('/settings/player-lists', { templateUrl: 'views/settings/player-lists/list.html' })
+        .when('/active-contents/:gameId', { templateUrl: 'views/simulation/active-games/details.html' })
+        .when('/closed-contents', { templateUrl: 'views/simulation/schedule-content/list.html' })
         // .when('/content-questions/:userId/:scheduled_questionId?', { templateUrl: 'views/simulation/schedule-content/content-questions.html' })
 
 
@@ -335,6 +337,14 @@
                         case '/message-libraries/:gamePlanId?':
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Messages';
+                            break;
+                        case '/active-contents/:gameId':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Active Contents';
+                            break;
+                        case '/closed-contents':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Closed Contents';
                             break;
                         case '/article-libraries/:gamePlanId?':
                             $rootScope.breadcrumb_2 = false;

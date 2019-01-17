@@ -7,29 +7,9 @@ var Q = require('q');
 var mailServer = require('../lib/email');
 
 
-
-// var send_message_for_user = function(msg,io){
-//     model.content_plan_template.findOne({ where: { id: msg.gamePlanTemplateId },
-//         attributes: ['id', 'roles'] })
-//     .then(function (gamePlanTemplate) {
-//         msg.assigned_game_message.roles.forEach(function (msgRole) {
-//             gamePlanTemplate.roles.forEach(function (gameRole) {
-//                 if(gameRole.id == msgRole.id){
-//                     var data = {
-//                         data: msg,
-//                         action: 'sent'
-//                     }
-//                     io.emit('game_plan_template_messages:' + msg.gamePlanTemplateId + '/' + gameRole.playerId,data)
-//                 }
-//             });
-//         });
-//     });
-// }
-
-
 var j = schedule.scheduleJob('01 * * * * *', function(){
     model.question_scheduling.findAll({
-        where: {activated: false,isDeleted:false},
+        where: {activated: false,skip: false,isDeleted:false},
         attributes: ['id', 'setOffTime', 'activatedAt']
     }).then(function(questions) {
         questions.forEach(function(msg) {
@@ -43,51 +23,76 @@ var j = schedule.scheduleJob('01 * * * * *', function(){
                     where: {id: msg.id},
                     include: [
                     {
-                        model: model.content_plan_template,
-                        include:[{ model: model.player_list,
-                            include:[{ model: model.user}]  
-                        }]
+                        model : model.user
                     }]
                 }).then(function(scheduled_question) {
-                    _.each(scheduled_question.content_plan_template.player_list.users, function (user){
-                        var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://localhost:8082/#/pages/content-questions' + '/' + user.id + '/' + scheduled_question.id;
-                        var mailOptions = {
-                            from: 'noreply@crisishub.co',
-                            to: user.email,
-                            subject : 'not decided subject',
-                            html: link
-                        };
-                        console.log('===============================',mailOptions)
-                        mailServer.sendMail(mailOptions).then(function(response) {
-                            console.log("response," ,response);
-                            res.send(response);
-                        }, function(err) {
-                            res.send(err);
-                            console.log(err, ' error');
-                        });
+                    var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://localhost:8082/#/pages/content-questions' + '/' + scheduled_question.userId + '/' + scheduled_question.id;
+                    var mailOptions = {
+                        from: 'noreply@crisishub.co',
+                        to: scheduled_question.user.email,
+                        subject : 'not decided subject',
+                        html: link
+                    };
+                    mailServer.sendMail(mailOptions).then(function(response) {
+                        console.log("response," ,response);
+                        res.send(response);
+                    }, function(err) {
+                        res.send(err);
+                        console.log(err, ' error');
                     });
                 });
                 model.question_scheduling.update({activated: true, activatedAt: new Date()}, {where: {id: msg.id}})
                 .then(function(gamePlanTmplate) {
-                    // model.question_scheduling.findOne({
-                    //     where: {id: msg.id},
-                    //     include: []
-                    // }).then(function(response) {
-                    //     // send_message_for_user(response,process.io);
-                    // });
-
+                    model.question_scheduling.findOne({
+                        where: {id: msg.id},
+                        include: [{
+                            model : model.user
+                        }]
+                    }).then(function(response) {
+                        var quesCoach = {
+                            data: response,
+                            action: 'update'
+                        }
+                        process.io.emit('detail_content:' + response.contentPlanTemplateId,quesCoach)
+                    });
                 });
             }
         });
     });
 });
 
+var j = schedule.scheduleJob('*/1 * * * * *', function(){
+    model.question_scheduling.findAll({
+        where: {activated : true,status : false,isDeleted:false},
+        attributes: ['id', 'setOffTime', 'activatedAt','total_time']
+    }).then(function(questions) {
+        questions.forEach(function(msg) {
+            if(new Date(msg.activatedAt.getTime() + msg.total_time*1000).getFullYear() == new Date().getFullYear() &&
+               new Date(msg.activatedAt.getTime() + msg.total_time*1000).getMonth() == new Date().getMonth() &&
+               new Date(msg.activatedAt.getTime() + msg.total_time*1000).getDay() == new Date().getDay() &&
+               new Date(msg.activatedAt.getTime() + msg.total_time*1000).getHours() == new Date().getHours() &&
+               new Date(msg.activatedAt.getTime() + msg.total_time*1000).getMinutes() == new Date().getMinutes() &&
+               new Date(msg.activatedAt.getTime() + msg.total_time*1000).getSeconds() == new Date().getSeconds()
+            ){
+                model.question_scheduling.update({status: true}, {where: {id: msg.id}})
+                .then(function(gamePlanTmplate) {
+                    model.question_scheduling.findOne({
+                        where: {id: msg.id},
+                        include: [{
+                        model: model.content_plan_template,
+                            include:[{ model: model.player_list}]
+                        }]
+                    }).then(function(response) {
+                        var data = {
+                            data: response,
+                            action: 'sent'
+                        }
+                        process.io.emit('content_plan_template_messages:' + response.id,data)
+                    });
 
-
-
-router.get('/all', function(req, res, next) {
-    model.article.findAll({where: {userAccountId: req.user.userAccountId}}).then(function(users) {
-        res.json(users);
+                });
+            }
+        });
     });
 });
 
@@ -114,33 +119,22 @@ router.post('/update-message-off-set/:id',function(req,res,next){
             record.activatedAt = new Date();
         }
         var toSave = new Date(comingDate.getTime() + secs*1000);
-
         record.setOffTime = toSave.toISOString();
         model.question_scheduling.update(record,{where: { id : req.params.id }})
         .then(function(result) {
             if(secs <= 60){
                 model.question_scheduling.findOne({
                 where: {id: req.params.id},
-                include: [
-                {
-                    model: model.content_plan_template,
-                    include:[{ model: model.player_list,
-                        include:[{ model: model.user}]  
-                    }]
-                }]
+                include: [{model : model.user}]
             }).then(function(scheduled_question) {
-                // console.log('==========>>>>>>>><<<<<<<<<',scheduled_question.content_plan_template)
-                // console.log('()()()()()()()()',scheduled_question.content_plan_template.player_list)
-                console.log('++++++++++++++++++++++++',scheduled_question.content_plan_template.player_list.users.length)
-                _.each(scheduled_question.content_plan_template.player_list.users, function (user){
-                    var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://localhost:8082/#/pages/content-questions' + '/' + user.id + '/' + scheduled_question.id;
+                // _.each(scheduled_question.content_plan_template.player_list.users, function (user){
+                    var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://localhost:8082/#/pages/content-questions' + '/' + scheduled_question.userId + '/' + scheduled_question.id;
                     var mailOptions = {
                         from: 'noreply@crisishub.co',
-                        to: user.email,
+                        to: scheduled_question.user.email,
                         subject : 'not decided subject',
                         html: link
                     };
-                    console.log('===============================',mailOptions)
                     mailServer.sendMail(mailOptions).then(function(response) {
                         console.log("response," ,response);
                         res.send(response);
@@ -148,21 +142,8 @@ router.post('/update-message-off-set/:id',function(req,res,next){
                         res.send(err);
                         console.log(err, ' error');
                     });
-                });
+                // });
             });
-                // model.question_scheduling.findOne({
-                //     where: { id : req.params.id },
-                //     include: []
-                // })
-                // .then(function(rspp) {
-                //     // var data = {
-                //     //     data: rspp.dataValues,
-                //     //     action: 'update'
-                //     // }
-                //     // req.app.get('io').emit('game_plan_template_messages:' + gameMsg.gamePlanTemplateId,data);
-                //     // send_message_for_user(rspp.dataValues,req.app.get('io'));
-                //     res.send(rspp);
-                // });  
             }else{
                 res.send(result);
             }
@@ -170,8 +151,41 @@ router.post('/update-message-off-set/:id',function(req,res,next){
     });
 });
 
+router.post('/send-question/:id',function(req,res,next){
+    model.question_scheduling.update({activated: true, activatedAt: new Date()}, {where: {id: req.params.id}})
+        .then(function(gamePlanTmplate) {
+        model.question_scheduling.findOne({
+            where: {id: req.params.id},
+            include: [{model : model.user}]
+        }).then(function(scheduled_question) {
+            var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://localhost:8082/#/pages/content-questions' + '/' + scheduled_question.userId + '/' + scheduled_question.id;
+            var mailOptions = {
+                from: 'noreply@crisishub.co',
+                to: scheduled_question.user.email,
+                subject : 'not decided subject',
+                html: link
+            };
+            mailServer.sendMail(mailOptions).then(function(response) {
+                console.log("response," ,response);
+                res.send(response);
+            }, function(err) {
+                res.send(err);
+                console.log(err, ' error');
+            });
+            var quesCoach = {
+                data: scheduled_question,
+                action: 'update'
+            }
+            process.io.emit('detail_content:' + scheduled_question.contentPlanTemplateId,quesCoach)
+        });
+    });
+});
+
+
+
 router.post('/save', function(req, res, next) {
     var record = req.body.data;
+    record.userId = req.body.userId;
     model.question_scheduling.create(record)
         .then(function(msg) {
             model.question_scheduling.findOne({
@@ -186,27 +200,22 @@ router.post('/save', function(req, res, next) {
         });
 });
 
-router.post('/update/:id', function(req, res, next) {
-    model.article.update(req.body.data,
-        {where: { id : req.params.id }})
-        .then(function(result) {
-        	model.article.findOne({
-		        where: {id: req.params.id }
-		    }).then(function(result) {
-		        res.send(result);
-		    });
+router.post('/update/:id',function(req,res,next){
+    model.question_scheduling.update(req.body.data,{where: { id : req.params.id }})
+    .then(function(result) {
+        model.question_scheduling.findOne({
+            where: {id: req.params.id},
+            include: [{model : model.user}]
+        }).then(function(response) {
+             var data = {
+                data: response,
+                action: 'skip'
+            }
+            process.io.emit('detail_content:' + response.contentPlanTemplateId,data)
+            res.send(response);
         });
-});
+    });
 
-router.delete('/remove/:id', function(req, res, next) {
-    var id = req.params.id;
-    model.article.destroy({where: {id: req.params.id}}).then(function(response) {
-        res.send({success:true, msg:response.toString()});
-    },function(response){
-        model.article.update({isDeleted:true},{where: {id: id}}).then(function(response) {
-            res.send({success:true, msg:response.toString()});
-        })
-    })
 });
 
 module.exports = router;

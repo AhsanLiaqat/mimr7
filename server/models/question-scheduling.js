@@ -6,8 +6,10 @@ module.exports = function(sequelize, DataTypes) {
         setOffTime: DataTypes.STRING,
         index: { type: DataTypes.INTEGER, defaultValue: 0},
         activated: {type: DataTypes.BOOLEAN, defaultValue: false},
+        skip: {type: DataTypes.BOOLEAN, defaultValue: false},
         activatedAt: {type: DataTypes.DATE},
-        status: { type: DataTypes.STRING, defaultValue: 'incomplete'},
+        skipped_At: {type: DataTypes.DATE},
+        status: { type: DataTypes.BOOLEAN, defaultValue: 0},
         statusAt: {type: DataTypes.DATE},
         offset: {type: DataTypes.INTEGER, defaultValue: 0},
         total_time: {type: DataTypes.INTEGER, defaultValue: 0},
@@ -22,6 +24,7 @@ module.exports = function(sequelize, DataTypes) {
             associate: function(models) {
                 question_scheduling.belongsTo(models.question);
                 question_scheduling.belongsTo(models.content_plan_template, {foreignKey: 'contentPlanTemplateId'});
+                question_scheduling.belongsTo(models.user);
             }
         }
     });

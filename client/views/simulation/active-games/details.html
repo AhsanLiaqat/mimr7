@@ -1,43 +1,22 @@
-<div class="page" ng-controller="viewDetailActiveGameCtrl">
+<div class="page" ng-controller="viewDetailActiveContentCtrl">
     <section class="panel panel-default">
         <div class="panel-heading">
             <div class="row">
                 <div class="col-sm-3">
-                    Active Game Details
+                    Active Content Details
                     <br>
-                    <h5>Scheduled at {{dateFormat(playGame.scheduled_date)}}</h5>
-                    <a ng-if = "playGame.incident" class="btn btn-primary" href= "#/dashboard/{{playGame.incident.id}}">
-                        {{playGame.incident.name}}
-                    </a>
                 </div>
 
                 <div class="col-sm-6 text-center">
-                    <a class="btn btn-success" ng-disabled = "playGame.status !== 'made'" ng-click ="updateGameStatus('play',0)">
-                        <i class="fa fa-play" aria-hidden="true"></i> Play
-                    </a>
-                    <a class="btn btn-warning" ng-show = "playGame.status == 'play'" ng-click ="updateGameStatus('pause',0)">
-                        <i class="fa fa-pause" aria-hidden="true"></i> Pause
-                    </a>
-                    <a class="btn btn-info" ng-show = "playGame.status == 'pause'" ng-disabled = "playGame.status == 'stop' || currentRound == roundsArray.length" ng-click ="updateGameStatus('play',1)">
-                        <i class="fa fa-play" aria-hidden="true"></i> Resume
-                    </a>
-                    <a class="btn btn-danger" ng-disabled = "playGame.status == 'stop' || playGame.status == 'made'" ng-click="updateGameStatus('pause',1)">
-                        <i class="fa fa-stop" aria-hidden="true"></i> Stop
-                    </a>
-                    <div class="text-center" ng-show = "playGame.status !== 'made' && playGame.status !== 'stop'">
-                        Game started At : :
+                    <div class="text-center">
+                        Content started At : :
                         <timer start-time=time>{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer>
                         <br>
-                        <p class="text-center" ng-hide = "currentRound == roundsArray.length">Playing Round : {{currentRound + 1}} / {{roundsArray.length}}</p>
-                        <p class="text-center" ng-show = "currentRound == roundsArray.length">All Rounds Completed.</p>
-                        
-                        
                     </div>
-
                 </div>
                 <div class="col-sm-3">
-                    <a class="btn btn-danger pull-right" ng-disabled = "playGame.status == 'stop' || playGame.status == 'made'" ng-click="cancelgame()">
-                        Close Game
+                    <a class="btn btn-danger pull-right" ng-disabled = "playContent.status == 'stop'" ng-click="cancelContent()">
+                        Close Content
                     </a>
                 </div>
             </div>
@@ -47,168 +26,31 @@
             <div class="container">
               
                 <ul class="nav nav-tabs nav-justified">
-                    <li class="active"><a data-toggle="tab" data-target="#rounds" href="">Rounds</a></li>
-                    <li><a data-toggle="tab" data-target="#players" href="">Roles/Players</a></li>
-                    <li><a data-toggle="tab" data-target="#message" href="">Messages</a></li>
-                    <li><a data-toggle="tab" data-target="#feedback" href="">Feedback</a></li>
-                    <li><a data-toggle="tab" data-target="#messageResponses" href="">Messages Responses</a></li>
+                    <li class="active"><a data-toggle="tab" data-target="#rounds" href="">Scheduled Questions</a></li>
+                    <li><a data-toggle="tab" data-target="#players" href="">Users</a></li>
                 </ul>
 
               <div class="tab-content">
-                <div id="message" class="tab-pane fade in ">
-                    <div class="row">
-                        <div class="col-md-12 ">
-                            <div class="form-group">
-                                <label>Game Messages Summary  </label>
-                               
-                                <a style="float: right;" class="btn btn-info" ng-click = "addModal()">
-                                Send New Message
-                                </a>
-                                <br><br>
-                                <table class="table table-bordered table-striped table-responsive">
-                                    <thead>
-                                    <tr>
-                                        <th>Sequence Number</th>
-                                        <th>Message</th>
-                                        <th>Roles & Actors</th>
-                                        <!-- <th>Setof Time (Min.)</th> -->
-                                        <!-- <th width="30%">Actions</th> -->
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-                                    <tr ng-repeat="gameMessage in gameMessages">
-                                        <td>{{gameMessage.index + 1}}</td>
-                                        <td ng-click = "showMessageDetail(gameMessage.game_message)">
-                                            <a>
-                                                {{ gameMessage.game_message.name }}
-                                            </a>
-                                        </td>
-                                        <td>
-                                        <span ng-if = "gameMessage.assigned_game_message" ng-repeat="role in gameMessage.assigned_game_message.roles"
-                                              style="margin-right: 15px;">
-                                            <b>({{role.name}} - {{getUserName(role.id)}})</b> 
-                                        </span>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                 
-                    <button class="btn btn-success"
-                            style="float: right; display: block;"
-                            ng-click="sendAllMessages()">
-                        Send All Messages
-                    </button>
-                </div>
-                <div id="feedback" class="tab-pane fade in ">
-                    <div class="row">
-                        <div class="col-md-12 ">
-                            <div class="form-group">
-                                <label>Game SurveyFeedback</label>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped ">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Heading</th>
-                                                <th>Players to sent</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="form in questionnaires">
-                                                <td>{{form.name}}</td>
-                                                <td>{{form.heading}}</td>
-                                                <td>
-                                                    <span ng-repeat = "detail in form.player_form_details">
-                                                        <a ng-click = "view(detail)" ng-if = "detail.submitted">
-                                                            {{detail.game_player.firstName}} {{detail.game_player.lastName}},
-                                                        </a>
-                                                        <span ng-if = "!detail.submitted">
-                                                            {{detail.game_player.firstName}} {{detail.game_player.lastName}},       
-                                                        </span>
-                                                    </span>
-                                                </td>
-                                                <td>
-                                                    <a ng-click="sendForm(form.id,form.name,form.player_form_details)"
-                                                       class="btn btn-info"
-                                                       title="Send Form via Email">
-                                                        <span class="glyphicon glyphicon-send"></span>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="messageResponses" class="tab-pane fade in ">
-                    <div class="row">
-                        <div class="col-md-12 ">
-                            <div class="form-group">
-                                <label>Message Responses</label>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped ">
-                                        <thead>
-                                            <tr>
-                                                <th>Player Name</th>
-                                                <th>Messages</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="message_rsp in message_response">
-                                                <td>{{message_rsp.game_player.firstName}}
-                                                {{message_rsp.game_player.lastName}}</td>
-                                                <td ng-click = "showMessageResponseDetail(message_rsp)">
-                                                    <a href="" title="{{message_rsp.template_plan_message.game_message.name}}" class="msg_rsp">
-                                                            {{message_rsp.template_plan_message.game_message.name  | displayString: 40}}
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div id="players" class="tab-pane fade">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Game Player/Roles Summary  </label>
+                                <label>Content Users Summary  </label>
                          
                                 <br><br>
                                 <table class="table table-bordered table-striped table-responsive">
                                     <thead>
                                     <tr>
-                                        <th>Role</th>
                                         <th>Email</th>
-                                        <th>Player Name</th>
-                                        <th>Action</th>
+                                        <th>User Name</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr ng-repeat="role in playGame.roles">
+                                    <tr ng-repeat="users in playContent.question_schedulings">
                                         <td>
-                                            {{role.name}}
+                                            {{ users.user.email }}
                                         </td>
-                                        <td>
-                                            {{ role.user.email }}
-                                        </td>
-                                        <td>{{ role.user.firstName }} {{ role.user.lastName }}</td>
-                                        <td>
-                                            <a class="btn btn-info" href = "#/simulation/my-messages/{{playGame.id}}/{{role.user.id}}">
-                                                Show Player Page    
-                                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                                            </a>
-                                            
-                                        </td>
+                                        <td>{{ users.user.firstName }} {{ users.user.lastName }}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -221,84 +63,57 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <uib-accordion close-others="oneAtATime" class = "list-accordian">
+                                <uib-accordion close-others="true" class = "list-accordian">
                                     <div uib-accordion-group class="panel-default to-move" 
-                                        is-open="true"
-                                        ng-repeat="round in roundsArray">
+                                        is-open="false"
+                                        ng-repeat="questions in questionSchedule">
                                         <uib-accordion-heading >
 
                                             <div class="panel-heading">
-                                              <strong><span class="pull-left" ></span> {{round.name}}</strong>
-                                              <strong style="float: right;">Time Span:{{round.timeSpan/60}} Minutes</strong>
+                                              <strong><span class="pull-left" ></span> {{questions.name}}</strong>
+                                              <strong style="float: right;">Time Span:{{questions.offset/60}} Minutes</strong>
                                             </div> 
                                             
                                         </uib-accordion-heading>
-                                    <table class="table table-striped" style="margin-left: -10px;">
-                                            <thead>
-                                                <tr>
-                                                    <th>Message</th>
-                                                    <th>Roles</th>
-                                                    <th>Set Off Time (Min.)</th>
-                                                    <th width="30%">Actions</th>
-                                                </tr>
-                                            </thead> 
+                                        <table class="table table-striped" style="margin-left: -10px;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Users</th>
+                                                        <th width="30%">Actions</th>
+                                                    </tr>
+                                                </thead> 
 
-                                              <tbody>
-                                               <tr ng-repeat="gameMessage in round.Messages">
-                                                    <td ng-click = "showMessageDetail(gameMessage.game_message)"> 
-                                                    <a>
-                                                    {{gameMessage.index}} - {{gameMessage.game_message.name}}
-                                                    </a>
-                                                    </td>
-                                                   <td>
-                                                    <span ng-repeat="role in gameMessage.assigned_game_message.roles"
-                                                          style="margin-right: 15px;">
-                                                        ({{role.name}} - {{getUserName(role.id)}})
-                                                    </span>
-                                                  </td>
-                                                <td>
-                                                    {{down(gameMessage.offset/60)}} Minutes.
-                                                </td>
-                                                <td>
-                                                    <!-- <a class="btn btn-info" ng-click="skipMessage(gameMessage)" ng-show="!gameMessage.activated && !gameMessage.Skip">
-                                                        Skip    
-                                                        <i class="fa fa-envelope" aria-hidden="true"></i>
-                                                    </a>
-                                                    <a ng-click="sendMessage(gameMessage)"
-                                                       ng-hide="gameMessage.activated"
-                                                       class="btn btn-info"
-                                                       title="Send Message">
-                                                        <span class="glyphicon glyphicon-send"></span>
-                                                    </a>
-                                                    <p ng-show="gameMessage.Skip">
-                                                        <i>Message sent at <b>{{dateFormat(gameMessage.skipped_At)}}</b></i>
-                                                    </p>
-                                                    <p ng-show="gameMessage.activated">
-                                                        <i>Message sent at <b>{{dateFormat(gameMessage.activatedAt)}}</b></i>
-                                                    </p> -->
-                                                    <div ng-hide="gameMessage.activated || gameMessage.skip">
-                                                        <a class="btn btn-info" ng-click="skipMessage(gameMessage)" >
-                                                            Skip    
-                                                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                                                        </a>
-                                                        <a ng-click="sendMessage(gameMessage)"
-                                                           class="btn btn-info"
-                                                           title="Send Message">
-                                                            <span class="glyphicon glyphicon-send"></span>
-                                                        </a>
-                                                    </div>
-                                                    <p ng-show="gameMessage.activated">
-                                                        <i>Message sent at <b>{{dateFormat(gameMessage.activatedAt)}}</b></i>
-                                                    </p>
-                                                    <p ng-show="gameMessage.skip">
-                                                        <i>Message skipped at <b>{{dateFormat(gameMessage.skipped_At)}}</b></i>
-                                                    </p>
-                                                </td>
-                                            
-                                        </tr>
-                                          </tbody>
-                                      </table>
-                                  </div>
+                                                <tbody>
+                                                   <tr ng-repeat="users in questions.data">
+                                                        <td> 
+                                                           <a>
+                                                              {{users.user.firstName}} - {{users.user.lastName}}
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <div ng-hide="users.activated || users.skip">
+                                                                <a class="btn btn-info" ng-click="skipQuestion(users)" >
+                                                                    Skip    
+                                                                    <i class="fa fa-envelope" aria-hidden="true"></i>
+                                                                </a>
+                                                                <a ng-click="sendQuestion(users)"
+                                                                   class="btn btn-info"
+                                                                   title="Send Question">
+                                                                    <span class="glyphicon glyphicon-send"></span>
+                                                                </a>
+                                                            </div>
+                                                            <p ng-show="users.activated">
+                                                                <i>Question sent at <b>{{dateFormat(users.activatedAt)}}</b></i>
+                                                            </p>
+                                                            <p ng-show="users.skip">
+                                                                <i>Question skipped at <b>{{dateFormat(users.skipped_At)}}</b></i>
+                                                            </p>
+                                                        </td>
+                                                
+                                                    </tr>
+                                              </tbody>
+                                          </table>
+                                        </div>
 
                                 </uib-accordion>
                             </div>

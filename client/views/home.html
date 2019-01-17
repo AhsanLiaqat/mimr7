@@ -102,18 +102,17 @@
                             <div style="min-height: 50px;" class="text-center">
                                 <a ng-click="sendQuestions(game)"
                                     ng-if = "gamesSelected == 'schedule'"
-                                    confirm = "Do you want to Play Game.?"
+                                    confirm = "Do you want to Play Content?"
                                     class="btn btn-success"
                                     title="Send Content">
                                     <span class="glyphicon glyphicon-play"></span>
                                 </a>
-
-                                 <!-- <a href="#/simulation/active-games/{{game.id}}"
+                                 <a href="#/active-contents/{{game.id}}"
                                     ng-if = "gamesSelected == 'active' || gamesSelected == 'stop'"
                                    class="btn btn-success"
                                    title="See Details">
                                     <span class="fa fa-list"></span>
-                                </a> -->
+                                </a>
                                 <!--  <button title="Generate Emails" class="btn btn-sm btn-success" style="position: absolute;right: 0px;top:0;"
                                 ng-if = "gamesSelected == 'active'"
                                  ng-click="GenerateEmail(game.id)">
@@ -128,7 +127,7 @@
                                 <a class="btn btn-danger"
                                    title="Remove Scheduled Game"
                                    ng-hide = "card.index == 2"
-                                   ng-click="deleteGame(game, $index)"
+                                   ng-click="deleteScheduleContent(game, $index)"
                                    confirm="Are you sure you want to delete?">
                                     <span class="glyphicon glyphicon-remove-sign"></span>
                                 </a>

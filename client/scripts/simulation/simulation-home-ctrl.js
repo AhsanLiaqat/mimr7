@@ -50,7 +50,6 @@
                 $http.get('/content-plan-templates/all')
                 .then(function (response) {
                     $scope.contents = response.data;
-                    console.log('-------------------',$scope.contents)
                         if(index == 1){
                             $scope.gamesSelected = 'schedule';
                         }else if(index == 2){
@@ -147,19 +146,25 @@
             $http.delete('/articles/remove/' + card.id)
             .then(function(res){
                 $scope.cards.splice(index,1);
-                toastr.success('Game Template Deleted.', 'Success!');
+                toastr.success('Content Template Deleted.', 'Success!');
+            });
+        };
+
+        $scope.deleteScheduleContent = function (card, index) {
+            $http.delete('/content-plan-templates/remove/' + card.id)
+            .then(function(res){
+                $scope.gameToShow.splice(index,1);
+                toastr.success('Content Template Deleted.', 'Success!');
             });
         };
 
         $scope.sendQuestions = function(game){
             $http.get('/content-plan-templates/get/'+game.id).then(function(response) {
                 $scope.data = response.data;
-                console.log('-------------=====',$scope.data)
             });
             $http.post('/content-plan-templates/update/'+game.id, {content_activated: true,play_date: new Date(),start_time : new Date()})
             .then(function(response){
-                console.log('===================',$scope.data)
-                angular.forEach($scope.data, function(question) {
+                angular.forEach($scope.data.question_schedulings, function(question) {
                     var dataMessage = {setOffTime : new Date()};
                     $http.post('/question-scheduling/update-message-off-set/'+question.id,{data:dataMessage}).then(function(res){
                         $http.get('/content-plan-templates/all')

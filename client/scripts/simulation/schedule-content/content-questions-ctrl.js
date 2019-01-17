@@ -11,6 +11,29 @@
             return moment(dat).utc().local().format('HH:mm DD-MM-YYYY');
         };
 
+        var setSocketForContentQuestions = function () {
+            $timeout(function () {
+                console.log('Listening ----> active_content:'+$routeParams.scheduledQuestionId);
+                SOCKET.on('content_plan_template_messages:'+$routeParams.scheduledQuestionId, function (response) {
+                    console.log('Content Recieved ----> active_content:'+$routeParams.scheduledQuestionId,response.data);
+                    var data = response.data;
+                    if(data){
+                        switch(response.action){
+                            case 'sent':
+                            if(data.status == true){
+                                $scope.page1 = false;
+                                $scope.page2 = true;
+                                $scope.page3 = false;
+                            }
+                        }
+                    }else{
+                        console.log('Recieved Nothing on ---> active_content:');
+
+                    }           
+                });
+            });
+        }
+
         // fetch and get initial data
         function init() {
             $scope.page1 = true;
@@ -20,24 +43,19 @@
             $scope.user = Query.getCookie('user');
             $http.get('/question-scheduling/get/' + $routeParams.scheduledQuestionId).then(function(res){
                 $scope.data = res.data;
-                var comngDate = new Date($scope.data.activatedAt)
-                console.log('-=-=-=-=-=-=-=-=-=-=-=',$scope.data)
-                console.log('-=-=-=-=-=-=+++++=++',comngDate)
-                console.log('-=-=-=-=-=-=>><<<>><<<<',new Date($scope.data.content_plan_template.start_time),'{{{}}}}',new Date(comngDate.getTime() + $scope.data.total_time*1000));
-                if(new Date() > new Date(comngDate.getTime() + $scope.data.total_time*1000)){
+                if($scope.data.status == true){
                     $scope.page1 = false;
                     $scope.page2 = true;
                     $scope.page3 = false;
                 }
                 $scope.time = new Date($scope.data.content_plan_template.start_time);
-                console.log('LKLKLKLKL',$scope.time);
+                setSocketForContentQuestions();
 
             });
         };
         init();
 
         $scope.submitAnswer = function () {
-            console.log('----------',$scope.data.question.id)
             $http.get('/questions/one/' + $scope.data.question.id).then(function(res){
                 $scope.result = res.data;
                 if($scope.result.answer){

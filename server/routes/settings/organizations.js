@@ -8,7 +8,8 @@ router.get('/get/:id', function(req, res, next) {
             id: req.params.id,isDeleted:false
         },
         include:[{
-            model: model.player_list
+            model: model.player_list,
+                include : [{model : model.user}]
         },{model :model.user}]
     }).then(function(response) {
         res.send(response);
