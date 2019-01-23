@@ -16,9 +16,9 @@
                     <tr>
                         <th class="col-md-2" st-sort="name">Message Name</th>
                         <th class="col-md-2" st-sort="description">Description</th>
-                        <th class="col-md-2" st-sort="order">Order</th>
+                        <th class="col-md-1" st-sort="order">Order</th>
                         <th class="col-md-1" st-sort="description">Total Questions</th>
-                        <th class="col-md-2">Actions</th>
+                        <th class="col-md-3">Actions</th>
                     </tr>
                     <tr>
                         <th>
@@ -27,24 +27,25 @@
                         <th>
                             <input class="form-control" placeholder="Search description" st-search="description"/>
                         </th>
-                        <th>
-                            <input class="form-control" placeholder="Search Order Sequence" st-search="order"/>
-                        </th>
                         <th></th>
+                        <th></th>
+                        <th></th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="record in messageToShow">
                         <td>
-                            <a>
-                                {{record.content}}
+                            <a ng-click="showMessageDetail(record)">
+                                {{record.content | displayString : 30}}
                             </a>
                         </td>
-                        <td ng-bind-html= "record.description"></td>
+                        <td ng-bind-html= "record.description | displayString: 150"></td>
                         <td>{{record.order}}</td>
                         <td>{{record.questions.length}}</td>
                         <td>
-                            <a title = "Add Questions" class="btn btn-info" ng-click="addQuestions(record, $index)"><span class="fa fa-question-circle"></span></a>
+                            <a title = "View Message" href="#/view-message/{{record.id}}" class="btn btn-info" ng-click="viewMessage(record, $index)"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <!-- <a title = "Add Questions" class="btn btn-info" ng-click="addQuestions(record, $index)"><span class="fa fa-question-circle"></span></a> -->
                             <a title = "Add Media" class="btn btn-sm btn-info" ng-click="addMedia(record, $index)"><span class="fa fa-link"></span></a>
                             <a title = "Edit Message" class="btn btn-sm btn-info" ng-click="edit(record, $index)"><span class="fa fa-pencil-square-o"></span></a>
 

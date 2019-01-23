@@ -12,25 +12,12 @@
       <div class="modal-body" style="padding-top: 0px !important;">
         <div class="col-md-12">
             <h3 >
-              {{message.name}}
+              {{message.content}}
             </h3>
-              <div style="height: 250px; overflow-y: scroll;" class="form-control" ng-bind-html= "toTrustedHTML( message.context )" ></div>
+              <div style="height: 250px; overflow-y: scroll;" class="form-control" ng-bind-html= "toTrustedHTML( message.description )" ></div>
       </div>
       <br>
       <div class="modal-footer">
-        <button class="btn btn-info btn-sm"
-                ng-disabled="checkLink(message.links)"
-                ng-click="showLink(message.links)">
-            <i class="fa fa-link" aria-hidden="true"></i> Links
-        </button>
-        <button class="btn btn-success btn-sm"
-        ng-disabled="checkLink(message.game_library)"
-        ng-click="previewAttachment(message.game_library)">
-            <i class="fa fa-paperclip" aria-hidden="true"></i> Attachment
-        </button>
-        <button ng-show="activity.response_actor && !selectUser" class="btn btn-success" ng-click="actorSelection()">Change</button>
-        <button ng-show="selectUser" class="btn btn-info" ng-click="selectUser=null">Back</button>
-        <button ng-show="selectUser" class="btn btn-success" ng-click="save()">Save</button>
         <button ng-show="!selectUser" class="btn btn-info" ng-click="close()" data-dismiss="modal">Close</button>
       </div>
     </div>

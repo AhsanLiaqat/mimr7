@@ -136,6 +136,8 @@
         .when('/settings/player-lists', { templateUrl: 'views/settings/player-lists/list.html' })
         .when('/active-contents/:gameId', { templateUrl: 'views/simulation/active-games/details.html' })
         .when('/closed-contents', { templateUrl: 'views/simulation/schedule-content/list.html' })
+        .when('/view-message/:messageId?', { templateUrl: 'views/simulation/game-messages/view-message.html' })
+
         // .when('/content-questions/:userId/:scheduled_questionId?', { templateUrl: 'views/simulation/schedule-content/content-questions.html' })
 
 
@@ -364,6 +366,12 @@
                             $rootScope.breadcrumb_2Heading = 'Users';
                             $rootScope.breadcrumb_2Link = 'settings/users';
                             $rootScope.breadcrumb_3Heading = 'New User';
+                            break;
+                        case '/view-message/:messageId?':
+                            $rootScope.breadcrumb_2 = true;
+                            $rootScope.breadcrumb_1Heading = 'Messages';
+                            $rootScope.breadcrumb_1Link = '/message-libraries';
+                            $rootScope.breadcrumb_2Heading = 'View Message';
                             break;
                         case '/settings/users/edit':
                             $rootScope.breadcrumb_3 = true;

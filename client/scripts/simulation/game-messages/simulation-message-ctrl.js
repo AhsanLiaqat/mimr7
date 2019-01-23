@@ -134,8 +134,23 @@
             };
         }
 
-
-
+        $scope.showMessageDetail = function(record) {
+            ModalService.showModal({
+                templateUrl: "views/simulation/game-messages/message-show-modal.html",
+                controller: "messageShowDetailCtrl",
+                inputs:{
+                    message: record
+                }
+            }).then(function(modal) {
+                modal.element.modal( {backdrop: 'static',  keyboard: false });
+                modal.close.then(function(result) {
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                    if (result && result !== ''){
+                    }
+                });
+            });
+        };
 
         // do pagination
         $scope.paginate = function(arr){

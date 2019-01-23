@@ -18,35 +18,18 @@ router.get('/get/:id', function(req, res, next) {
     });
 });
 
-router.post('/update', function(req, res, next) {
-    model.message.update(req.body.data, {where: { id : req.body.data.id }}).then(function(result) {
-        model.message.findOne({
-            where: {id: req.body.data.id}}).then(function(result) {
-            var io = req.app.get('io');
-            var xresp = {
-                data: result,
-                action: 'update'
-            }
-            // console.log('incoming_message:' + req.user.userAccountId)
-            io.emit('incoming_message:' + req.user.userAccountId,xresp)
-            io.emit('incoming_message:' + result.articleId,xresp)
-
-            res.send(result);
-        });
-
+router.get('/all/:id', function(req, res, next) {
+    model.question.findAll({
+        where: {messageId: req.params.id}}).then(function(result) {
+        res.send(result);
     });
-
 });
 
 router.post('/save', function(req, res, next) {
     var data = req.body.data;
-    model.question.create(data).then(function(message) {
-        res.send(message);
-
+    model.question.create(data).then(function(question) {
+        res.send(question);
     });
-
-
-
 });
 
 router.get('/one/:id', function(req, res, next) {
@@ -56,6 +39,29 @@ router.get('/one/:id', function(req, res, next) {
     }).then(function(result) {
         res.send(result);
     });
+});
+
+router.delete('/delete/:id', function(req, res, next) {
+    var id = req.params.id;
+    model.question.destroy({where: {id: id}}).then(function(response) {
+        res.send({success:true, msg:response.toString()});
+    },function(response){
+        model.question.update({isDeleted:true},{where: {id: id}}).then(function(response) {
+            res.send({success:true, msg:response.toString()});
+        })
+    });
+});
+
+router.post('/update/:id',function(req,res,next){
+    model.question.update(req.body.data,{where: { id : req.params.id }})
+    .then(function(result) {
+        model.question.findOne({
+            where: {id: req.params.id}
+        }).then(function(response) {
+            res.send(response);
+        });
+    });
+
 });
 
 module.exports = router;
