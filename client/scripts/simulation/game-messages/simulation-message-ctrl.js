@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('app')
-    .controller('simulationMessageCtrl', ['$scope', '$timeout', '$location', 'ModalService', '$filter', '$http', '$rootScope', '$route', 'AuthService','$routeParams','Query', taskFunc]);
+    .controller('messageCtrl', ['$scope', '$timeout', '$location', 'ModalService', '$filter', '$http', '$rootScope', '$route', 'AuthService','$routeParams','Query', taskFunc]);
 
     function taskFunc($scope, $timeout, $location, ModalService, $filter, $http, $rootScope, $route, AuthService,$routeParams,Query) {
         $scope.valid = false;
@@ -16,7 +16,6 @@
         $scope.messageToShow = [];
 
         var setSocketForMessages = function(){
-            console.log('[][][][][][]',$scope.selected)
             $timeout(function () {
                 if($scope.selected != 0){
                     $scope.valid = false;
@@ -125,7 +124,6 @@
                             $scope.selected = $routeParams.gamePlanId;
                         }
                         $scope.messageToShow =  angular.copy($scope.messages);
-                        console.log('======================',$scope.messageToShow)
                         $scope.managearray($scope.selected);
                     });
                 });
@@ -233,9 +231,6 @@
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });
                 modal.close.then(function(result) {
-                    // if(result){
-                    //     $scope.media.push(result);
-                    // }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
                 });
