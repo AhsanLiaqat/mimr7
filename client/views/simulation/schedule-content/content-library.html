@@ -64,7 +64,7 @@
                         </thead>
                         <tbody>
                             <tr ng-show = "questions.length" ng-repeat="question in questions">
-                                <td>{{question.name}}</td>
+                                <td ng-bind-html = "question.name"></td>
                             </tr>
                             <tr ng-show = "!questions.length">
                                 <td>No Question Present</td>

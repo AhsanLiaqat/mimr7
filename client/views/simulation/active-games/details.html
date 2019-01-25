@@ -70,7 +70,7 @@
                                         <uib-accordion-heading >
 
                                             <div class="panel-heading">
-                                              <strong><span class="pull-left" ></span> {{questions.name}}</strong>
+                                              <strong ng-bind-html = "questions.name"><span class="pull-left"></span> {{questions.name}}</strong>
                                               <strong style="float: right;">Time Span:{{questions.offset/60}} Minutes</strong>
                                             </div> 
                                             
