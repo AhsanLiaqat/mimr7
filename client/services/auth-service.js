@@ -1,5 +1,5 @@
 angular.module('app')
-.factory('AuthService', function ($http ,$location, $q, $rootScope,Query, LibraryService) {
+.factory('AuthService', function ($http ,$location, $q, $rootScope,Query) {
     // var $http = $injector.get('$http');
         return {
             login: function (data) {

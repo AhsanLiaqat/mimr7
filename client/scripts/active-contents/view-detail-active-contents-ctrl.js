@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('app')
-        .controller('viewDetailActiveContentCtrl', ['$scope', '$filter', '$routeParams', '$http', 'AuthService', 'ModalService', '$location', 'filterFilter','$timeout','$rootScope','Query','DynamicFormService', playGameCtrl]);
+        .controller('viewDetailActiveContentCtrl', ['$scope', '$filter', '$routeParams', '$http', 'AuthService', 'ModalService', '$location', 'filterFilter','$timeout','$rootScope','Query', playGameCtrl]);
 
-    function playGameCtrl($scope, $filter, $routeParams, $http, AuthService, ModalService, $location, filterFilter,$timeout,$rootScope,Query, DynamicFormService) {
+    function playGameCtrl($scope, $filter, $routeParams, $http, AuthService, ModalService, $location, filterFilter,$timeout,$rootScope,Query) {
         $scope.dateFormat = function (dat) {
             return moment(dat).utc().local().format('HH:mm DD-MM-YYYY');
         };

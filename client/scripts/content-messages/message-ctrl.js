@@ -226,7 +226,7 @@
             };
             ModalService.showModal({
                 templateUrl: "views/simulation/game-libraries/form.html",
-                controller: "newGameLibraryCtrl",
+                controller: "newMediaLibraryCtrl",
                 inputs: inputs
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });

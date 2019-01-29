@@ -193,7 +193,7 @@
 
     }]
 )
-.run(function ($rootScope, Idle, Keepalive, $uibModal, $http, $location, AuthService, editableOptions, editableThemes,Query,IncidentTeamService, IncidentTypeService, ReportService,IncidentService) {
+.run(function ($rootScope, Idle, Keepalive, $uibModal, $http, $location, AuthService, editableOptions, editableThemes,Query) {
     
 
     // $http.defaults.headers.common['Authorization'] = Query.getCookie('Auth_token',false);

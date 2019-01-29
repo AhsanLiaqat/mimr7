@@ -26,11 +26,9 @@
         function init(){
             $http.get('/settings/player-lists/get/' + listId).then(function(response){
                 $scope.organization_player_list = response.data;
-                console.log('>>>>>>>>>>>>><<<<<<<<<',$scope.organization_player_list)
                 $http.get('/users/get-organization-employ/' + $scope.organization_player_list.organizationId)
                 .then(function(response){
                     $scope.users = response.data;
-                    console.log('-=-=-=-=-=-=-=-=-=-=-',$scope.users); 
                     angular.forEach($scope.users, function (elem) {
                         elem.selected = false;
                     });
@@ -45,8 +43,6 @@
 
         $scope.submit = function(){
             var list = Query.filter($scope.users,{selected: true},false);
-            console.log('++++++++++++++++++++++++++++',list)
-            console.log('++++++++=================',listId)
             $http.post('/settings/player-lists/import-players', {listId: listId,data: list})
                 .then(function (result) {
                     toastr.success('Player List Updated','Success!');

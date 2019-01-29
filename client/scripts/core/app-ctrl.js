@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('app')
-        .controller('appCtrl', ['$scope', '$rootScope', 'ModalService', '$route', '$document', 'AuthService', '$http','Query','$cookies','LibraryService', appCtrl]); // overall control
+        .controller('appCtrl', ['$scope', '$rootScope', 'ModalService', '$route', '$document', 'AuthService', '$http','Query','$cookies', appCtrl]); // overall control
 
-    function appCtrl($scope, $rootScope, ModalService, $route, $document, AuthService, $http,Query,$cookies, LibraryService) {
+    function appCtrl($scope, $rootScope, ModalService, $route, $document, AuthService, $http,Query,$cookies) {
 
         $scope.getUser = function () {
             if (Query.getCookie('user')){

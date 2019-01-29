@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('app')
-    .controller('simulationLibraryCtrl', [ '$scope', '$timeout', '$location', 'ModalService', '$uibModal', '$filter', '$http', '$rootScope', '$route', 'AuthService','$routeParams','Query', libraryFunc]); 
+    .controller('articleLibraryCtrl', [ '$scope', '$timeout', '$location', 'ModalService', '$uibModal', '$filter', '$http', '$rootScope', '$route', 'AuthService','$routeParams','Query', libraryFunc]); 
     
     function libraryFunc($scope, $timeout, $location, ModalService, $uibModal, $filter, $http, $rootScope, $route, AuthService,$routeParams,Query) {
 
@@ -174,7 +174,6 @@
                     $http.post('/article-libraries/all?' + params).then(function (respp) {
                         $scope.selectoptions = $scope.selectoptions.concat($scope.articles);
                         $scope.messages = respp.data;
-                        console.log('//////////////////////',$scope.messages)
                         $scope.messages = _.sortBy($scope.messages, function (o) { return new Date(o.content); });
                         $scope.safeMessages = angular.copy($scope.messages);
                         $scope.isLoading = false;
@@ -193,25 +192,6 @@
 
 
         $scope.managearray = function(id,DontSet){
-            console.log('--=-=--=-=-=-=-=-',id)
-            // if(id == 0){
-            //     $http.post('/article-libraries/all').then(function (response) {
-            //         console.log('==================',response.data);
-            //         $scope.allMessages = response.data;
-            //         $scope.messageToShow =  angular.copy($scope.allMessages);
-            //     });
-            // }else{
-            //     $scope.messageToShow = [];
-            //     $http.post('/article-libraries/all?id=' + id).then(function (response) {
-            //         $scope.articleMessage = response.data;
-            //         angular.forEach($scope.articleMessage, function(value) {
-            //             if(value.parentId == id){
-            //                 $scope.messageToShow.push(value);
-            //             }
-            //         });
-            //     });
-            // }
-
             if(id == 0){
                 $scope.messageToShow =  angular.copy($scope.messages);
             }else{
@@ -221,7 +201,6 @@
             if(!DontSet){
                 setSocketForMessages();
             }
-            // $scope.messageToShow = $scope.paginate($scope.messageToShow);
         }
 
         // dp pagination
@@ -253,14 +232,11 @@
             };
             ModalService.showModal({
                 templateUrl: "views/simulation/game-libraries/form.html",
-                controller: "newGameLibraryCtrl",
+                controller: "newMediaLibraryCtrl",
                 inputs: inputs
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });
                 modal.close.then(function(result) {
-                    // if(result){
-                    //     $scope.media.push(result);
-                    // }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
                 });
@@ -272,7 +248,7 @@
             console.log('sadasda');
             ModalService.showModal({
                 templateUrl: "views/simulation/game-libraries/form.html",
-                controller: "newGameLibraryCtrl",
+                controller: "newMediaLibraryCtrl",
                 inputs:{
                     record: record,
                     parentId: record.parentId,
@@ -281,9 +257,6 @@
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });
                 modal.close.then(function(result) {
-                    // if(result){
-                    //     $scope.media[index] = result;
-                    // }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
                 });
@@ -292,7 +265,6 @@
         
         //show image type media
         var imageModal = function(record){
-            console.log('909090909090909090',record)
         	$uibModal.open({
         	      templateUrl: 'views/settings/libraries/lib-image.html',
         	      size: 'lg',
@@ -409,7 +381,6 @@
         
         //show and categorize media
         $scope.preview = function(record){
-            console.log('++++++++++++++++++++++++',record)
         	switch (record.type){
         		case "image":
         			imageModal(record);

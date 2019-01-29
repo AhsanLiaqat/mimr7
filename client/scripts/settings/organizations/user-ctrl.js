@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('app')
-        .controller('organizationsUsersCtrl', ['$scope','ModalService' ,'$location', '$routeParams', '$http', 'AuthService', 'Query','DepartmentService','RoleService', ctrlFunction]);
+        .controller('organizationsUsersCtrl', ['$scope','ModalService' ,'$location', '$routeParams', '$http', 'AuthService', 'Query', ctrlFunction]);
 
-    function ctrlFunction($scope,ModalService, $location, $routeParams, $http, AuthService, Query, DepartmentService, RoleService) {
+    function ctrlFunction($scope,ModalService, $location, $routeParams, $http, AuthService, Query) {
 
         function init() {
             $scope.orgId = $routeParams.OrgId;
@@ -16,36 +16,10 @@
                     $scope.data = response.data;
                 });
             }
-            RoleService.all().then(function(response){
-                $scope.roles = response.data;
-            },function(err){
-                if(err)
-                    toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
-                else
-                    toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
-            });
-            
-            // var path = "/settings/roles/all";
-            // $http.get(path).then(function
-            //     (response) {
-                    
-            // }); 
             $scope.user = Query.getCookie('user');
             $scope.data = {};
             $scope.data.userCountry = $scope.user.userCountry;
             $scope.data.countryCode = $scope.user.countryCode;
-            DepartmentService.getAll($scope.user.userAccountId).then(function(response){
-                $scope.departments = response.data;
-                },function(err){
-                    if(err)
-                        toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
-                    else
-                        toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
-                });
-            // var path = "/settings/departments/all?userAccountId=" + $scope.user.userAccountId ;
-            // $http.get(path).then(function(response) {
-                    
-            //     });
         }
 
         $scope.submit = function() {

@@ -2,45 +2,16 @@
     'use strict';
 
     angular.module('app')
-        .controller('usersCreateCtrl', ['$scope', 'ModalService', '$location', '$routeParams', 'Upload', '$timeout', '$filter', 'AuthService', '$http','Query','DepartmentService','AccountService','RoleService','LocationService', usersCreateCtrl]);
+        .controller('usersCreateCtrl', ['$scope', 'ModalService', '$location', '$routeParams', 'Upload', '$timeout', '$filter', 'AuthService', '$http','Query','AccountService', usersCreateCtrl]);
 
-    function usersCreateCtrl($scope, ModalService, $location, $routeParams, Upload, $timeout, $filter, AuthService, $http,Query, DepartmentService, AccountService, RoleService, LocationService) {
+    function usersCreateCtrl($scope, ModalService, $location, $routeParams, Upload, $timeout, $filter, AuthService, $http,Query, AccountService) {
 
         $scope.user = Query.getCookie('user');
         function init() {
-            
-            RoleService.all().then(function(response){
-                $scope.roles = response.data;
-            },function(err){
-                if(err)
-                    toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
-                else
-                    toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
-            });
-            // var path = "/settings/roles/all";
-            // $http.get(path).then(function
-            //     (response) {
-                    
-            // }); 
             $scope.data = {};
             $scope.data.userCountry = $scope.user.userCountry;
             $scope.data.countryCode = $scope.user.countryCode;
-            DepartmentService.getAll($scope.user.userAccountId).then(function(response){
-                $scope.departments = response.data;
-            },function(err){
-                if(err)
-                    toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
-                else
-                    toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
-            });
-            // var path = "/settings/departments/all?userAccountId=" + $scope.user.userAccountId ;
-            // $http.get(path).then(function
-            //     (response) {
-                
-            // });
-
             AuthService.user().then(function(response) {
-                // var path = '/settings/accounts/get?id=' + response.id;
                 if(response.id !== undefined) {
                     AccountService.get(response.id).then(function(account){
                         if(account.data.id !== undefined) {
@@ -52,10 +23,6 @@
                                 else
                                     toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
                             });
-                            // var query = '/settings/locations/get?id=' + account.data.id;
-                            // $http.get(query).then(function(locations) {
-                                
-                            // });
                         }
                     },function(err){
                         if(err)
@@ -63,9 +30,6 @@
                         else
                             toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
                     });
-                    // $http.get(path).then(function(account) {
-                        
-                    // });
                 }
             });
         }

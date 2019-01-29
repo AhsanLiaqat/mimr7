@@ -2,20 +2,17 @@
     'use strict';
 
     angular.module('app')
-        .controller('newGameLibraryCtrl', ['$scope', '$http', '$timeout', 'Upload', 'close','ModalService','record','contentType','parentId', ctrlFunction]);
+        .controller('newMediaLibraryCtrl', ['$scope', '$http', '$timeout', 'Upload', 'close','ModalService','record','contentType','parentId', ctrlFunction]);
 
     function ctrlFunction($scope, $http, $timeout, Upload, close,ModalService,record, contentType, parentId) {
         //fetch initial data
         $scope.init = function() {
             $scope.parentId = parentId;
-            console.log('()()()()()()',record != {});
-            // console.log('()()()()()()',parentId);
             if(record && Object.keys(record).length > 0){
                 $scope.lib = angular.copy(record);
             }else{
                 $scope.lib = {parentId: parentId};
             }
-            console.log('()()()()()()',$scope.lib);
             $scope.lib.kind = contentType;
             if(contentType == 'article-library'){
                 $scope.lib.parentType = 'Article';
