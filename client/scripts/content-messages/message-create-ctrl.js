@@ -32,7 +32,7 @@
             }
         }
         $scope.get_libraries =  function(gameId){
-             $http.get('/simulation/game-libraries/all-for-game/'+gameId).then(function (response) {
+             $http.get('/simulation/content-libraries/all-for-game/'+gameId).then(function (response) {
                 var library = response.data;
                 _.each(library, function (doc) {
                     if(doc.mimetype !== null){

@@ -17,7 +17,7 @@
         //fetch and set initial data
         function init() {
             $scope.cardsToShow = [
-                {name: 'Content Library',route: 'game-template',click: false},
+                {name: 'Content Library',route: 'content',click: false},
                 {name: 'Scheduled Content',route: 'simulation/scheduled-games/1',click: false},
                 {name: 'Active Content',route: 'simulation/scheduled-games/2',click: false},
                 {name: 'Completed',route: 'simulation/scheduled-games/3',click: false}
@@ -86,7 +86,7 @@
 
         $scope.scheduleGame = function (game) {
             ModalService.showModal({
-                templateUrl: "views/simulation/schedule-content/content-library.html",
+                templateUrl: "views/schedule-content/content-library.html",
                 controller: "contentLibraryCtrl",
                 inputs: {
                     gameId: game.id
@@ -105,7 +105,7 @@
         // manage array for both type games filtered by cards used
         $scope.newContent = function () {
             ModalService.showModal({
-                templateUrl: "views/simulation/game-template/new-game-template-making.html",
+                templateUrl: "views/content/new-content-making.html",
                 controller: "addArticleModalCtrl",
                 inputs: {
                     gameId: null
@@ -124,7 +124,7 @@
 
         $scope.editModal = function (id, index) {
             ModalService.showModal({
-                templateUrl: "views/simulation/game-template/new-game-template-making.html",
+                templateUrl: "views/content/new-content-making.html",
                 controller: "addArticleModalCtrl",
                 inputs: {
                     gameId: id

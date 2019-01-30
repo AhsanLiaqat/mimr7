@@ -124,8 +124,8 @@
         .when('/settings/users/edit', { templateUrl: 'views/settings/users/edit.html' })
 
 		.when('/home', { templateUrl: 'views/home.html' })
-        .when('/article-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-libraries/list.html' })
-        .when('/message-libraries/:gamePlanId?', { templateUrl: 'views/simulation/game-messages/list.html' })
+        .when('/article-libraries/:gamePlanId?', { templateUrl: 'views/content-libraries/list.html' })
+        .when('/message-libraries/:gamePlanId?', { templateUrl: 'views/content-messages/list.html' })
         .when('/settings/users', { templateUrl: 'views/settings/users/list.html' })
         .when('/settings/users/add', { templateUrl: 'views/settings/users/add.html' })
         .when('/settings/users/edit', { templateUrl: 'views/settings/users/edit.html' })
@@ -134,9 +134,9 @@
         .when('/settings/organizations/details/:id', { templateUrl: 'views/settings/organizations/details.html' })
         .when('/settings/organizations/:OrgId/users/:id?', { templateUrl: 'views/settings/organizations/user.html' })
         .when('/settings/player-lists', { templateUrl: 'views/settings/player-lists/list.html' })
-        .when('/active-contents/:gameId', { templateUrl: 'views/simulation/active-games/details.html' })
-        .when('/closed-contents', { templateUrl: 'views/simulation/schedule-content/list.html' })
-        .when('/view-message/:messageId?', { templateUrl: 'views/simulation/game-messages/view-message.html' })
+        .when('/active-contents/:gameId', { templateUrl: 'views/active-contents/details.html' })
+        .when('/closed-contents', { templateUrl: 'views/schedule-content/list.html' })
+        .when('/view-message/:messageId?', { templateUrl: 'views/content-messages/view-message.html' })
 
         // .when('/content-questions/:userId/:scheduled_questionId?', { templateUrl: 'views/simulation/schedule-content/content-questions.html' })
 

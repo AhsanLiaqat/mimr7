@@ -132,24 +132,6 @@
             };
         }
 
-        $scope.showMessageDetail = function(record) {
-            ModalService.showModal({
-                templateUrl: "views/simulation/game-messages/message-show-modal.html",
-                controller: "messageShowDetailCtrl",
-                inputs:{
-                    message: record
-                }
-            }).then(function(modal) {
-                modal.element.modal( {backdrop: 'static',  keyboard: false });
-                modal.close.then(function(result) {
-                    $('.modal-backdrop').remove();
-                    $('body').removeClass('modal-open');
-                    if (result && result !== ''){
-                    }
-                });
-            });
-        };
-
         // do pagination
         $scope.paginate = function(arr){
             $scope.a = _.sortBy(arr, function (o) { return new Date(o.name); });
@@ -184,7 +166,7 @@
         // open details of message
         $scope.showMessageDetail = function(record) {
             ModalService.showModal({
-                templateUrl: "views/simulation/game-messages/message-show-modal.html",
+                templateUrl: "views/content-messages/message-show-modal.html",
                 controller: "messageShowDetailCtrl",
                 inputs:{
                     message: record
@@ -203,7 +185,7 @@
         // add message modal
         $scope.addModal = function() {
             ModalService.showModal({
-                templateUrl: "views/simulation/game-messages/form.html",
+                templateUrl: "views/content-messages/form.html",
                 controller: "messageCreateCtrl",
                 inputs:{
                     messageId: null,
@@ -225,7 +207,7 @@
                 contentType : 'message-library'
             };
             ModalService.showModal({
-                templateUrl: "views/simulation/game-libraries/form.html",
+                templateUrl: "views/content-libraries/form.html",
                 controller: "newMediaLibraryCtrl",
                 inputs: inputs
             }).then(function(modal) {
@@ -243,7 +225,7 @@
                 articleId : record.articleId
             };
             ModalService.showModal({
-                templateUrl: "views/simulation/game-libraries/question.html",
+                templateUrl: "views/content-libraries/question.html",
                 controller: "newQuestionCtrl",
                 inputs: inputs
             }).then(function(modal) {
@@ -260,7 +242,7 @@
 
         $scope.edit = function(message, index) {
             ModalService.showModal({
-                templateUrl: "views/simulation/game-messages/form.html",
+                templateUrl: "views/content-messages/form.html",
                 controller: "messageCreateCtrl",
                 inputs:{
                     messageId: message.id,

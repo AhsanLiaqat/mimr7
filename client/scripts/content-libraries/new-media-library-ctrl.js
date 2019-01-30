@@ -100,7 +100,7 @@
             var avatar = file;
             if(avatar) {
                 avatar.upload = Upload.upload({
-                    url: '/simulation/game-libraries/avatar',
+                    url: '/simulation/content-libraries/avatar',
                     data: { file: avatar }
                 });
 

@@ -231,7 +231,7 @@
                 contentType : 'article-library'
             };
             ModalService.showModal({
-                templateUrl: "views/simulation/game-libraries/form.html",
+                templateUrl: "views/content-libraries/form.html",
                 controller: "newMediaLibraryCtrl",
                 inputs: inputs
             }).then(function(modal) {
@@ -247,7 +247,7 @@
         $scope.callAtTimeout = function(record, index) {
             console.log('sadasda');
             ModalService.showModal({
-                templateUrl: "views/simulation/game-libraries/form.html",
+                templateUrl: "views/content-libraries/form.html",
                 controller: "newMediaLibraryCtrl",
                 inputs:{
                     record: record,
