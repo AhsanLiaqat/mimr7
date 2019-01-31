@@ -25,8 +25,8 @@ module.exports = {
                     type: "TIMESTAMP WITH TIME ZONE"
                 },
                 status: {
-                    type: Sequelize.STRING,
-                    defaultValue: "incomplete"
+                    type: Sequelize.BOOLEAN,
+                    defaultValue: false
                 },
                 statusAt: {
                     type: "TIMESTAMP WITH TIME ZONE"
