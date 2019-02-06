@@ -5121,3 +5121,6 @@ body { padding-right: 0 !important }
   height: calc(100vh - 168px);
   overflow: auto;
 }
+.scroll-down{
+  overflow: auto;
+}
