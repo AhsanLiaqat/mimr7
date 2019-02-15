@@ -7,6 +7,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         name: DataTypes.STRING,
         number: DataTypes.INTEGER,
+        offset: DataTypes.INTEGER,
         type: DataTypes.STRING,
         isDeleted: {
             type: DataTypes.BOOLEAN,

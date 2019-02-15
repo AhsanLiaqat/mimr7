@@ -20,7 +20,6 @@
             $scope.tableState = tableState;
             $http.get('/settings/player-lists/all').then(function (response) {
                 $scope.playerlists = response.data;
-                console.log('()()()()',$scope.playerlists)
                 $scope.isLoading = false;
                 $scope.roleToShow =  angular.copy($scope.playerlists);
                 $scope.roleToShow = $scope.paginate($scope.roleToShow);

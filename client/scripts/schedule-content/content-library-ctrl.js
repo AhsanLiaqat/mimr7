@@ -27,6 +27,7 @@
             });
             $http.get('/questions/get/' + gameId).then(function(response){
                 $scope.questions = response.data;
+                $scope.filteredQuestions = $filter('filter')($scope.questions, function(item){return item.offset});
                 // $scope.gameMessages = _.sortBy($scope.gameMessages, function(o) { return  o.order });
             })
         };
@@ -72,10 +73,10 @@
                 return passed;
             } else if ($scope.page3){
                 var passed = true;
-                    if (!$scope.timeSpan){
-                        toastr.error('Please Enter Time Span', 'Error!');
-                        passed = false;
-                    }
+                    // if (!$scope.timeSpan){
+                    //     toastr.error('Please Enter Time Span', 'Error!');
+                    //     passed = false;
+                    // }
                     if(!$scope.total_time){
                         toastr.error('Please Enter Total Time','Error!');
                         passed = false;
@@ -87,41 +88,44 @@
         };
 
         $scope.scheduleContent = function () {
-            if($scope.page3 && validateValues()){
-                $http.get('settings/player-lists/get/'+ $scope.playGame.playerListId).then(function(res){
-                    $scope.playerListUser = res.data;
-                    $scope.playGame.scheduled_date = new Date().toDateString();
-                    $http.post('/content-plan-templates/create', $scope.playGame)
-                    .then(function(response){
-                        $scope.contentPlanTemplateId=response.data.id;
-                        toastr.success("Plan template created Successfully");
-                        var interval = ( $scope.timeSpan / $scope.questions.length ) * 60 ;
-                        var seconds = interval;
-                        angular.forEach($scope.questions, function(messageQuestion,ind){
-                            if ( ind == 0 ){
-                                seconds = ( interval / 2 );
-                            }
-                            else{
-                                seconds += interval;
-                            }
-                            var messg ={
-                                 index: ind,
-                                 contentPlanTemplateId: $scope.contentPlanTemplateId,
-                                 questionId: messageQuestion.id,
-                                 offset: angular.copy(seconds),
-                                 total_time : $scope.total_time * 60
-                            }
-                            angular.forEach($scope.playerListUser.users, function(usr,ind){
-                                $http.post('/question-scheduling/save', {data:messg,userId : usr.id})
-                                .then(function(resp){
-                                    close(resp);
-                                }); 
+            // if($scope.page3 && validateValues()){
+                if($scope.total_time && $scope.playGame.organizationId && $scope.playGame.playerListId){
+                    $http.get('settings/player-lists/get/'+ $scope.playGame.playerListId).then(function(res){
+                        $scope.playerListUser = res.data;
+                        $scope.playGame.scheduled_date = new Date().toDateString();
+                        $http.post('/content-plan-templates/create', $scope.playGame)
+                        .then(function(response){
+                            $scope.contentPlanTemplateId=response.data.id;
+                            toastr.success("Plan template created Successfully");
+                            var interval = ( $scope.timeSpan / $scope.questions.length ) * 60 ;
+                            var seconds = interval;
+                            angular.forEach($scope.filteredQuestions, function(messageQuestion,ind){
+                                if ( ind == 0 ){
+                                    seconds = ( interval / 2 );
+                                }
+                                else{
+                                    seconds += interval;
+                                }
+                                var messg ={
+                                     index: ind,
+                                     contentPlanTemplateId: $scope.contentPlanTemplateId,
+                                     questionId: messageQuestion.id,
+                                     offset: messageQuestion.offset,
+                                     total_time : $scope.total_time * 60
+                                }
+                                angular.forEach($scope.playerListUser.users, function(usr,ind){
+                                    $http.post('/question-scheduling/save', {data:messg,userId : usr.id})
+                                    .then(function(resp){
+                                        close(resp);
+                                    }); 
+                                });
                             });
-
                         });
                     });
-                });
-            }
+                }else{
+                    toastr.error('Please Enter All Fields','Error!');
+                }
+            // }
         };
 
         

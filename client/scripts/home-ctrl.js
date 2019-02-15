@@ -84,7 +84,7 @@
             // $scope.gameToShow = $filter('orderBy')($scope.gameToShow, 'Gname');
         }
 
-        $scope.scheduleGame = function (game) {
+        $scope.scheduleContent = function (game) {
             ModalService.showModal({
                 templateUrl: "views/schedule-content/content-library.html",
                 controller: "contentLibraryCtrl",

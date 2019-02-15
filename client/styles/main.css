@@ -5124,3 +5124,12 @@ body { padding-right: 0 !important }
 .scroll-down{
   overflow: auto;
 }
+.questions-schedule{
+  overflow: inherit !important;
+}
+.message-schedule{
+  overflow: inherit !important;
+}
+.question-drag{
+  overflow: inherit !important;
+}

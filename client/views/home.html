@@ -51,7 +51,7 @@
                         <div class="card-headline">
 
                             <div>
-                                <h3 style="color: black" >{{template.title}}</h3>
+                                <h3 style="color: black;width: 42%" >{{template.title}}</h3>
                             </div>
                         </div>
 
@@ -63,9 +63,13 @@
 
                                 <a href="#/article-libraries/{{template.id}}" class="btn btn-sm color_black">Documents & Media</a>
 
-                                <button title="Schedule Game" class="btn btn-sm btn-success" style="position: absolute;right: 110px;top:0;" ng-click="scheduleGame(template)">
+                                <button title="Schedule Content" class="btn btn-sm btn-success" style="position: absolute;right: 110px;top:0;" ng-click="scheduleContent(template)">
                                     <i class="fa fa-calendar"></i>
                                 </button>
+
+                                <a href = "#/view-scheduled-question/{{template.id}}" title="Question Scheduling" class="btn btn-success" style="position: absolute;right: 153px;top:-4px;">
+                                    <i class="fa fa-question-circle"></i>
+                                </a>
                                 
                                 <button title="Edit Game" class="btn btn-sm btn-info" style="position: absolute;right: 60px;top:0;" ng-click="editModal(template.id, $index)">
                                     <span class="glyphicon glyphicon-edit"></span>

@@ -313,3 +313,11 @@ body{
     width: calc(100% - 85px);
     vertical-align: top;
 }
+
+.questions-section-hower .panel-body{
+    overflow: auto;
+    height: 300px;
+}
+/*.questions-section{
+    position: fixed;
+}*/
