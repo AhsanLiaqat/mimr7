@@ -26,7 +26,7 @@ var j = schedule.scheduleJob('01 * * * * *', function(){
                         model : model.user
                     }]
                 }).then(function(scheduled_question) {
-                    var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://localhost:8082/#/pages/content-questions' + '/' + scheduled_question.userId + '/' + scheduled_question.id;
+                    var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://mimr7-dev1.us-east-1.elasticbeanstalk.com/#/pages/content-questions' + '/' + scheduled_question.userId + '/' + scheduled_question.id;
                     var mailOptions = {
                         from: 'noreply@crisishub.co',
                         to: scheduled_question.user.email,
@@ -128,7 +128,7 @@ router.post('/update-message-off-set/:id',function(req,res,next){
                 include: [{model : model.user}]
             }).then(function(scheduled_question) {
                 // _.each(scheduled_question.content_plan_template.player_list.users, function (user){
-                    var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://localhost:8082/#/pages/content-questions' + '/' + scheduled_question.userId + '/' + scheduled_question.id;
+                    var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://mimr7-dev1.us-east-1.elasticbeanstalk.com/#/pages/content-questions' + '/' + scheduled_question.userId + '/' + scheduled_question.id;
                     var mailOptions = {
                         from: 'noreply@crisishub.co',
                         to: scheduled_question.user.email,
