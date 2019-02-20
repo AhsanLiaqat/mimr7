@@ -7,7 +7,7 @@
     function homeFunction($scope, $routeParams, $http, AuthService, ModalService, $location, filterFilter,$filter,Query) {
         // formats date in some given format
         $scope.dateTimeFormat = function(dat){
-            return moment(dat).utc().local().format('HH:mm DD-MM-YYYY');
+            return moment(dat).utc().local().format('DD-MM-YYYY');
             //HH:mm
         };
         $scope.dateFormat = function (dat) {
@@ -102,6 +102,23 @@
             });
         };
 
+        $scope.editScheduleContent = function (contentId) {
+            ModalService.showModal({
+                templateUrl: "views/schedule-content/edit-content-library.html",
+                controller: "editContentLibraryCtrl",
+                inputs: {
+                    gameId: contentId
+                }
+            }).then(function (modal) {
+                modal.element.modal({ backdrop: 'static', keyboard: false });
+                modal.close.then(function (result) {
+                    if (result && result !== '') {
+                    }
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
+            });
+        };
         // manage array for both type games filtered by cards used
         $scope.newContent = function () {
             ModalService.showModal({

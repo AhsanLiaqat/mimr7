@@ -29,27 +29,44 @@
                                 //     // if(!questionArr.length){
                                 //     //     question.data.push(data);
                                 //     // }
+                                // var found = false;
+                                // for (var i = 0; i < $scope.questionSchedule.length; i++) {
+                                //     for (var j = 0; j < $scope.questionSchedule[i].data.length; j++) {
+                                //         if ($scope.questionSchedule[i].data[j].id === reslt.id) {
+                                //             $scope.questionSchedule[i].data[j] = angular.copy(reslt);
+                                //             found = true;
+                                //             break;
+                                //         }
+                                //     }
+                                //     if(found)break;
+                                // }
                                 var found = false;
-                                for (var i = 0; i < $scope.questionSchedule.length; i++) {
-                                    for (var j = 0; j < $scope.questionSchedule[i].data.length; j++) {
-                                        if ($scope.questionSchedule[i].data[j].id === reslt.id) {
-                                            $scope.questionSchedule[i].data[j] = angular.copy(reslt);
-                                            found = true;
-                                            break;
-                                        }
+                                for(var i = 0; i < $scope.playContent.question_schedulings.length; i++){
+                                    if($scope.playContent.question_schedulings[i].id === reslt.id){
+                                        $scope.playContent.question_schedulings[i] = angular.copy(reslt);
+                                        found = true;
+                                        break;
                                     }
                                     if(found)break;
                                 }
                                 break;
                             case 'skip':
+                                // for(var i = 0; i < $scope.questionSchedule.length; i++){
+                                //     for(var j = 0; j < $scope.questionSchedule[i].data.length; j++){
+                                //         if($scope.questionSchedule[i].data[j].id === reslt.id){
+                                //             $scope.questionSchedule[i].data[j] = angular.copy(reslt);
+                                //             found = true;
+                                //             break;
+                                //         }
+                                //     }
+                                //     if(found)break;
+                                // }
                                 var found = false;
-                                for(var i = 0; i < $scope.questionSchedule.length; i++){
-                                    for(var j = 0; j < $scope.questionSchedule[i].data.length; j++){
-                                        if($scope.questionSchedule[i].data[j].id === reslt.id){
-                                            $scope.questionSchedule[i].data[j] = angular.copy(reslt);
-                                            found = true;
-                                            break;
-                                        }
+                                for(var i = 0; i < $scope.playContent.question_schedulings.length; i++){
+                                    if($scope.playContent.question_schedulings[i].id === reslt.id){
+                                        $scope.playContent.question_schedulings[i] = angular.copy(reslt);
+                                        found = true;
+                                        break;
                                     }
                                     if(found)break;
                                 }
@@ -72,14 +89,15 @@
             $http.get('/content-plan-templates/play-content-summary/' + $scope.gameId).then(function (response) {
                 $scope.playContent = response.data;
                 $scope.time = new Date($scope.playContent.start_time).getTime();
-                $scope.questionSchedule = [];
-                angular.forEach($scope.playContent.question_schedulings, function (scheduledQuestion,ind){
-                    if (scheduledQuestion.question){
-                        putData(scheduledQuestion.question.name,$scope.questionSchedule,scheduledQuestion,scheduledQuestion.question.id,scheduledQuestion.offset);
-                    }else{
-                        putData('N/A',$scope.questionSchedule,null,null,'N/A');
-                    }
-                });
+                // $scope.questionSchedule = [];
+                // angular.forEach($scope.playContent.question_schedulings, function (scheduledQuestion,ind){
+                //     if (scheduledQuestion.question){
+                //         putData(scheduledQuestion.question.name,$scope.questionSchedule,scheduledQuestion,scheduledQuestion.question.id,scheduledQuestion.offset);
+                //     }else{
+                //         putData('N/A',$scope.questionSchedule,null,null,'N/A');
+                //     }
+                // });
+
             });
             setSocketForContentMessages();
         };

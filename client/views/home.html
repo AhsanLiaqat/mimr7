@@ -124,6 +124,12 @@
                                    confirm="Are you sure you want to delete?">
                                     <span class="glyphicon glyphicon-remove-sign"></span>
                                 </a>
+                                <a ng-click="editScheduleContent(game.id, $index)"
+                                   class="btn btn-info"
+                                   ng-hide = "gamesSelected == 'stop'"
+                                   title="Edit Scheduled Game">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </a>
                             </div>
                         </div>
                     </div>

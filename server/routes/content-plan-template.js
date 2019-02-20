@@ -14,11 +14,14 @@ var s3Library = require('../lib/aws/s3').library;
 router.get('/get/:id', function(req, res, next) {
     model.content_plan_template.findOne({
         where: {id: req.params.id},
-        attributes: ['id', 'scheduled_date', 'createdAt','playerListId'],
-        order: [['createdAt', 'DESC']],
-        include: [
-        {model: model.player_list, attributes: ['id', 'name','description']},
-        {model: model.question_scheduling, attributes: ['id', 'setOffTime','offset','index']}]
+        include: [{
+            model: model.player_list,
+                include : [{model : model.organization}] 
+        },{
+            model : model.article
+        },{
+            model: model.question_scheduling
+        }]
     }).then(function(contentPlanTmplate) {
         // var unique_questions = _.uniq(contentPlanTmplate.question_schedulings,'offset');
         res.send(contentPlanTmplate);
@@ -48,7 +51,8 @@ router.get('/play-content-summary/:id', function(req, res, next) {
         order: [['createdAt', 'DESC']],
         include: [
         {model: model.question_scheduling,
-            include : [{model : model.question},
+            include : [{model : model.question,
+                            include : [{model : model.message}]},
                         {model : model.user}]
         }]
     }).then(function(contentPlanTmplate) {

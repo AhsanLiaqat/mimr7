@@ -47,6 +47,9 @@ var j = schedule.scheduleJob('01 * * * * *', function(){
                         where: {id: msg.id},
                         include: [{
                             model : model.user
+                        },{
+                            model : model.question,
+                                include : [{model : model.message}]
                         }]
                     }).then(function(response) {
                         var quesCoach = {
@@ -156,7 +159,12 @@ router.post('/send-question/:id',function(req,res,next){
         .then(function(gamePlanTmplate) {
         model.question_scheduling.findOne({
             where: {id: req.params.id},
-            include: [{model : model.user}]
+            include: [{
+                model : model.user
+            },{
+                model : model.question,
+                    include : [{model : model.message}]
+            }]
         }).then(function(scheduled_question) {
             var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://localhost:8082/#/pages/content-questions' + '/' + scheduled_question.userId + '/' + scheduled_question.id;
             var mailOptions = {
@@ -179,6 +187,16 @@ router.post('/send-question/:id',function(req,res,next){
             process.io.emit('detail_content:' + scheduled_question.contentPlanTemplateId,quesCoach)
         });
     });
+});
+
+router.post('/skip/:id',function(req,res,next){
+    console.log('what is come',req.params.id)
+    console.log('----------------------------<><><><>',req.body.data)
+    model.question_scheduling.update(req.body.data,{where: { id : req.params.id }})
+    .then(function(result) {
+        res.send(result);
+    });
+
 });
 
 
@@ -205,7 +223,12 @@ router.post('/update/:id',function(req,res,next){
     .then(function(result) {
         model.question_scheduling.findOne({
             where: {id: req.params.id},
-            include: [{model : model.user}]
+            include: [{
+                model : model.user
+            },{
+                model : model.question,
+                    include : [{model : model.message}]
+            }]
         }).then(function(response) {
              var data = {
                 data: response,

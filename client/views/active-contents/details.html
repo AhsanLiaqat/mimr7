@@ -27,39 +27,64 @@
               
                 <ul class="nav nav-tabs nav-justified">
                     <li class="active"><a data-toggle="tab" data-target="#rounds" href="">Scheduled Questions</a></li>
-                    <li><a data-toggle="tab" data-target="#players" href="">Users</a></li>
                 </ul>
 
               <div class="tab-content">
-                <div id="players" class="tab-pane fade">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>Content Users Summary  </label>
-                         
-                                <br><br>
-                                <table class="table table-bordered table-striped table-responsive">
-                                    <thead>
-                                    <tr>
-                                        <th>Email</th>
-                                        <th>User Name</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="users in playContent.question_schedulings">
-                                        <td>
-                                            {{ users.user.email }}
-                                        </td>
-                                        <td>{{ users.user.firstName }} {{ users.user.lastName }}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <br><br>
+                            <table class="table table-bordered table-striped table-responsive">
+                                <thead>
+                                <tr>
+                                    <th>Message</th>
+                                    <th>Question</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="ques in playContent.question_schedulings">
+                                    <td>
+                                        {{ques.question.message.content}}
+                                    </td>
+                                    <td ng-bind-html = "ques.question.name">
+                                        {{ ques.question.name }}
+                                    </td>
+                                    <td>{{ques.setOffTime | date : 'd MMMM y'}}</td>
+                                    <td ng-show = "!ques.skip">{{ques.setOffTime | date : 'h:mm a'}}</td>
+                                    <td ng-show = "ques.skip && !ques.activated">{{ques.skipped_At | date : 'h:mm a'}}</td>
+                                    <td ng-show = "ques.activated">Sent</td>
+                                    <td ng-show = "!ques.activated && !ques.skip">Sending</td>
+                                    <td ng-show = "ques.skip && !ques.activated">Skip</td>
+                                    <td>
+                                        <div ng-hide="ques.activated || ques.skip">
+                                            <a class="btn btn-info" ng-click="skipQuestion(ques)" >
+                                                Skip    
+                                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                            </a>
+                                            <a ng-click="sendQuestion(ques)"
+                                               class="btn btn-info"
+                                               title="Send Question">
+                                                <span class="glyphicon glyphicon-send"></span>
+                                            </a>
+                                        </div>
+                                        <p ng-show="ques.activated">
+                                            <i>Question sent at <b>{{dateFormat(ques.activatedAt)}}</b></i>
+                                        </p>
+                                        <p ng-show="ques.skip">
+                                            <i>Question skipped at <b>{{dateFormat(ques.skipped_At)}}</b></i>
+                                        </p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                   <!-- Section for Rounds -->
-                <div id="rounds" class="tab-pane fade in active">
+                <!-- <div id="rounds" class="tab-pane fade in active">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -120,7 +145,7 @@
                         </div>
                     </div>
                  
-                </div>
+                </div> -->
               </div>
             </div>  
         </div>

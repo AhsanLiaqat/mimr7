@@ -92,7 +92,6 @@
                 if($scope.total_time && $scope.playGame.organizationId && $scope.playGame.playerListId){
                     $http.get('settings/player-lists/get/'+ $scope.playGame.playerListId).then(function(res){
                         $scope.playerListUser = res.data;
-                        $scope.playGame.scheduled_date = new Date().toDateString();
                         $http.post('/content-plan-templates/create', $scope.playGame)
                         .then(function(response){
                             $scope.contentPlanTemplateId=response.data.id;
