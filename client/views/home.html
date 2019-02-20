@@ -126,7 +126,7 @@
                                 </a>
                                 <a ng-click="editScheduleContent(game.id, $index)"
                                    class="btn btn-info"
-                                   ng-hide = "gamesSelected == 'stop'"
+                                   ng-hide = "gamesSelected == 'stop' || gamesSelected == 'active'"
                                    title="Edit Scheduled Game">
                                     <span class="glyphicon glyphicon-edit"></span>
                                 </a>

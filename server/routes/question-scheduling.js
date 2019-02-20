@@ -190,8 +190,6 @@ router.post('/send-question/:id',function(req,res,next){
 });
 
 router.post('/skip/:id',function(req,res,next){
-    console.log('what is come',req.params.id)
-    console.log('----------------------------<><><><>',req.body.data)
     model.question_scheduling.update(req.body.data,{where: { id : req.params.id }})
     .then(function(result) {
         res.send(result);
