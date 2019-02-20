@@ -48,10 +48,14 @@
                                 <tbody>
                                 <tr ng-repeat="ques in playContent.question_schedulings">
                                     <td>
-                                        {{ques.question.message.content}}
+                                        <a ng-click = "showMessageDetail(ques)">
+                                            {{ques.question.message.content | displayString : 25}}
+                                        </a>
                                     </td>
-                                    <td ng-bind-html = "ques.question.name">
-                                        {{ ques.question.name }}
+                                    <td>
+                                        <a ng-click = "showQuestionDetail(ques)">
+                                            <span ng-bind-html = "ques.question.name | displayString : 50"></span>
+                                        </a>
                                     </td>
                                     <td>{{ques.setOffTime | date : 'd MMMM y'}}</td>
                                     <td ng-show = "!ques.skip">{{ques.setOffTime | date : 'h:mm a'}}</td>

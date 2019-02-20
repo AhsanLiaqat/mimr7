@@ -116,6 +116,49 @@
 
         init();
 
+        $scope.showMessageDetail = function(record) {
+            ModalService.showModal({
+                templateUrl: "views/content-messages/message-show-modal.html",
+                controller: "messageShowDetailCtrl",
+                inputs:{
+                    message: record,
+                    activeRecord : 'activeRecord',
+                    messageListing : null,
+                    questionDetail : null
+
+                }
+            }).then(function(modal) {
+                modal.element.modal( {backdrop: 'static',  keyboard: false });
+                modal.close.then(function(result) {
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                    if (result && result !== ''){
+                    }
+                });
+            });
+        };
+
+        $scope.showQuestionDetail = function(record) {
+            ModalService.showModal({
+                templateUrl: "views/content-messages/message-show-modal.html",
+                controller: "messageShowDetailCtrl",
+                inputs:{
+                    message: record,
+                    activeRecord : null,
+                    messageListing : null,
+                    questionDetail : 'questionDetail'
+                }
+            }).then(function(modal) {
+                modal.element.modal( {backdrop: 'static',  keyboard: false });
+                modal.close.then(function(result) {
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                    if (result && result !== ''){
+                    }
+                });
+            });
+        };
+
         $scope.sendQuestion = function (contentQuestion) {
             $http.post('/question-scheduling/send-question/' + contentQuestion.id).then(function (response) {
             });

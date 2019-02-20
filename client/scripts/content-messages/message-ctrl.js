@@ -169,7 +169,11 @@
                 templateUrl: "views/content-messages/message-show-modal.html",
                 controller: "messageShowDetailCtrl",
                 inputs:{
-                    message: record
+                    message: record,
+                    activeRecord : null,
+                    messageListing : 'messageListing',
+                    questionDetail : null
+
                 }
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });
