@@ -1,0 +1,109 @@
+<div class="page" ng-controller="viewContentCtrl">
+    <div class="main-wrapper">
+        <div class="row">
+            <div class="col-sm-8">
+                <a href="" class="pull-right" style="margin : 10px" ng-click = "addContent()"><i class="fa fa-plus"></i> Add Content</a>
+                <div class="title-header">
+                    <h3><span>Content</span>
+                        <ul class="nav navbar-nav navbar-left incident-ul content-list">
+                            <li class="dropdown">
+                                <a href="" data-target="" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="chapter-heading" ng-hide="currentStatus">Select Chapter <b class="caret"></b></span>
+                                    <span class="chapter-heading" ng-show="currentStatus">{{currentStatus.name}} <b class="caret"></b></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li role="presentation" ng-repeat="chap in article.chapters">
+                                        <a class="dropdown-cursor" role="menuitem" ng-click="changeStatus(chap)"> {{chap.name}}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </h3>
+                </div>
+                <div class="main-content scroll-down" ng-hide = "contentShow">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p ng-bind-html= "toTrustedHTML( currentStatus.text )"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class = "froalaEditor" ng-if = "contentShow">
+                    <textarea froala="froalaOptions" ng-model="chapter.text"></textarea>
+                    <br>
+                    <button class="pull-right btn btn-success" ng-click="saveContent()">Save</button>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="title-header">
+                    <h3><span>Messages</span></h3>
+                </div>
+                <div class="questions-wrapper">
+                    <div class="message-questions">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="message-listing-wrpper">
+                                    <div class="questions-section" ng-repeat = "msg in message track by $index">
+                                        <a ng-click = "toggleMenu(msg)" class="question-manage"><i class="fa fa-ellipsis-v"></i></a>
+                                        <ul ng-if = "msg.show">
+                                            <li><a ng-click = "edit(msg,$index)"><i class="fa fa-edit"></i> edit</a></li>
+                                            <li><a ng-click = "delete(msg.id,$index)"><i class="fa fa-trash"></i> delete</a></li>
+                                        </ul>
+                                        <div ng-bind-html= "toTrustedHTML( msg.content )" ></div>
+                                        <!-- <p>asdfskdjfkl asldf</p> -->
+                                    </div>
+                                    <div ng-if = !message.length> 
+                                        <h3>No Message Present</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="add-question">
+                            <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Message</a>
+                        </div>
+                        <form class="add-query">
+                            <a class="close"><i class="fa fa-times"></i></a>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type = "text" class="form-control" ng-model = "data.content" placeholder="Enter Name"></input>
+                            </div>
+                            <div class="form-group">
+                                <label>Order</label>
+                                <input type="number" ng-model = "data.order" class="form-control" placeholder="Enter Order">
+                            </div>
+                            <div class="form-group">
+                                <label>Text</label>
+                                <textarea froala="froalaOptions" ng-model = "data.description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" ng-click = "save()" class="btn btn-primary add-ques">Add Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("a[href='#']").click(function(e){
+        e.preventDefault();
+    });
+
+    // $('.question-manage').click(function(){
+    //     $(".questions-section ul").slideUp();
+    //     $(this).siblings("ul").slideToggle();
+    // });
+
+    // $(".add-question").click(function(){
+    //     $(".add-query").addClass("slide-div");
+    //     $(".questions-wrapper").addClass("questions-wrapper-bg");
+    // });
+    $(".close").click(function(){
+        $(".add-query").removeClass("slide-div");
+        $(".questions-wrapper").removeClass("questions-wrapper-bg");
+    });
+});
+
+</script>

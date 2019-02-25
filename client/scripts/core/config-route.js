@@ -138,6 +138,7 @@
         .when('/closed-contents', { templateUrl: 'views/schedule-content/list.html' })
         .when('/view-message/:messageId?', { templateUrl: 'views/content-messages/view-message.html' })
         .when('/view-scheduled-question/:contentId?', { templateUrl: 'views/schedule-content/view-scheduled-question.html' })
+        .when('/view-contents/:articleId?', { templateUrl: 'views/content/view-content.html' })
 
         // .when('/content-questions/:userId/:scheduled_questionId?', { templateUrl: 'views/simulation/schedule-content/content-questions.html' })
 
@@ -348,6 +349,10 @@
                         case '/view-scheduled-question/:contentId?':
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Scheduled Questions';
+                            break;
+                        case '/view-contents/:articleId?':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'View Contents';
                             break;
                         case '/closed-contents':
                             $rootScope.breadcrumb_2 = false;

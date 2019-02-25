@@ -4937,6 +4937,12 @@ body { padding-right: 0 !important }
 }
 
 
+.chapter-heading{
+  font-size: 16px;
+}
+.chapter-heading::after{
+  background-color: #009688 !important;
+}
 
 .title-header{
   font-size: 24px;
@@ -5132,4 +5138,8 @@ body { padding-right: 0 !important }
 }
 .question-drag{
   overflow: inherit !important;
+}
+.froalaEditor .fr-box.fr-basic .fr-element{
+  height: 60vh;
+  overflow: auto;
 }

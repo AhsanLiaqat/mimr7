@@ -12,7 +12,10 @@ router.get('/all', function(req, res, next) {
 
 router.get('/get/:id', function(req, res, next) {
     model.article.findOne({
-        where: {id: req.params.id }
+        where: {id: req.params.id },
+        include : [{
+            model : model.chapter
+        }]
     }).then(function(article) {
         res.send(article);
     });
