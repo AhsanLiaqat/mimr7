@@ -47,7 +47,7 @@
                 .then(function(res){
                     $scope.data = res.data;
                     $scope.message.push(res.data);
-                    toastr.success('Question Added.', 'Success!');
+                    toastr.success('Message Added.', 'Success!');
                     $(".add-query").removeClass("slide-div");
                     $(".questions-wrapper").removeClass("questions-wrapper-bg");
                 });
