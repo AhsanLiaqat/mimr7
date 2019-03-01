@@ -25,6 +25,7 @@ module.exports = function(sequelize, DataTypes) {
                 question_scheduling.belongsTo(models.question);
                 question_scheduling.belongsTo(models.content_plan_template, {foreignKey: 'contentPlanTemplateId'});
                 question_scheduling.belongsTo(models.user);
+                question_scheduling.hasOne(models.answer);
             }
         }
     });

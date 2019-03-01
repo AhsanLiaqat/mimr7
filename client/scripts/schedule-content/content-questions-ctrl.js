@@ -43,6 +43,11 @@
             $scope.user = Query.getCookie('user');
             $http.get('/question-scheduling/get/' + $routeParams.scheduledQuestionId).then(function(res){
                 $scope.data = res.data;
+                if($scope.data.answer){
+                    $scope.page1 = false;
+                    $scope.page2 = false;
+                    $scope.page3 = true;
+                }
                 if($scope.data.status == true){
                     $scope.page1 = false;
                     $scope.page2 = true;
@@ -65,7 +70,8 @@
                         questionId : $scope.data.question.id,
                         text : $scope.data.ans,
                         userId : $routeParams.userId,
-                        contentPlanTemplateId : $scope.data.content_plan_template.id
+                        contentPlanTemplateId : $scope.data.content_plan_template.id,
+                        questionSchedulingId : $scope.data.id
                     }
                     $http.post('/content-questions/save', $scope.answer)
                     .then(function(response){

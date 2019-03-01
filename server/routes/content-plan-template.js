@@ -60,6 +60,28 @@ router.get('/play-content-summary/:id', function(req, res, next) {
     });
 });
 
+router.get('/get-player-detail/:id', function(req, res, next) {
+    model.content_plan_template.findOne({
+        where: {id: req.params.id},
+        order: [['createdAt', 'DESC']],
+        include: [
+        {model: model.player_list,
+            include : [{model : model.user,
+                include : [{model : model.question_scheduling,
+                    where : {contentPlanTemplateId : req.params.id},
+                    include : [{
+                        model : model.answer
+                    },{
+                        model : model.question
+                    }]
+                }]
+            }]
+        }]
+    }).then(function(playerDetail) {
+        res.send(playerDetail);
+    });
+});
+
 
 router.get('/all', function(req, res, next) {
     model.content_plan_template.findAll({ where : {isDeleted : false},

@@ -50,6 +50,8 @@ var j = schedule.scheduleJob('01 * * * * *', function(){
                         },{
                             model : model.question,
                                 include : [{model : model.message}]
+                        },{
+                            model : model.answer
                         }]
                     }).then(function(response) {
                         var quesCoach = {
@@ -82,8 +84,10 @@ var j = schedule.scheduleJob('*/1 * * * * *', function(){
                     model.question_scheduling.findOne({
                         where: {id: msg.id},
                         include: [{
-                        model: model.content_plan_template,
-                            include:[{ model: model.player_list}]
+                            model: model.content_plan_template,
+                                include:[{ model: model.player_list}]
+                        },{
+                            model : model.answer
                         }]
                     }).then(function(response) {
                         var data = {
@@ -99,11 +103,50 @@ var j = schedule.scheduleJob('*/1 * * * * *', function(){
     });
 });
 
+var j = schedule.scheduleJob('*/1 * * * * *', function(){
+    model.question_scheduling.findAll({
+        where: {activated : true,status : false,isDeleted:false},
+        attributes: ['id', 'setOffTime', 'activatedAt','total_time']
+    }).then(function(questions) {
+        questions.forEach(function(msg) {
+            if(new Date(msg.activatedAt.getTime() + msg.total_time*1000).getFullYear() == new Date().getFullYear() &&
+               new Date(msg.activatedAt.getTime() + msg.total_time*1000).getMonth() == new Date().getMonth() &&
+               new Date(msg.activatedAt.getTime() + msg.total_time*1000).getDay() == new Date().getDay() &&
+               new Date(msg.activatedAt.getTime() + msg.total_time*1000).getHours() == new Date().getHours() &&
+               new Date(msg.activatedAt.getTime() + msg.total_time*1000).getMinutes() == new Date().getMinutes() &&
+               new Date(msg.activatedAt.getTime() + msg.total_time*1000).getSeconds() == new Date().getSeconds()
+            ){
+                model.question_scheduling.update({status: true}, {where: {id: msg.id}})
+                .then(function(gamePlanTmplate) {
+                    model.question_scheduling.findOne({
+                        where: {id: msg.id},
+                        include: [{
+                            model: model.content_plan_template,
+                                include:[{ model: model.player_list}]
+                        },{
+                            model : model.answer
+                        }]
+                    }).then(function(response) {
+                        var data = {
+                            data: response,
+                            action: 'sent'
+                        }
+                        process.io.emit('question_expired:' + response.contentPlanTemplateId,data)
+                    });
+
+                });
+            }
+        });
+    });
+});
+
 router.get('/get/:id', function(req, res, next) {
     model.question_scheduling.findOne({
         where: {id: req.params.id },
         include : [{model : model.question},
-        {model : model.content_plan_template}]
+                    {model : model.content_plan_template},{
+                        model : model.answer
+                }]
     }).then(function(scheduled_question) {
         res.send(scheduled_question);
     });

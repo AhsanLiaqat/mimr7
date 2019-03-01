@@ -1,0 +1,49 @@
+<div class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none;">
+              <button type="button" class="close" ng-click="close()">&times;</button>
+            </div>
+            <div class="modal-body" style="padding-top: 0px !important;">
+                <div class="form-group" ng-hide = "decider == 'Answered'">
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Questions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show = "records.length" ng-repeat="ques in records">
+                                <td ng-bind-html = "ques.question.name"></td>
+                            </tr>
+                            <tr ng-show = "!records.length">
+                                <td>No Question Present</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-group" ng-show = "decider == 'Answered'">
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Questions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show = "records.length" ng-repeat="ques in records">
+                                <td ng-bind-html = "ques.answer.text"></td>
+                            </tr>
+                            <tr ng-show = "!records.length">
+                                <td>No Question Present</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <div class="modal-footer">
+                    <button class="btn btn-info" ng-click="close()" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -113,11 +113,17 @@
                                     title="Send Content">
                                     <span class="glyphicon glyphicon-play"></span>
                                 </a>
-                                 <a href="#/active-contents/{{game.id}}"
+                                <a href="#/active-contents/{{game.id}}"
                                     ng-if = "gamesSelected == 'active' || gamesSelected == 'stop'"
                                    class="btn btn-success"
                                    title="See Details">
                                     <span class="fa fa-list"></span>
+                                </a>
+                                <a href="#/question-responses/{{game.id}}"
+                                    ng-if = "gamesSelected == 'active' || gamesSelected == 'stop'"
+                                   class="btn btn-success"
+                                   title="See User Responses">
+                                    <span class="fa fa-inbox"></span>
                                 </a>
                                 <a class="btn btn-danger"
                                    title="Remove Scheduled Game"

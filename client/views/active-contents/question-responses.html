@@ -1,0 +1,83 @@
+<div class="page" ng-controller="questionResponsesCtrl">
+    <section class="panel panel-default">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-sm-3">
+                    Question Responses Details
+                    <br>
+                </div>
+
+                <div class="col-sm-6 text-center">
+                    <div class="text-center">
+                        Content started At : :
+                        <timer start-time=time>{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+           
+        <div class="panel-body">
+            <div class="container">
+              
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active"><a data-toggle="tab" data-target="#rounds" href="">User Responses</a></li>
+                </ul>
+
+              <div class="tab-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <br><br>
+                            <table class="table table-bordered table-striped table-responsive">
+                                <thead>
+                                <tr>
+                                    <th>Users</th>
+                                    <th>Question</th>
+                                    <th>Sent</th>
+                                    <th>Active</th>
+                                    <th>Answered</th>
+                                    <th>Expired</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="ques in playerDetail.player_list.users">
+                                    <td>
+                                        {{ques.firstName}} {{ques.lastName}}
+                                    </td>
+                                    <td>
+                                        <a href="" ng-click = "detailsQuestions('question',ques)">
+                                            {{ques.question_schedulings.length}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="" ng-click = "detailsQuestions('sent',ques)">
+                                            {{(ques.question_schedulings | filter : { activated: true }).length}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="" ng-click = "detailsQuestions('active',ques)">
+                                            {{(ques.question_schedulings | filter : { activated: false }).length}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="" ng-click = "detailsQuestions('Answered',ques)">
+                                            {{ques.answerQuestions}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="" ng-click = "detailsQuestions('expired',ques)">
+                                            {{(ques.question_schedulings | filter : { answer : null,status : true}).length}}
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>  
+        </div>
+    </section>
+</div>
