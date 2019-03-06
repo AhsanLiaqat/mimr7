@@ -130,6 +130,12 @@ router.post('/save', function(req, res, next) {
 
 });
 
+router.get('/all-messages', function(req, res, next) {
+    model.message.findAll().then(function(msg) {
+        res.send(msg);
+    });
+});
+
 router.delete('/remove/:id', function(req, res, next) {
     var id = req.params.id;
     model.message.findOne({where : {id : id}}).then(function(result){

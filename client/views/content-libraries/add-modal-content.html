@@ -1,0 +1,46 @@
+<div class="modal fade" role="dialog">
+    <div id="modal-dialog" class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" id="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"  id="modal-title">Add Content</h4>
+
+            </div>
+            <div class="modal-body modal_big_height">
+                <section class="panel panel-default modal_third_cal">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="home" class="tab-pane fade in active">
+                                    <div class="form-group">
+                                        <label>Text</label>
+                                        <br><!-- <span style="color: red" title="Required"> *</span> -->
+                                        <textarea froala="froalaOptions" ng-model="data.text"></textarea>
+                                        
+                                    </div>
+                                    <br>
+                                    <div class="chosen-full-container play-game-client" style="margin: 5px;">
+                                        <label>Articles </label>
+                                        <select chosen
+                                                ng-model="articleId"
+                                                ng-change = "getChaptersList()"
+                                                ng-options="article.id as article.title for article in articles">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-success" ng-click="save()" style="float:right">
+                    <span>Save</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

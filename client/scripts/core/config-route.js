@@ -126,6 +126,8 @@
 		.when('/home', { templateUrl: 'views/home.html' })
         .when('/article-libraries/:gamePlanId?', { templateUrl: 'views/content-libraries/list.html' })
         .when('/message-libraries/:gamePlanId?', { templateUrl: 'views/content-messages/list.html' })
+        .when('/content/question-libraries', { templateUrl: 'views/content-libraries/question-libraries.html' })
+        .when('/content/content-libraries', { templateUrl: 'views/content-libraries/content-library.html' })
         .when('/settings/users', { templateUrl: 'views/settings/users/list.html' })
         .when('/settings/users/add', { templateUrl: 'views/settings/users/add.html' })
         .when('/settings/users/edit', { templateUrl: 'views/settings/users/edit.html' })
@@ -342,6 +344,14 @@
                         case '/message-libraries/:gamePlanId?':
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Messages';
+                            break;
+                        case '/content/question-libraries':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Questions';
+                            break;
+                        case '/content/content-libraries':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Contents';
                             break;
                         case '/active-contents/:gameId':
                             $rootScope.breadcrumb_2 = false;

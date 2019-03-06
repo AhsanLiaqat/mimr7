@@ -12,10 +12,39 @@ router.get('/get/:id', function(req, res, next) {
     });
 });
 
+router.get('/all', function(req, res, next) {
+    model.chapter.findAll().then(function(chapt) {
+        res.send(chapt);
+    });
+});
+
 router.post('/save', function(req, res, next) {
     var record = req.body.data;
     model.chapter.create(record).then(function (chap) {
         res.send(chap);
+    });
+});
+
+router.post('/update/:id',function(req,res,next){
+    model.chapter.update(req.body.data,{where: { id : req.params.id }})
+    .then(function(result) {
+        model.chapter.findOne({
+            where: {id: req.params.id}
+        }).then(function(response) {
+            res.send(response);
+        });
+    });
+
+});
+
+router.delete('/delete/:id', function(req, res, next) {
+    var id = req.params.id;
+    model.chapter.destroy({where: {id: id}}).then(function(response) {
+        res.send({success:true, msg:response.toString()});
+    },function(response){
+        model.chapter.update({isDeleted:true},{where: {id: id}}).then(function(response) {
+            res.send({success:true, msg:response.toString()});
+        })
     });
 });
 

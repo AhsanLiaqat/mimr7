@@ -18,13 +18,6 @@ router.get('/get/:id', function(req, res, next) {
     });
 });
 
-router.get('/all/:id', function(req, res, next) {
-    model.question.findAll({
-        where: {messageId: req.params.id}}).then(function(result) {
-        res.send(result);
-    });
-});
-
 router.post('/save', function(req, res, next) {
     var data = req.body.data;
     model.question.create(data).then(function(question) {
@@ -37,6 +30,12 @@ router.get('/one/:id', function(req, res, next) {
         where: {id: req.params.id},
         include : [{model : model.answer}]
     }).then(function(result) {
+        res.send(result);
+    });
+});
+
+router.get('/all-questions', function(req, res, next) {
+    model.question.findAll().then(function(result) {
         res.send(result);
     });
 });
@@ -62,6 +61,13 @@ router.post('/update/:id',function(req,res,next){
         });
     });
 
+});
+
+router.get('/all/:id', function(req, res, next) {
+    model.question.findAll({
+        where: {messageId: req.params.id}}).then(function(result) {
+        res.send(result);
+    });
 });
 
 module.exports = router;
