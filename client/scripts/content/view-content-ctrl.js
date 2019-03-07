@@ -42,15 +42,19 @@
                     $(".questions-wrapper").removeClass("questions-wrapper-bg");
                 });
             }else{
-                $scope.data.articleId = $scope.articleId;
-                $http.post('/messages/save',{data : $scope.data})
-                .then(function(res){
-                    $scope.data = res.data;
-                    $scope.message.push(res.data);
-                    toastr.success('Message Added.', 'Success!');
-                    $(".add-query").removeClass("slide-div");
-                    $(".questions-wrapper").removeClass("questions-wrapper-bg");
-                });
+                if($scope.data.content){
+                    $scope.data.articleId = $scope.articleId;
+                    $http.post('/messages/save',{data : $scope.data})
+                    .then(function(res){
+                        $scope.data = res.data;
+                        $scope.message.push(res.data);
+                        toastr.success('Message Added.', 'Success!');
+                        $(".add-query").removeClass("slide-div");
+                        $(".questions-wrapper").removeClass("questions-wrapper-bg");
+                    });
+                }else{
+                    toastr.error('Enter All Fields');
+                }
             }
                 
         };
