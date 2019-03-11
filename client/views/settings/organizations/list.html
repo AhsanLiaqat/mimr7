@@ -43,13 +43,16 @@
                             <a href="#/settings/organizations/details/{{record.id}}" class="btn btn-sm btn-primary">
                                 Employees
                             </a>
+                            <a href="#/organizations/students/details/{{record.id}}" class="btn btn-sm btn-primary">
+                                Students
+                            </a>
                             <a class="btn btn-sm btn-info" title="Add Player List" ng-click = "addPlayerList(record.id)">
                                 <span class="glyphicon glyphicon-plus"></span>
                             </a>
                             <a href="#/settings/organizations/edit/{{record.id}}" class="btn btn-sm btn-info">
                                 <span class="glyphicon glyphicon-edit"></span>
                             </a>
-                            <a class="btn btn-danger btn-sm" ng-click="deleteOrganization(record, $index)">
+                            <a class="btn btn-danger btn-sm" ng-click="deleteOrganization(record.id, $index)">
                                 <span class="glyphicon glyphicon-remove-sign"></span>
                             </a>
                         </td>

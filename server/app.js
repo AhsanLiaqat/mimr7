@@ -84,6 +84,7 @@ app.use('/users', require('./routes/users'));
 app.use('/settings/locations', require('./routes/settings/locations.js'));
 app.use('/chapters', require('./routes/chapter.js'));
 app.use('/settings/organizations', require('./routes/settings/organizations.js'));
+app.use('/settings/students', require('./routes/settings/students.js'));
 app.use('/settings/player-lists', require('./routes/settings/player-list.js'));
 app.use('/content-plan-templates', require('./routes/content-plan-template.js'));
 app.use('/question-scheduling', require('./routes/question-scheduling.js'));

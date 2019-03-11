@@ -1,0 +1,72 @@
+<div class="page" ng-controller="studentsDetailCtrl">
+    <section class="panel panel-default">
+        <div class="panel-heading">
+            <strong>
+        	<span class="glyphicon glyphicon-th"></span> {{organizations.name}}</strong>
+            <div class="pull-right header-buttons">
+                <a href="#/settings/organizations" class="btn btn-info btn-sm">Back</a>
+                <a href="" ng-click = "addStudent()" class="btn btn-success btn-sm">New Student</a>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table st-pipe="studentTable" st-table="roles" class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th st-sort="name">Name</th>
+                        <th st-sort="email">Email</th>
+                        <th st-sort="mobilePhone">Mobile Number</th>
+                        <th> Actions </th>
+                    </tr>
+                    <tr>
+                     <th>
+                        <input class="form-control" placeholder="Search Name" st-search="firstName"/>
+                    </th>
+                    <th>
+                    <input class="form-control" placeholder="Search Email" st-search="email"/>
+                    </th>
+                    <th>
+                        <input class="form-control" placeholder="Search mobilePhone" st-search="mobilePhone"/>
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="record in organizationsToShow">
+                        <td>{{record.name}}</td>
+                        <td>{{record.email}}</td>
+                        <td>{{record.mobilePhone}}</td>
+                        <td>
+                            <a href="" ng-click = "editStudent(record,$index)" class="btn btn-sm btn-info">
+                            	    <span class="fa fa-pencil-square-o"></span>
+                                </a>
+                            <a href="" ng-click="deleteStudent(record.id, $index)" class="btn btn-sm btn-danger" confirm="Are you sure you want to delete?">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </a>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+                <tbody ng-show="isLoading">
+                  <tr>
+                    <td colspan="4" class="text-center">Loading ... </td>
+                </tr>
+            </tbody>
+            <tfoot class="table table-striped table-responsive">
+              <tr>
+                <td class="text-center" st-pagination="" st-items-by-page="pageItems" colspan="7">
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="col-md-3">
+      <select class="form-control"
+      ng-model="pageItems"
+      ng-options="item.val as item.name for item in items"
+      ng-selected="item.val === pageItems">
+  </select>
+</div>
+        </div>
+    </section>
+</div>

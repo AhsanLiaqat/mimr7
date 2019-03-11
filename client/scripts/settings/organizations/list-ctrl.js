@@ -67,36 +67,12 @@
             });
         };
 
-        $scope.deleteOrganization = function (org,index) { // tick
-            ModalService.showModal({
-                templateUrl: "views/incidents/delete-incident-popup.html",
-                controller: "removeIncidentCtrl"
-            }).then(function (modal) {
-                modal.element.modal({ backdrop: 'static', keyboard: false });
-                modal.close.then(function (result) {
-                    console.log(result);
-                    if(result != undefined && result.answer === '87654321'){
-                        OrganizationService.remove(org.id).then(function(res){
-                            toastr.success("Delete Organization Successful");
-                            $scope.organizations.splice(index,1);
-                        },function(err){
-                            if(err)
-                                toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
-                            else
-                                toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
-                        });
-                        // $http.post('/api/incidents/delete', { id:  incidentId }).then(function (res) {
-                            
-                        // });
-                    }else{
-                        toastr.error('Incident not deleted, Try again!');
-                    }
-                    $('.modal-backdrop').remove();
-                    $('body').removeClass('modal-open');
+        $scope.deleteOrganization = function (id, index) {
+            $http.delete('/settings/organizations/remove/' + id)
+                .then(function(res){
+                   $scope.organizations.splice(index, 1);
                 });
-            });
-
-        }
+        };
 
         $scope.dateFormat = function(dat){
             return moment(dat).utc().local().format('HH:mm DD-MM-YYYY');

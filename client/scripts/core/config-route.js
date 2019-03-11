@@ -134,6 +134,7 @@
         .when('/settings/organizations', { templateUrl: 'views/settings/organizations/list.html' }) 
         .when('/settings/organizations/edit/:id?', { templateUrl: 'views/settings/organizations/form.html' })
         .when('/settings/organizations/details/:id', { templateUrl: 'views/settings/organizations/details.html' })
+        .when('/organizations/students/details/:OrgId', { templateUrl: 'views/settings/organizations/students-details.html' })
         .when('/settings/organizations/:OrgId/users/:id?', { templateUrl: 'views/settings/organizations/user.html' })
         .when('/settings/player-lists', { templateUrl: 'views/settings/player-lists/list.html' })
         .when('/active-contents/:gameId', { templateUrl: 'views/active-contents/details.html' })
@@ -433,6 +434,13 @@
                             $rootScope.breadcrumb_2Heading = 'External Organizations';
                             $rootScope.breadcrumb_2Link = 'settings/organizations';
                             $rootScope.breadcrumb_3Heading = 'Users';
+                            break;
+                        case '/organizations/students/details/:OrgId':
+                            $rootScope.breadcrumb_3 = true;
+                            $rootScope.breadcrumb_1Heading = 'Settings';
+                            $rootScope.breadcrumb_2Heading = 'External Organizations';
+                            $rootScope.breadcrumb_2Link = 'settings/organizations';
+                            $rootScope.breadcrumb_3Heading = 'Students';
                             break;
 
                         case '/superadmin':

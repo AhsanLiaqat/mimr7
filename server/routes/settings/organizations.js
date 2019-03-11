@@ -10,7 +10,8 @@ router.get('/get/:id', function(req, res, next) {
         include:[{
             model: model.player_list,
                 include : [{model : model.user}]
-        },{model :model.user}]
+        },{model :model.user},
+        {model : model.student}]
     }).then(function(response) {
         res.send(response);
     });
@@ -27,7 +28,6 @@ router.get('/all', function(req, res, next) {
         model: model.user,
         require: false
     }]}).then(function(response) {
-        console.log('----------',response)
         res.send(response);
     });
 });
