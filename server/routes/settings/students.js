@@ -8,6 +8,13 @@ router.get('/get/:id', function(req, res, next) {
     });
 });
 
+router.get('/all', function(req, res, next) {
+    let condition = (req.query.id !== "All Students") ? {organizationId: req.query.id}: {};
+    model.student.findAll({where: condition}).then(function(std) {
+        res.send(std);
+    });
+});
+
 router.get('/all-students/:id', function(req, res, next) {
     model.student.findAll({ where: {organizationId: req.params.id,isDeleted:false}}).then(function(response) {
         res.send(response);

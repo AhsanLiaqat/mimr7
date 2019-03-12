@@ -127,8 +127,6 @@
                         $scope.managearray($scope.selected);
                     });
                 });
-                    
-                
             };
         }
 

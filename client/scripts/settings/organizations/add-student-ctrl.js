@@ -8,12 +8,17 @@
         $scope.init = () => {
             $scope.studentId = studentId;
             $scope.organizationId = organizationId;
+            $scope.user = Query.getCookie('user');
             if($scope.studentId){
                 $http.get('settings/students/get/' + $scope.studentId)
                 .then(function(res){
                     $scope.data = res.data;
+                    $scope.organizationId = $scope.data.organizationId;
                 });    
             }
+            $http.get('/settings/organizations/all?userAccountId=' + $scope.user.userAccountId).then(function(response) {
+                $scope.organizations = response.data;
+            });
         }
         $scope.init();
 
@@ -40,13 +45,17 @@
                     if(res.data.id){
                         toastr.error('Students Aleardy Exist with Email provided!');
                     }else{
-                        $scope.data.organizationId = $scope.organizationId;
-                        $http.post('/settings/students/save',{data : $scope.data})
-                        .then(function(res){
-                            $scope.data = res.data;
-                            toastr.success('Students Added.', 'Success!');
-                            close(res.data);
-                        });
+                        if($scope.organizationId){
+                            $scope.data.organizationId = $scope.organizationId;
+                            $http.post('/settings/students/save',{data : $scope.data})
+                            .then(function(res){
+                                $scope.data = res.data;
+                                toastr.success('Students Added.', 'Success!');
+                                close(res.data);
+                            });
+                        }else{
+                            toastr.error('please enter all fields');
+                        }
                     }
                 });
                 

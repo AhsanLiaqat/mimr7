@@ -27,6 +27,13 @@
                                         <label>Mobile Number</label>
                                         <input ng-model="data.mobilePhone" class="form-control" id="phone"></input>
                                     </div>
+                                    <div class="form-group">
+                                        <label>Organizations</label>
+                                        <div class="form-group chosen-full-container" style="margin-bottom:10px;">
+                                            <select chosen ng-model="organizationId" ng-options = "item.id as item.name for item in organizations" ng-disabled = "organizationId">
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
