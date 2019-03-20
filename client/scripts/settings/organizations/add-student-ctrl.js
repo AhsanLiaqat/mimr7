@@ -31,11 +31,20 @@
                         toastr.error('Students Aleardy Exist with Email provided!');
                     } else {
                         $scope.data.organizationId = $scope.organizationId;
+                        $scope.data.type = 'student';
+                        $scope.data.password = '12345678';
                         $http.post('/settings/students/update/' + $scope.studentId,{data : $scope.data})
                         .then(function(res){
-                            $scope.data = res.data;
+                            $scope.rslt = res.data;
+                            let answerQuestions = 0;
+                            angular.forEach($scope.rslt.question_schedulings,function(item){
+                                if(item.answer){
+                                    answerQuestions++;
+                                }
+                            });
+                            $scope.rslt.answerQuestions = answerQuestions;
                             toastr.success('Students Updated.', 'Success!');
-                            close(res.data);
+                            close($scope.rslt);
                         });
                     }
                 });
@@ -47,11 +56,14 @@
                     }else{
                         if($scope.organizationId){
                             $scope.data.organizationId = $scope.organizationId;
+                            $scope.data.type = 'student';
+                            $scope.data.password = '12345678';
                             $http.post('/settings/students/save',{data : $scope.data})
                             .then(function(res){
-                                $scope.data = res.data;
+                                $scope.result = res.data;
+                                $scope.result.answerQuestions = 0;
                                 toastr.success('Students Added.', 'Success!');
-                                close(res.data);
+                                close($scope.result);
                             });
                         }else{
                             toastr.error('please enter all fields');

@@ -29,6 +29,7 @@ module.exports = function(sequelize, DataTypes) {
         latestAlert : DataTypes.DATE,
         LastEmailActivation : DataTypes.DATE,
         LastUpdatePassword : DataTypes.DATE,
+        type : DataTypes.STRING,
         enabled: {
             type: DataTypes.BOOLEAN,
             defaultValue: true

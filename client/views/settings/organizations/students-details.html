@@ -17,6 +17,9 @@
                         <th st-sort="name">Name</th>
                         <th st-sort="email">Email</th>
                         <th st-sort="mobilePhone">Mobile Number</th>
+                        <th st-sort="mobilePhone">Total Question</th>
+                        <th st-sort="mobilePhone">Answer</th>
+                        <th st-sort="mobilePhone">Expired</th>
                         <th> Actions </th>
                     </tr>
                     <tr>
@@ -29,26 +32,34 @@
                     <th>
                         <input class="form-control" placeholder="Search mobilePhone" st-search="mobilePhone"/>
                     </th>
+                    <th>
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                    </th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="record in studentToShow">
-                        <td>{{record.name}}</td>
+                        <td>{{record.firstName}}</td>
                         <td>{{record.email}}</td>
                         <td>{{record.mobilePhone}}</td>
+                        <td>{{record.question_schedulings.length}}</td>
+                        <td>{{record.answerQuestions}}</td>
+                        <td>
+                            {{(record.question_schedulings | filter : { answer : null,status : true}).length}}
+                        </td>
                         <td>
                             <a href="" ng-click = "editStudent(record,$index)" class="btn btn-sm btn-info">
                             	    <span class="fa fa-pencil-square-o"></span>
-                                </a>
+                            </a>
                             <a href="" ng-click="deleteStudent(record.id, $index)" class="btn btn-sm btn-danger" confirm="Are you sure you want to delete?">
                                     <span class="glyphicon glyphicon-remove-sign"></span>
-                                </a>
-
+                            </a>
                         </td>
-
                     </tr>
-
                 </tbody>
                 <tbody ng-show="isLoading">
                   <tr>

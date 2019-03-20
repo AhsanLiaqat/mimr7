@@ -164,7 +164,7 @@ router.post('/update-message-off-set/:id',function(req,res,next){
             record.activated = true;
             record.activatedAt = new Date();
         }
-        var toSave = new Date(comingDate.getTime() + secs*1000);
+        var toSave = new Date(comingDate.getTime() + secs*1000*60*60);
         record.setOffTime = toSave.toISOString();
         model.question_scheduling.update(record,{where: { id : req.params.id }})
         .then(function(result) {

@@ -33,6 +33,14 @@
                     $http.get('/settings/students/all?' + params).then(function (respp) {
                         $scope.selectoptions = $scope.selectoptions.concat($scope.org);
                         $scope.students = respp.data;
+                        angular.forEach($scope.students , function(user){
+                            user.answerQuestions = 0;
+                            angular.forEach(user.question_schedulings,function(item){
+                                if(item.answer){
+                                    user.answerQuestions++;
+                                }
+                            });
+                        });
                         $scope.students = _.sortBy($scope.students, function (o) { return new Date(o.name); });
                         $scope.isLoading = false;
                         if($routeParams.OrgId){
@@ -105,7 +113,6 @@
                 modal.element.modal( {backdrop: 'static',  keyboard: false });
                 modal.close.then(function(result) {
                     if(result){
-                        console.log('result',result)
                         $scope.studentToShow[index] = result;
                     }
                     $('.modal-backdrop').remove();
