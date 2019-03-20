@@ -160,39 +160,39 @@ router.post('/update-message-off-set/:id',function(req,res,next){
     }).then(function(gameMsg) {
         var comingDate = new Date(record.setOffTime)
         var secs = gameMsg.offset
-        if(secs <= 60){
-            record.activated = true;
-            record.activatedAt = new Date();
-        }
+        // if(secs <= 60){
+        //     record.activated = true;
+        //     record.activatedAt = new Date();
+        // }
         var toSave = new Date(comingDate.getTime() + secs*1000*60*60);
         record.setOffTime = toSave.toISOString();
         model.question_scheduling.update(record,{where: { id : req.params.id }})
         .then(function(result) {
-            if(secs <= 60){
-                model.question_scheduling.findOne({
-                where: {id: req.params.id},
-                include: [{model : model.user}]
-            }).then(function(scheduled_question) {
-                // _.each(scheduled_question.content_plan_template.player_list.users, function (user){
-                    var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://mimr7-dev1.us-east-1.elasticbeanstalk.com/#/pages/content-questions' + '/' + scheduled_question.userId + '/' + scheduled_question.id;
-                    var mailOptions = {
-                        from: 'noreply@crisishub.co',
-                        to: scheduled_question.user.email,
-                        subject : 'not decided subject',
-                        html: link
-                    };
-                    mailServer.sendMail(mailOptions).then(function(response) {
-                        console.log("response," ,response);
-                        res.send(response);
-                    }, function(err) {
-                        res.send(err);
-                        console.log(err, ' error');
-                    });
-                // });
-            });
-            }else{
+            // if(secs <= 60){
+            //     model.question_scheduling.findOne({
+            //     where: {id: req.params.id},
+            //     include: [{model : model.user}]
+            // }).then(function(scheduled_question) {
+            //     // _.each(scheduled_question.content_plan_template.player_list.users, function (user){
+            //         var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://mimr7-dev1.us-east-1.elasticbeanstalk.com/#/pages/content-questions' + '/' + scheduled_question.userId + '/' + scheduled_question.id;
+            //         var mailOptions = {
+            //             from: 'noreply@crisishub.co',
+            //             to: scheduled_question.user.email,
+            //             subject : 'not decided subject',
+            //             html: link
+            //         };
+            //         mailServer.sendMail(mailOptions).then(function(response) {
+            //             console.log("response," ,response);
+            //             res.send(response);
+            //         }, function(err) {
+            //             res.send(err);
+            //             console.log(err, ' error');
+            //         });
+            //     // });
+            // });
+            // }else{
                 res.send(result);
-            }
+            // }
         });
     });
 });
