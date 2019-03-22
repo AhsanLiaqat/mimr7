@@ -17,9 +17,9 @@
         //fetch and set initial data
         function init() {
             $scope.cardsToShow = [
-                {name: 'Content Library',route: 'content',click: false},
-                {name: 'Scheduled Content',route: 'simulation/scheduled-games/1',click: false},
-                {name: 'Active Content',route: 'simulation/scheduled-games/2',click: false},
+                {name: 'Collections',route: 'content',click: false},
+                {name: 'Schedule',route: 'simulation/scheduled-games/1',click: false},
+                {name: 'Active',route: 'simulation/scheduled-games/2',click: false},
                 {name: 'Completed',route: 'simulation/scheduled-games/3',click: false}
             ]
             if (Query.getCookie('user')){

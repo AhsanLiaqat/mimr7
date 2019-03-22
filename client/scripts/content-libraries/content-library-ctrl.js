@@ -107,6 +107,23 @@
             });
         };
 
+        $scope.viewContent = function(record) {
+            ModalService.showModal({
+                templateUrl: "views/content-libraries/view-content-modal.html",
+                controller: "viewContentModalCtrl",
+                inputs : {
+                    content : record
+                }
+            }).then(function(modal) {
+                modal.element.modal( {backdrop: 'static',  keyboard: false });
+                modal.close.then(function(result) {
+                    
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
+            });
+        };
+
         //deletes message
         $scope.deleteContent = function (id, index) {
             $http.delete("/chapters/delete/" + id)

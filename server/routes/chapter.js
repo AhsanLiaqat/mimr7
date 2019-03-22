@@ -13,7 +13,9 @@ router.get('/get/:id', function(req, res, next) {
 });
 
 router.get('/all', function(req, res, next) {
-    model.chapter.findAll().then(function(chapt) {
+    model.chapter.findAll({
+        include : [{model : model.article}]
+    }).then(function(chapt) {
         res.send(chapt);
     });
 });

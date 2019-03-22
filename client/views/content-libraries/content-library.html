@@ -15,11 +15,15 @@
                 <thead>
                     <tr>
                         <th class="col-md-7" st-sort="name">Text</th>
-                        <th class="col-md-5">Actions</th>
+                        <th class="col-md-3" st-sort="name">Collection</th>
+                        <th class="col-md-2">Actions</th>
                     </tr>
                     <tr>
                         <th>
                             <input class="form-control" placeholder="Search Text" st-search="text"/>
+                        </th>
+                        <th>
+                            <input class="form-control" placeholder="Search Collection" st-search="article.title"/>
                         </th>
                         <th></th>
                     </tr>
@@ -28,12 +32,15 @@
                     <tr ng-repeat="record in chaptersToShow">
                         <td ng-bind-html= "record.text | displayString: 150">
                         </td>
+                        <td>{{record.article.title}}
+                        </td>
                         <td>
-                            <a title = "Edit Question" class="btn btn-sm btn-info" ng-click="editContent(record, $index)"><span class="fa fa-pencil-square-o"></span></a>
+                            <a title = "Edit Content" class="btn btn-sm btn-info" ng-click="editContent(record, $index)"><span class="fa fa-pencil-square-o"></span></a>
 
-                            <a title = "Delete Question" class="btn btn-danger btn-sm" ng-click="deleteContent(record.id, $index)" confirm="Are you sure you want to delete?">
+                            <a title = "Delete Content" class="btn btn-danger btn-sm" ng-click="deleteContent(record.id, $index)" confirm="Are you sure you want to delete?">
                                 <span class="glyphicon glyphicon-remove-sign"></span>
                             </a>
+                            <a title = "View Content" class="btn btn-sm btn-info" ng-click="viewContent(record, $index)"><span class="glyphicon glyphicon-eye-open"></span></a>
                         </td>
                     </tr>
                 </tbody>
@@ -42,7 +49,7 @@
                     <tr class="watermark-text-medium"
                         style="position: inherit; display: table-row; font-size: 30px;">
                         <td colspan="8">
-                            <p>No Question Present</p>
+                            <p>No Content Present</p>
                         </td>
                     </tr>
                 </tbody>

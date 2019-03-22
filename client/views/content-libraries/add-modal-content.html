@@ -13,13 +13,6 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div id="home" class="tab-pane fade in active">
-                                    <div class="form-group">
-                                        <label>Text</label>
-                                        <br><!-- <span style="color: red" title="Required"> *</span> -->
-                                        <textarea froala="froalaOptions" ng-model="data.text"></textarea>
-                                        
-                                    </div>
-                                    <br>
                                     <div class="chosen-full-container play-game-client" style="margin: 5px;">
                                         <label>Articles </label>
                                         <select chosen
@@ -28,6 +21,12 @@
                                                 ng-options="article.id as article.title for article in articles">
                                             <option value=""></option>
                                         </select>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <label>Text</label>
+                                        <br><!-- <span style="color: red" title="Required"> *</span> -->
+                                        <textarea froala="froalaOptions" ng-model="data.text"></textarea>
                                     </div>
                                 </div>
                             </div>

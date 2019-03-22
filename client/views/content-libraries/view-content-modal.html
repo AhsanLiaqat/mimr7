@@ -1,0 +1,18 @@
+<div class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none;">
+              <button type="button" class="close" ng-click="close()">&times;</button>
+            </div>
+            <div class="modal-body" style="padding-top: 0px !important;">
+                <div class="col-md-12">
+                    <div style="height: 400px; overflow-y: scroll;" class="form-control" ng-bind-html= "toTrustedHTML( content.text )" >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-info" ng-click="close()" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
