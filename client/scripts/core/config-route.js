@@ -119,6 +119,11 @@
             resolve: CountriesService.resolve,
             templateUrl: "views/settings/account.html",
         })
+        .when('/detail-content/:contentId', {
+            controller: "detailContentCtrl",
+            resolve: CountriesService.resolve,
+            templateUrl: "views/content/view-content.html",
+        })
         .when('/settings/users', { templateUrl: 'views/settings/users/list.html' })
         .when('/settings/users/add', { templateUrl: 'views/settings/users/add.html' })
         .when('/settings/users/edit', { templateUrl: 'views/settings/users/edit.html' })
@@ -142,7 +147,11 @@
         .when('/closed-contents', { templateUrl: 'views/schedule-content/list.html' })
         .when('/view-message/:messageId?', { templateUrl: 'views/content-messages/view-message.html' })
         .when('/view-scheduled-question/:contentId?', { templateUrl: 'views/schedule-content/view-scheduled-question.html' })
-        .when('/view-contents/:articleId?', { templateUrl: 'views/content/view-content.html' })
+        .when('/view-contents/:articleId?', {
+            controller : "viewContentCtrl",
+            resolve: CountriesService.resolve,
+            templateUrl: 'views/content/view-content.html', 
+        })
 
         // .when('/content-questions/:userId/:scheduled_questionId?', { templateUrl: 'views/simulation/schedule-content/content-questions.html' })
 
@@ -369,6 +378,10 @@
                         case '/view-contents/:articleId?':
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'View Contents';
+                            break;
+                        case '/detail-content/:contentId':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Detail Content';
                             break;
                         case '/closed-contents':
                             $rootScope.breadcrumb_2 = false;

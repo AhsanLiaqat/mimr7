@@ -9,6 +9,8 @@ module.exports = function(sequelize, DataTypes) {
         number: DataTypes.INTEGER,
         offset: DataTypes.INTEGER,
         type: DataTypes.STRING,
+        hint: DataTypes.TEXT,
+        solution: DataTypes.TEXT,
         isDeleted: {
             type: DataTypes.BOOLEAN,
             defaultValue: false

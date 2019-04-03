@@ -14,9 +14,9 @@
             <table st-pipe="QuestionsTable" st-table="msg" class="table table-bordered table-striped table-responsive">
                 <thead>
                     <tr>
-                        <th class="col-md-7" st-sort="name">Text</th>
+                        <th class="col-md-6" st-sort="name">Text</th>
                         <th class="col-md-3" st-sort="name">Collection</th>
-                        <th class="col-md-2">Actions</th>
+                        <th class="col-md-3">Actions</th>
                     </tr>
                     <tr>
                         <th>
@@ -40,7 +40,8 @@
                             <a title = "Delete Content" class="btn btn-danger btn-sm" ng-click="deleteContent(record.id, $index)" confirm="Are you sure you want to delete?">
                                 <span class="glyphicon glyphicon-remove-sign"></span>
                             </a>
-                            <a title = "View Content" class="btn btn-sm btn-info" ng-click="viewContent(record, $index)"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <a title = "Detail Content" class="btn btn-sm btn-info" ng-click="viewContent(record, $index)"><span class="glyphicon glyphicon-eye-open"></span></a>
+                            <a title = "View Content" class="btn btn-sm btn-info" href="/#/detail-content/{{record.id}}"><span class="glyphicon glyphicon-eye-close"></span></a>
                         </td>
                     </tr>
                 </tbody>

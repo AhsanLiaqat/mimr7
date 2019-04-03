@@ -1,11 +1,11 @@
-/*View - Content*/
-/*In this controller we implement functionality for view contents of articles*/
+/*Detail - Content*/
+/*In this controller we implement functionality for detail contents of articles*/
 /*Naveed Iftikhar*/
 (function () {
     'use strict';
 
     angular.module('app')
-        .controller('viewContentCtrl', ['$scope', '$routeParams', '$http', 'AuthService', 'Query', 'filterFilter','ModalService','$sce','$uibModal', addFunction]);
+        .controller('detailContentCtrl', ['$scope', '$routeParams', '$http', 'AuthService', 'Query', 'filterFilter','ModalService','$sce','$uibModal', addFunction]);
 
     function addFunction($scope, $routeParams, $http, AuthService, Query, filterFilter,ModalService,$sce,$uibModal) {
 
@@ -14,14 +14,18 @@
             $scope.contentShow = false;
             $scope.chapter = {};
             $scope.data = {};
-            $scope.articleId = $routeParams.articleId;
-            $http.get('messages/all?id=' + $routeParams.articleId).then(function(response){
-                $scope.message = response.data;
+            $scope.contentId = $routeParams.contentId;
+            $http.get('/chapters/get/' + $scope.contentId).then(function (respp) {
+                $scope.chapter = respp.data;
+                $scope.currentStatus = $scope.chapter;
+                $http.get('/articles/get/' + $scope.chapter.articleId).then(function(response){
+                    $scope.article = response.data;
+                });
+                $http.get('messages/all?id=' + $scope.chapter.articleId).then(function(response){
+                    $scope.message = response.data;
+                });
             });
-            $http.get('/articles/get/' + $routeParams.articleId).then(function(response){
-                $scope.article = response.data;
-                $scope.currentStatus = $scope.article.chapters[0];
-            });
+            
 
         }
 
@@ -30,12 +34,12 @@
         $scope.toggleMenu = (question) => {
             question.show = !question.show;
         }
-        $scope.addContent = () => {
-            $scope.contentShow = !$scope.contentShow;
-        }
+        // $scope.addContent = () => {
+        //     $scope.contentShow = !$scope.contentShow;
+        // }
         $scope.save = () => {
             if($scope.data.id){
-                $scope.data.articleId = $scope.message.articleId;
+                $scope.data.articleId = $scope.article.id;
                 $http.post('/messages/update',{data : $scope.data})
                 .then(function(res){
                     $(".add-query").removeClass("slide-div");
@@ -43,7 +47,7 @@
                 });
             }else{
                 if($scope.data.content){
-                    $scope.data.articleId = $scope.articleId;
+                    $scope.data.articleId = $scope.article.id;
                     $http.post('/messages/save',{data : $scope.data})
                     .then(function(res){
                         $scope.data = res.data;
@@ -59,26 +63,26 @@
                 
         };
 
-        $scope.saveContent = () => {
-            $scope.chapter.articleId = $scope.articleId;
-            $scope.chapter.name =  'chapter ' + ($scope.article.chapters.length + 1);
-            if($scope.chapter.text){
-                $http.post('/chapters/save',{data : $scope.chapter}).then(function(res){
-                    $scope.article.chapters.push(res.data);
-                    $scope.currentStatus = res.data;
-                    $scope.contentShow = false;
-                    $scope.chapter.name = '';
-                    $scope.chapter.text = '';
-                });
-            }else{
-                toastr.error('Enter All Fields');
-            }
-        }
+        // $scope.saveContent = () => {
+        //     $scope.chapter.articleId = $scope.articleId;
+        //     $scope.chapter.name =  'chapter ' + ($scope.article.chapters.length + 1);
+        //     if($scope.chapter.text){
+        //         $http.post('/chapters/save',{data : $scope.chapter}).then(function(res){
+        //             $scope.article.chapters.push(res.data);
+        //             $scope.currentStatus = res.data;
+        //             $scope.contentShow = false;
+        //             $scope.chapter.name = '';
+        //             $scope.chapter.text = '';
+        //         });
+        //     }else{
+        //         toastr.error('Enter All Fields');
+        //     }
+        // }
 
         $scope.changeStatus = (chap) => {
-            $http.get('/chapters/get/' + chap.id).then(function(res){
-                $scope.currentStatus = res.data;
-            });
+            // $http.get('/chapters/get/' + chap.id).then(function(res){
+                $scope.currentStatus = chap;
+            // });
         };
 
         $scope.edit = (question) => {

@@ -1,15 +1,15 @@
-<div class="page" ng-controller="viewContentCtrl">
+<div class="page">
     <div class="main-wrapper">
         <div class="row">
             <div class="col-sm-8">
-                <a href="" class="pull-right" style="margin : 10px" ng-click = "addContent()"><i class="fa fa-plus"></i> Add Content</a>
+                <a href="" class="pull-right" style="margin : 10px" ng-hide = "contentId" ng-click = "addContent()"><i class="fa fa-plus"></i> Add Content</a>
                 <div class="title-header">
                     <h3><span>Content</span>
                         <ul class="nav navbar-nav navbar-left incident-ul content-list">
                             <li class="dropdown">
                                 <a href="" data-target="" class="dropdown-toggle" data-toggle="dropdown">
                                     <span class="chapter-heading" ng-hide="currentStatus">Select Chapter <b class="caret"></b></span>
-                                    <span class="chapter-heading" ng-show="currentStatus">{{currentStatus.name}} <b class="caret"></b></span>
+                                    <span class="chapter-heading"  ng-show="currentStatus">{{currentStatus.name}} <b class="caret"></b></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li role="presentation" ng-repeat="chap in article.chapters">
