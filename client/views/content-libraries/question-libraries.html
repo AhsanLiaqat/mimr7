@@ -4,8 +4,8 @@
             <strong>
                 <span class="glyphicon glyphicon-th"></span> Questions
             </strong>
-            <!-- <select chosen ng-model="selected" ng-options = "item.id as item.title for item in selectoptions" ng-change = "managearray(selected)" ng-disabled = "gameIdFound">
-            </select> -->
+            <select chosen ng-model="selected" ng-options = "item.id as item.title for item in selectoptions" ng-change = "managearray(selected)">
+            </select>
             <div class="pull-right header-buttons">
                 <a ng-click="addQuestions()" class="btn btn-success btn-sm">New Question</a>
             </div>
@@ -33,7 +33,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="record in questions">
+                    <tr ng-repeat="record in questionsToShow">
                         <td ng-bind-html= "record.name | displayString: 150">
                         </td>
                         <td>{{record.number}}</td>

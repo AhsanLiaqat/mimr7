@@ -131,8 +131,9 @@
 		.when('/home', { templateUrl: 'views/home.html' })
         .when('/article-libraries/:gamePlanId?', { templateUrl: 'views/content-libraries/list.html' })
         .when('/message-libraries/:gamePlanId?', { templateUrl: 'views/content-messages/list.html' })
-        .when('/content/question-libraries', { templateUrl: 'views/content-libraries/question-libraries.html' })
+        .when('/content/question-libraries/:articleId?', { templateUrl: 'views/content-libraries/question-libraries.html' })
         .when('/content/content-libraries', { templateUrl: 'views/content-libraries/content-library.html' })
+        .when('/content/content-builder', { templateUrl: 'views/content/content-builder.html' })
         .when('/settings/users', { templateUrl: 'views/settings/users/list.html' })
         .when('/settings/users/add', { templateUrl: 'views/settings/users/add.html' })
         .when('/settings/users/edit', { templateUrl: 'views/settings/users/edit.html' })
@@ -147,11 +148,15 @@
         .when('/closed-contents', { templateUrl: 'views/schedule-content/list.html' })
         .when('/view-message/:messageId?', { templateUrl: 'views/content-messages/view-message.html' })
         .when('/view-scheduled-question/:contentId?', { templateUrl: 'views/schedule-content/view-scheduled-question.html' })
+        .when('/simple-scheduled-question/:contentId?', { templateUrl: 'views/schedule-content/simple-scheduled-question.html' })
         .when('/view-contents/:articleId?', {
             controller : "viewContentCtrl",
             resolve: CountriesService.resolve,
             templateUrl: 'views/content/view-content.html', 
         })
+
+        .when('/dynamic-form', { templateUrl: 'views/dynamic-form/list.html' }) //done
+        
 
         // .when('/content-questions/:userId/:scheduled_questionId?', { templateUrl: 'views/simulation/schedule-content/content-questions.html' })
 
@@ -355,7 +360,11 @@
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Messages';
                             break;
-                        case '/content/question-libraries':
+                        case '/content/content-builder':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Content Builder';
+                            break;
+                        case '/content/question-libraries/:articleId?':
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Questions';
                             break;
@@ -367,6 +376,10 @@
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Active Contents';
                             break;
+                        case '/dynamic-form':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Dynamic Forms';
+                            break;
                         case '/question-responses/:gameId':
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Question Responses';
@@ -374,6 +387,10 @@
                         case '/view-scheduled-question/:contentId?':
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Scheduled Questions';
+                            break;
+                        case '/simple-scheduled-question/:contentId?':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Simple Scheduled Messages';
                             break;
                         case '/view-contents/:articleId?':
                             $rootScope.breadcrumb_2 = false;

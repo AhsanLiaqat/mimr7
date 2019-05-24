@@ -17,6 +17,7 @@ module.exports = function(sequelize, DataTypes) {
         middleName: DataTypes.STRING,
         lastName: DataTypes.STRING,
         password:DataTypes.STRING,
+        active: DataTypes.STRING,
         role: DataTypes.STRING,
         lastLogin: DataTypes.DATE,
         title: DataTypes.STRING,

@@ -54,7 +54,7 @@ router.get('/play-content-summary/:id', function(req, res, next) {
             include : [{model : model.question,
                             include : [{model : model.message}]},
                         {model : model.user}]
-        }]
+        },{model : model.article}]
     }).then(function(contentPlanTmplate) {
         res.send(contentPlanTmplate);
     });

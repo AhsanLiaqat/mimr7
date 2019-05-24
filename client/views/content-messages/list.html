@@ -2,22 +2,22 @@
     <section class="panel panel-default">
         <div class="panel-heading">
             <strong>
-                <span class="glyphicon glyphicon-th"></span> Messages
+                <span class="glyphicon glyphicon-th"></span> Highlights
             </strong>
             <select chosen ng-model="selected" ng-options = "item.id as item.title for item in selectoptions" ng-change = "managearray(selected)" ng-disabled = "gameIdFound">
             </select>
             <div class="pull-right header-buttons">
-                <a ng-click="addModal()" class="btn btn-success btn-sm">New Message</a>
+                <a ng-click="addModal()" class="btn btn-success btn-sm">New Highlights</a>
             </div>
         </div>
         <div class="panel-body">
             <table st-pipe="messagesTable" st-table="msg" class="table table-bordered table-striped table-responsive">
                 <thead>
                     <tr>
-                        <th class="col-md-2" st-sort="name">Message Name</th>
+                        <th class="col-md-2" st-sort="name">Highlight Name</th>
                         <th class="col-md-2" st-sort="description">Description</th>
                         <th class="col-md-1" st-sort="order">Order</th>
-                        <th class="col-md-1" st-sort="description">Total Questions</th>
+                        <th class="col-md-1" st-sort="description">Total Messages</th>
                         <th class="col-md-3">Actions</th>
                     </tr>
                     <tr>
@@ -60,7 +60,7 @@
                     <tr class="watermark-text-medium"
                         style="position: inherit; display: table-row; font-size: 30px;">
                         <td colspan="8">
-                            <p>No Messages Present</p>
+                            <p>No Highlights Present</p>
                         </td>
                     </tr>
                 </tbody>

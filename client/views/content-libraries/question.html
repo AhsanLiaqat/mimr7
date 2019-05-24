@@ -34,10 +34,18 @@
                                         </div>
                                     </div>
                                     <div class="chosen-full-container play-game-client" style="margin: 5px;">
+                                        <label>Articles </label>
+                                        <select chosen
+                                                ng-model="articleId"
+                                                ng-change = "getMessageList()"
+                                                ng-options="article.id as article.title for article in articles">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="chosen-full-container play-game-client" ng-if = "articleId && article.type == 'subjectCollection'" style="margin: 5px;">
                                         <label>Messages </label>
                                         <select chosen
                                                 ng-model="data.messageId"
-                                                ng-change = "getArticleList()"
                                                 ng-options="message.id as message.content for message in messages">
                                             <option value=""></option>
                                         </select>

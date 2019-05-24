@@ -92,8 +92,11 @@ app.use('/settings/accounts', require('./routes/settings/accounts.js'));
 app.use('/articles', require('./routes/articles.js'));
 app.use('/article-libraries', require('./routes/article-libraries.js'));
 app.use('/messages', require('./routes/messages.js'));
+app.use('/responses', require('./routes/responses.js'));
 app.use('/questions', require('./routes/question.js'));
 app.use('/content-questions', require('./routes/content-questions.js'));
+app.use('/dynamic-form', require('./routes/dynamic-form.js'));
+
 
 
 

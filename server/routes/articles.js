@@ -5,7 +5,16 @@ var _ = require('underscore');
 var Q = require('q');
 
 router.get('/all', function(req, res, next) {
-    model.article.findAll({where: {userAccountId: req.user.userAccountId}}).then(function(users) {
+    model.article.findAll({
+        where: {userAccountId: req.user.userAccountId},
+            include : [{
+                model : model.message,
+                    include : [{
+                                model : model.question
+                            }
+                ]},
+                {model : model.chapter}]
+    }).then(function(users) {
         res.json(users);
     });
 });
@@ -15,6 +24,8 @@ router.get('/get/:id', function(req, res, next) {
         where: {id: req.params.id },
         include : [{
             model : model.chapter
+        },{
+            model : model.message
         }]
     }).then(function(article) {
         res.send(article);

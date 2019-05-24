@@ -49,17 +49,19 @@
                 <div class="card" style="background-color: rgba(255, 255, 255, 0.78) !important;">
                     <div class="card-content" style="position: relative;">
                         <div class="card-headline">
-
-                            <div>
+                            <div ng-if = "template.type == 'subjectCollection' || template.type == undefined">
+                                <h3 style="color: black;width: 42%" >{{template.title}}</h3>
+                            </div>
+                            <div ng-if = "template.type == 'reminderCollection'">
                                 <h3 style="color: black;width: 42%" >{{template.title}}</h3>
                             </div>
                         </div>
 
                         <div class="card-body">
                             <br>
-                            <div style="min-height: 50px;" class="text-center">
+                            <div style="min-height: 50px;" class="text-center" ng-if = "template.type == 'subjectCollection' || template.type == undefined">
 
-                                <a href="#/message-libraries/{{template.id}}" class="btn btn-sm color_black">Messages</a>
+                                <a href="#/message-libraries/{{template.id}}" class="btn btn-sm color_black">Highlights</a>
 
                                 <a href="#/article-libraries/{{template.id}}" class="btn btn-sm color_black">Documents & Media</a>
 
@@ -84,6 +86,28 @@
                                     <span class="glyphicon glyphicon-remove-sign"></span>
                                 </button>
 
+                            </div>
+                            <div style="min-height: 50px;" class="text-center" ng-if = "template.type == 'reminderCollection'">
+
+                                <a href="#/content/question-libraries/{{template.id}}" class="btn btn-sm color_black">Messages</a>
+                                
+                                <button title="Edit Game" class="btn btn-sm btn-info" style="position: absolute;right: 60px;top:0;" ng-click="editModal(template.id, $index)">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </button>
+
+                                <button title="Delete Plan" class="btn btn-sm btn-danger"
+                                 style="position: absolute;right: 10px;top:0;"
+                                        ng-click="delete($index,template)"
+                                        confirm = "Are you sure you want to DELETE  '{{template.title}}' ?">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </button>
+                                <button title="Schedule Content" class="btn btn-sm btn-success" style="position: absolute;right: 110px;top:0;" ng-click="scheduleContent(template)">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+
+                                <a href = "#/simple-scheduled-question/{{template.id}}" title="Question Scheduling" class="btn btn-success" style="position: absolute;right: 153px;top:-4px;">
+                                    <i class="fa fa-question-circle"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -129,7 +153,7 @@
                                    title="Remove Scheduled Game"
                                    ng-hide = "card.index == 2"
                                    ng-click="deleteScheduleContent(game, $index)"
-                                   confirm="Are you sure you want to delete?">
+                                   >
                                     <span class="glyphicon glyphicon-remove-sign"></span>
                                 </a>
                                 <a ng-click="editScheduleContent(game.id, $index)"

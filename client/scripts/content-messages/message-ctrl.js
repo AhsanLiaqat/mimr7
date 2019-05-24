@@ -221,26 +221,26 @@
             });
         };
 
-        $scope.addQuestions = function(record,index) {
-            var inputs = {
-                messageId : record.id,
-                articleId : record.articleId
-            };
-            ModalService.showModal({
-                templateUrl: "views/content-libraries/question.html",
-                controller: "newQuestionCtrl",
-                inputs: inputs
-            }).then(function(modal) {
-                modal.element.modal( {backdrop: 'static',  keyboard: false });
-                modal.close.then(function(result) {
-                    if(result){
-                        $scope.messageToShow[index].questions.push(result);
-                    }
-                    $('.modal-backdrop').remove();
-                    $('body').removeClass('modal-open');
-                });
-            });
-        };
+        // $scope.addQuestions = function(record,index) {
+        //     var inputs = {
+        //         messageId : record.id,
+        //         articleId : record.articleId
+        //     };
+        //     ModalService.showModal({
+        //         templateUrl: "views/content-libraries/question.html",
+        //         controller: "newQuestionCtrl",
+        //         inputs: inputs
+        //     }).then(function(modal) {
+        //         modal.element.modal( {backdrop: 'static',  keyboard: false });
+        //         modal.close.then(function(result) {
+        //             if(result){
+        //                 $scope.messageToShow[index].questions.push(result);
+        //             }
+        //             $('.modal-backdrop').remove();
+        //             $('body').removeClass('modal-open');
+        //         });
+        //     });
+        // };
 
         $scope.edit = function(message, index) {
             ModalService.showModal({

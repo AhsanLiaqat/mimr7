@@ -24,6 +24,17 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="exampleInputEmail1">Status</label>
+                                        <div class="form-group chosen-full-container">
+                                            <select chosen class="form-control" ng-model="data.active"
+                                                    data-placeholder-text-single="'Choose category'">
+                                              <option>Active</option>
+                                              <option>InActive</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label>Mobile Number</label>
                                         <input ng-model="data.mobilePhone" class="form-control" id="phone"></input>
                                     </div>

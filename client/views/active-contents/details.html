@@ -26,7 +26,7 @@
             <div class="container">
               
                 <ul class="nav nav-tabs nav-justified">
-                    <li class="active"><a data-toggle="tab" data-target="#rounds" href="">Scheduled Questions</a></li>
+                    <li class="active"><a data-toggle="tab" data-target="#rounds" href="">Scheduled Messages</a></li>
                 </ul>
 
               <div class="tab-content">
@@ -37,8 +37,8 @@
                             <table class="table table-bordered table-striped table-responsive">
                                 <thead>
                                 <tr>
-                                    <th>Message</th>
-                                    <th>Question</th>
+                                    <th ng-if = "playContent.article.type != 'reminderCollection'">Highlights</th>
+                                    <th>Messages</th>
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Status</th>
@@ -47,7 +47,7 @@
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="ques in playContent.question_schedulings">
-                                    <td>
+                                    <td ng-if = "playContent.article.type != 'reminderCollection'">
                                         <a ng-click = "showMessageDetail(ques)">
                                             {{ques.question.message.content | displayString : 25}}
                                         </a>

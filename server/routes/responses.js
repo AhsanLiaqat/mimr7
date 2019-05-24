@@ -12,16 +12,16 @@ var fs = require('fs');
 var s3Library = require('../lib/aws/s3').library;
 
 router.get('/get/:id', function(req, res, next) {
-    model.question.findAll({
-        where: {articleId: req.params.id}}).then(function(result) {
+    model.response.findOne({
+        where: {questionId: req.params.id}}).then(function(result) {
         res.send(result);
     });
 });
 
 router.post('/save', function(req, res, next) {
     var data = req.body.data;
-    model.question.create(data).then(function(question) {
-        res.send(question);
+    model.response.create(data).then(function(rslt) {
+        res.send(rslt);
     });
 });
 
@@ -41,21 +41,21 @@ router.get('/all-questions', function(req, res, next) {
     });
 });
 
-router.delete('/delete/:id', function(req, res, next) {
+router.delete('/remove/:id', function(req, res, next) {
     var id = req.params.id;
-    model.question.destroy({where: {id: id}}).then(function(response) {
+    model.response.destroy({where: {id: id}}).then(function(response) {
         res.send({success:true, msg:response.toString()});
     },function(response){
-        model.question.update({isDeleted:true},{where: {id: id}}).then(function(response) {
+        model.response.update({isDeleted:true},{where: {id: id}}).then(function(response) {
             res.send({success:true, msg:response.toString()});
         })
     });
 });
 
 router.post('/update/:id',function(req,res,next){
-    model.question.update(req.body.data,{where: { id : req.params.id }})
+    model.response.update(req.body.data,{where: { id : req.params.id }})
     .then(function(result) {
-        model.question.findOne({
+        model.response.findOne({
             where: {id: req.params.id}
         }).then(function(response) {
             res.send(response);

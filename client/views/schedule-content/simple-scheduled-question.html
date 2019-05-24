@@ -1,27 +1,11 @@
-<div class="page" ng-controller="viewMessageCtrl">
+<div class="page" ng-controller="simpleScheduledQuestionCtrl">
     <div class="main-wrapper">
         <div class="row">
             <div class="col-sm-8">
                 <div class="title-header">
-                    <h3><span>Highlights</span></h3>
+                    <h3><span>Scheduled Messages</span></h3>
                 </div>
-                <div class="main-content scroll-down">
-                    <div class="row time-date">
-                        <div class="col-sm-9">
-                            <h3>{{ message.createdAt | date : 'd MMMM y'}}</h3>
-                        </div>
-                        <div class="col-sm-3 text-right">
-                            <h5>{{ message.createdAt | date : 'h:mm a'}}</h5>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h3 ng-bind-html= "toTrustedHTML( message.content ) "></h3>
-                            <br>
-                            <p ng-bind-html= "toTrustedHTML( message.description )"></p>
-                        </div>
-                    </div>
-                </div>
+                <div ui-calendar="uiConfig.calendar" id="main-calendar" class="span8 calendar" ng-model = "eventSources"></div> 
             </div>
             <div class="col-sm-4">
                 <div class="title-header">
@@ -32,24 +16,24 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="message-listing-wrpper">
-                                    <div class="questions-section" ng-repeat = "question in questions track by $index">
+                                    <div id = "{{$index}}" class="questions-section" ng-repeat = "question in questions track by $index" ng-if = "!Ids.includes(question.id)">
                                         <a ng-click = "toggleMenu(question)" class="question-manage"><i class="fa fa-ellipsis-v"></i></a>
                                         <ul ng-if = "question.show">
                                             <li><a ng-click = "edit(question,$index)"><i class="fa fa-edit"></i> edit</a></li>
                                             <li><a ng-click = "delete(question.id,$index)"><i class="fa fa-trash"></i> delete</a></li>
                                         </ul>
-                                        Message # {{$index+1}}
+                                        Question # {{$index+1}}
                                         <div ng-bind-html= "toTrustedHTML( question.name )" ></div>
                                         <!-- <p>asdfskdjfkl asldf</p> -->
                                     </div>
                                     <div ng-if = !questions.length> 
-                                        <h3>No Message Present</h3>
+                                        <h3>No Question Present</h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="add-question">
-                            <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Message</a>
+                            <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Question</a>
                         </div>
                         <form class="add-query">
                             <a class="close"><i class="fa fa-times"></i></a>
@@ -79,12 +63,16 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <button type="submit" ng-click = "save()" class="btn btn-primary add-ques">Add Message</button>
+                                <button type="submit" ng-click = "save()" class="btn btn-primary add-ques">Add Question</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+
+
+
+
         </div>
         <div class="footer"></div>
     </div>
@@ -94,16 +82,6 @@ $(document).ready(function(){
     $("a[href='#']").click(function(e){
         e.preventDefault();
     });
-
-    // $('.question-manage').click(function(){
-    //     $(".questions-section ul").slideUp();
-    //     $(this).siblings("ul").slideToggle();
-    // });
-
-    // $(".add-question").click(function(){
-    //     $(".add-query").addClass("slide-div");
-    //     $(".questions-wrapper").addClass("questions-wrapper-bg");
-    // });
     $(".close").click(function(){
         $(".add-query").removeClass("slide-div");
         $(".questions-wrapper").removeClass("questions-wrapper-bg");

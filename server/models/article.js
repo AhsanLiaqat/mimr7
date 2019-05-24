@@ -7,6 +7,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         title: DataTypes.STRING,
         description: DataTypes.STRING,
+        type: DataTypes.STRING,
         text: DataTypes.TEXT,
         private: DataTypes.BOOLEAN,
         saleable: DataTypes.BOOLEAN,
@@ -25,6 +26,7 @@ module.exports = function(sequelize, DataTypes) {
                 article.hasMany(models.question);
                 article.hasMany(models.content_plan_template);
                 article.hasMany(models.article_library, {foreignKey: 'parentId'});
+                article.hasMany(models.response);
             }
         }
     });

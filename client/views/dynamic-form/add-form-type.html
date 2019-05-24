@@ -1,0 +1,34 @@
+<div class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content" style="height: 450px;overflow-y: scroll;">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="close()" >&times;</button>
+                <h4 class="modal-title">New Form Type</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Name</label> <span style="color: red" title="Required"> *</span>
+                    <input type="text" class="form-control" ng-model="data.name">
+                </div>
+
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" class="form-control" ng-model="data.description" >
+                </div>
+                <div class="form-group" >
+                    <label ng-if="!data.id">Multiple</label>
+                    <input type="radio" ng-model="data.multiple" value="true" ng-if="!data.id">
+                    <label ng-if="!data.id">Allow</label>
+                    <input type="radio" ng-model="data.multiple" value="false" ng-if="!data.id">
+                    <label ng-if="!data.id">Not Allow</label>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="close()" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-success" ng-click="submit()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

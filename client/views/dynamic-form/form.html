@@ -1,0 +1,176 @@
+<div class="modal fade" role="dialog">
+    <div id="modal-dialog" class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div id="modal-header" class="modal-header">
+                <button type="button" class="close" ng-click="close()" >&times;</button>
+                <h4 id="modal-title" class="modal-title">Create New Form</h4>
+            </div>
+
+            <form ng-submit = "submit(form)">
+                <div class="modal-body ">
+                    <div class="form-group col-md-12">
+                        <div class="col-md-12">
+                            <label>Name<span class="required-custom"> *</span></label>
+                            <input class="form-control" ng-model="form.name" required>
+                        </div>
+                        <div class="col-md-12">
+                            <label>Form Heading<span class="required-custom"> *</span></label>
+                            <input class="form-control" ng-model="form.heading" >
+                        </div>
+    					<!-- <div class="col-md-12">
+                            <label>Form Types<span class="required-custom"> *</span></label>
+                            <select class="select form-control" ng-change = "saveType(form.formTypeId)" ng-model="form.formTypeId" ng-options="f.id as f.name for f in formTypes" ng-selected="item.val === pageItems" required>
+    							<option value=""></option>
+                            </select>
+                        </div> -->
+                        <!-- <div class="col-md-12" ng-if = "saveTypeHelp('Help Questionnaire')">
+                            <label>Page Link<span class="required-custom"> *</span></label>
+                            <select class="select form-control" ng-model = "form.page_link" required>
+                                <option value="dashboard">Information Dashboard</option>
+                                <option value="home">Incident Page</option>
+                                
+                                <option value="actionPlanDashboardV2">Action Plan Dashboard</option>
+                            </select>
+                        </div> -->
+                        
+                        <div>
+                            <div ng-repeat="field in form.fields" class="form-group col-md-12">
+                                <h4 >Field</h4>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <input class="form-control" ng-model="field.label" placeholder="Label" required>
+                                    </div>
+                                    <div class="col-md-3" ng-if = "!saveTypeHelp('Help Questionnaire')" >
+                                        <input type="number" min = "0" class="form-control" ng-model="field.position" placeholder="position">
+                                    </div>
+                                    <div class="col-md-3" ng-if = "saveTypeHelp('Help Questionnaire')">
+                                        <select class="form-control" ng-model="field.helpType.position" required>
+                                            <option value="top">Top</option>
+                                            <option value="left">Left</option>
+                                            <option value="right">Right</option>
+                                            <option value="bottom">Bottom</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select class="form-control" ng-if = "!saveTypeHelp('Help Questionnaire')" ng-model="field.type" ng-options="fieldType.val as fieldType.name for fieldType in fieldTypes" ng-selected="item.val === pageItems" required>
+                                            <option value=""></option>
+                                        </select>
+                                        <div ng-if = "saveTypeHelp('Help Questionnaire')" class="row">
+                                            <div class="col-md-8 help-questionnaire-select">
+                                                <select chosen class="form-control"  ng-model="field.helpTypeId" ng-options="fieldType.id as fieldType.name for fieldType in pagesHelp[form.page_link]" ng-selected="item.val === pageItems" ng-change="checkFieldType(field)" required>
+                                                    <option value=""></option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-4" ng-if = "field.helpType">
+                                                <input class="form-control" type="color" ng-model="field.helpType.color">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type = "button" class="btn btn-sm btn-danger" ng-click="removeField($index)"><i class="fa fa-times"></i>Delete</button>
+                                    </div>
+                                </div>
+                              
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" froala="froalaOptions" rows="1" ng-model="field.description"
+                                        placeholder="Description"> </textarea>
+                                        <br>
+                                    </div>
+                                </div>
+                                <!-- <div class="row" ng-if = "saveTypeHelp('Help Questionnaire') && field.helpType">
+                                    <div class="col-md-8">
+                                        <textarea class="form-control" rows="1" ng-model="field.helpType.tooltip"
+                                        placeholder="Description"> </textarea>
+                                    </div>
+                                </div> -->
+                                <div class="row" ng-if = "saveTypeHelp('Incident Questionnaire')">
+                                    <div class="col-md-6">
+                                        Include Link?
+                                        <input type="checkbox" ng-model="field.link_present" ng-click="includeLink(field)"> 
+                                    </div>
+                                    <div class="col-md-6">
+                                        Include Checklist?
+                                        <input type="checkbox" ng-model="field.checklist_present"> 
+                                    </div>
+                                </div>
+                                <!-- <div class="row dynamic-form-selects" ng-if = "saveTypeHelp('Incident Questionnaire')">
+                                    <div class="col-md-6">
+                                        <div ng-show = "field.link_present">
+                                            <div class="form-group"> 
+                                                <label>Link Type</label>
+                                                <select chosen class="form-control" data-placeholder-text-single="'Select Checklist'" ng-model="field.link.type" ng-change="checkLinkType(field.link)" required>
+                                                        <option value="text">Page Link</option>
+                                                        <option value="function">Pop up Link</option>
+                                                </select>
+                                            </div>
+                                            <div ng-if = "field.link.type">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label>Name</label>
+                                                        <input class="form-control" ng-model="field.link.name" placeholder="Label" required>        
+                                                    </div>
+                                                    <div class="col-md-6 chosen-full-container ">
+                                                        <label>Link</label>
+
+                                                        <select ng-if = "field.link.type == 'text'" chosen class="form-control" style=" line-height: 5px" ng-model="field.link.address" required>
+                                                            <option value="dashboard">Dashboard</a></option> 
+                                                            <option value="home">Incident Page</a></option>
+                                                            <option value="incident-dashboard">Incident Dashboard</option>                                                           
+                                                            <option value="actionPlanDashboardV2">Action Plan</option>
+                                                        </select>
+                                                                                                 
+                                                        <select  ng-if = "field.link.type == 'function'" chosen class="form-control" style=" line-height: 5px" ng-model="field.link.address" required>
+                                                            <option value="alert_teams">Alert teams</a></option>
+                                                            <option value="sitrap">Sitrap</option>                                                   
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>Require Parameters</label>
+                                                        <input type="checkbox" ng-model="field.link.params" >        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" >
+                                        <div class="form-group chosen-full-container" ng-show = "field.checklist_present" >
+                                            <select chosen class="form-control" data-placeholder-text-single="'Select Checklist'" ng-model="field.checklist" ng-options="type.id as type.name for type in checklists">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div> -->
+    
+                                <div style="float: left;width: 100%;background: #efefef;" ng-show="field.type == SELECT_BOX || field.type == RADIO_BUTTON">
+                                    <div ng-repeat="option in field.options" >
+                                        <h5 class="col-md-12">Option</h5>
+                                        <div class="col-md-4">
+                                            <input class="form-control" ng-model="option.label" placeholder="Text">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input class="form-control" ng-model="option.value" placeholder="Value">
+                                        </div>
+                                        <button class="btn btn-sm btn-danger" type = "button" ng-click="removeOptions($parent.$index,$index)"><i class="fa fa-times"></i> Delete</button>
+                                    </div>
+                                    <button class="btn btn-sm btn-success" type = "button" ng-click="addOptions($index)"><i class="fa fa-plus"></i> Option</button>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-success" ng-click="addField()"><i class="fa fa-plus"></i> Add Field</button>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-sm btn-info" ng-click="close()" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-sm btn-success" type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

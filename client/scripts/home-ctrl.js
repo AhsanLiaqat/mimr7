@@ -167,13 +167,37 @@
             });
         };
 
-        $scope.deleteScheduleContent = function (card, index) {
-            $http.delete('/content-plan-templates/remove/' + card.id)
-            .then(function(res){
-                $scope.gameToShow.splice(index,1);
-                toastr.success('Content Template Deleted.', 'Success!');
+        // $scope.deleteScheduleContent = function (card, index) {
+        //     $http.delete('/content-plan-templates/remove/' + card.id)
+        //     .then(function(res){
+        //         $scope.gameToShow.splice(index,1);
+        //         toastr.success('Content Template Deleted.', 'Success!');
+        //     });
+        // };
+
+        $scope.deleteScheduleContent = function (card, index) { // tick
+            ModalService.showModal({
+                templateUrl: "views/content/delete-confirmation-popup.html",
+                controller: "removeContentCtrl"
+            }).then(function (modal) {
+                modal.element.modal({ backdrop: 'static', keyboard: false });
+                modal.close.then(function (result) {
+                    console.log(result);
+                    if(result != undefined && result.answer === '87654321'){
+                        $http.delete('/content-plan-templates/remove/' + card.id)
+                        .then(function(res){
+                            $scope.gameToShow.splice(index,1);
+                            toastr.success('Content Template Deleted.', 'Success!');
+                        });
+                    }else{
+                        toastr.error('Content not deleted, Try again!');
+                    }
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
             });
-        };
+
+        }
 
         $scope.sendQuestions = function(game){
             $http.get('/content-plan-templates/get/'+game.id).then(function(response) {

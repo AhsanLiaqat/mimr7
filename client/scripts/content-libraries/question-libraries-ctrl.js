@@ -16,15 +16,29 @@
         $scope.messageToShow = [];
 
         function init() {
-
             $scope.QuestionsTable = function (tableState) {
+                $scope.selectoptions.push({id: 0,title: 'All'});
                 $scope.isLoading = true;
                 $scope.tableState = tableState;
                 $scope.user = Query.getCookie('user');
-                $http.get('/questions/all-questions').then(function (respp) {
-                    $scope.questions = respp.data;
-                    $scope.isLoading = false;
-                    $scope.questions = $scope.paginate($scope.questions);
+                var params = 'id=';
+                $http.get('/articles/all').then(function (resp) {
+                    $scope.articles = resp.data;
+                    if($routeParams.articleId){
+                        params += $routeParams.articleId;
+                    }else{
+                        params += 'All Questions';
+                    }
+                    $http.get('/questions/all-questions?' + params).then(function (respp) {
+                        $scope.selectoptions = $scope.selectoptions.concat($scope.articles);
+                        $scope.questions = respp.data;
+                        $scope.isLoading = false;
+                        if($routeParams.articleId){
+                            $scope.selected = $routeParams.articleId;
+                        }
+                        $scope.questionsToShow =  angular.copy($scope.questions);
+                        $scope.managearray($scope.selected);
+                    });
                 });
             };
         }
@@ -46,18 +60,28 @@
             return result;
         }
 
+        $scope.managearray = function(id){
+            if(id == 0){
+                $scope.questionsToShow =  angular.copy($scope.questions);
+            }else{
+                $scope.questionsToShow = Query.filter($scope.questions , {articleId: $scope.selected},false);
+            }
+            $scope.questionsToShow = $scope.paginate($scope.questionsToShow);
+        }
+
         $scope.addQuestions = function() {
             ModalService.showModal({
                 templateUrl: "views/content-libraries/question.html",
                 controller: "newQuestionCtrl",
                 inputs : {
-                    questionId : null
+                    questionId : null,
+                    articleId : $routeParams.articleId || $scope.selected
                 }
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });
                 modal.close.then(function(result) {
                     if(result){
-                        $scope.questions.push(result);
+                        $scope.questionsToShow.push(result);
                     }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
@@ -70,13 +94,14 @@
                 templateUrl: "views/content-libraries/question.html",
                 controller: "newQuestionCtrl",
                 inputs : {
-                    questionId : record.id
+                    questionId : record.id,
+                    articleId : $routeParams.articleId || $scope.selected
                 }
             }).then(function(modal) {
                 modal.element.modal( {backdrop: 'static',  keyboard: false });
                 modal.close.then(function(result) {
                     if(result){
-                        $scope.questions[index] = result;
+                        $scope.questionsToShow[index] = result;
                     }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
@@ -87,7 +112,7 @@
         $scope.deleteQuestion = function (id, index) {
             $http.delete("/questions/delete/" + id)
                 .then(function(res){
-                   $scope.questions.splice(index, 1);
+                   $scope.questionsToShow.splice(index, 1);
                 });
         };
 

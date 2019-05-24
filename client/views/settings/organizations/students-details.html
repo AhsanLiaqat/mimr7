@@ -17,6 +17,7 @@
                         <th st-sort="name">Name</th>
                         <th st-sort="email">Email</th>
                         <th st-sort="mobilePhone">Mobile Number</th>
+                        <th st-sort="status">Status</th>
                         <th st-sort="mobilePhone">Total Question</th>
                         <th st-sort="mobilePhone">Answer</th>
                         <th st-sort="mobilePhone">Expired</th>
@@ -33,6 +34,10 @@
                         <input class="form-control" placeholder="Search mobilePhone" st-search="mobilePhone"/>
                     </th>
                     <th>
+                        <input class="form-control" placeholder="Search Status"
+                        st-search="active"/>
+                    </th>
+                    <th>
                     </th>
                     <th>
                     </th>
@@ -46,6 +51,14 @@
                         <td>{{record.firstName}}</td>
                         <td>{{record.email}}</td>
                         <td>{{record.mobilePhone}}</td>
+                        <td>
+                          <a href="" class="btn btn-sm btn-success" ng-show="record.active === 'Active'">
+                              Active
+                          </a>
+                          <a href="" class="btn btn-sm btn-info" ng-show="record.active === 'InActive'">
+                              InActive
+                          </a>
+                      </td>
                         <td>{{record.question_schedulings.length}}</td>
                         <td>{{record.answerQuestions}}</td>
                         <td>
