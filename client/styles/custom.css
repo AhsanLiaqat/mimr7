@@ -346,3 +346,45 @@ body{
   /*border: 3px solid rgb(204, 204, 204);*/
   background-color: rgb(204, 204, 204)
 }
+.student_image{
+    top: 26px;
+    position: relative;
+    width: 61px;
+    height: 0px;
+    left: 58px;
+}
+.class_image{
+    top: 31px;
+    position: relative;
+    width: 17px;
+    height: 0px;
+    left: 73px
+}
+.playerlist_image{
+    margin-right: 8px;
+    width: 18px;
+    margin-bottom: 5px;
+}
+.collections_image{
+    margin-right: 5px;
+    margin-bottom: 4px;
+    width: 16px;
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(21deg) brightness(97%) contrast(103%);
+}
+.organization_image{
+    margin-right: 8px;
+    margin-bottom: 3px;
+    width: 18px;
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(21deg) brightness(97%) contrast(103%);
+}
+
+.employees_image{
+    margin-right: 8px;
+    margin-bottom: 2px
+}
+.students_btn{
+    background-color: #07988b !important;
+}
+.calendar_icon{
+    margin-right: 5px;
+}

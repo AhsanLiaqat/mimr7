@@ -46,7 +46,16 @@ router.post('/save', function(req, res, next) {
     var record = req.body.data;
     record.userAccountId = req.user.userAccountId;
     model.player_list.create(record).then(function(response) {
-        res.send(response);
+        model.player_list.findOne({
+            where : {id : response.id},
+                include : [{
+                    model : model.organization
+                },{
+                    model : model.user
+                }]
+        }).then(function(response) {
+            res.send(response);
+        });
     });
 });
 

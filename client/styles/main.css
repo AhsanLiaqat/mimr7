@@ -3079,6 +3079,11 @@ body {
     position: relative;
 }
 
+.add_org{
+    margin-right: 19px;
+    position: relative;
+}
+
 .page-dashboard .placeholder{
 	border: 1px #000 dashed;
 	padding: 20px;

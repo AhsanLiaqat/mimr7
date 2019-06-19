@@ -90,7 +90,7 @@ router.get('/all', function(req, res, next) {
         include: [
             {model: model.player_list, attributes: ['id', 'name','description'],
                         include: [{ model: model.user}]},
-            {model: model.article, attributes: ['id', 'title']}]
+            {model: model.article, attributes: ['id', 'title','description']}]
     })
         .then(function(result) {
             // result.forEach(function(game) {

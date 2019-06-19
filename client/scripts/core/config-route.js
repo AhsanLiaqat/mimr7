@@ -128,6 +128,7 @@
         .when('/settings/users/add', { templateUrl: 'views/settings/users/add.html' })
         .when('/settings/users/edit', { templateUrl: 'views/settings/users/edit.html' })
 
+        .when('/mainHome', { templateUrl: 'views/mainHome.html' })
 		.when('/home', { templateUrl: 'views/home.html' })
         .when('/article-libraries/:gamePlanId?', { templateUrl: 'views/content-libraries/list.html' })
         .when('/message-libraries/:gamePlanId?', { templateUrl: 'views/content-messages/list.html' })
@@ -361,6 +362,10 @@
                             $rootScope.breadcrumb_1Heading = 'Messages';
                             break;
                         case '/content/content-builder':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Content Builder';
+                            break;
+                        case '/mainHome':
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Content Builder';
                             break;
