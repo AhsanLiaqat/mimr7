@@ -274,15 +274,16 @@
             $scope.collectionToShow = true;
             $scope.studentToShow = false;
             $scope.mainContentToShow = false;
+            $scope.scheduleToShow = false;
+            $scope.activeToShow = false;
+            $scope.completeToShow = false;
             $cope.organizationToShow = false;
             $scope.playerListToShow = false;
             $scope.employeeToShow = false;
             $scope.contentToShow = false;
             $scope.highlightsToShow = false;
             $scope.messagesToShow = false;
-            $scope.scheduleToShow = false;
-            $scope.activeToShow = false;
-            $scope.completeToShow = false;
+            
         }
 
         $scope.CreatePlayerList = () => {
