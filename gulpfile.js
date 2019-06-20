@@ -20,6 +20,10 @@ var notify = require('node-notify');
 var query = require('pg-query')
 
 gulp.task('default', function() {
+    // var sources = ['./public/index.html']
+    // return gulp.src('./public/index.html')
+    //     .pipe(inject(gulp.src(sources), {relative: true}))
+    //     .pipe(gulp.dest('./client'))
     // place code for your default task here
 });
 

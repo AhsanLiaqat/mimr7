@@ -858,7 +858,12 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><strong>Description</strong></td>
+                        <td><strong>Content Schedule Date</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Player List</strong></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -873,7 +878,12 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                    <td> {{record.article.description}}</td>
+                    <td> {{dateTimeFormat(record.scheduled_date)}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    <td> {{record.player_list.name || "No List attached"}}</td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -911,7 +921,12 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td><strong>Description</strong></td>
+                        <td><strong>Content Played Date</strong></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong>Player List</strong></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -926,7 +941,12 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                    <td> {{record.article.description}}</td>
+                    <td> {{dateTimeFormat(record.play_date)}}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    <td> {{record.player_list.name || "No List attached"}}</td>
                         <td></td>
                         <td></td>
                         <td></td>

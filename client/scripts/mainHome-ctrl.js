@@ -77,39 +77,6 @@
             $scope.messagesToShow = false;
         }
 
-        $scope.showClass = function(){
-            $scope.classToShow = !$scope.classToShow;
-            $scope.collectionToShow = true;
-            $scope.studentToShow = false;
-            $scope.mainContentToShow = false;
-            $cope.organizationToShow = false;
-            $scope.playerListToShow = false;
-            $scope.employeeToShow = false;
-            $scope.contentToShow = false;
-            $scope.highlightsToShow = false;
-            $scope.messagesToShow = false;
-            $scope.scheduleToShow = false;
-            $scope.activeToShow = false;
-            $scope.completeToShow = false;
-        }
-
-        $scope.showStudents = function(){
-            $scope.studentToShow = !$scope.studentToShow;
-            $scope.organizationToShow = true;
-            $scope.classToShow = false;
-            $scope.mainContentToShow = false;
-            $scope.playerListToShow = false;
-            $scope.employeeToShow = false;
-            $scope.contentToShow = false;
-            $scope.highlightsToShow = false;
-            $scope.messagesToShow = false;
-            $scope.collectionToShow = false;
-            $scope.scheduleToShow = false;
-            $scope.activeToShow = false;
-            $scope.completeToShow = false;
-        }
-
-
         $scope.changeArticle = function (record) {
             $scope.selectedArticle = record;
             $http.get('/articles/get/' + $scope.selectedArticle.id).then(function(response){
@@ -214,6 +181,22 @@
             });
         }
 
+        $scope.showStudents = function(){
+            $scope.studentToShow = !$scope.studentToShow;
+            $scope.organizationToShow = true;
+            $scope.classToShow = false;
+            $scope.mainContentToShow = false;
+            $scope.playerListToShow = false;
+            $scope.employeeToShow = false;
+            $scope.contentToShow = false;
+            $scope.highlightsToShow = false;
+            $scope.messagesToShow = false;
+            $scope.collectionToShow = false;
+            $scope.scheduleToShow = false;
+            $scope.activeToShow = false;
+            $scope.completeToShow = false;
+        }
+
         $scope.close = () => {
             $(".add-query").removeClass("slide-div");
             $(".questions-wrapper").removeClass("questions-wrapper-bg");
@@ -285,6 +268,22 @@
                 });
             });
         };
+
+        $scope.showClass = function(){
+            $scope.classToShow = !$scope.classToShow;
+            $scope.collectionToShow = true;
+            $scope.studentToShow = false;
+            $scope.mainContentToShow = false;
+            $cope.organizationToShow = false;
+            $scope.playerListToShow = false;
+            $scope.employeeToShow = false;
+            $scope.contentToShow = false;
+            $scope.highlightsToShow = false;
+            $scope.messagesToShow = false;
+            $scope.scheduleToShow = false;
+            $scope.activeToShow = false;
+            $scope.completeToShow = false;
+        }
 
         $scope.CreatePlayerList = () => {
             ModalService.showModal({
