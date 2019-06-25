@@ -128,8 +128,8 @@
         .when('/settings/users/add', { templateUrl: 'views/settings/users/add.html' })
         .when('/settings/users/edit', { templateUrl: 'views/settings/users/edit.html' })
 
-        .when('/mainHome', { templateUrl: 'views/mainHome.html' })
-		.when('/home', { templateUrl: 'views/home.html' })
+        .when('/mainHome', { templateUrl: 'views/home.html' })
+		.when('/home', { templateUrl: 'views/mainHome.html' })
         .when('/article-libraries/:gamePlanId?', { templateUrl: 'views/content-libraries/list.html' })
         .when('/message-libraries/:gamePlanId?', { templateUrl: 'views/content-messages/list.html' })
         .when('/content/question-libraries/:articleId?', { templateUrl: 'views/content-libraries/question-libraries.html' })

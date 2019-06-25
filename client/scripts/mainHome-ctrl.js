@@ -46,20 +46,57 @@
                 $scope.chapters = $scope.currentArticle.chapters;
                 $scope.currentStatus = $scope.chapters[0]; 
             });
-            $http.get('/settings/organizations/all?userAccountId=' + $scope.user.userAccountId).then(function(res){
-                $scope.organizations = res.data;
-            });
-            $http.get('/settings/player-lists/all').then(function(res){
-                $scope.player_lists = res.data;
-            });
-            $http.get('/settings/students/all?id=All Students').then(function(res){
-                $scope.employees = res.data;
-            });
+            // $http.get('/settings/organizations/all?userAccountId=' + $scope.user.userAccountId).then(function(res){
+            //     $scope.organizations = res.data;
+            // });
+            // $http.get('/settings/player-lists/all').then(function(res){
+            //     $scope.player_lists = res.data;
+            // });
+            // $http.get('/settings/students/all?id=All Students').then(function(res){
+            //     $scope.employees = res.data;
+            // });
             $http.get('/articles/all').then(function(res){
                 $scope.collections = res.data;
             })
         }
         init();
+
+        $scope.organizationTable = function (tableState) {
+            $scope.isLoading = true;
+            $http.get('/settings/organizations/all?userAccountId=' + $scope.user.userAccountId).then(function(res){
+                $scope.organizations = res.data;
+                $scope.organizations = _.sortBy($scope.organizations, function (o) { return o.name.toLowerCase(); });
+                $scope.isLoading = false;
+            });
+        };
+
+        $scope.playerListTable = function (tableState) {
+            $scope.isLoading = true;
+            $http.get('/settings/player-lists/all').then(function(res){
+                $scope.player_lists = res.data;
+                $scope.player_lists = _.sortBy($scope.player_lists, function (o) { return o.name.toLowerCase(); });
+                $scope.isLoading = false;
+            });
+        };
+
+        $scope.employeeListTable = function (tableState) {
+            $scope.isLoading = true;
+            $http.get('/settings/students/all?id=All Students').then(function(res){
+                $scope.employees = res.data;
+                $scope.employees = _.sortBy($scope.employees, function (o) { return o.firstName.toLowerCase(); });
+                $scope.isLoading = false;
+            });
+        };
+
+        $scope.collectionListTable = function (tableState) {
+            $scope.isLoading = true;
+            $http.get('/articles/all').then(function(res){
+                $scope.collections = res.data;
+                $scope.collections = _.sortBy($scope.collections, function (o) { return o.title.toLowerCase(); });
+                $scope.isLoading = false;
+            });
+        };
+
 
         $scope.showContents = function(){
             $scope.mainContentToShow = !$scope.mainContentToShow;
