@@ -43,7 +43,9 @@ router.post('/save', function(req, res, next) {
 
 router.post('/update', function(req, res, next) {
     model.organization.update(req.body.data, {where: { id : req.body.data.id }}).then(function(response) {
-        res.send(response);
+        model.organization.findOne({where : {id : req.body.data.id}}).then(function(respp){
+            res.send(respp);
+        });
     });
 });
 

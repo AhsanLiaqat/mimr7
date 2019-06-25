@@ -579,7 +579,7 @@
                         <td></td>
                         <td></td>
                     <td>
-                        <a href="#/settings/organizations/edit/{{record.id}}" class="btn btn-sm btn-info">
+                        <a href="" ng-click = "editOrganization(record,$index)" class="btn btn-sm btn-info">
                             <span class="glyphicon glyphicon-edit"></span>
                         </a>
                         <a title = "Delete Organization" class="btn btn-danger btn-sm" ng-click="deleteOrganization(record.id, $index)" confirm="Are you sure you want to delete?">

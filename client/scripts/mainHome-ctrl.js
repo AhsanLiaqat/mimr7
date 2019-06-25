@@ -255,13 +255,32 @@
                 templateUrl: "views/settings/organizations/add-organization-modal.html",
                 controller: "addOrganizationModalCtrl",
                 inputs: {
-                    
+                    organizationId : null
                 }
             }).then(function (modal) {
                 modal.element.modal({ backdrop: 'static', keyboard: false });
                 modal.close.then(function (result) {
                     if (result) {
                         $scope.organizations.push(result);
+                    }
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
+            });
+        };
+
+         $scope.editOrganization = function (record,index) {
+            ModalService.showModal({
+                templateUrl: "views/settings/organizations/add-organization-modal.html",
+                controller: "addOrganizationModalCtrl",
+                inputs: {
+                    organizationId : record.id
+                }
+            }).then(function (modal) {
+                modal.element.modal({ backdrop: 'static', keyboard: false });
+                modal.close.then(function (result) {
+                    if (result) {
+                        $scope.organizations[index] = result;
                     }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
@@ -277,7 +296,7 @@
             $scope.scheduleToShow = false;
             $scope.activeToShow = false;
             $scope.completeToShow = false;
-            $cope.organizationToShow = false;
+            $scope.organizationToShow = false;
             $scope.playerListToShow = false;
             $scope.employeeToShow = false;
             $scope.contentToShow = false;
