@@ -15,10 +15,13 @@
                     $scope.data = res.data;
                     $scope.organizationId = $scope.data.organizationId;
                 });    
+            }else{
+                $scope.data = {active : 'Active'}
             }
             $http.get('/settings/organizations/all?userAccountId=' + $scope.user.userAccountId).then(function(response) {
                 $scope.organizations = response.data;
             });
+
         }
         $scope.init();
 

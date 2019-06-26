@@ -158,12 +158,6 @@
                             <div class="custom-clm text-center">
                                 <button class="btn btn-sm btn-raised btn-default" ng-click="toggleContentList()" ng-class = "{'students_btn':contentToShow}">
                                     <span><i class="fa fa-pencil" aria-hidden="true"></i> Contents</span>
-                                    <!-- <div class="badge" ng-if="incident.incident_plans.length > 0">
-                                        {{incident.incident_plans.length}}
-                                    </div>
-                                    <div class="badge" ng-if="incident.incident_plans.length == 0">
-                                        0
-                                    </div> -->
                                 </button>
                                 <button class="btn btn-sm btn-raised btn-default" ng-click="toggleHighlightList()" ng-class = "{'students_btn':highlightsToShow}">
                                     <span><i class="fa fa-lightbulb-o" style="margin-right: 3px;" aria-hidden="true"></i>Highlights</span>
@@ -171,9 +165,9 @@
                                 <button class="btn btn-sm btn-raised btn-default" ng-click="toggleMessageList()" ng-class = "{'students_btn':messagesToShow}">
                                     <span><i class="fa fa-envelope-o" aria-hidden="true"></i> Messages</span>
                                 </button>
-                                <!-- <button class="btn btn-sm btn-raised btn-default" title="Available Action Plans" ng-click="avilableActionPlans()">
-                                    <span><i class="fa fa-reply" aria-hidden="true"></i> Responses</span>
-                                </button> -->
+                                <button class="btn btn-sm btn-raised" ng-click="toggleCollectionList()" ng-class = "{'students_btn': collectionToShow}">
+                                    <span><img ng-src="../images/collections.png" class="collections_image" /> Collections</span>
+                                </button>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -469,6 +463,65 @@
                         </div>
                     </div>
                 </div>
+                <div ng-if="collectionToShow" class="table-responsive">
+                    <div class="pull-right add_org">
+                        <a href="" class="btn btn-success btn-sm" ng-click = "addCollection()"> <i class="fa fa-plus"></i> ADD</a>
+                    </div>
+                    <table st-pipe="collectionListTable" st-table="collections" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <th st-sort="title"><strong>Name</strong></th>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <th st-sort="description"><strong>Description</strong></th>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong style="margin-left: 229px">Actions</strong></td>
+                            </tr>
+                        </thead>
+                        <tr ng-repeat="record in collections">
+                            <td></td>
+                            <td>{{record.title | displayString : 20}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            <td> {{record.description}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            <td>
+                                <a href="#/message-libraries/{{record.id}}" class="btn btn-sm btn-primary">Highlights</a>
+                                <a href="#/article-libraries/{{record.id}}" class="btn btn-sm btn-primary">Docs & Media</a>
+
+                                <a href="#/view-contents/{{record.id}}" class="btn btn-sm btn-primary">Contents</a>
+                                <button title="Schedule Content" class="btn btn-sm btn-success" ng-click="scheduleContent(record)">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+
+                                <a href = "#/view-scheduled-question/{{record.id}}" title="Question Scheduling" class="btn btn-success">
+                                    <i class="fa fa-question-circle"></i>
+                                </a>
+                                
+                                <button title="Edit Game" class="btn btn-sm btn-info" ng-click="editModal(record.id, $index)">
+                                    <span class="glyphicon glyphicon-edit"></span>
+                                </button>
+
+                                <button title="Delete Plan" class="btn btn-sm btn-danger"
+                                        ng-click="delete($index,record)"
+                                        confirm = "Are you sure you want to DELETE  '{{record.title}}' ?">
+                                    <span class="glyphicon glyphicon-remove-sign"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="footer"></div>
         </div>
@@ -648,6 +701,9 @@
                         <td></td>
                         <td></td>
                     <td>
+                        <a ng-click="importPlayers(record.id,record.users)" title = "Import players" class="btn btn-info">
+                            <span class="glyphicon glyphicon-import"></span>
+                        </a>
                         <a title = "Edit Player List" class="btn btn-sm btn-info" ng-click="editPlayerList(record, $index)"><span class="fa fa-pencil-square-o"></span></a>
                         <a title = "Delete Player List" class="btn btn-danger btn-sm" ng-click="deletePlayerList(record.id, $index)" confirm="Are you sure you want to delete?">
                             <span class="glyphicon glyphicon-remove-sign"></span>
@@ -710,6 +766,7 @@
                         <td></td>
                         <td></td>
                     <td>
+
                          <a href="" ng-click = "editStudent(record,$index)" class="btn btn-sm btn-info">
                             <span class="fa fa-pencil-square-o"></span>
                         </a>
@@ -730,9 +787,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="custom-clm text-center">
-                                <button class="btn btn-sm btn-raised" ng-click="toggleCollectionList()" ng-class = "{'students_btn': collectionToShow}">
-                                    <span><img ng-src="../images/collections.png" class="collections_image" /> Collections</span>
-                                </button>
+                                
                                 <button class="btn btn-sm btn-raised" ng-click="toggleScheduleList()" ng-class = "{'students_btn': scheduleToShow}">
                                     <span><i class="fa fa-calendar calendar_icon"></i>Schedule</span>
                                 </button>
@@ -764,65 +819,6 @@
                 </div>
             </div>
         </nav>
-        <div ng-if="collectionToShow" class="table-responsive">
-            <div class="pull-right add_org">
-                <a href="" class="btn btn-success btn-sm" ng-click = "addCollection()"> <i class="fa fa-plus"></i> ADD</a>
-            </div>
-            <table st-pipe="collectionListTable" st-table="collections" class="table table-striped">
-                <thead>
-                    <tr>
-                        <td></td>
-                        <th st-sort="title"><strong>Name</strong></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <th st-sort="description"><strong>Description</strong></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><strong style="margin-left: 229px">Actions</strong></td>
-                    </tr>
-                </thead>
-                <tr ng-repeat="record in collections">
-                    <td></td>
-                    <td>{{record.title | displayString : 20}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    <td> {{record.description}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    <td>
-                        <a href="#/message-libraries/{{record.id}}" class="btn btn-sm btn-primary">Highlights</a>
-                        <a href="#/article-libraries/{{record.id}}" class="btn btn-sm btn-primary">Docs & Media</a>
-
-                        <a href="#/view-contents/{{record.id}}" class="btn btn-sm btn-primary">Contents</a>
-                        <button title="Schedule Content" class="btn btn-sm btn-success" ng-click="scheduleContent(record)">
-                            <i class="fa fa-calendar"></i>
-                        </button>
-
-                        <a href = "#/view-scheduled-question/{{record.id}}" title="Question Scheduling" class="btn btn-success">
-                            <i class="fa fa-question-circle"></i>
-                        </a>
-                        
-                        <button title="Edit Game" class="btn btn-sm btn-info" ng-click="editModal(record.id, $index)">
-                            <span class="glyphicon glyphicon-edit"></span>
-                        </button>
-
-                        <button title="Delete Plan" class="btn btn-sm btn-danger"
-                                ng-click="delete($index,record)"
-                                confirm = "Are you sure you want to DELETE  '{{record.title}}' ?">
-                            <span class="glyphicon glyphicon-remove-sign"></span>
-                        </button>
-                    </td>
-                </tr>
-            </table>
-        </div> 
         <div ng-if="scheduleToShow" class="table-responsive">
             <table class="table table-striped">
                 <thead>

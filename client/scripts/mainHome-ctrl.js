@@ -135,18 +135,21 @@
             $scope.contentToShow = true;
             $scope.highlightsToShow = false;
             $scope.messagesToShow = false;
+            $scope.collectionToShow = false;
         }
 
         $scope.toggleHighlightList = () => {
-            $scope.contentToShow = false;
             $scope.highlightsToShow = true;
+            $scope.contentToShow = false;
             $scope.messagesToShow = false;
+            $scope.collectionToShow = false;
         }
 
         $scope.toggleMessageList = () => {
+            $scope.messagesToShow = true;
             $scope.contentToShow = false;
             $scope.highlightsToShow = false;
-            $scope.messagesToShow = true;
+            $scope.collectionToShow = false;
         }
 
         $scope.toggleOrganizationList = () => {
@@ -168,9 +171,12 @@
         }
         $scope.toggleCollectionList = () => {
             $scope.collectionToShow = true;
-            $scope.scheduleToShow = false;
-            $scope.activeToShow = false;
-            $scope.completeToShow = false;
+            // $scope.scheduleToShow = false;
+            // $scope.activeToShow = false;
+            // $scope.completeToShow = false;
+            $scope.contentToShow = false;
+            $scope.highlightsToShow = false;
+            $scope.messagesToShow = false;
         }
         $scope.toggleScheduleList = () => {
             $scope.collectionToShow = false;
@@ -327,10 +333,10 @@
 
         $scope.showClass = function(){
             $scope.classToShow = !$scope.classToShow;
-            $scope.collectionToShow = true;
+            $scope.toggleScheduleList();
             $scope.studentToShow = false;
             $scope.mainContentToShow = false;
-            $scope.scheduleToShow = false;
+            $scope.collectionToShow = false;
             $scope.activeToShow = false;
             $scope.completeToShow = false;
             $scope.organizationToShow = false;
@@ -361,6 +367,27 @@
                 });
             });
         };
+
+        $scope.importPlayers = function (listId,players) {
+            ModalService.showModal({
+                templateUrl: "views/settings/player-lists/importPlayerList.html",
+                controller: "importPlayerListModalCtrl",
+                inputs: {
+                    listId: listId,
+                    players_list : players
+                }
+            }).then(function (modal) {
+                modal.element.modal({ backdrop: 'static', keyboard: false });
+                modal.close.then(function (result) {
+                    if (result && result !== '') {
+                        $scope.playerListTable($scope.tableState);
+                    }
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
+            });  
+        };
+
 
         $scope.addEmployee = function() {
             ModalService.showModal({
