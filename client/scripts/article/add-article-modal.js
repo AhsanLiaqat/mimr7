@@ -23,6 +23,12 @@
                 }
 
             });
+        }else{
+            $scope.data = {
+                type : 'subjectCollection',
+                private : 'true',
+                saleable : 'false'
+            }
         }
         $scope.save = function () {
             if($scope.data.id == null){
