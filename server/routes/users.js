@@ -53,7 +53,7 @@ router.get('/me', function (req, res, next) {
 
 router.get('/list', function (req, res) {
     model.user.findAll({
-        where: { userAccountId: req.user.userAccountId, userType: null ,isDeleted:false},
+        where: { userAccountId: req.user.userAccountId, userType: null ,isDeleted:false , type : null},
         order: [['firstName', 'ASC']]
     }).then(function (users) {
         res.send(users);
