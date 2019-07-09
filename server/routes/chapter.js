@@ -13,7 +13,7 @@ router.get('/get/:id', function(req, res, next) {
 });
 
 router.get('/all', function(req, res, next) {
-    model.chapter.findAll({
+    model.chapter.findAll({ where : {userAccountId : req.query.userAccountId},
         include : [{model : model.article}]
     }).then(function(chapt) {
         res.send(chapt);
@@ -22,6 +22,7 @@ router.get('/all', function(req, res, next) {
 
 router.post('/save', function(req, res, next) {
     var record = req.body.data;
+    record.userAccountId = req.user.userAccountId;
     model.chapter.create(record).then(function (chap) {
         res.send(chap);
     });

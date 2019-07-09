@@ -9,24 +9,7 @@ angular.module('app')
                 // $.get( "http://ip-api.com/json", function( respp ) {
                     data.login_detail = '';
                     $http.post("/auth/login", data).then(function (res) {
-                        console.log('---------?????????????',res.data.name)
                         $rootScope.userNam = res.data.name;
-
-                        // LibraryService.getCustomLib(res.data.userAccountId).then(function(response){
-                        //     console.log('Ref Help: ',response);
-
-                        //     if (response.data && response.data.url !== null) {
-                        //         $rootScope.refHelpLink = response.data.url;
-                        //     }else {
-                        //         $rootScope.refHelpLink = "https://s3.amazonaws.com/crisishub/library/b8cfc165-aae2-4bba-8301-5e2c2a3b88b7.pdf";
-                        //     }
-                        // },function(err){
-                        //     if(err)
-                        //         toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
-                        //     else
-                        //         toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
-                        // });
-                        
                         user = res.data.token;
                         var exp = new Date(new Date().getTime() + 1000*60*60).toUTCString();
                         Query.setCookie('Auth_token',user,{expires: exp});

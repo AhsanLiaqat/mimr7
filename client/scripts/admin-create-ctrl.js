@@ -2,9 +2,9 @@
   'use strict';
 
   angular.module('app')
-  .controller('adminCreateCtrl', ['$scope', '$location', '$routeParams', '$http', 'AuthService','AccountService','ColorPaletteService','CustomMessageService', ctrlFunction]);
+  .controller('adminCreateCtrl', ['$scope', '$location', '$routeParams', '$http', 'AuthService','AccountService', ctrlFunction]);
 
-  function ctrlFunction($scope, $location, $routeParams, $http, AuthService, AccountService, ColorPaletteService, CustomMessageService) {
+  function ctrlFunction($scope, $location, $routeParams, $http, AuthService, AccountService) {
 
     function init() {
       $scope.validationOptions = {
@@ -116,8 +116,8 @@
                     user.id = undefined;
 
                     $http.post('/users/create2', {data: user}).then(function(response) {
-                      $scope.createDefaultTemplates(user.userAccountId);
-                      $scope.createDefaultColorPalettes(user.userAccountId);
+                      // $scope.createDefaultTemplates(user.userAccountId);
+                      // $scope.createDefaultColorPalettes(user.userAccountId);
                       if(response.data){
                         $scope.user = response.data;
                       }
@@ -156,31 +156,31 @@
     }
   }
 
-  $scope.createDefaultTemplates = function(id){
-    CustomMessageService.defaultTemplates(id).then(function(response){
+  // $scope.createDefaultTemplates = function(id){
+  //   CustomMessageService.defaultTemplates(id).then(function(response){
 
-    },function(err){
-      if(err)
-        toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
-      else
-        toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
-    });
-    // $http.get('/settings/custom-messages/default-templates?userAccountId='+id).then(function(response) {
-    // });
-  };
+  //   },function(err){
+  //     if(err)
+  //       toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
+  //     else
+  //       toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
+  //   });
+  //   // $http.get('/settings/custom-messages/default-templates?userAccountId='+id).then(function(response) {
+  //   // });
+  // };
 
-  $scope.createDefaultColorPalettes = function(id){
-    ColorPaletteService.defaultColors(id).then(function(response){
+  // $scope.createDefaultColorPalettes = function(id){
+  //   ColorPaletteService.defaultColors(id).then(function(response){
 
-    },function(err){
-      if(err)
-        toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
-      else
-        toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
-    });
-    // $http.post('/settings/color-palettes/default-colors?userAccountId='+id).then(function(response) {
-    // });
-  };
+  //   },function(err){
+  //     if(err)
+  //       toastr.error(AppConstant.GENERAL_ERROR_MSG,'Error')
+  //     else
+  //       toastr.error(AppConstant.GENERAL_ERROR_MSG,'Custom Error')
+  //   });
+  //   // $http.post('/settings/color-palettes/default-colors?userAccountId='+id).then(function(response) {
+  //   // });
+  // };
 
 
 

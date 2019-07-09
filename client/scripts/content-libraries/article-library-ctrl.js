@@ -52,7 +52,6 @@
         // };
 
         var setSocketForMessages = function(){
-            console.log('[][][][][][]',$scope.selected)
             $timeout(function () {
                 if($scope.selected != 0){
                     $scope.valid = false;
@@ -164,7 +163,7 @@
                 $scope.tableState = tableState;
                 var params = 'id=';
                 $scope.user = Query.getCookie('user');
-                $http.get('/articles/all').then(function (resp) {
+                $http.get('/articles/all?userAccountId' + +$scope.user.userAccountId).then(function (resp) {
                     $scope.articles = resp.data;
                     if($routeParams.gamePlanId){
                         params += $routeParams.gamePlanId;

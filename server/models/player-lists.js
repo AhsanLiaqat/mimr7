@@ -15,6 +15,7 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'player_lists',
         classMethods: {
             associate: function(models) {
+                player_list.belongsTo(models.user_accounts);
                 player_list.belongsTo(models.organization);
                 player_list.hasMany(models.content_plan_template);
                 player_list.belongsToMany(models.user, {through: 'player_lists_users'});

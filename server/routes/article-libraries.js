@@ -13,7 +13,7 @@ var s3Library = require('../lib/aws/s3').library;
 
 router.post('/all', function(req, res, next) {
     // let condition = req.query.id ? {parentId: req.query.id}: {};
-    let condition = (req.query.id !== "All Messages") ? {parentId: req.query.id}: {};
+    let condition = (req.query.id !== "All Messages") ? {parentId: req.query.id}: {userAccountId : req.user.userAccountId};
     model.article_library.findAll({where: condition}).then(function(msg) {
         res.send(msg);
     });

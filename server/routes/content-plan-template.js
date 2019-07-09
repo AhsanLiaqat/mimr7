@@ -84,7 +84,7 @@ router.get('/get-player-detail/:id', function(req, res, next) {
 
 
 router.get('/all', function(req, res, next) {
-    model.content_plan_template.findAll({ where : {isDeleted : false},
+    model.content_plan_template.findAll({ where : { userAccountId : req.query.userAccountId,isDeleted : false},
         attributes: ['id', 'scheduled_date', 'content_activated', 'createdAt','status','start_time','play_date'],
         order: [['createdAt', 'DESC']],
         include: [
@@ -127,7 +127,7 @@ router.post('/create', function(req, res, next) {
     var record = req.body;
     record.userAccountId = req.user.userAccountId;
     model.content_plan_template.create(record).then(function(contentPlanTmplate) {
-        res.send(contentPlanTmplate)
+        res.send(contentPlanTmplate);
     });
 });
 

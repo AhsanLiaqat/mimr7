@@ -21,6 +21,7 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'content_plan_templates',
         classMethods: {
             associate: function(models) {
+                content_plan_template.belongsTo(models.user_accounts);
                 content_plan_template.belongsTo(models.article);
                 content_plan_template.belongsTo(models.player_list);
                 content_plan_template.hasMany(models.question_scheduling);

@@ -20,6 +20,7 @@ router.get('/get/:id', function(req, res, next) {
 
 router.post('/save', function(req, res, next) {
     var data = req.body.data;
+    data.userAccountId = req.user.userAccountId;
     model.question.create(data).then(function(question) {
         res.send(question);
     });
@@ -35,7 +36,7 @@ router.get('/one/:id', function(req, res, next) {
 });
 
 router.get('/all-questions', function(req, res, next) {
-    let condition = (req.query.id !== "All Questions") ? {articleId: req.query.id}: {};
+    let condition = (req.query.id !== "All Questions") ? {articleId: req.query.id}: {userAccountId : req.user.userAccountId};
     model.question.findAll({where: condition}).then(function(msg) {
         res.send(msg);
     });

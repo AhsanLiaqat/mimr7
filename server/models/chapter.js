@@ -13,6 +13,7 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'chapters',
         classMethods: {
             associate: function(models) {
+                chapter.belongsTo(models.user_accounts);
                 chapter.belongsTo(models.article);
             }
         }

@@ -245,6 +245,7 @@ router.post('/skip/:id',function(req,res,next){
 router.post('/save', function(req, res, next) {
     var record = req.body.data;
     record.userId = req.body.userId;
+    record.userAccountId = req.user.userAccountId;
     model.question_scheduling.create(record)
         .then(function(msg) {
             model.question_scheduling.findOne({

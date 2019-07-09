@@ -44,18 +44,22 @@ router.post('/login', function(req, res, next) {
             // model.auth_token.create(data)
             // .then(function (token) {
                 model.user.update(user, { where: { id: user.id } }).then(function (result) {
-                    model.user.findOne({ where: { id: user.id } }).then(function (response) {
-						console.log("Login");
+                    model.user.findOne({ where: { id: user.id,type : null } }).then(function (response) {
+						console.log("Login---------",response);
+                        if(response){
+                            response.notifyChange();
+                            user = response.dataValues;
+                            return res.json({   success:true,
+                                token: auth_token,
+                                role: user.role,
+                                name: user.firstName+' '+user.lastName,
+                                email: user.email,
+                                userId: user.id,
+                                userAccountId: user.userAccountId });
+                        }else{
+                            return res.status(400).json({success: false});
+                        }
 
-                        response.notifyChange();
-                        user = response.dataValues;
-                        return res.json({   success:true,
-                            token: auth_token,
-                            role: user.role,
-                            name: user.firstName+' '+user.lastName,
-                            email: user.email,
-                            userId: user.id,
-                            userAccountId: user.userAccountId });
                     });
                 });
             // });

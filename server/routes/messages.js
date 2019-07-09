@@ -12,7 +12,7 @@ var fs = require('fs');
 var s3Library = require('../lib/aws/s3').library;
 
 router.get('/all', function(req, res, next) {
-    let condition = (req.query.id !== "All Messages") ? {articleId: req.query.id}: {};
+    let condition = (req.query.id !== "All Messages") ? {articleId: req.query.id}: {userAccountId : req.user.userAccountId};
     model.message.findAll({where: condition,
             include : [{
                 model : model.question
@@ -107,6 +107,7 @@ router.post('/save-libraries', multipartyMiddleware, function(req, res, next) {
 
 router.post('/save', function(req, res, next) {
     var d = req.body.data;
+    d.userAccountId = req.user.userAccountId;
     model.message.create(d).then(function(message) {
         model.message.findOne({
             where: {id: message.id},
@@ -125,9 +126,6 @@ router.post('/save', function(req, res, next) {
             res.send(message);
         });
     });
-
-
-
 });
 
 router.get('/all-messages', function(req, res, next) {

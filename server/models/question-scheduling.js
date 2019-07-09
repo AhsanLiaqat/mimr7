@@ -22,6 +22,7 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'question_schedulings',
         classMethods: {
             associate: function(models) {
+                question_scheduling.belongsTo(models.user_accounts);
                 question_scheduling.belongsTo(models.question);
                 question_scheduling.belongsTo(models.content_plan_template, {foreignKey: 'contentPlanTemplateId'});
                 question_scheduling.belongsTo(models.user);

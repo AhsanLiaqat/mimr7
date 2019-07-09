@@ -48,6 +48,7 @@
                         toastr.error('User Aleardy Exist with Email provided!');
                     }else{
 
+                        $scope.data.role = 'CA';
                         if($scope.data.role != undefined){
                             $http.post('/users/create', {data: $scope.data}).then(function(res) {
                                 toastr.success("User added successfully");
@@ -60,6 +61,7 @@
                     }
                 });
             }else { 
+                $scope.data.role = 'CA';
                 if($scope.data.role != undefined){
                     $http.post('/users/create', {data: $scope.data}).then(function(res) {
                         toastr.success("User added successfully");

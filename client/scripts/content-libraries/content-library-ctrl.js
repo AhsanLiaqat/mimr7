@@ -27,9 +27,9 @@
                 $scope.isLoading = true;
                 $scope.tableState = tableState;
                 $scope.user = Query.getCookie('user');
-                $http.get('/articles/all').then(function (resp) {
+                $http.get('/articles/all?userAccountId=' + $scope.user.userAccountId).then(function (resp) {
                     $scope.articles = resp.data;
-                    $http.get('/chapters/all').then(function (respp) {
+                    $http.get('/chapters/all?userAccountId=' + $scope.user.userAccountId).then(function (respp) {
                         $scope.selectoptions = $scope.selectoptions.concat($scope.articles);
                         $scope.chapters = respp.data;
                         $scope.isLoading = false;

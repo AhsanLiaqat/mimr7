@@ -15,28 +15,26 @@ router.get('/get/:id', function(req, res, next) {
 });
 
 router.get('/all', function(req, res, next) {
-    model.player_list.findAll({
-    include: [
-        {model: model.organization},
-        {model: model.user}
+    model.player_list.findAll({ 
+        where : {userAccountId : req.query.userAccountId,isDeleted:false},
+        include: [
+            {model: model.organization},
+            {model: model.user}
     ]}).then(function(response) {
         res.send(response);
     });
 });
 
 router.post('/import-players', function(req, res, next) {
-    console.log('---------------<><><><><><><>',req.body.data)
     var record = req.body.data;
     model.player_list.findOne({where: {id: req.body.listId},
         include : [{
             model: model.user
         }]
     }).then(function(item) {
-        console.log('---------------',item)
         var ids = record.map(function(item, index) {
             return item.id;
         });
-        console.log('***************************************',ids)
         item.addUsers(ids);
         res.send(item);
     });

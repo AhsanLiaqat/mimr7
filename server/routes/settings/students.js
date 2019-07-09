@@ -23,10 +23,9 @@ router.get('/all', function(req, res, next) {
     });
 });
 
-
-
 router.post('/save', function(req, res, next) {
     var record = req.body.data;
+    record.userAccountId = req.user.userAccountId;
     model.user.create(record).then(function(response) {
         model.user.findOne({
             where: { id: response.id},
@@ -49,6 +48,21 @@ router.post('/One', function (req, res) {
         res.send(u);
     });
 });
+
+router.get('/find-all', function(req, res, next) {
+    model.user.findAll({where: {userAccountId :req.query.userAccountId,type : 'student'} ,
+        include : [{model : model.question_scheduling,
+            include : [{
+                model : model.answer
+            },{
+                model : model.question
+            }]
+        }]
+    }).then(function(std) {
+        res.send(std);
+    });
+});
+
 
 router.post('/CheckEmail', function (req, res) {
     var record = req.body.data;

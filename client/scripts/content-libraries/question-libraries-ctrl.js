@@ -22,7 +22,7 @@
                 $scope.tableState = tableState;
                 $scope.user = Query.getCookie('user');
                 var params = 'id=';
-                $http.get('/articles/all').then(function (resp) {
+                $http.get('/articles/all?userAccountId' + $scope.user.userAccountId).then(function (resp) {
                     $scope.articles = resp.data;
                     if($routeParams.articleId){
                         params += $routeParams.articleId;

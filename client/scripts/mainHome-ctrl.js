@@ -38,7 +38,7 @@
             $scope.messageRes = {};
             $scope.data = {};
             $scope.articleId = $routeParams.articleId;
-            $http.get('/articles/all').then(function(response){
+            $http.get('/articles/all?userAccountId=' + $scope.user.userAccountId).then(function(response){
                 $scope.article = response.data;
                 $scope.currentArticle = $scope.article[0];
                 $scope.message = $scope.currentArticle.messages;
@@ -46,18 +46,6 @@
                 $scope.chapters = $scope.currentArticle.chapters;
                 $scope.currentStatus = $scope.chapters[0]; 
             });
-            // $http.get('/settings/organizations/all?userAccountId=' + $scope.user.userAccountId).then(function(res){
-            //     $scope.organizations = res.data;
-            // });
-            // $http.get('/settings/player-lists/all').then(function(res){
-            //     $scope.player_lists = res.data;
-            // });
-            // $http.get('/settings/students/all?id=All Students').then(function(res){
-            //     $scope.employees = res.data;
-            // });
-            $http.get('/articles/all').then(function(res){
-                $scope.collections = res.data;
-            })
         }
         init();
 
@@ -72,7 +60,7 @@
 
         $scope.playerListTable = function (tableState) {
             $scope.isLoading = true;
-            $http.get('/settings/player-lists/all').then(function(res){
+            $http.get('/settings/player-lists/all?userAccountId=' + $scope.user.userAccountId).then(function(res){
                 $scope.player_lists = res.data;
                 $scope.player_lists = _.sortBy($scope.player_lists, function (o) { return o.name.toLowerCase(); });
                 $scope.isLoading = false;
@@ -81,7 +69,7 @@
 
         $scope.employeeListTable = function (tableState) {
             $scope.isLoading = true;
-            $http.get('/settings/students/all?id=All Students').then(function(res){
+            $http.get('/settings/students/find-all?userAccountId=' + $scope.user.userAccountId).then(function(res){
                 $scope.employees = res.data;
                 $scope.employees = _.sortBy($scope.employees, function (o) { return o.firstName.toLowerCase(); });
                 $scope.isLoading = false;
@@ -183,7 +171,7 @@
             $scope.scheduleToShow = true;
             $scope.activeToShow = false;
             $scope.completeToShow = false;
-            $http.get('/content-plan-templates/all').then(function (response) {
+            $http.get('/content-plan-templates/all?userAccountId=' + $scope.user.userAccountId).then(function (response) {
             $scope.scheduleContentToShow = [];
                 $scope.scheduled_collections = response.data;
                 angular.forEach($scope.scheduled_collections, function(value) {
@@ -198,7 +186,7 @@
             $scope.scheduleToShow = false;
             $scope.activeToShow = true;
             $scope.completeToShow = false;
-            $http.get('/content-plan-templates/all').then(function (response) {
+            $http.get('/content-plan-templates/all?userAccountId=' + $scope.user.userAccountId).then(function (response) {
             $scope.activeContentToShow = [];
                 $scope.active_collections = response.data;
                 angular.forEach($scope.active_collections, function(value) {
@@ -766,7 +754,7 @@
                 angular.forEach($scope.data.question_schedulings, function(question) {
                     var dataMessage = {setOffTime : new Date()};
                     $http.post('/question-scheduling/update-message-off-set/'+question.id,{data:dataMessage}).then(function(res){
-                        $http.get('/content-plan-templates/all')
+                        $http.get('/content-plan-templates/all?userAccountId=' + $scope.user.userAccountId)
                         .then(function (response) {
                             $scope.contents = response.data;
                             $scope.gamesSelected = 'schedule';
