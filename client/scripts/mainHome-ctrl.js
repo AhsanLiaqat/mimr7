@@ -703,8 +703,7 @@
             });
         };
 
-        // deletes game from game library
-        $scope.delete = function (index, card) {
+        $scope.deleteCollection = function (index, card) {
             $http.delete('/articles/remove/' + card.id)
             .then(function(res){
                 $scope.collections.splice(index,1);
