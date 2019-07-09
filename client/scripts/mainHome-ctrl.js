@@ -540,7 +540,7 @@
             });
         };
 
-         $('.main-wrapper').click(function(event){
+        $('.main-wrapper').click(function(event){
             if(!($(event.target).hasClass('question-manage') || $(event.target).parents('.question-manage').length > 0)){
                 angular.forEach( $scope.message , function(value){
                     value.show = false;
@@ -548,22 +548,6 @@
                 $scope.$apply();
             }
         });
-
-        $('.main-wrapper').click(function(event){
-            if(!($(event.target).hasClass('question-manage') || $(event.target).parents('.question-manage').length > 0)){
-                angular.forEach( $scope.questions , function(value){
-                    value.show = false;
-                })
-                $scope.$apply();
-            }
-        });
-
-        $('.main-wrapper').click(function(event){
-            if(!($(event.target).hasClass('question-manage') || $(event.target).parents('.question-manage').length > 0)){
-                $scope.messageRes.show = false;
-            }
-        });
-
 
         $scope.delete = (messageId,index) => {
             $http.delete('/messages/remove/' + messageId)
@@ -612,6 +596,15 @@
                 });
         };
 
+        $('.main-wrapper').click(function(event){
+            if(!($(event.target).hasClass('question-manage') || $(event.target).parents('.question-manage').length > 0)){
+                angular.forEach( $scope.questions , function(value){
+                    value.show = false;
+                })
+                $scope.$apply();
+            }
+        });
+
 
         //convert html to styled text
         $scope.toTrustedHTML = function( html ){
@@ -629,6 +622,12 @@
                 }
             });
         }
+
+        $('.main-wrapper').click(function(event){
+            if(!($(event.target).hasClass('question-manage') || $(event.target).parents('.question-manage').length > 0)){
+                $scope.messageRes.show = false;
+            }
+        });
 
         $scope.scheduleContent = function (game) {
             ModalService.showModal({
