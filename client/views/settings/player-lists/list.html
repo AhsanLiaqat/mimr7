@@ -2,11 +2,11 @@
     <section class="panel panel-default">
         <div class="panel-heading">
             <strong>
-                <span class="glyphicon glyphicon-th"></span> Player Lists
+                <span class="glyphicon glyphicon-th"></span> Class Lists
             </strong>
 
             <div class="pull-right header-buttons">
-                <a href="" ng-click="CreatePlayerList()" class="btn btn-success btn-sm">New Player List</a>
+                <a href="" ng-click="CreatePlayerList()" class="btn btn-success btn-sm">New Class List</a>
             </div>
         </div>
         <div class="panel-body">
@@ -16,7 +16,7 @@
                     <th st-sort="name">Name</th>
                     <th st-sort="email">Description</th>
                     <th st-sort="game_players.name">Oragnizations</th>
-                    <th st-sort="game_players.name">Users</th>
+                    <th st-sort="game_players.name">Students</th>
                     <th>Actions</th>
                 </tr>
                 <tr>
@@ -30,7 +30,7 @@
                         <input class="form-control" placeholder="Search Oragnization" st-search="organization.name"/>
                     </th>
                     <th>
-                        <input class="form-control" placeholder="Search User" st-search="firstName"/>
+                        <input class="form-control" placeholder="Search Student" st-search="firstName"/>
                     </th>
                     <th>
                     </th>

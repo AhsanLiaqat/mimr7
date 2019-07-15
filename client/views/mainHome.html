@@ -549,6 +549,9 @@
                         <td></td>
                         <td></td>
                     <td>
+                        <a href="#/organizations/students/details/{{record.id}}" class="btn btn-sm btn-primary">
+                                Students
+                            </a>
                         <a href="" ng-click = "editOrganization(record,$index)" class="btn btn-sm btn-info">
                             <span class="glyphicon glyphicon-edit"></span>
                         </a>
@@ -618,7 +621,7 @@
                         <td></td>
                         <td></td>
                     <td>
-                        <a ng-click="importPlayers(record.id,record.users)" title = "Import players" class="btn btn-info">
+                        <a ng-click="importPlayers(record.id,record.users)" title = "Import students" class="btn btn-info">
                             <span class="glyphicon glyphicon-import"></span>
                         </a>
                         <a title = "Edit Player List" class="btn btn-sm btn-info" ng-click="editPlayerList(record, $index)"><span class="fa fa-pencil-square-o"></span></a>

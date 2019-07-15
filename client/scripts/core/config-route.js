@@ -504,7 +504,6 @@
                     $location.path("/");
                 } else if ( next.originalPath == "/pages/studentLogin" || next.originalPath == '/pages/content-questions/:userId/:scheduledQuestionId' || next.originalPath == "/reference-library/:userAccountId" || next.originalPath == "/message/:id" || next.originalPath == '/messages' || next.originalPath == '/myTasks/:incidentId' || next.originalPath == '/taskDetail/:taskId' || next.originalPath == '/active-games' || next.originalPath == '/my-messages/:templateGameId/:userId') {
                     $rootScope.fixedHeader = false;
-                    console.log('-----');
                 }
                 else if ($rootScope.infoProvider === true || localStorage['role'] === 'IP') {
                     if (next.originalPath == "/reference-library/:userAccountId" || next.originalPath == "/message/:id" || next.originalPath == '/messages' || next.originalPath == '/myTasks/:incidentId' || next.originalPath == '/taskDetail/:taskId' || next.originalPath == '/active-games' || next.originalPath == '/my-messages/:templateGameId/:userId') {

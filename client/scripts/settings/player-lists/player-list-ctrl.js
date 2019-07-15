@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('app')
-        .controller('playerListCtrl', ['$scope', '$filter', '$routeParams', '$http', 'AuthService', 'ModalService', '$location', gamePlayerCtrl]);
+        .controller('playerListCtrl', ['$scope', '$filter', '$routeParams', '$http', 'AuthService', 'ModalService', '$location','Query', gamePlayerCtrl]);
 
-    function gamePlayerCtrl($scope, $filter, $routeParams, $http, AuthService, ModalService, $location) {
+    function gamePlayerCtrl($scope, $filter, $routeParams, $http, AuthService, ModalService, $location,Query) {
         $scope.items = [{name: '10 items per page', val: 10},
             {name: '20 items per page', val: 20},
             {name: '30 items per page', val: 30},
@@ -13,12 +13,14 @@
         $scope.selectoptions = [];
         $scope.selected = 0;
         $scope.roleToShow = [];
+        $scope.user = Query.getCookie('user');
+
         
         // fecth and set some initial data
         $scope.playerListTable = function (tableState) {
             $scope.isLoading = true;
             $scope.tableState = tableState;
-            $http.get('/settings/player-lists/all').then(function (response) {
+            $http.get('/settings/player-lists/all?userAccountId=' + $scope.user.userAccountId).then(function (response) {
                 $scope.playerlists = response.data;
                 $scope.isLoading = false;
                 $scope.roleToShow =  angular.copy($scope.playerlists);
