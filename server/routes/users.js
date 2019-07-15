@@ -150,11 +150,27 @@ router.post('/verify', function (req, res) {
     });
 });
 
+router.get('/student-details/:userId', function (req, res, next) {
+    model.user.findOne({
+        where: {id: req.params.userId,type : 'student'},
+        order: [['createdAt', 'DESC']],
+            include : [{model : model.player_list}]
+    }).then(function(student) {
+        var playerListIds = _.map(student.player_lists, function (plyrList) { return plyrList.dataValues.id });
+        model.content_plan_template.findAll({
+            where : {playerListId : {in : playerListIds},isDeleted : false},
+                include : [{model : model.article}]
+        }).then(function(activeArticle){
+            res.send(activeArticle); 
+        });
+    });
+});
+
 router.post('/verifyEmail', function (req, res) {
     var record = req.body.data;
     if(record.email){
-        model.game_player.findOne({
-            where: { email: record.email}
+        model.user.findOne({
+            where: { email: record.email,type : 'student'}
         }).then(function (u) {
             if(u){
             var new_jwt = nJwt.create({id: u.dataValues.id},process.env.JWT_SECRET);
@@ -165,7 +181,6 @@ router.post('/verifyEmail', function (req, res) {
                 role: u.dataValues.role,
                 name: u.dataValues.firstName+' '+u.dataValues.lastName,
                 email: u.dataValues.email,
-                userId: u.dataValues.id,
                 userAccountId: u.dataValues.userAccountId });
             // res.send(u);
             }

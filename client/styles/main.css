@@ -2331,6 +2331,7 @@ html {
       @media (min-width: 768px) {
         .app > .header-container.header-fixed + .main-container {
           padding-top: 42px; } }
+
   .app > .main-container {
     position: relative;
     min-height: 100%; }
@@ -2346,6 +2347,11 @@ html {
       bottom: 0;
       background-color: #eaeaea;
       box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.2); }
+      .page-signin{ 
+        background-color: #515962;
+        min-height: 100vh;
+        padding: 54px 0;
+      }
     .app > .main-container > .nav-vertical:before {
       left: 0; }
     .app > .main-container > .nav-container {

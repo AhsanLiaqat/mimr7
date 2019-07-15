@@ -48,8 +48,13 @@ require('./local-strategy')(passport);
 app.use(function(req, res, next) {
     // check header or url parameters or post parameters for token
     // req.headers && (req.url.indexOf('/auth/login') !== -1 || ( req.headers['upper-url'] && (req.headers['upper-url'] == '/pages/simulationLogin' || (req.headers['upper-url'] == '/pages/signin' && req.url.indexOf('/auth/confirm-login') == -1 ) )))
-    console.log();
-    if(req.url.indexOf('/users/editorImage') !== -1 || (req.headers && (req.url.indexOf('/auth/login') !== -1 || ( req.headers['upper-url'] && (req.headers['upper-url'].indexOf('/pages/content-questions') !== -1 || (req.headers['upper-url'] == '/pages/signin' && req.url.indexOf('/auth/confirm-login') == -1 ) ))))){
+    if( req.url.indexOf('/users/editorImage') !== -1 || 
+        (req.headers && 
+        (req.url.indexOf('/auth/login') !== -1 || 
+        ( req.headers['upper-url'] && 
+        (req.headers['upper-url'].indexOf('/pages/content-questions') !== -1 || 
+        (req.headers['upper-url'].indexOf('/pages/studentLogin') !== -1 || 
+        (req.headers['upper-url'] == '/pages/signin' && req.url.indexOf('/auth/confirm-login') == -1 ) )))))){
         next();
     }
     else if(req.url.indexOf('.map') == -1 ){

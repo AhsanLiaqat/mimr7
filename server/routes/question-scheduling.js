@@ -240,6 +240,16 @@ router.post('/skip/:id',function(req,res,next){
 
 });
 
+router.get('/my-messages/:id', function(req, res, next) {
+    model.question_scheduling.findAll({
+        where: {contentPlanTemplateId: req.params.id,activated : true , isDeleted : false},
+        attributes : ['id', 'setOffTime','activatedAt'],
+        include: [{model : model.question}]
+    }).then(function(messages) {
+        res.send(messages);
+    });
+});
+
 
 
 router.post('/save', function(req, res, next) {

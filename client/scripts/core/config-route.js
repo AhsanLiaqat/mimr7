@@ -82,8 +82,8 @@
             'forms/elements', 'forms/layouts', 'forms/validation', 'forms/wizard',
             'charts/charts', 'charts/flot',
             'pages/404', 'pages/500', 'pages/blank', 'pages/forgot-password', 'pages/invoice',
-            'pages/lock-screen', 'pages/profile', 'pages/invoice', 'pages/signin', 'pages/signup','pages/content-questions',
-            'mail/compose', 'mail/inbox', 'mail/single', 
+            'pages/lock-screen', 'pages/profile', 'pages/invoice', 'pages/signin', 'pages/signup','pages/studentLogin','pages/content-questions',
+            'mail/compose', 'mail/inbox', 'mail/single',
             'app/tasks', 'app/calendar', 'incidents/edit', 'IdleProvider', 'KeepaliveProvider', 'pages/invite'
         ]
         IdleProvider.idle(3600); // in seconds
@@ -293,6 +293,9 @@
                 }
                 else if (next.templateUrl == "views/pages/invite.html") {
                     $location.path("/pages/invite");
+                }
+                else if (next.templateUrl == "views/pages/studentLogin.html") {
+                    $location.path("/pages/studentLogin");
                 }
                 else if (next.templateUrl == "views/pages/content-questions.html") {
                     var str = '/pages/content-questions/';
