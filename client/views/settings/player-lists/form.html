@@ -1,12 +1,13 @@
-<div class="modal fade" role="dialog">
+<div class="modal fade content-edit-collection class-list-modal" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
-        <div class="modal-content" style="height: 450px;overflow-y: scroll;">
+        <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" ng-click="close()" >&times;</button>
                 <h4 class="modal-title">New Class List</h4>
             </div>
             <div class="modal-body">
+                <div class="new-list-modal">
                 <div class="form-group">
                     <label>Class List Name</label> <span style="color: red" title="Required"> *</span>
                     <input type="text" class="form-control" ng-model="data.name" placeholder="Class List Name" >
@@ -22,7 +23,7 @@
                         <option value=""></option>
                     </select>
                 </div>
-
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" ng-click="close()" data-dismiss="modal">Cancel</button>

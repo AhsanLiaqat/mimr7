@@ -1,6 +1,6 @@
-<div class="page" ng-controller="collectionContentLibraryCtrl">
-    <section class="panel panel-default">
-        <div class="panel-heading">
+<div class="page page-table" ng-controller="collectionContentLibraryCtrl">
+    <section class="panel panel-default search-collection-type-sec">
+        <div class="panel-heading pb-0 highlights-panel-heading">
             <strong>
                 <span class="glyphicon glyphicon-th"></span> Contents
             </strong>
@@ -11,12 +11,13 @@
             </div>
         </div>
         <div class="panel-body">
-            <table st-pipe="QuestionsTable" st-table="msg" class="table table-bordered table-striped table-responsive">
+         <div class="table-collection-mobile">
+            <table st-pipe="QuestionsTable" st-table="msg" class="table table-bordered table-striped table-responsive table-content-messages">
                 <thead>
                     <tr>
-                        <th class="col-md-6" st-sort="name">Text</th>
-                        <th class="col-md-3" st-sort="name">Collection</th>
-                        <th class="col-md-3">Actions</th>
+                        <th  st-sort="name">Text</th>
+                        <th  st-sort="name">Collection</th>
+                        <th>Actions</th>
                     </tr>
                     <tr>
                         <th>
@@ -34,7 +35,7 @@
                         </td>
                         <td>{{record.article.title}}
                         </td>
-                        <td>
+                        <td class="btns-icons">
                             <a title = "Edit Content" class="btn btn-sm btn-info" ng-click="editContent(record, $index)"><span class="fa fa-pencil-square-o"></span></a>
 
                             <a title = "Delete Content" class="btn btn-danger btn-sm" ng-click="deleteContent(record.id, $index)" confirm="Are you sure you want to delete?">
@@ -62,7 +63,8 @@
                 </tr>
                 </tfoot>
             </table>
-            <div class="col-md-3">
+            </div>
+            <div class="col-sm-3 col-xs-12">
                 <select class="form-control"
                         ng-model="pageItems"
                         ng-options="item.val as item.name for item in items"

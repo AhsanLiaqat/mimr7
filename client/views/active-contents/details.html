@@ -1,5 +1,5 @@
 <div class="page" ng-controller="viewDetailActiveContentCtrl">
-    <section class="panel panel-default">
+    <section class="panel panel-default active-schedule-message">
         <div class="panel-heading">
             <div class="row">
                 <div class="col-sm-3">
@@ -30,10 +30,7 @@
                 </ul>
 
               <div class="tab-content">
-                <div class="row">
-                    <div class="col-md-12">
                         <div class="form-group">
-                            <br><br>
                             <table class="table table-bordered table-striped table-responsive">
                                 <thead>
                                 <tr>
@@ -52,7 +49,7 @@
                                             {{ques.question.message.content | displayString : 25}}
                                         </a>
                                     </td>
-                                    <td>
+                                    <td class="active-schedule-td">
                                         <a ng-click = "showQuestionDetail(ques)">
                                             <span ng-bind-html = "ques.question.name | displayString : 50"></span>
                                         </a>
@@ -85,8 +82,6 @@
                                 </tr>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
                 </div>
                 <!-- <div id="rounds" class="tab-pane fade in active">
                     <div class="row">

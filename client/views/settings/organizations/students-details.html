@@ -11,7 +11,8 @@
             </div>
         </div>
         <div class="panel-body">
-            <table st-pipe="studentTable" st-table="roles" class="table table-bordered table-striped table-responsive">
+            <div class="std-collection-table">
+            <table st-pipe="studentTable" st-table="roles" class="table table-bordered table-striped table-responsive std-table">
                 <thead>
                     <tr>
                         <th st-sort="name">Name</th>
@@ -21,7 +22,7 @@
                         <th st-sort="mobilePhone">Total Question</th>
                         <th st-sort="mobilePhone">Answer</th>
                         <th st-sort="mobilePhone">Expired</th>
-                        <th> Actions </th>
+                        <th > Actions </th>
                     </tr>
                     <tr>
                      <th>
@@ -64,7 +65,7 @@
                         <td>
                             {{(record.question_schedulings | filter : { answer : null,status : true}).length}}
                         </td>
-                        <td>
+                        <td class="btns-icons external-organization-student">
                             <a href="" ng-click = "editStudent(record,$index)" class="btn btn-sm btn-info">
                             	    <span class="fa fa-pencil-square-o"></span>
                             </a>
@@ -79,13 +80,8 @@
                     <td colspan="4" class="text-center">Loading ... </td>
                 </tr>
             </tbody>
-            <tfoot class="table table-striped table-responsive">
-                <tr>
-                    <td class="text-center" st-pagination="" st-items-by-page="pageItems" colspan="8">
-                </td>
-                </tr>
-            </tfoot>
     </table>
+    </div>
     <div class="col-md-3">
       <select class="form-control"
       ng-model="pageItems"

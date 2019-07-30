@@ -1,14 +1,14 @@
 <div class="page" ng-controller="questionResponsesCtrl">
-    <section class="panel panel-default">
+    <section class="panel panel-default user-response-panel">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-4 col-xs-12">
                     Question Responses Details
                     <br>
                 </div>
 
-                <div class="col-sm-6 text-center">
-                    <div class="text-center">
+                <div class="col-sm-8 col-xs-12 text-center ">
+                    <div class="text-right">
                         Content started At : :
                         <timer start-time=time>{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer>
                         <br>
@@ -25,10 +25,7 @@
                 </ul>
 
               <div class="tab-content">
-                <div class="row">
-                    <div class="col-md-12">
                         <div class="form-group">
-                            <br><br>
                             <table class="table table-bordered table-striped table-responsive">
                                 <thead>
                                 <tr>
@@ -75,9 +72,7 @@
                             </table>
                         </div>
                     </div>
-                </div>
-              </div>
-            </div>  
-        </div>
-    </section>
+                </div>  
+            </div>
+      </section>
 </div>

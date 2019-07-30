@@ -1,7 +1,7 @@
-<div class="page">
+<div class="page details-content">
     <div class="main-wrapper">
-        <div class="row">
-            <div class="col-sm-8">
+        <div class="row content-section-highlight">
+            <div class="col-sm-8 col-xs-12">
                 <a href="" class="pull-right" style="margin : 10px" ng-hide = "contentId" ng-click = "addContent()"><i class="fa fa-plus"></i> Add Content</a>
                 <div class="title-header">
                     <h3><span>Content</span>
@@ -21,11 +21,7 @@
                     </h3>
                 </div>
                 <div class="main-content scroll-down" ng-hide = "contentShow">
-                    <div class="row">
-                        <div class="col-xs-12">
                             <p ng-bind-html= "toTrustedHTML( currentStatus.text )"></p>
-                        </div>
-                    </div>
                 </div>
                 <div class = "froalaEditor" ng-if = "contentShow">
                     <textarea froala="froalaOptions" ng-model="chapter.text"></textarea>
@@ -33,9 +29,9 @@
                     <button class="pull-right btn btn-success" ng-click="saveContent()">Save</button>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 col-xs-12">
                 <div class="title-header">
-                    <h3><span>Highlights</span></h3>
+                    <h3><span class="span-content-highlight">Highlights</span></h3>
                 </div>
                 <div class="questions-wrapper">
                     <div class="message-questions">

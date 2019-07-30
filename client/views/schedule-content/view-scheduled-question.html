@@ -1,7 +1,7 @@
-<div class="page" ng-controller="viewScheduledQuestionCtrl">
+<div class="page calender-page" ng-controller="viewScheduledQuestionCtrl">
     <div class="main-wrapper">
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-8 ">
                 <div class="title-header">
                     <h3><span>Scheduled Question</span></h3>
                 </div>
@@ -9,7 +9,7 @@
             </div>
             <div class="col-sm-4">
                 <div class="title-header">
-                    <h3><span>Messages</span></h3>
+                    <h3><span>Highlights</span></h3>
                 </div>
                 <div class="questions-wrapper questions-schedule">
                     <div class="message-questions">
@@ -27,12 +27,15 @@
                                                       <i class=" glyphicon pull-right" ng-class="{'glyphicon-chevron-down': expand, 'glyphicon-chevron-down': !expand}"></i>
                                                     </div> 
                                                 </uib-accordion-heading>
-                                                <div id = "{{msgIndex}}_{{$index}}" class="questions-section" ng-repeat = "question in msg.questions track by $index" ng-if = "!Ids.includes(question.id)">
+                                                <div id = "{{msgIndex}}_{{$index}}" class="questions-section" ng-repeat = "question in msg.questions track by $index" ng-if="!Ids.includes(question.id)">
                                                     Question # {{$index+1}}
-                                                    <div  ng-bind-html= "toTrustedHTML( question.name )" ></div>
+                                                    <div ng-bind-html= "toTrustedHTML( question.name )" ></div>
                                                 </div>
                                             </div>
                                         </uib-accordion>
+                                    </div>
+                                    <div ng-if = "!messages.length"> 
+                                        <h3>No Highlight Present</h3>
                                     </div>
                                 </div>
                             </div>

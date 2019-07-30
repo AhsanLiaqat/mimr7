@@ -1,16 +1,16 @@
-<div class="page" ng-controller="viewMessageCtrl">
+<div class="page page-highlights" ng-controller="viewMessageCtrl">
     <div class="main-wrapper">
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-8 col-xs-12">
                 <div class="title-header">
                     <h3><span>Highlights</span></h3>
                 </div>
                 <div class="main-content scroll-down">
                     <div class="row time-date">
-                        <div class="col-sm-9">
+                        <div class="col-xs-9">
                             <h3>{{ message.createdAt | date : 'd MMMM y'}}</h3>
                         </div>
-                        <div class="col-sm-3 text-right">
+                        <div class="col-xs-3 text-right">
                             <h5>{{ message.createdAt | date : 'h:mm a'}}</h5>
                         </div>
                     </div>
@@ -23,11 +23,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 col-xs-12">
                 <div class="title-header">
                     <h3><span>Messages</span></h3>
                 </div>
-                <div class="questions-wrapper">
+                <div class="questions-wrapper highlight-message-wrapper">
                     <div class="message-questions">
                         <div class="row">
                             <div class="col-xs-12">

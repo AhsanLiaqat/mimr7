@@ -1,6 +1,6 @@
-<div class="page" ng-controller="QuestionCtrl">
-    <section class="panel panel-default">
-        <div class="panel-heading">
+<div class="page page-table" ng-controller="QuestionCtrl">
+    <section class="panel panel-default search-collection-type-sec">
+        <div class="panel-heading  pb-0 highlights-panel-heading">
             <strong>
                 <span class="glyphicon glyphicon-th"></span> Questions
             </strong>
@@ -11,13 +11,14 @@
             </div>
         </div>
         <div class="panel-body">
-            <table st-pipe="QuestionsTable" st-table="msg" class="table table-bordered table-striped table-responsive">
+            <div class="table-collection-mobile">
+            <table st-pipe="QuestionsTable" st-table="msg" class="table table-bordered table-striped table-responsive  table-content-messages">
                 <thead>
                     <tr>
-                        <th class="col-md-2" st-sort="name">Question Name</th>
-                        <th class="col-md-1" st-sort="description">Number</th>
-                        <th class="col-md-3" st-sort="order">Type</th>
-                        <th class="col-md-3">Actions</th>
+                        <th st-sort="name">Question Name</th>
+                        <th st-sort="description">Number</th>
+                        <th st-sort="order">Type</th>
+                        <th >Actions</th>
                     </tr>
                     <tr>
                         <th>
@@ -38,7 +39,7 @@
                         </td>
                         <td>{{record.number}}</td>
                         <td>{{record.type}}</td>
-                        <td>
+                        <td class="btns-icons">
                             <a title = "Edit Question" class="btn btn-sm btn-info" ng-click="editQuestion(record, $index)"><span class="fa fa-pencil-square-o"></span></a>
 
                             <a title = "Delete Question" class="btn btn-danger btn-sm" ng-click="deleteQuestion(record.id, $index)" confirm="Are you sure you want to delete?">
@@ -64,7 +65,8 @@
                 </tr>
                 </tfoot>
             </table>
-            <div class="col-md-3">
+            </div>
+            <div class="col-sm-3 col-xs-12">
                 <select class="form-control"
                         ng-model="pageItems"
                         ng-options="item.val as item.name for item in items"

@@ -201,7 +201,7 @@
             $scope.scheduleToShow = false;
             $scope.activeToShow = false;
             $scope.completeToShow = true;
-            $http.get('/content-plan-templates/all').then(function (response) {
+            $http.get('/content-plan-templates/all?userAccountId=' + $scope.user.userAccountId).then(function (response) {
             $scope.completeContentToShow = [];
                 $scope.complete_collections = response.data;
                 angular.forEach($scope.complete_collections, function(value) {

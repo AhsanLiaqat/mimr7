@@ -1,6 +1,6 @@
-<div class="page" ng-controller="organizationsCtrl">
-    <section class="panel panel-default">
-        <div class="panel-heading">
+<div class="page student-table" ng-controller="organizationsCtrl">
+    <section class="panel panel-default search-collection-type-sec">
+        <div class="panel-heading pb-0 highlights-panel-heading">
             <strong>
         	<span class="glyphicon glyphicon-th"></span> External Organizations</strong>
             <div class="pull-right header-buttons">
@@ -8,7 +8,8 @@
             </div>
         </div>
         <div class="panel-body">
-            <table st-pipe="orgTable" st-table="roles" class="table table-bordered table-striped table-responsive">
+        <div class="table-collection-mobile">
+            <table st-pipe="orgTable" st-table="roles" class="table table-bordered table-striped table-responsive table-student-responsive">
                 <thead>
                     <tr>
                         <th st-sort="name"> Name</th>
@@ -39,7 +40,7 @@
                         <td>{{record.state}}</td>
                         <td><span ng-repeat="usr in record.users">{{usr.firstName}} {{usr.lastName}}<br></span></td>
                         <td>{{dateFormat(record.createdAt)}}</td>
-                        <td>
+                        <td class="btns-icons students-icons">
                             <!-- <a href="#/settings/organizations/details/{{record.id}}" class="btn btn-sm btn-primary">
                                 Employees
                             </a> -->
@@ -63,14 +64,9 @@
                     <td colspan="4" class="text-center">Loading ... </td>
                 </tr>
             </tbody>
-            <tfoot class="table table-striped table-responsive">
-              <tr>
-                <td class="text-center" st-pagination="" st-items-by-page="pageItems" colspan="7">
-                </td>
-            </tr>
-        </tfoot>
     </table>
-    <div class="col-md-3">
+    </div>
+    <div class="col-sm-3 col-xs-12">
       <select class="form-control"
       ng-model="pageItems"
       ng-options="item.val as item.name for item in items"

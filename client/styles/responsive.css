@@ -2,17 +2,35 @@
 /*******************/
 
 @media all and (max-width:1199px){
+	  .question-manage > a{
+    padding:0 10px 0 0 !important;
+}
 	.view-container p {text-align: left;}
 	.view-container .card-body {text-align: center;}
 	.view-container a, .view-container button  {padding: 8px 10px !important;}
-
+	.questions-section > a{
+		padding: 0 10px 0 0 !important;
+	}
 	.view-container .page-dashboard .navbar-white {text-align: center;}
 	.view-container .page-dashboard .navbar-white .nav.float-left {float: none !important; display: inline-block; margin: 0 auto;}
 	.view-container .page-dashboard .navbar-white .nav.float-right {float: none !important; display: inline-block; margin: 0 auto;}
+	.student_image {
+    padding: 35px 0 0;
+}
+ .class_image{
+     padding: 35px 0 0;
+   }
+   .student-table .search-collection-type-sec tr .btns-icons a {
+    padding: 0 6px !important;
+}
+
 }
 
 @media all and (max-width:991px){
 	.view-container a, .view-container button  {padding: 8px 10px !important;}
+	.questions-section > a{
+		padding: 0 10px 0 0 !important;
+	}
 	.view-container .col-md-4 {width: 50%;}
 	.inf-db-inc li {
 		float: none !important;
@@ -20,9 +38,61 @@
 	}
 	.ap-dashboard-check .btn {padding: 5px 10px !important;}
 
+	/************************/
+	.logo-img{
+	  width: 180px;
+	}
+	.home-page-cards .col-md-4{
+		width: 100%;
+	}
+	.delete-content-confirmation #modal-title{
+		font-size: 14px;
+	}
+	.delete-content-confirmation .modal-header .close{
+		margin-top: 0;
+	}
+	.active-schedule-message .container{
+		width: 100%;
+	}
+	.highlight-message-wrapper .message-listing-wrpper h3{
+		font-size: 20px;
+	}
+	.btn-icons-messages a{
+		padding:5px !important;
+	}
+	.calender-page .panel-heading {
+        padding: 5px 14px 5px 6px;
+     }
+    .calender-page .panel .panel-title {
+    font-size: 12px;
+    }
+    .calender-page .panel .panel-body{
+    	padding: 15px 0;
+    }
+    .std-table{
+    	min-width: 900px;
+    }
+    .std-collection-table{
+    	overflow-x: auto;
+    	width: 100%;
+    }
+     .std-table input::placeholder{
+     	font-size: 11px;
+     }
+     .table-content-messages{
+     	min-width: 850px; 
+     }
+     .table-collection-mobile{
+     	overflow-x: auto;
+     	width: 100%;
+     }
+
 }
 
 @media all and (max-width:767px){
+	.delete-content-confirmation.modal-dialog{
+		margin: 10px auto;
+	}
 	.main-logo{
 		top: 10px;
 	}
@@ -41,6 +111,9 @@
 	.app > .main-container > .nav-container.nav-fixed {top: 86px !important;}
 
 	.view-container a, .view-container button  {padding: 8px 10px !important;}
+	.questions-section > a{
+		padding: 0 10px 0 0 !important;
+	}
 	.view-container .col-md-4 {width: 100%; float: none; clear: both;}
 
 	.view-container .top_btns_container {text-align: center;}
@@ -59,6 +132,213 @@
 	.ip-messages .col-sm-8.text-right {text-align: center;}
 	.ip-messages .col-sm-8.text-right .btn {float: none !important; margin: 0 !important;}
 	.ip-messages {margin-top: -100px;}
+
+
+	/************************/
+	.logo-img{
+	  width: 170px;
+	}
+	.page-signin .auth-container, .page-signup .auth-container, .page-forgot .auth-container{
+		max-width: 50%;
+		
+	}
+	.signin-body .form-submit .btn{
+		padding: 10px 0 !important;
+	}
+	.home-page-cards .col-xs-12{
+		margin: 10px 0 !important;
+	}
+	.table-schedule-content{
+		min-width: 600px;
+		overflow-y: auto;
+	}
+	.delete-content-confirmation.modal-dialog {
+    margin: 140px auto;
+    width: 55%;
+}
+    .delete-content-confirmation .modal-content .modal-header{
+    	padding: 10px;
+    }
+    .active-schedule-message .col-sm-3{
+    	text-align: center;
+    	width: 100%;
+    	margin: 10px 0;
+    }
+    .active-schedule-message .col-sm-6{
+    	width: 100%;
+    	margin: 10px 0;
+    }
+    .active-schedule-message .btn-danger{
+    	width: 100%;
+    	text-align: center;
+    }
+   .active-schedule-message .form-group{
+   	    overflow-y: auto;
+   }
+   .active-schedule-message  .table{
+        width: 800px;
+   }
+   .user-response-panel .panel-heading .col-sm-4{
+   	margin: 5px 0;
+   	width: 100%;
+   	text-align: center;
+   }
+   .user-response-panel .panel-heading .col-sm-8{
+   	margin: 5px 0;
+   }
+   .user-response-panel .panel-heading .col-sm-8 .text-right{
+   	     text-align: center;
+   }
+   .user-response-panel .form-group{
+   	overflow-y: auto;
+   }
+   .col-sm-3{
+           width: 100%;
+   } 
+   .col-sm-6{
+    width: 100%;
+   }
+   .col-sm-4 {
+    width: 100%;
+  }
+  .main-content-navbar .navbar-dashboard-dropdown{
+  	display: inline-block;
+  }
+  .main-content-navbar .navbar-nav{
+  	display: inline-block;
+  	margin: 0 5px;
+  }
+  .main-content-navbar .col-xs-12 .text-left{
+  	text-align: center;
+  	padding: 0;
+  }
+  .main-content-navbar .btn-sm span{
+	font-size: 10px;
+}
+.main-wrapper .row .col-sm-8{
+	padding: 0;
+}
+.content-section-highlight .title-header h3{
+	padding: 0 16px;
+}
+.span-content-highlight{
+	margin-left: -5px;
+}
+.main-content-navbar{
+	margin:0;
+} 
+.chapter-heading {
+    font-size: 16px;
+}
+.content-section-highlight .add-content-btn{
+	font-size: 16px;
+}
+.content-section-highlight .title-header h3{
+	font-size: 16px;
+}
+.content-list-higlight{
+	padding: 3px 0;
+}
+.content-section-highlight .main-content {
+    padding: 0px 25px;
+}
+.highlight-message-wrapper .message-listing-wrpper {
+    padding: 0 0 0 15px!important;
+}
+.question-selection-wrapper.questions-section{
+	padding:15px 0 15px 15px;
+}
+.message-listing-wrpper .highlights-section {
+    padding: 15px 25px;
+}
+.table-complete-status{
+		min-width: 800px;
+		overflow-y: auto
+	}
+	.table-collection-mobile{
+		width: 100%;
+		overflow-y: auto;
+	}
+	.collection-type-table{
+		min-width: 800px;
+	}
+	.class-list-modal .modal-dialog{
+		width: 80%;
+        margin: 66px auto;
+	}
+	.form-articles .modal-dialog{
+		width: 80%;
+        margin: 66px auto;
+	}
+	.modal-content-library .modal-dialog {
+	width: 80%;
+    margin: 66px auto;
+}
+   .modal-content-library .modal-content .modal-body{
+	 padding: 20px 0;
+}
+  .calender-page .fc{
+    padding: 0 15px;
+}
+ .calender-page .row .col-sm-4{
+	padding: 0 15px;
+}
+.content-edit-collection .modal-dialog {
+    margin: 85px auto;
+}
+	.add-question{
+		bottom: 10px;
+	}
+	.page-highlights .main-content > .row {
+    max-width: 98%;
+}
+.page-highlights .title-header{
+	padding: 0 16px;
+}
+.search-collection-type-sec .panel-heading{
+	text-align: center;
+}
+.search-collection-type-sec .panel-heading strong{
+	display: block;
+	margin: 5px 0;
+}
+.search-collection-type-sec .panel-heading .header-buttons{
+	float: none !important; 
+	margin: 0 !important;
+	padding: 20px 0!important;
+}
+.search-collection-type-sec .panel-heading .header-buttons .btn{
+	margin: 0 !important;
+	padding: 0 !important;
+}
+.highlights-panel-heading{
+	height: 100px;
+}
+.pb-0{
+    padding-bottom: 0 !important;
+}
+.articles-content .modal-dialog{
+    width: 80%;
+    margin: 85px auto;
+}
+.details-content .content-section-highlight .content-list{
+	margin: 0 5px;
+}
+.details-content .content-section-highlight h3 .dropdown a{
+	line-height: 12px;
+}
+.details-content .main-content p{
+	margin: 0;
+}
+.student-table .table-student-responsive{
+	min-width: 930px;
+}
+.dynamic-form .dynamic-form-student{
+	width: 25%;
+}
+.dynamic-form .dynamic-form-student .btn.btn-sm {
+    padding: 0 4px !important;
+}
 }
 
 @media all and (max-width:480px){
@@ -70,7 +350,219 @@
 	.view-container .btn-group-right-top button {display: inline-block; float: none !important;}
 
 	.full-xs {display: block; width: 100%; clear: both; text-align: center;}
+
+
+	/************************/
+	.logo-img{
+	  width: 150px;
+	}
+	.page-signin .auth-container, .page-signup .auth-container, .page-forgot .auth-container{
+		max-width: 70%;
+	}
+	.signin-body .form-submit .btn{
+		padding: 5px 0 !important;
+	}
+	.custom-clm button{
+		font-size: 10px;
+	}
+	.custom-clm button span{
+		font-size: 10px;
+	}
+	.custom-clm button span i{
+		font-size: 10px
+	}
+	.custom-clm button i{
+		font-size: 10px;
+	}
+	
+	.schedule-content-modal .form-group label{
+		font-size: 13px;
+	}
+	.schedule-content-modal .btn{
+		font-size: 10px;
+	}
+	.delete-content-confirmation .form-group label{
+		font-size: 12px;
+	}
+	.delete-content-confirmation #modal-title {
+    font-size: 11px;
 }
+.active-schedule-message .table {
+    width: 600px;
+}
+.organization_image{
+    margin-right: 1px;
+    width: 12px;
+}
+.employees_image{
+    margin-right: 1px;
+    width: 12px;
+}
+.student-organization .custom-clm .btn-sm{
+	padding: 7px 5px !important;
+}
+.main-content-navbar .custom-clm .btn-sm{
+	padding: 7px 5px !important;
+}
+ .main-content-navbar .btn-sm span{
+	font-size: 8px;
+}
+.main-content-navbar .btn-sm {
+	font-size: 8px;
+}
+.main-content-navbar .btn-sm i{
+	font-size: 8px;
+}
+.main-content-navbar .collections_image{
+	margin-right: 1px;
+    margin-bottom: 4px;
+    width: 9px;
+}
+.content-section-highlight .title-header h3{
+	font-size: 12px !important;
+}
+.content-list-higlight{
+	padding: 5px 0;
+}
+.home-page-cards .card .card-body {
+    padding: 5px 0 5px;
+}
+.class_image {
+    padding: 15px 0 0;
+}
+.student_image{
+	 padding: 15px 0 0;
+}
+.chapter-heading {
+    font-size: 12px;
+}
+.content-section-highlight .add-content-btn{
+	font-size: 12px;
+}
+.content-section-highlight .add-content-btn i{
+	font-size: 10px;
+}
+.content-section-highlight .add-content-btn {
+    margin: 23px 10px 0;
+}
+.add-question{
+	bottom: 10px;
+}
+.search-collection-type-sec .panel-heading strong{
+	display: block;
+	text-align: center;
+	margin: 10px 0;
+}
+.search-collection-type-sec .panel-heading select{
+	display: block;
+	text-align: center;
+	margin: 10px auto;
+}
+.search-collection-type-sec .header-media-btn .btn.btn-sm{
+	padding: 0 !important;
+	margin: 0 !important;
+}
+.search-collection-type-sec .panel-heading .header-media-btn.pull-right{
+	float: none !important;
+}
+.search-collection-type-sec .panel-heading .header-buttons{
+	bottom: 0;
+	text-align: center;
+	margin: 10px 0;
+}
+  .modal-content-library .form-group{
+  	padding:0 25px;
+  }
+  .modal-content-library .form-group label{
+  	font-size: 11px;
+  }
+  .modal-content-library .form-group select{
+  	font-size: 12px;
+  }
+   .modal-content-library .modal-footer .btn{
+   	font-size: 12px;
+   	padding: 5px;
+   } 
+   .content-edit-collection #home{
+    width: 80%;
+}
+   .content-edit-collection .form-group label{
+   	font-size: 12px;
+   }
+   .content-edit-collection .form-group input,
+   textarea{
+   	font-size: 12px;
+   }
+   .content-edit-collection .form-group .form-control{
+   	font-size: 11px;
+   }
+   .content-edit-collection .modal-content .modal-body{
+   	height: 100%;
+   	padding-bottom: 0;
+   	   }
+    .calender-page .fc-event.fc-draggable{
+    	padding: 3px 2px !important;
+    }
+  .Organization-modal .modal-dialog{
+    margin: 65px auto;
+}
+.content-edit-collection h4{
+	font-size: 14px;
+}
+.content-edit-collection .form-group input::placeholder{
+   	font-size: 12px;
+   }
+   .chosen-single{
+   	width: 80%;
+   }
+   .modal-footer-btns{
+   	padding: 0 !important;
+   }
+   .modal-footer-btns .btn{
+   	padding: 10px 5px !important;
+	 }
+	.modal-footer-btns .btn-warning{
+		float: left !important;
+	}
+	/*.page-highlights .title-header .main-content h5{
+		font-size: 12px !important;
+	}*/
+	.page-highlights .main-content h3,h5{
+		font-size: 12px !important;
+	}
+	.highlights-panel-heading{
+		height: 130px;
+	}
+	.search-collection-type-sec .panel-heading .header-buttons{
+	     padding: 10px 0!important;
+}
+     .articles-content .panel-body .form-group{
+     	margin: 0;
+     }
+    .student-table .highlights-panel-heading{
+     	height: 100px;
+     }
+     .std-pannel-address-btns.float-right{
+     	float: right !important;
+     }
+     .dynamic-form .dynamic-form-student{
+			padding: 15px 0;
+		}
+	  .dynamic-form th{
+	  	font-size: 10px;
+	  }
+	  .dynamic-form th input::placeholder{
+	  	font-size: 10px;
+	  }
+	   .dynamic-form tr td{
+	   	font-size: 10px;
+	   }
+
+	/*.page-highlights .title-header .main-content h5{
+		font-size: 12px;
+	}*/
+}
+
 
 /*extensive queries*/
 /*******************/
@@ -79,6 +571,7 @@
 	
 }
 @media screen and (min-width: 320px) and (max-width: 479px) {
+	
 
 }
 
@@ -153,3 +646,4 @@
 	.information-dashboard .col-lg-3,
 	.information-dashboard .col-lg-9 {float: none !important; width: 100% !important;}
 }
+

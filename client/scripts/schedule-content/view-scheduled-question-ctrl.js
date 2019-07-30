@@ -56,7 +56,6 @@ section and drop onto the calendar*/
                                         },
                                         stop: function() {
                                             $(this).parent().css('overflow' , 'auto');
-                                            
                                         }
                                     });
                             }, 1);
@@ -132,7 +131,6 @@ section and drop onto the calendar*/
                     // $scope.messages[msgIndex].questions.splice(questionIndex,1);
                 },
                 viewRender: function(view, element) {
-                    console.log('view is wonderful',view)
                     if(view.intervalEnd._d > new Date(2018,6,31,0,0,0) && view.type == 'agendaWeek'){
                         $('.fc-next-button').addClass('fc-state-disabled');
                     }else{

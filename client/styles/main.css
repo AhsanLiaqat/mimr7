@@ -2047,7 +2047,7 @@ be a descendant of the grid when it is being dragged.
       .page-signin .signin-header,
       .page-signup .signin-header,
       .page-forgot .signin-header {
-        margin-top: 150px; } }
+        margin-top: 50px; } }
     .page-signin .signin-header h1,
     .page-signup .signin-header h1,
     .page-forgot .signin-header h1 {
@@ -3060,7 +3060,7 @@ body {
   left: 0;
   right: 0;
   margin: 0;
-  padding-bottom: 50px; }
+  padding-bottom: 0; }
 .body-wide .introjs-overlay,
 .body-wide .introjs-helperLayer {
   display: none; }
@@ -4101,10 +4101,6 @@ padding: 10px;
 
 /* MATERIAL DESIGN CSS EXTENSION */
 
-.card-headline {
-  margin-left: 15px;
-}
-
 .nav-tabs {
   background-color:#F8F8F8;
 }
@@ -4949,7 +4945,7 @@ body { padding-right: 0 !important }
 
 
 .chapter-heading{
-  font-size: 16px;
+  font-size: 23px;
 }
 .chapter-heading::after{
   background-color: #009688 !important;
@@ -5276,3 +5272,41 @@ body { padding-right: 0 !important }
   height: 60vh;
   overflow: auto;
 }
+/********/
+.logo-img{
+  width: 240px;
+}
+
+.page-signin .auth-container, .page-signup .auth-container, .page-forgot .auth-container{
+    max-width: 40%;
+    width: 100%;
+  }
+  .page-signin .signin-header, .page-signup .signin-header, .page-forgot .signin-header{
+    padding: 15px 12px;
+    margin-top:0px;
+  }
+  .page-signin .form-info, .page-signup .form-info, .page-forgot .form-info{
+    padding: 20px 10px;
+  }
+  .page-signin .form-submit, .page-signup .form-submit, .page-forgot .form-submit{
+    padding: 10px;
+  }
+  .signin-body .form-submit .btn{
+    padding: 20px 0 !important;
+    margin: 0;
+  }
+  .page-signin{
+    padding: 0;
+  }
+  .page-signin .input-group-addon{
+    padding: 6px 10px 6px 0; 
+  }
+  .page-signin{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .home-page-cards{
+    margin: 5px;
+  }

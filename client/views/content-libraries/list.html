@@ -1,27 +1,27 @@
 <div class="page page-table" data-ng-controller="articleLibraryCtrl">
 
-    <section class="panel panel-default">
+    <section class="panel panel-default search-collection-type-sec">
         <div class="panel-heading">
             <strong>
                 <span class="glyphicon glyphicon-th"></span> Media Library
             </strong>
             <select chosen ng-model="selected" ng-options = "item.id as item.title for item in selectoptions" ng-change = "managearray(selected)" ng-disabled = "gameIdFound">
             </select>
-            <div class="pull-right header-buttons">
+            <div class="pull-right header-buttons header-media-btn">
                 <a ng-click="addModal()" class="btn btn-success btn-sm">Add Media </a>
             </div>
         </div>
 
         <div class="panel-body">
-
-            <table  st-pipe="referencesTable" st-table="libReferences" class="table table-bordered table-striped table-responsive">
+          <div class="table-collection-mobile">
+            <table  st-pipe="referencesTable" st-table="libReferences" class="table table-bordered table-striped table-responsive collection-type-table">
 
                 <thead>
                 <tr>
-                    <th class="col-md-1" st-sort="title">Title</th>
-                    <th class="col-md-1" st-sort="author">Description</th>
-                    <th class="col-md-1" st-sort="filename">File Name</th>
-                    <th class="col-md-2">Actions</th>
+                    <th st-sort="title">Title</th>
+                    <th  st-sort="author">Description</th>
+                    <th  st-sort="filename">File Name</th>
+                    <th  class="action">Actions</th>
                 </tr>
                 <tr>
                     <th>
@@ -36,7 +36,7 @@
                         <input class="form-control" placeholder="Search File"
                                st-search="filename"/>
                     </th>
-                    <th></th>
+                    <th class="action"></th>
                 </tr>
                 </thead>
 
@@ -49,7 +49,7 @@
                         <p ng-show="!record.mimetype">N/A</p>
                     </td>
 
-                    <td>
+                    <td class="action btns-icons">
                         <button ng-show="record.mimetype"
                                 class="btn btn-sm btn-default"
                                 ng-click="preview(record)">
@@ -73,7 +73,8 @@
                 </tr>
                 </tfoot>
             </table>
-            <div class="col-md-3">
+            </div>
+            <div class="col-sm-3 col-xs-12">
                 <select class="form-control"
                         ng-model="pageItems"
                         ng-options="item.val as item.name for item in items"

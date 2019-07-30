@@ -44,25 +44,20 @@
     </div> -->
 
 
-    <div class="row" style="margin: 5px;">
-        <div class="col-md-4" style="margin-bottom: 20px;margin-top: 20px">
+    <div class="row home-page-cards">
+        <div class="col-sm-4 col-xs-12" style="margin-bottom: 20px;margin-top: 20px">
             <div class="card">
-                <div class="card-content" style="position: static;">
-                    <div class="card-headline">
+                <div class="card-content">
                         <div class="class_image">
                             <img ng-src="../images/class.png" style="width: 57px;"  alt="No Image" />
+                                <a ng-click = "showClass()" href = "" >
+                                    CLASS
+                                </a>
                         </div>
-                        <h2 class="text-center">
-                            <a ng-click = "showClass()" href = "" style="position: relative;top: 25px;">
-                                CLASS
-                            </a>
-                        </h2>
-
-                    </div>
 
                     <div class="card-body">
                         <div class="text-center">
-                            <a ng-click = "showClass()" class="btn text-center" style="color: black;   position: relative;top: 25px;" ng-class="{'color_green': classToShow}">
+                            <a ng-click = "showClass()" class="btn text-center" style="color: black;" ng-class="{'color_green': classToShow}">
                                 <i class="fa fa-caret-down fa-2x "></i>
                             </a>
                         </div>
@@ -72,24 +67,18 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4" style="margin-bottom: 20px;margin-top: 20px">
+        <div class="col-sm-4 col-xs-12" style="margin-bottom: 20px;margin-top: 20px">
             <div class="card">
-                <div class="card-content" style="position: static;">
-                    <div class="card-headline">
+                <div class="card-content">
                         <div class="student_image">
-                            <img ng-src="../images/student.png" style="width: 61px;" alt="No Image" />
+                            <img ng-src="../images/student.png" alt="No Image" />
+                                <a ng-click = "showStudents()" href = "">
+                                    STUDENT
+                                </a>
                         </div>
-                        <h2 class="text-center">
-                            <a ng-click = "showStudents()" href = "" style="position: relative;top: 25px;">
-                                STUDENT
-                            </a>
-                        </h2>
-
-                    </div>
-
                     <div class="card-body">
                         <div class="text-center">
-                            <a ng-click = "showStudents()" class="btn text-center" style="color: black;   position: relative;top: 25px;" ng-class="{'color_green': studentToShow}">
+                            <a ng-click = "showStudents()" class="btn text-center" style="color: black;" ng-class="{'color_green': studentToShow}">
                                 <i class="fa fa-caret-down fa-2x "></i>
                             </a>
                         </div>
@@ -99,24 +88,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4" style="margin-bottom: 20px;margin-top: 20px">
+        <div class="col-sm-4 col-xs-12" style="margin-bottom: 20px;margin-top: 20px">
             <div class="card">
-                <div class="card-content" style="position: static;">
-                    <div class="card-headline">
+                <div class="card-content">
                         <div class="student_image">
                             <img ng-src="../images/content.png" style="width: 57px;" alt="No Image" />
+                                <a ng-click = "showContents()" href = "">
+                                    CONTENT
+                                </a>
                         </div>
-                        <h2 class="text-center">
-                            <a ng-click = "showContents()" href = "" style="position: relative;top: 25px;">
-                                CONTENT
-                            </a>
-                        </h2>
-
-                    </div>
 
                     <div class="card-body">
                         <div class="text-center">
-                            <a ng-click = "showContents()" class="btn text-center" style="color: black;   position: relative;top: 25px;" ng-class="{'color_green': mainContentToShow}">
+                            <a ng-click = "showContents()" class="btn text-center" style="color: black;" ng-class="{'color_green': mainContentToShow}">
                                 <i class="fa fa-caret-down fa-2x "></i>
                             </a>
                         </div>
@@ -129,11 +113,11 @@
     </div>
     <div class="main-wrapper" style="margin-right: 20px;margin-left: 20px;">
         <div ng-if = "mainContentToShow">
-            <nav class="navbar navbar-default navbar-white" style="margin-right: 20px;margin-left: 20px">
+            <nav class="navbar navbar-default navbar-white main-content-navbar">
                 <div class="container-fluid">
                     <div class="Quick-plan-row Information-dashboard-top-btn">
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-sm-4 col-xs-12">
                                <div class="custom-clm text-left">
                                     <ul class="nav navbar-nav">
                                         <li class="dropdown inf-db-inc"">
@@ -154,8 +138,8 @@
                                     </button>
                                 </div> 
                             </div>
-                            <div class="col-md-6">
-                                <div class="custom-clm text-center">
+                            <div class="col-sm-8 col-xs-12">
+                                <div class="custom-clm text-left">
                                     <button class="btn btn-sm btn-raised btn-default" ng-click="toggleContentList()" ng-class = "{'students_btn':contentToShow}">
                                         <span><i class="fa fa-pencil" aria-hidden="true"></i> Contents</span>
                                     </button>
@@ -170,9 +154,6 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                
-                            </div>
                         </div>
                     </div>
                     <div class="" id="bs-example-navbar-collapse-1">
@@ -184,11 +165,11 @@
                     </div>
                 </div>
             </nav>
-                <div class="row">
-                    <div class="col-sm-8" ng-if = "contentToShow">
-                        <a href="" class="pull-right" style="margin : 10px" ng-hide = "contentId" ng-click = "addContent()"><i class="fa fa-plus"></i> Add Content</a>
+                <div class="row content-section-highlight">
+                    <div class="col-sm-8 col-xs-12" ng-if = "contentToShow">
+                        <a href="" class="pull-right add-content-btn"  ng-hide = "contentId" ng-click = "addContent()"><i class="fa fa-plus"></i> Add Content</a>
                         <div class="title-header">
-                            <h3><span>Content</span>
+                            <h3><span class="content-list-higlight">Content</span>
                                 <ul class="nav navbar-nav navbar-left incident-ul content-list">
                                     <li class="dropdown">
                                         <a href="" data-target="" class="dropdown-toggle" data-toggle="dropdown">
@@ -205,11 +186,7 @@
                             </h3>
                         </div>
                         <div class="main-content scroll-down" ng-hide = "contentShow">
-                            <div class="row">
-                                <div class="col-xs-12">
                                     <p ng-bind-html= "toTrustedHTML( currentStatus.text )"></p>
-                                </div>
-                            </div>
                         </div>
                         <div class = "froalaEditor" ng-if = "contentShow">
                             <textarea froala="froalaOptions" ng-model="chapter.text"></textarea>
@@ -217,9 +194,9 @@
                             <button class="pull-right btn btn-success" ng-click="saveContent()">Save</button>
                         </div>
                     </div>
-                    <div class="col-sm-4" ng-if = "contentToShow">
+                    <div class="col-sm-4 col-xs-12"  ng-if = "contentToShow">
                         <div class="title-header">
-                            <h3><span>Highlights</span></h3>
+                            <h3><span  class="span-content-highlight">Highlights</span></h3>
                         </div>
                         <div class="questions-wrapper">
                             <div class="message-questions">
@@ -264,14 +241,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8" ng-if = "highlightsToShow">
+                    <div class="col-sm-8 col-xs-12" ng-if = "highlightsToShow">
                         <div class="title-header">
-                            <h3><span>Highlights</span></h3>
+                            <h3 class="highlights-heading"><span>Highlights</span></h3>
                         </div>
                         <div class="highlights-wrapper">
                             <div class="message-questions">
-                                <div class="row">
-                                    <div class="col-xs-12">
                                         <div class="message-listing-wrpper">
                                             <div class="highlights-section" ng-repeat = "highlight in message track by $index" ng-click = "changeHighlight(highlight.id)" ng-class="(msg.id == highlight.id) ? 'selected-highlight' : '' ">
                                                 <div ng-bind-html= "toTrustedHTML( highlight.content )" ></div>
@@ -280,21 +255,17 @@
                                                 <h3>No Highlights Present</h3>
                                             </div>
                                         </div>
-                                    </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4" ng-if = "highlightsToShow">
+                    <div class="col-sm-4 col-xs-12" ng-if = "highlightsToShow">
                         <div class="title-header">
                             <h3><span>Messages</span></h3>
                         </div>
-                        <div class="questions-wrapper">
+                        <div class="questions-wrapper highlight-message-wrapper">
                             <div class="message-questions">
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="message-listing-wrpper">
-                                            <div class="questions-section" ng-repeat = "msg in questions track by $index">
+                                    <div class="message-listing-wrpper">
+                                            <div class="questions-section highlight-message-section" ng-repeat = "msg in questions track by $index">
                                                 <a ng-click = "toggleMenu(msg)" class="question-manage"><i class="fa fa-ellipsis-v"></i></a>
                                                 <ul ng-if = "msg.show">
                                                     <li><a ng-click = "edit(msg,$index)"><i class="fa fa-edit"></i> edit</a></li>
@@ -305,9 +276,7 @@
                                             <div ng-if = !questions.length> 
                                                 <h3>No Message Present</h3>
                                             </div>
-                                        </div>
                                     </div>
-                                </div>
                                 <div class="add-question">
                                     <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Message</a>
                                 </div>
@@ -345,37 +314,31 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8" ng-if = "messagesToShow">
+                    <div class="col-sm-8 col-xs-12" ng-if = "messagesToShow">
                         <div class="title-header">
                             <h3><span>Messages</span></h3>
                         </div>
                         <div class="messages-wrapper">
                             <div class="message-questions">
-                                <div class="row">
-                                    <div class="col-xs-12">
                                         <div class="message-listing-wrpper">
                                             <div class="highlights-section" ng-repeat = "question in questions track by $index" ng-click = "changeMessage(question.id)" ng-class="(ques.id == question.id) ? 'selected-highlight' : '' ">
                                                 <div ng-bind-html= "toTrustedHTML( question.name )" ></div>
                                             </div>
                                             <div ng-if = !questions.length> 
-                                                <h3>No Message Present</h3>
+                                                <h3 >No Message Present</h3>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4" ng-if = "messagesToShow">
+                    <div class="col-sm-4 col-xs-12" ng-if = "messagesToShow">
                         <div class="title-header">
                             <h3><span>Responses</span></h3>
                         </div>
                         <div class="questions-wrapper">
-                            <div class="message-questions">
-                                <div class="row">
-                                    <div class="col-xs-12">
+                            <div class="message-questions ">
                                         <div class="message-listing-wrpper">
-                                            <div class="questions-section" ng-if = messageRes.name>
+                                            <div class="questions-section question-selection-wrapper" ng-if = messageRes.name>
                                                 <a ng-click = "toggleList(messageRes)" class="question-manage"><i class="fa fa-ellipsis-v"></i></a>
                                                 <ul ng-if = "messageRes.show">
                                                     <li><a ng-click = "edit(messageRes,$index)"><i class="fa fa-edit"></i> edit</a></li>
@@ -384,11 +347,9 @@
                                                 <div ng-bind-html= "toTrustedHTML( messageRes.name )" ></div>
                                             </div>
                                             <div ng-if = !messageRes.name> 
-                                                <h3>No Response Present</h3>
+                                                <h3 style="padding-left: 11px;">No Response Present</h3>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
                                 <div class="add-question">
                                     <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Response</a>
                                 </div>
@@ -405,42 +366,24 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-if="collectionToShow" class="table-responsive">
-                        <div class="pull-right add_org">
+                     <div ng-if="collectionToShow" class="pull-right add_org" style="margin-left: auto;" >
                             <a href="" class="btn btn-success btn-sm" ng-click = "addCollection()"> <i class="fa fa-plus"></i> ADD</a>
-                        </div>
-                        <table st-pipe="collectionListTable" st-table="collections" class="table table-striped">
+                    </div>
+                    <div ng-if="collectionToShow" class="table-responsive">
+                        <table st-pipe="collectionListTable" st-table="collections" class="table table-striped table-complete-status highlight-collection-table">
                             <thead>
                                 <tr>
-                                    <td></td>
                                     <th st-sort="title"><strong>Name</strong></th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
                                     <th st-sort="description"><strong>Description</strong></th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><strong style="margin-left: 135px">Actions</strong></td>
+                                    <th><strong>Actions</strong></th>
                                 </tr>
                             </thead>
                             <tr ng-repeat="record in collections">
-                                <td></td>
                                 <td>{{record.title | displayString : 20}}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
                                 <td> {{record.description}}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                <td>
+                                <td class="collec-btns-icons btn-icons-messages">
                                     <!-- <a href="#/message-libraries/{{record.id}}" class="btn btn-sm btn-primary">Highlights</a> -->
-                                    <a href="#/article-libraries/{{record.id}}" class="btn btn-sm btn-primary">Docs & Media</a>
+                                    <a href="#/article-libraries/{{record.id}}" class="btn btn-sm btn-primary">Docs& Media</a>
 
                                     <!-- <a href="#/view-contents/{{record.id}}" class="btn btn-sm btn-primary">Contents</a> -->
                                     <button title="Schedule Content" class="btn btn-sm btn-success" ng-click="scheduleContent(record)">
@@ -469,13 +412,10 @@
         </div>
     </div>
     <div ng-if= "studentToShow">
-        <nav class="navbar navbar-default navbar-white" style="margin-right: 20px;margin-left: 20px">
+        <nav class="navbar navbar-default navbar-white student-organization" style="margin-right: 20px;margin-left: 20px">
             <div class="container-fluid">
                 <div class="Quick-plan-row Information-dashboard-top-btn">
-                    <div class="row">
-                        <div class="col-md-3">
-                        </div>
-                        <div class="col-md-6">
+                    <div class="row" style="justify-content: center;">
                             <div class="custom-clm text-center">
                                 <button class="btn btn-sm btn-raised" ng-click="toggleOrganizationList()" ng-class = "{'students_btn': organizationToShow}">
                                     <span><img ng-src="../images/organization.png" class="organization_image" /> Organization</span>
@@ -490,10 +430,6 @@
                                     </span>
                                 </button>
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            
-                        </div>
                     </div>
                 </div>
                 <div class="" id="bs-example-navbar-collapse-1">
@@ -505,50 +441,25 @@
                 </div>
             </div>
         </nav>
-        <div ng-if="organizationToShow" class="table-responsive">
-            <div class="pull-right add_org">
-                <a href="" class="btn btn-success btn-sm" ng-click = "addOrganization()"> <i class="fa fa-plus"></i> ADD</a>
-            </div>
-            <table st-pipe="organizationTable" st-table="organizations" class="table table-striped">
+         
+        <div ng-if="organizationToShow" class="pull-right add_org">
+            <a href="" class="btn btn-success btn-sm" ng-click = "addOrganization()"> <i class="fa fa-plus"></i> ADD</a>
+        </div>
+        <div ng-if="organizationToShow" class="table-responsive">  
+            <table st-pipe="organizationTable" st-table="organizations" class="table table-striped table-schedule-content">
                 <thead>
                     <tr>
-                        <td></td>
                         <th st-sort="name"><strong>Name</strong></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <th st-sort="region"><strong>Region</strong></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <th st-sort="state"><strong>Sector</strong></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><strong>Actions</strong></td>
+                        <th><strong>Actions</strong></th>
                     </tr>
                 </thead>
                 <tr ng-repeat="record in organizations">
-                    <td></td>
                     <td>{{record.name | displayString : 20}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     <td> {{record.region}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     <td> {{record.state}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    <td>
+                    <td class="btns-icons">
                         <a href="#/organizations/students/details/{{record.id}}" class="btn btn-sm btn-primary">
                                 Students
                             </a>
@@ -562,65 +473,32 @@
                 </tr>
             </table>
         </div>
-        <div ng-if="playerListToShow" class="table-responsive">
-            <div class="pull-right add_org">
+         <div ng-if="playerListToShow" class="pull-right add_org">
                 <a href="" class="btn btn-success btn-sm" ng-click = "CreatePlayerList()"> <i class="fa fa-plus"></i> ADD</a>
             </div>
-            <table st-pipe="playerListTable" st-table="player_lists" class="table table-striped">
+
+        <div ng-if="playerListToShow" class="table-responsive">
+                       <table st-pipe="playerListTable" st-table="player_lists" class="table table-striped table-schedule-content-student">
                 <thead>
                     <tr>
-                        <td></td>
                         <th st-sort="name"><strong>Name</strong></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <th st-sort="description"><strong>Description</strong></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <th st-sort="organization.name"><strong>Organization</strong></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <th st-sort="firstName"><strong>Employees</strong></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td><strong>Actions</strong></td>
                     </tr>
                 </thead>
                 <tr ng-repeat="record in player_lists">
-                    <td></td>
                     <td>{{record.name | displayString : 20}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     <td> {{record.description}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     <td> {{record.organization.name}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     <td ng-if = "record.users.length == 0">N/A</td>
                     <td ng-if = "record.users.length > 0">
                         <span ng-repeat = "player in record.users">
                             {{player.firstName}} {{player.lastName}},
                         </span>
                     </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    <td>
+                    <td class="btns-icons">
                         <a ng-click="importPlayers(record.id,record.users)" title = "Import students" class="btn btn-info">
                             <span class="glyphicon glyphicon-import"></span>
                         </a>
@@ -635,60 +513,26 @@
                     No Player List Present
                 </p> -->
         </div>
-        <div ng-if="employeeToShow" class="table-responsive">
-            <div class="pull-right add_org">
+        <div ng-if="employeeToShow" class="pull-right add_org">
                 <a href="" class="btn btn-success btn-sm" ng-click = "addEmployee()"> <i class="fa fa-plus"></i> ADD</a>
             </div>
-            <table st-pipe="employeeListTable" st-table="employees" class="table table-striped">
+        <div ng-if="employeeToShow" class="table-responsive">
+            <table st-pipe="employeeListTable" st-table="employees" class="table table-striped table-schedule-content-student">
                 <thead>
                     <tr>
-                        <td></td>
                         <th st-sort="firstName"><strong>Name</strong></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <th st-sort="email"><strong>Email</strong></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <th st-sort="mobilePhone"><strong>Mobile Number</strong></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <th><strong>Status</strong></th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td><strong>Actions</strong></td>
+                        <th><strong>Actions</strong></th>
                     </tr>
                 </thead>
                 <tr ng-repeat="record in employees">
-                    <td></td>
                     <td>{{record.firstName}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     <td> {{record.email}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     <td> {{record.mobilePhone}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     <td> {{record.active}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    <td>
+                    <td class="btns-icons">
 
                          <a href="" ng-click = "editStudent(record,$index)" class="btn btn-sm btn-info">
                             <span class="fa fa-pencil-square-o"></span>
@@ -705,12 +549,8 @@
         <nav class="navbar navbar-default navbar-white" style="margin-right: 20px;margin-left: 20px">
             <div class="container-fluid">
                 <div class="Quick-plan-row Information-dashboard-top-btn">
-                    <div class="row">
-                        <div class="col-md-3">
-                        </div>
-                        <div class="col-md-6">
+                    <div class="row" style="justify-content: center;">
                             <div class="custom-clm text-center">
-                                
                                 <button class="btn btn-sm btn-raised" ng-click="toggleScheduleList()" ng-class = "{'students_btn': scheduleToShow}">
                                     <span><i class="fa fa-calendar calendar_icon"></i>Schedule</span>
                                 </button>
@@ -727,10 +567,6 @@
                                     </span>
                                 </button>
                             </div>
-                        </div>
-                        <div class="col-md-3">
-                            
-                        </div>
                     </div>
                 </div>
                 <div class="" id="bs-example-navbar-collapse-1">
@@ -742,47 +578,21 @@
                 </div>
             </div>
         </nav>
-        <div ng-if="scheduleToShow" class="table-responsive">
-            <table class="table table-striped">
+        <div ng-if="scheduleToShow" class="table-responsive ">
+            <table class="table table-striped table-schedule-content">
                 <thead>
                     <tr>
-                        <td></td>
                         <td><strong>Name</strong></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td><strong>Content Schedule Date</strong></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td><strong>Player List</strong></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td><strong>Actions</strong></td>
                     </tr>
                 </thead>
                 <tr ng-repeat="record in scheduleContentToShow">
-                    <td></td>
                     <td>{{record.article.title | displayString : 20}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     <td> {{dateTimeFormat(record.scheduled_date)}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     <td> {{record.player_list.name || "No List attached"}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    <td>
+                    <td class="btns-icons">
                         <a ng-click="sendQuestions(record)"
                             confirm = "Do you want to Play Content?"
                             class="btn btn-success"
@@ -805,47 +615,21 @@
                 </tr>
             </table>
         </div> 
-        <div ng-if="activeToShow" class="table-responsive">
-            <table class="table table-striped">
+        <div ng-if="activeToShow" class="table-responsive ">
+            <table class="table table-striped table-schedule-content">
                 <thead>
                     <tr>
-                        <td></td>
                         <td><strong>Name</strong></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td><strong>Content Played Date</strong></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td><strong>Player List</strong></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td><strong>Actions</strong></td>
                     </tr>
                 </thead>
                 <tr ng-repeat="record in activeContentToShow">
-                    <td></td>
                     <td>{{record.article.title | displayString : 20}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     <td> {{dateTimeFormat(record.play_date)}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     <td> {{record.player_list.name || "No List attached"}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    <td>
+                    <td class="btns-icons">
                         <a href="#/active-contents/{{record.id}}"
                            class="btn btn-success"
                            title="See Details">
@@ -861,36 +645,18 @@
             </table>
         </div> 
         <div ng-if="completeToShow" class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped table-complete-status">
                 <thead>
                     <tr>
-                        <td></td>
                         <td><strong>Name</strong></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td><strong>Description</strong></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                         <td><strong>Actions</strong></td>
                     </tr>
                 </thead>
                 <tr ng-repeat="record in completeContentToShow">
-                    <td></td>
                     <td>{{record.article.title | displayString : 20}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
                     <td> {{record.article.description}}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    <td>
+                    <td class="btns-icons">
                         <a href="#/active-contents/{{record.id}}"
                            class="btn btn-success"
                            title="See Details">

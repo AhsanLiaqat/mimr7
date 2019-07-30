@@ -1,6 +1,6 @@
-<div class="page" ng-controller="messageCtrl">
-    <section class="panel panel-default">
-        <div class="panel-heading">
+<div class="page page-table" ng-controller="messageCtrl">
+    <section class="panel panel-default search-collection-type-sec">
+        <div class="panel-heading pb-0 highlights-panel-heading" >
             <strong>
                 <span class="glyphicon glyphicon-th"></span> Highlights
             </strong>
@@ -11,14 +11,15 @@
             </div>
         </div>
         <div class="panel-body">
-            <table st-pipe="messagesTable" st-table="msg" class="table table-bordered table-striped table-responsive">
+            <div class="table-collection-mobile">
+            <table st-pipe="messagesTable" st-table="msg" class="table table-bordered table-striped table-responsive table-content-messages">
                 <thead>
                     <tr>
-                        <th class="col-md-2" st-sort="name">Highlight Name</th>
-                        <th class="col-md-2" st-sort="description">Description</th>
-                        <th class="col-md-1" st-sort="order">Order</th>
-                        <th class="col-md-1" st-sort="description">Total Messages</th>
-                        <th class="col-md-3">Actions</th>
+                        <th st-sort="name">Highlight Name</th>
+                        <th st-sort="description">Description</th>
+                        <th st-sort="order">Order</th>
+                        <th st-sort="description">Total Messages</th>
+                        <th >Actions</th>
                     </tr>
                     <tr>
                         <th>
@@ -43,7 +44,7 @@
                         <td ng-bind-html= "record.description | displayString: 150"></td>
                         <td>{{record.order}}</td>
                         <td>{{record.questions.length}}</td>
-                        <td>
+                        <td class="btns-icons">
                             <a title = "View Message" href="#/view-message/{{record.id}}" class="btn btn-info" ng-click="viewMessage(record, $index)"><span class="glyphicon glyphicon-eye-open"></span></a>
                             <!-- <a title = "Add Questions" class="btn btn-info" ng-click="addQuestions(record, $index)"><span class="fa fa-question-circle"></span></a> -->
                             <a title = "Add Media" class="btn btn-sm btn-info" ng-click="addMedia(record, $index)"><span class="fa fa-link"></span></a>
@@ -72,7 +73,8 @@
                 </tr>
                 </tfoot>
             </table>
-            <div class="col-md-3">
+            </div>
+            <div class="col-sm-3 col-xs-12">
                 <select class="form-control"
                         ng-model="pageItems"
                         ng-options="item.val as item.name for item in items"

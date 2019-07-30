@@ -3,9 +3,8 @@
     <section class="panel panel-default">
         <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Create External Organization </strong></div>
         <div class="panel-body">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-
+            <div class="row" style="justify-content: center;">
+                <div class="std-pannel-address">
                     <form role="form" ng-submit="submit()">
                          <div class="form-group">
                             <label > Name <span class="required-custom">*</span></label>
@@ -23,11 +22,11 @@
                         <label >Sector</label>
                             <input type="text" ng-model="data.state" class="form-control" placeholder="Enter Organization's Sector">
                         </div>
-
+                        <div class="std-pannel-address-btns float-right">
                         <a href="#/settings/organizations" class="btn btn-info"> Cancel </a>
                         <button type="submit" class="btn btn-success">Save</button>
+                        </div>
                     </form>
-
                 </div>
             </div>
         </div>

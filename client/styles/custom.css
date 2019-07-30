@@ -347,18 +347,10 @@ body{
   background-color: rgb(204, 204, 204)
 }
 .student_image{
-    top: 26px;
     position: relative;
-    width: 61px;
-    height: 0px;
-    left: 58px;
 }
 .class_image{
-    top: 31px;
     position: relative;
-    width: 17px;
-    height: 0px;
-    left: 73px
 }
 .playerlist_image{
     margin-right: 8px;
@@ -387,4 +379,273 @@ body{
 }
 .calendar_icon{
     margin-right: 5px;
+}
+  .student_image{
+    text-align: center;
+  }
+   .student_image a{
+    font-size: 25px;
+    display: inline-block;
+    vertical-align: middle
+   }
+   .student_image{
+    padding: 35px 0 20px;
+   }
+   .class_image{
+    text-align: center;
+   }
+    .class_image a{
+    font-size: 25px;
+    display: inline-block;
+    vertical-align: middle
+   }
+   .class_image{
+     padding: 35px 0 20px;
+   }
+   .card .card-content{
+    position: relative;
+   }
+   .student_image img{
+    max-width: 57px;
+   }
+   .home-page-cards .card .card-body a{
+    padding: 0;
+    margin: 0;
+   }
+    .home-page-cards .card .card-body{
+        padding: 18px 0 5px;
+   }
+   .table-schedule-content tr td{
+    width: 25%;
+    text-align: center;
+    padding: 33px 0 !important;
+   }
+   .table-schedule-content .btns-icons{
+    padding: 25px 0 !important;
+   }
+   .table-schedule-content .btns-icons a{
+    margin: 0;
+   }
+      .table-complete-status tr td{
+        width: 33.3%;
+        text-align: center;
+        padding: 33px 0 !important;
+   }
+    .table-complete-status  tr th{
+        text-align: center;
+    }
+    .highlight-collection-table.table-complete-status .btns-icons{
+    padding: 19px 0 !important;
+   }
+    .table-complete-status .btns-icons{
+    padding: 25px 0 !important;
+   }
+    .table-complete-status .btns-icons a{
+    margin: 0;
+   }
+   .table-schedule-content-student th{
+    text-align: center;
+   }
+    .table-schedule-content-student tr td{
+        width: 20%;
+        text-align: center;
+        padding: 33px 20px !important;
+   }
+      .table-schedule-content-student .btns-icons{
+    padding: 25px 0 !important;
+   }
+     .table-schedule-content-student .btns-icons a{
+    margin: 0;
+   }
+   .active-schedule-message .btn{
+    margin: 0;
+    padding: 0 !important;
+   }
+   .active-schedule-message .panel-heading{
+    padding: 15px;
+   }
+   .active-schedule-message .form-group{
+    margin: 0;
+   }
+   .active-schedule-message .tab-content{
+    margin-top: 20px;
+   }
+   .active-schedule-td{
+    padding: 6px 20px !important;
+   }
+   .active-schedule-td a{
+     padding: 1px !important;
+    line-height: 0 !important;
+}
+.col-sm-3{
+        width: 24%;
+        margin: 0 auto;
+}
+.col-sm-6{
+    width: 49%;
+    margin: 0 auto;
+}
+.col-sm-4 {
+    width: 33%;
+    margin: 0 auto;
+}
+.col-xs-9{
+    width: 74.5%;
+}
+.col-xs-3{
+    width: 24.5%;
+}
+.table-schedule-content th{
+    text-align: center;
+}
+.content-section-highlight .add-content-btn{
+    margin: 20px 10px 0;
+}
+.main-content-navbar{
+    margin: 0 20px;
+}
+.content-section-highlight .title-header{
+    padding-bottom: 15px;
+}
+.content-section-highlight .main-content{
+   padding: 0 20px;
+}
+.highlight-message-wrapper .message-listing-wrpper{
+    padding: 0 15px !important;
+}
+.highlight-message-section.message-questions{
+    padding: 15px 0 !important;
+}
+.highlight-message-section.questions-section{
+    padding: 15px 0;
+}
+.question-selection-wrapper .question-manage{
+    padding: 0 5px!important;
+}
+.content-container .navbar{
+    margin: 0 0 10px;
+}
+.header-media-btn .btn.btn-sm{
+    padding: 10px 20px !important;
+
+}
+.collection-type-table th{
+    width: 20%;
+    text-align: center;
+}
+.collection-type-table .action{
+    width: 40%;
+    text-align: center;
+}
+.collection-type-table tr td p{
+    text-align: center;
+    margin: 0;
+}
+.collection-type-table tr td{
+    width: 20%;
+    text-align: center;
+    padding: 20px 0 !important;
+}
+.collection-type-table tr .action{
+    width: 40%;
+    text-align: center;
+    padding: 16px 0 !important;
+}
+.search-collection-type-sec tr .action{
+    text-align: center;
+}
+.search-collection-type-sec tr .btns-icons{
+    text-align: center;
+}
+.search-collection-type-sec tr .btns-icons a{
+    margin: 0 !important;
+    padding: 0 10px !important;
+}
+.collection-type-table tr .action a{
+    margin: 0;
+    padding: 0;
+}
+.modal-content-library .modal-dialog{
+    margin:44px auto;
+}
+.content-edit-collection #home{
+    width: 50%;
+}
+.content-edit-collection .form-group{
+    margin-top: 0;
+}
+.content-edit-collection .modal-dialog{
+    width: 80%;
+    margin: 45px auto;
+}
+.Organization-modal #home{
+    width: 50%;
+}
+.Organization-modal .form-group{
+    margin-top: 0;
+}
+.Organization-modal .modal-dialog{
+    width: 80%;
+    margin: 45px auto;
+}
+.view-container a:focus{
+    outline: none;
+    outline-offset: none;
+}
+.calender-page .questions-wrapper{
+   height: calc(100% - 50px) !important;
+   overflow-y: auto !important;
+   overflow-x: hidden !important;
+}
+.modal-content .modal-body{
+    padding-bottom: 0;
+}
+.modal_big_height {
+    height: 100%;
+}
+.class-list-modal .modal-dialog{
+        width: 400px;
+}
+.form-articles .form-group{
+    margin: 0;
+}
+.form-articles .modal-dialog{
+        width: 600px;
+}
+.highlights.form-articles .modal-dialog{
+    width: 80%;
+}
+.page-highlights .main-content > .row{
+    max-width: 100%;
+}
+.articles-content .modal-dialog{
+    margin: 45px auto;
+}
+.details-content .main-content p{
+    padding-top: 5px;
+}
+.btns-icons .btn.btn-sm{
+    margin: 0;
+    padding: 0;
+}
+.collec-btns-icons .btn.btn-sm{
+    margin: 0;
+    padding: 15px;
+}
+.students-icons{
+    width: 20%;
+}
+.std-pannel-address{
+    width: 80%;
+    margin: 0 auto;
+}
+.std-collection-table td > .btn.btn-sm{
+    padding: 0 !important;
+    margin: 0;
+}
+.std-collection-table .external-organization-student .btn.btn-sm{
+    padding: 0 5px !important;
+}
+.dynamic-form .dynamic-form-student .btn.btn-sm{
+    padding: 0 20px !important;
 }
