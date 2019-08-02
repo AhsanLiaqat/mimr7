@@ -1,0 +1,70 @@
+<div class="page" ng-controller="viewScheduledSurveyCtrl">
+    <div class="main-wrapper">
+        <div class="row">
+            <div class="col-sm-8 ">
+                <div class="title-header">
+                    <h3><span>Scheduled Question</span></h3>
+                </div>
+                <div ui-calendar="uiConfig.calendar" id="main-calendar" class="span8 calendar" ng-model = "eventSources"></div> 
+            </div>
+            <div class="col-sm-4">
+                <div class="title-header">
+                    <h3><span>Highlights</span></h3>
+                </div>
+                <div class="questions-wrapper questions-schedule">
+                    <div class="message-questions">
+                        <div class="row question-drag">
+                            <div class="col-xs-12">
+                                <div class="message-listing-wrpper message-schedule">
+                                    <div class="questions-section-hower">
+                                        <!-- <uib-accordion close-others="true" class = "list-accordian">
+                                            <div uib-accordion-group class="panel-default to-move" 
+                                                is-open="false"
+                                                ng-repeat="(msgIndex,msg) in messages">
+                                                <uib-accordion-heading >
+                                                    <div class="panel-heading">
+                                                      <strong><span class="pull-left"></span> {{msg.content}}</strong>
+                                                      <i class=" glyphicon pull-right" ng-class="{'glyphicon-chevron-down': expand, 'glyphicon-chevron-down': !expand}"></i>
+                                                    </div> 
+                                                </uib-accordion-heading>
+                                                <div id = "{{msgIndex}}_{{$index}}" class="questions-section" ng-repeat = "question in msg.questions track by $index" ng-if="!Ids.includes(question.id)">
+                                                    Question # {{$index+1}}
+                                                    <div ng-bind-html= "toTrustedHTML( question.name )" ></div>
+                                                </div>
+                                            </div>
+                                        </uib-accordion> -->
+                                        <div class="questions-section" id = "{{$index}}" ng-repeat = "form in dynamic_forms track by $index" ng-if="!Ids.includes(form.id)">
+                                            <!-- <a ng-click = "toggleMenu(form)" class="question-manage"><i class="fa fa-ellipsis-v"></i></a>
+                                            <ul ng-if = "msg.show">
+                                                <li><a ng-click = "edit(form,$index)"><i class="fa fa-edit"></i> edit</a></li>
+                                                <li><a ng-click = "delete(form.id,$index)"><i class="fa fa-trash"></i> delete</a></li>
+                                            </ul> -->
+                                            <!-- <div ng-bind-html= "toTrustedHTML( form.name )" ></div> -->
+                                            <div>{{form.name}}</div>
+                                        </div>
+                                        <div ng-if = !dynamic_forms.length> 
+                                            <h3>No Form Present</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("a[href='#']").click(function(e){
+        e.preventDefault();
+    });
+    $(".close").click(function(){
+        $(".add-query").removeClass("slide-div");
+        $(".questions-wrapper").removeClass("questions-wrapper-bg");
+    });
+});
+
+</script>

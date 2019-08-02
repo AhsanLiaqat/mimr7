@@ -149,6 +149,7 @@
         .when('/closed-contents', { templateUrl: 'views/schedule-content/list.html' })
         .when('/view-message/:messageId?', { templateUrl: 'views/content-messages/view-message.html' })
         .when('/view-scheduled-question/:contentId?', { templateUrl: 'views/schedule-content/view-scheduled-question.html' })
+        .when('/view-scheduled-surveys/:contentId?', { templateUrl: 'views/schedule-content/view-scheduled-surveys.html' })
         .when('/simple-scheduled-question/:contentId?', { templateUrl: 'views/schedule-content/simple-scheduled-question.html' })
         .when('/view-contents/:articleId?', {
             controller : "viewContentCtrl",
@@ -395,6 +396,10 @@
                         case '/view-scheduled-question/:contentId?':
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Scheduled Questions';
+                            break;
+                        case '/view-scheduled-surveys/:contentId?':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Scheduled Surveys';
                             break;
                         case '/simple-scheduled-question/:contentId?':
                             $rootScope.breadcrumb_2 = false;

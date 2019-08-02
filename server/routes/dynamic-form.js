@@ -3,7 +3,12 @@ var router = express.Router();
 var model = require('../models');
 
 router.get('/all', function(req, res, next) {
-    model.dynamic_form.findAll().then(function(response) {
+    model.dynamic_form.findAll({
+        where : { userAccountId : req.user.userAccountId },
+            include : [{
+                model : model.survey
+            }]
+    }).then(function(response) {
         res.send(response);
     });
 });

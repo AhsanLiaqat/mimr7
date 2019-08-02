@@ -27,6 +27,7 @@ module.exports = function(sequelize, DataTypes) {
                 article.hasMany(models.content_plan_template);
                 article.hasMany(models.article_library, {foreignKey: 'parentId'});
                 article.hasMany(models.response);
+                article.hasMany(models.survey);
             }
         }
     });

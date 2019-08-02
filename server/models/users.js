@@ -51,6 +51,7 @@ module.exports = function(sequelize, DataTypes) {
                 users.belongsTo(models.organization);
                 users.hasMany(models.auth_token);
                 users.hasMany(models.question_scheduling);
+                users.hasMany(models.survey);
                 users.hasOne(models.player);
                 users.hasMany(models.answer);
                 users.belongsToMany(models.player_list, {through: 'player_lists_users'});
