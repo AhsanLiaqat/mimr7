@@ -18,6 +18,7 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             //any assosiation will be define here
             associate: function (models) {
+                dynamic_forms.belongsTo(models.user_accounts);
                 dynamic_forms.hasMany(models.survey);
             }
         }

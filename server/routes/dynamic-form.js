@@ -35,6 +35,7 @@ router.delete('/remove/:id', function(req, res, next) {
 
 router.post('/save', function(req, res, next) {
     var record = req.body.data;
+    record.userAccountId = req.user.userAccountId;
     model.dynamic_form.create(record).then(function(resp) {
         res.send(resp);
     });
