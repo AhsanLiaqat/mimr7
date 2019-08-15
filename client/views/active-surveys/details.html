@@ -1,0 +1,84 @@
+<div class="page" ng-controller="viewDetailActiveSurveyCtrl">
+    <section class="panel panel-default active-schedule-message">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-sm-3">
+                    Active Surveys Details
+                    <br>
+                </div>
+
+                <div class="col-sm-6 text-center">
+                    <div class="text-center">
+                        Content started At : :
+                        <timer start-time=time>{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer>
+                        <br>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <a class="btn btn-danger pull-right" ng-disabled = "playContent.status == 'stop'" ng-click="cancelContent()">
+                        Close Content
+                    </a>
+                </div>
+            </div>
+        </div>
+           
+        <div class="panel-body">
+            <div class="container">
+              
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active"><a data-toggle="tab" data-target="#rounds" href="">Scheduled Surveys</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="form-group">
+                        <table class="table table-bordered table-striped table-responsive">
+                            <thead>
+                            <tr>
+                                <th>Dynamic Form</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="survy in survey_summary.scheduled_surveys">
+                                <td>
+                                    <a ng-click = "showMessageDetail(ques)">
+                                        {{survy.dynamic_form.name | displayString : 25}}
+                                    </a>
+                                </td>
+                                <td>{{survy.setOffTime | date : 'd MMMM y'}}</td>
+                                <td ng-show = "!survy.skip">{{survy.setOffTime | date : 'h:mm a'}}</td>
+                                <td ng-show = "survy.skip && !survy.activated">{{survy.skipped_At | date : 'h:mm a'}}</td>
+                                <td ng-show = "survy.activated">Sent</td>
+                                <td ng-show = "!survy.activated && !survy.skip">Sending</td>
+                                <td ng-show = "survy.skip && !survy.activated">Skip</td>
+                                <td>
+                                    <div ng-hide="survy.activated || survy.skip">
+                                        <a class="btn btn-info" ng-click="skipSurvey(survy)" >
+                                            Skip    
+                                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                                        </a>
+                                        <a ng-click="sendSurvey(survy)"
+                                           class="btn btn-info"
+                                           title="Send Survey">
+                                            <span class="glyphicon glyphicon-send"></span>
+                                        </a>
+                                    </div>
+                                    <p ng-show="survy.activated">
+                                        <i>Survey sent at <b>{{dateFormat(survy.activatedAt)}}</b></i>
+                                    </p>
+                                    <p ng-show="survy.skip">
+                                        <i>Survey skipped at <b>{{dateFormat(survy.skipped_At)}}</b></i>
+                                    </p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </section>
+</div>

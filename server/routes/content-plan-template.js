@@ -21,6 +21,8 @@ router.get('/get/:id', function(req, res, next) {
             model : model.article
         },{
             model: model.question_scheduling
+        },{
+            model : model.scheduled_survey
         }]
     }).then(function(contentPlanTmplate) {
         // var unique_questions = _.uniq(contentPlanTmplate.question_schedulings,'offset');
@@ -49,12 +51,25 @@ router.get('/play-content-summary/:id', function(req, res, next) {
     model.content_plan_template.findOne({
         where: {id: req.params.id},
         order: [['createdAt', 'DESC']],
-        include: [
-        {model: model.question_scheduling,
+        include: [{model: model.question_scheduling,
             include : [{model : model.question,
                             include : [{model : model.message}]},
                         {model : model.user}]
         },{model : model.article}]
+    }).then(function(contentPlanTmplate) {
+        res.send(contentPlanTmplate);
+    });
+});
+
+router.get('/survey-summary/:id', function(req, res, next) {
+    model.content_plan_template.findOne({
+        where: {id: req.params.id},
+        order: [['createdAt', 'DESC']],
+        include: [{model : model.scheduled_survey,
+            include : [{model : model.dynamic_form},{
+                model : model.user                
+            }]
+        }]
     }).then(function(contentPlanTmplate) {
         res.send(contentPlanTmplate);
     });
@@ -90,7 +105,7 @@ router.get('/all', function(req, res, next) {
         include: [
             {model: model.player_list, attributes: ['id', 'name','description'],
                         include: [{ model: model.user}]},
-            {model: model.article, attributes: ['id', 'title','description']}]
+            {model: model.article, attributes: ['id', 'title','description','kind']}]
     })
         .then(function(result) {
             // result.forEach(function(game) {

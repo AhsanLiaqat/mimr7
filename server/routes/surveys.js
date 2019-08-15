@@ -27,7 +27,6 @@ router.post('/save', function(req, res, next) {
 });
 
 router.post('/update/:id',function(req,res,next){
-    console.log('----',req.params.id);
     model.survey.update(req.body.data,{where: { id : req.params.id }})
     .then(function(result) {
         model.survey.findOne({

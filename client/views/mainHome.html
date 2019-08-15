@@ -133,7 +133,7 @@
                                             </ul>
                                         </li>
                                     </ul>
-                                    <button class="btn btn-sm btn-raised btn-default" title="New Collection" style="margin-right: 10px;" ng-click="addCollection()">
+                                    <button class="btn btn-sm btn-raised btn-default" title="New Collection" style="margin-right: 10px;" ng-click="addCollections()">
                                         <i class="glyphicon glyphicon-plus"></i>
                                     </button>
                                 </div> 
@@ -167,7 +167,9 @@
             </nav>
                 <div class="row content-section-highlight">
                     <div class="col-sm-8 col-xs-12" ng-if = "contentToShow">
-                        <a href="" class="pull-right add-content-btn"  ng-hide = "contentId" ng-click = "addContent()"><i class="fa fa-plus"></i> Add Content</a>
+                        <a confirm = "Are you sure you want to DELETE"  href="" class="pull-right add-content-btn" ng-click = "deleteContent(currentStatus.id)"><i class="fa fa-trash"></i> Delete Content</a>
+                        <a href="" class="pull-right add-content-btn" ng-click = "editContent(currentStatus)"><i class="fa fa-edit"></i> Edit Content</a>
+                        <a href="" class="pull-right add-content-btn" ng-click = "addContent()"><i class="fa fa-plus"></i> Add Content</a>
                         <div class="title-header">
                             <h3><span class="content-list-higlight">Content</span>
                                 <ul class="nav navbar-nav navbar-left incident-ul content-list">
@@ -186,12 +188,13 @@
                             </h3>
                         </div>
                         <div class="main-content scroll-down" ng-hide = "contentShow">
-                                    <p ng-bind-html= "toTrustedHTML( currentStatus.text )"></p>
+                            <p ng-bind-html= "toTrustedHTML( currentStatus.text )"></p>
                         </div>
-                        <div class = "froalaEditor" ng-if = "contentShow">
+                        <div class = "froalaEditor" ng-show = "contentShow">
                             <textarea froala="froalaOptions" ng-model="chapter.text"></textarea>
                             <br>
                             <button class="pull-right btn btn-success" ng-click="saveContent()">Save</button>
+                            <button class="pull-right btn btn-success" ng-click="cancelContent()">Cancel</button>
                         </div>
                     </div>
                     <div class="col-sm-4 col-xs-12"  ng-if = "contentToShow">
@@ -204,7 +207,7 @@
                                     <div class="col-xs-12">
                                         <div class="message-listing-wrpper">
                                             <div class="questions-section" ng-repeat = "msg in message track by $index">
-                                                <a ng-click = "toggleMenu(msg)" class="question-manage"><i class="fa fa-ellipsis-v"></i></a>
+                                                <a ng-click = "toggleMenu(msg,$event)" class="question-manage"><i class="fa fa-ellipsis-v"></i></a>
                                                 <ul ng-if = "msg.show">
                                                     <li><a ng-click = "edit(msg,$index)"><i class="fa fa-edit"></i> edit</a></li>
                                                     <li><a ng-click = "delete(msg.id,$index)"><i class="fa fa-trash"></i> delete</a></li>
@@ -221,10 +224,13 @@
                                     <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Highlights</a>
                                 </div>
                                 <form class="add-query">
-                                    <a class="close"><i class="fa fa-times" ng-click = "close()"></i></a>
+                                    <div class = "highlightSection">
+                                        <a href="" title="Save highlight" class="glyphicon glyphicon-save" ng-click = "save()"></a>
+                                        <a class="close"><i class="fa fa-times" ng-click = "close()"></i></a>
+                                    </div>
                                     <div class="form-group">
                                         <label>Name</label>
-                                        <input type = "text" class="form-control" ng-model = "data.content" placeholder="Enter Name"></input>
+                                        <input type = "text" class="form-control" ng-model = "data.content" placeholder="Enter Name">
                                     </div>
                                     <div class="form-group">
                                         <label>Order</label>
@@ -234,8 +240,9 @@
                                         <label>Text</label>
                                         <textarea froala="froalaOptions" ng-model = "data.description"></textarea>
                                     </div>
-                                    <div class="form-group">
-                                        <button type="submit" ng-click = "save()" class="btn btn-primary add-ques">Add Highlights</button>
+                                    <div class="form-group contentBtn">
+                                        <button type="submit" ng-click = "save()" class="btn btn-primary hihglightBtn">Save</button>
+                                        <button ng-click = "close()" class="btn btn-primary hihglightBtn">Cancel</button>
                                     </div>
                                 </form>
                             </div>
@@ -247,15 +254,43 @@
                         </div>
                         <div class="highlights-wrapper">
                             <div class="message-questions">
-                                        <div class="message-listing-wrpper">
-                                            <div class="highlights-section" ng-repeat = "highlight in message track by $index" ng-click = "changeHighlight(highlight.id)" ng-class="(msg.id == highlight.id) ? 'selected-highlight' : '' ">
-                                                <div ng-bind-html= "toTrustedHTML( highlight.content )" ></div>
-                                            </div>
-                                            <div ng-if = !message.length> 
-                                                <h3>No Highlights Present</h3>
-                                            </div>
-                                        </div>
+                                <div class="message-listing-wrpper">
+                                    <div class="highlights-section" ng-repeat = "highlight in message track by $index" ng-click = "changeHighlight(highlight.id)" ng-class="(msg.id == highlight.id) ? 'selected-highlight' : '' ">
+                                            <a ng-click = "toggleMenu(highlight,$event)" class="question-manage"><i class="fa fa-ellipsis-v"></i></a>
+                                            <ul ng-if = "highlight.show">
+                                                <li><a ng-click = "viewHighlight(highlight,$index)"><i class="fa fa-eye"></i>View</a></li>
+                                                <li><a ng-click = "editHighlight(highlight,$index)"><i class="fa fa-edit"></i>Edit</a></li>
+                                                <li><a ng-click = "delete(highlight.id,$index)"><i class="fa fa-trash"></i>Delete</a></li>
+                                            </ul>
+                                        <div ng-bind-html= "toTrustedHTML( highlight.content )" ></div>
+                                    </div>
+                                    <div ng-if = !message.length> 
+                                        <h3>No Highlights Present</h3>
+                                    </div>
                                 </div>
+                                <form class="add-highlight-modal">
+                                    <div class = "highlightSection">
+                                        <a href="" title="Save highlight" class="glyphicon glyphicon-save" ng-click = "saveHighlight()" ng-hide = "view"></a>
+                                        <a class="close"><i class="fa fa-times" ng-click = "closeHighlight()"></i></a>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type = "text" class="form-control" ng-model = "highlight_data.content" placeholder="Enter Name">
+                                    </div>
+                                    <div class="form-group" ng-hide = "view">
+                                        <label>Order</label>
+                                        <input type="number" ng-model = "highlight_data.order" class="form-control" placeholder="Enter Order">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Text</label>
+                                        <textarea froala="froalaOptions" ng-model = "highlight_data.description"></textarea>
+                                    </div>
+                                    <div class="form-group contentBtn" ng-hide = "view">
+                                        <button type="submit" ng-click = "saveHighlight()" class="btn btn-primary hihglightBtn">Save</button>
+                                        <button ng-click = "closeHighlight()" class="btn btn-primary hihglightBtn">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-4 col-xs-12" ng-if = "highlightsToShow">
@@ -266,7 +301,7 @@
                             <div class="message-questions">
                                     <div class="message-listing-wrpper">
                                             <div class="questions-section highlight-message-section" ng-repeat = "msg in questions track by $index">
-                                                <a ng-click = "toggleMenu(msg)" class="question-manage"><i class="fa fa-ellipsis-v"></i></a>
+                                                <a ng-click = "toggleMenu(msg,$event)" class="question-manage"><i class="fa fa-ellipsis-v"></i></a>
                                                 <ul ng-if = "msg.show">
                                                     <li><a ng-click = "edit(msg,$index)"><i class="fa fa-edit"></i> edit</a></li>
                                                     <li><a ng-click = "deleteMessage(msg.id,$index)"><i class="fa fa-trash"></i> delete</a></li>
@@ -281,7 +316,10 @@
                                     <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Message</a>
                                 </div>
                                 <form class="add-query">
-                                    <a class="close"><i class="fa fa-times" ng-click="close()"></i></a>
+                                    <div class = "highlightSection">
+                                        <a href="" title="Save Message" class="glyphicon glyphicon-save" ng-click = "saveMessage()"></a>
+                                        <a class="close"><i class="fa fa-times" ng-click = "close()"></i></a>
+                                    </div>
                                     <div class="form-group">
                                         <label>Name</label>
                                         <textarea froala="froalaOptions" ng-model = "data.name"></textarea>
@@ -307,8 +345,9 @@
                                             <option value="Other">Others</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <button type="submit" ng-click = "saveMessage()" class="btn btn-primary add-ques">Add Message</button>
+                                    <div class="form-group contentBtn">
+                                        <button type="submit" ng-click = "saveMessage()" class="btn btn-primary hihglightBtn">Save</button>
+                                        <button ng-click = "close()" class="btn btn-primary hihglightBtn">Cancel</button>
                                     </div>
                                 </form>
                             </div>
@@ -320,14 +359,55 @@
                         </div>
                         <div class="messages-wrapper">
                             <div class="message-questions">
-                                        <div class="message-listing-wrpper">
-                                            <div class="highlights-section" ng-repeat = "question in questions track by $index" ng-click = "changeMessage(question.id)" ng-class="(ques.id == question.id) ? 'selected-highlight' : '' ">
-                                                <div ng-bind-html= "toTrustedHTML( question.name )" ></div>
-                                            </div>
-                                            <div ng-if = !questions.length> 
-                                                <h3 >No Message Present</h3>
-                                            </div>
+                                <div class="message-listing-wrpper">
+                                    <div class="highlights-section" ng-repeat = "question in questions track by $index" ng-click = "changeMessage(question.id)" ng-class="(ques.id == question.id) ? 'selected-highlight' : '' ">
+                                        <a ng-click = "toggleMenu(question,$event)" class="question-manage"><i class="fa fa-ellipsis-v"></i></a>
+                                        <ul ng-if = "question.show">
+                                            <li><a ng-click = "viewMessage(question,$index)"><i class="fa fa-eye"></i>View</a></li>
+                                            <li><a ng-click = "editMessage(question,$index)"><i class="fa fa-edit"></i>Edit</a></li>
+                                            <li><a ng-click = "deleteMessage(question.id,$index)"><i class="fa fa-trash"></i>Delete</a></li>
+                                        </ul>
+                                        <div ng-bind-html= "toTrustedHTML( question.name )" ></div>
+                                    </div>
+                                    <div ng-if = !questions.length> 
+                                        <h3 >No Message Present</h3>
+                                    </div>
+                                    <form class="add-highlight-modal">
+                                        <div class = "highlightSection">
+                                            <a href="" title="Save highlight" class="glyphicon glyphicon-save" ng-click = "updateMessage()" ng-hide = "view"></a>
+                                            <a class="close"><i class="fa fa-times" ng-click = "closeHighlight()"></i></a>
                                         </div>
+                                        <!-- <a class="close"><i class="fa fa-times" ng-click="close()"></i></a> -->
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <textarea froala="froalaOptions" ng-model = "message_data.name"></textarea>
+                                        </div>
+                                        <div class="form-group" ng-hide = "view">
+                                            <label>Hint</label>
+                                            <textarea froala="froalaOptions" ng-model = "message_data.hint"></textarea>
+                                        </div>
+                                        <div class="form-group" ng-hide = "view">
+                                            <label>Answer</label>
+                                            <textarea froala="froalaOptions" ng-model = "message_data.solution"></textarea>
+                                        </div>
+                                        <div class="form-group" ng-hide = "view">
+                                            <label>Number</label>
+                                            <input type="text" ng-model = "message_data.number" class="form-control" placeholder="Enter Number">
+                                        </div>
+                                        <div class="form-group" ng-hide = "view">
+                                            <label>Type</label>
+                                            <select chosen class="form-control" data-placeholder-text-single="'Select Kind'" ng-model="message_data.type" >
+                                                <option value="Blanks">Fill In The Blanks</option>
+                                                <option value="InputField">Enter Text</option>
+                                                <option value="Mcqs">Multiple Choice</option>
+                                                <option value="Other">Others</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" ng-hide = "view">
+                                            <button type="submit" ng-click = "updateMessage()" class="btn btn-primary add-ques">Update Message</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -359,8 +439,9 @@
                                         <label>Name</label>
                                         <input type = "text" class="form-control" ng-model = "data.name" placeholder="Enter Name"></input>
                                     </div>
-                                    <div class="form-group">
-                                        <button type="submit" ng-click = "saveResponse()" class="btn btn-primary add-ques">Add Response</button>
+                                    <div class="form-group contentBtn">
+                                        <button type="submit" ng-click = "saveResponse()" class="btn btn-primary hihglightBtn">Save</button>
+                                        <button ng-click = "close()" class="btn btn-primary hihglightBtn">Cancel</button>
                                     </div>
                                 </form>
                             </div>
@@ -390,11 +471,11 @@
                                         <i class="fa fa-calendar"></i>
                                     </button>
 
-                                    <a href = "#/view-scheduled-question/{{record.id}}" title="Question Scheduling" class="btn btn-success">
+                                    <a ng-hide = "record.kind == 'survey'" href = "#/view-scheduled-question/{{record.id}}" title="Question Scheduling" class="btn btn-success">
                                         <i class="fa fa-question-circle"></i>
                                     </a>
 
-                                    <a href = "#/view-scheduled-surveys/{{record.id}}" title="Schedule Survey" class="btn btn-success">
+                                    <a ng-hide = "record.kind == 'message'" href = "#/view-scheduled-surveys/{{record.id}}" title="Schedule Survey" class="btn btn-success">
                                         <i class="fa fa-tasks"></i>
                                     </a>
                                     
@@ -587,6 +668,7 @@
                 <thead>
                     <tr>
                         <td><strong>Name</strong></td>
+                        <td><strong>Type</strong></td>
                         <td><strong>Content Schedule Date</strong></td>
                         <td><strong>Player List</strong></td>
                         <td><strong>Actions</strong></td>
@@ -594,6 +676,8 @@
                 </thead>
                 <tr ng-repeat="record in scheduleContentToShow">
                     <td>{{record.article.title | displayString : 20}}</td>
+                    <td ng-show = "record.article.kind == 'message'">Message</td>
+                    <td ng-show = "record.article.kind == 'survey'">Survey</td>
                     <td> {{dateTimeFormat(record.scheduled_date)}}</td>
                     <td> {{record.player_list.name || "No List attached"}}</td>
                     <td class="btns-icons">
@@ -624,6 +708,7 @@
                 <thead>
                     <tr>
                         <td><strong>Name</strong></td>
+                        <td><strong>Type</strong></td>
                         <td><strong>Content Played Date</strong></td>
                         <td><strong>Player List</strong></td>
                         <td><strong>Actions</strong></td>
@@ -631,12 +716,19 @@
                 </thead>
                 <tr ng-repeat="record in activeContentToShow">
                     <td>{{record.article.title | displayString : 20}}</td>
+                    <td ng-show = "record.article.kind == 'message'">Message</td>
+                    <td ng-show = "record.article.kind == 'survey'">Survey</td>
                     <td> {{dateTimeFormat(record.play_date)}}</td>
                     <td> {{record.player_list.name || "No List attached"}}</td>
                     <td class="btns-icons">
-                        <a href="#/active-contents/{{record.id}}"
+                        <a ng-show = "record.article.kind == 'message'" href="#/active-contents/{{record.id}}"
                            class="btn btn-success"
-                           title="See Details">
+                           title="See Active Messages">
+                            <span class="fa fa-list"></span>
+                        </a>
+                        <a ng-show = "record.article.kind == 'survey'" href="#/active-surveys/{{record.id}}"
+                           class="btn btn-success"
+                           title="See Active Surveys">
                             <span class="fa fa-list"></span>
                         </a>
                         <a href="#/question-responses/{{record.id}}"

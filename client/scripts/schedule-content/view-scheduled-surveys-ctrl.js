@@ -1,6 +1,5 @@
 /*View-Scheduled-Question*/
-/*In this controller we implement question scheduling functionality we drag question from question
-section and drop onto the calendar*/
+/*In this controller we implement survey scheduling functionality we drag survey and drop onto the calendar*/
 /*Naveed Iftikhar*/
 (function () {
     'use strict';
@@ -17,7 +16,7 @@ section and drop onto the calendar*/
         }
         $scope.init = () => {
             $scope.user = Query.getCookie('user');
-            $http.get('/dynamic-form/all?id=' + $routeParams.contentId).then(function(response){
+            $http.get('/dynamic-form/all').then(function(response){
                 $scope.dynamic_forms = response.data;
                 angular.forEach($scope.dynamic_forms , function(form,index){
                     $timeout(function() {
@@ -77,6 +76,23 @@ section and drop onto the calendar*/
             $http.post('/surveys/update/' + event.id,{data : {offset}}).then(function(res){
             });
         }
+
+        $scope.alertOnEventClick = (event) => {
+            ModalService.showModal({
+                templateUrl: "views/schedule-content/repeat-survey.html",
+                controller: "repeatSurveyCtrl",
+                inputs: {
+                    survey: event
+                }
+            }).then(function (modal) {
+                modal.element.modal({ backdrop: 'static', keyboard: false });
+                modal.close.then(function (result) {
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
+            });
+        };
+
         $scope.uiConfig = {
             calendar:{
                 timezone: 'UTC',
@@ -147,9 +163,7 @@ section and drop onto the calendar*/
         $scope.eventSources = [$scope.events];
 
         $scope.init();
-        $scope.toggleMenu = (question) => {
-            question.show = !question.show;
-        }
+        
         let findOffset = (date) => {
             var utc = new Date(date.getTime() + date.getTimezoneOffset() * 60000)
             return (utc - new Date(2018,6,1))/(1000*60*60);
@@ -160,55 +174,6 @@ section and drop onto the calendar*/
             return new Date(2018,6,1+(Math.floor(offset/24)),(offset%24),0,0).toLocaleString("en-US", {timeZone: offSet});
             
         }
-
-        $scope.save = function () {
-            if($scope.data.id){
-                $scope.data.messageId = $scope.message.id;
-                $scope.data.articleId = $scope.message.articleId;
-                $http.post('/questions/update/' + $scope.data.id,{data : $scope.data})
-                .then(function(res){
-                    $(".add-query").removeClass("slide-div");
-                    $(".questions-wrapper").removeClass("questions-wrapper-bg");
-                });
-            }else{
-                $scope.data.messageId = $scope.message.id;
-                $scope.data.articleId = $scope.message.articleId;
-                $http.post('/questions/save',{data : $scope.data})
-                .then(function(res){
-                    $scope.data = res.data;
-                    $scope.questions.push(res.data);
-                    toastr.success('Question Added.', 'Success!');
-                    $(".add-query").removeClass("slide-div");
-                    $(".questions-wrapper").removeClass("questions-wrapper-bg");
-                });
-            }
-                
-        };
-
-        $scope.edit = function(question){
-            $(".add-query").addClass("slide-div");
-            $(".questions-wrapper").addClass("questions-wrapper-bg");
-            $scope.data = question;
-        };
-
-         $('.main-wrapper').click(function(event){
-            if(!($(event.target).hasClass('question-manage') || $(event.target).parents('.question-manage').length > 0)){
-                angular.forEach( $scope.questions , function(value){
-                    value.show = false;
-                })
-                $scope.$apply();
-            }
-        });
-
-        $scope.delete = function(questionId,index){
-            $http.delete('/questions/delete/' + questionId)
-            .then(function(res){
-                $scope.data = res.data;
-                $scope.questions.splice(index,1);
-                toastr.success('Question Deleted.', 'Success!');
-
-            });
-        };
 
         //convert html to styled text
         $scope.toTrustedHTML = function( html ){

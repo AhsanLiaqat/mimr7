@@ -5231,6 +5231,24 @@ body { padding-right: 0 !important }
     top: 100%;
     z-index: 1;
 }
+
+.add-highlight-modal {
+    background-color: #fff;
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    top: 0;
+    padding: 15px;
+    height: 100%;
+    overflow: auto;
+    margin: 0 auto 0 1px;
+    transition: all .3s ease-in;
+    -webkit-transition: all .3s ease-in;
+    top: 100%;
+    z-index: 1;
+}
 .slide-div {
     top: 0;
 }
@@ -5244,6 +5262,14 @@ body { padding-right: 0 !important }
 }
 
 .add-query .chosen-container{
+  width: 100% !important;
+}
+
+.add-highlight-modal .form-group{
+  margin: 26px 0 0 0;
+}
+
+.add-highlight-modal .chosen-container{
   width: 100% !important;
 }
 

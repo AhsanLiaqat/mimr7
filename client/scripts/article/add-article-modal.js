@@ -27,7 +27,8 @@
             $scope.data = {
                 type : 'subjectCollection',
                 private : 'true',
-                saleable : 'false'
+                saleable : 'false',
+                kind : 'message'
             }
         }
         $scope.save = function () {

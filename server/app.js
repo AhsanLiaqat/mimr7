@@ -94,6 +94,7 @@ app.use('/settings/player-lists', require('./routes/settings/player-list.js'));
 app.use('/content-plan-templates', require('./routes/content-plan-template.js'));
 app.use('/question-scheduling', require('./routes/question-scheduling.js'));
 app.use('/surveys', require('./routes/surveys.js'));
+app.use('/scheduled-surveys', require('./routes/scheduled-survey.js'));
 app.use('/settings/accounts', require('./routes/settings/accounts.js'));
 app.use('/articles', require('./routes/articles.js'));
 app.use('/article-libraries', require('./routes/article-libraries.js'));

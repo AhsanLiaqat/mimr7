@@ -649,3 +649,24 @@ body{
 .dynamic-form .dynamic-form-student .btn.btn-sm{
     padding: 0 20px !important;
 }
+.repeatSurvey{
+    height: 239px !important;
+    overflow: hidden !important;
+}
+.contentBtn{
+    text-align: center;
+}
+.hihglightBtn{
+    display: inline-block;
+}
+.highlightSection{
+    float: right;
+}
+
+.highlightSection  a{
+    padding: 8px 10px !important;
+}
+.highlightSection  a:nth-child(1){
+    line-height: 17px;
+    color: #ccc;
+}

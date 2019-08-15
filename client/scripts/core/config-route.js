@@ -145,6 +145,7 @@
         .when('/settings/organizations/:OrgId/users/:id?', { templateUrl: 'views/settings/organizations/user.html' })
         .when('/settings/player-lists', { templateUrl: 'views/settings/player-lists/list.html' })
         .when('/active-contents/:gameId', { templateUrl: 'views/active-contents/details.html' })
+        .when('/active-surveys/:surveyId', { templateUrl: 'views/active-surveys/details.html' })
         .when('/question-responses/:gameId', { templateUrl: 'views/active-contents/question-responses.html' })
         .when('/closed-contents', { templateUrl: 'views/schedule-content/list.html' })
         .when('/view-message/:messageId?', { templateUrl: 'views/content-messages/view-message.html' })
@@ -384,6 +385,10 @@
                         case '/active-contents/:gameId':
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Active Contents';
+                            break;
+                        case '/active-surveys/:surveyId':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Active Surveys';
                             break;
                         case '/dynamic-form':
                             $rootScope.breadcrumb_2 = false;

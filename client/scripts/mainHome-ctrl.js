@@ -37,6 +37,7 @@
             $scope.chapter = {};
             $scope.messageRes = {};
             $scope.data = {};
+            $scope.view = false;
             $scope.articleId = $routeParams.articleId;
             $http.get('/articles/all?userAccountId=' + $scope.user.userAccountId).then(function(response){
                 $scope.article = response.data;
@@ -111,7 +112,9 @@
                 $scope.currentStatus = $scope.chapters[0]; 
             });
         };
-        $scope.toggleMenu = (question) => {
+        $scope.toggleMenu = (question,event) => {
+            event.stopPropagation();
+            event.preventDefault();
             question.show = !question.show;
         }
 
@@ -233,8 +236,20 @@
             $(".questions-wrapper").removeClass("questions-wrapper-bg");
         } 
 
+        $scope.closeHighlight = () => {
+            $(".add-highlight-modal").removeClass("slide-div");
+            $(".highlights-wrapper").removeClass("highlights-wrapper-bg");
+        }
         $scope.addContent = () => {
-            $scope.contentShow = !$scope.contentShow;
+            $scope.contentShow = true;
+            $scope.chapter.text = '';
+        }
+        $scope.cancelContent = () => {
+            $scope.contentShow = false;
+        }
+        $scope.editContent = (currentContent) => {
+            $scope.contentShow = true;
+            $scope.chapter = angular.copy(currentContent);
         }
         $scope.save = () => {
             if($scope.data.id){
@@ -262,6 +277,31 @@
                 
         };
 
+        $scope.saveHighlight = () => {
+            if($scope.highlight_data.id){
+                $scope.highlight_data.articleId = $scope.currentArticle.id;
+                $http.post('/messages/update',{data : $scope.highlight_data})
+                .then(function(res){
+                    $(".add-highlight-modal").removeClass("slide-div");
+                    $(".highlights-wrapper").removeClass("highlights-wrapper-bg");
+                });
+            }
+                
+        };
+
+        $scope.updateMessage = () => {
+            if($scope.message_data.id){
+                $scope.message_data.messageId = $scope.msg.id;
+                $scope.message_data.articleId = $scope.currentArticle.id;
+                $http.post('/questions/update/' + $scope.message_data.id,{data : $scope.message_data})
+                .then(function(res){
+                    $(".add-highlight-modal").removeClass("slide-div");
+                    $(".highlights-wrapper").removeClass("highlights-wrapper-bg");
+                });
+            }
+                
+        };
+
         $scope.addCollection = function () {
             ModalService.showModal({
                 templateUrl: "views/content/new-content-making.html",
@@ -280,6 +320,8 @@
                 });
             });
         };
+
+        
 
         $scope.addOrganization = function () {
             ModalService.showModal({
@@ -335,6 +377,25 @@
             $scope.messagesToShow = false;
             
         }
+
+        $scope.addCollections = function () {
+            ModalService.showModal({
+                templateUrl: "views/content/new-content-making.html",
+                controller: "addArticleModalCtrl",
+                inputs: {
+                    gameId: null
+                }
+            }).then(function (modal) {
+                modal.element.modal({ backdrop: 'static', keyboard: false });
+                modal.close.then(function (result) {
+                    if (result) {
+                        $scope.article.push(result);
+                    }
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
+            });
+        };
 
         $scope.CreatePlayerList = () => {
             ModalService.showModal({
@@ -442,19 +503,34 @@
         };
 
         $scope.saveContent = () => {
-            $scope.chapter.articleId = $scope.currentArticle.id;
-            $scope.chapter.name =  'chapter ' + ($scope.chapters.length + 1);
-            if($scope.chapter.text){
-                $http.post('/chapters/save',{data : $scope.chapter}).then(function(res){
-                    $scope.chapters.push(res.data);
+            if($scope.chapter.id){
+                $http.post('/chapters/update/' + $scope.chapter.id,{data : $scope.chapter}).then(function(res){
                     $scope.currentStatus = res.data;
                     $scope.contentShow = false;
                     $scope.chapter.name = '';
                     $scope.chapter.text = '';
                 });
             }else{
-                toastr.error('Enter All Fields');
+                $scope.chapter.articleId = $scope.currentArticle.id;
+                $scope.chapter.name =  'chapter ' + ($scope.chapters.length + 1);
+                if($scope.chapter.text){
+                    $http.post('/chapters/save',{data : $scope.chapter}).then(function(res){
+                        $scope.chapters.push(res.data);
+                        $scope.currentStatus = res.data;
+                        $scope.contentShow = false;
+                        $scope.chapter.name = '';
+                        $scope.chapter.text = '';
+                    });
+                }else{
+                    toastr.error('Enter All Fields');
+                }
             }
+        }
+        $scope.deleteContent = (id) => {
+            $http.delete('/chapters/delete/' + id + '/' + $scope.currentArticle.id).then(function(res){
+                $scope.chapters = res.data;
+                $scope.currentStatus = $scope.chapters[0];
+            });
         }
 
         $scope.saveResponse = () => {
@@ -518,6 +594,35 @@
                     $('body').removeClass('modal-open');
                 });
             });  
+        };
+
+        $scope.editHighlight = (highlight) => {
+            $(".add-highlight-modal").addClass("slide-div");
+            $(".highlights-wrapper").addClass("highlights-wrapper-bg");
+            $scope.view = false;
+            $scope.highlight_data = highlight;
+        };
+
+        $scope.editMessage = (message) => {
+            $(".add-highlight-modal").addClass("slide-div");
+            $(".highlights-wrapper").addClass("highlights-wrapper-bg");
+            $scope.view = false;
+            $scope.message_data = message;
+        };
+
+        $scope.viewHighlight = (highlight) => {
+            $(".add-highlight-modal").addClass("slide-div");
+            $(".highlights-wrapper").addClass("highlights-wrapper-bg");
+            $scope.view = true;
+            $scope.highlight_data = highlight;
+        };
+
+        $scope.viewMessage = (message) => {
+            $(".add-highlight-modal").addClass("slide-div");
+            $(".highlights-wrapper").addClass("highlights-wrapper-bg");
+            $scope.view = true;
+            $scope.message_data = message;
+            console.log('--------',$scope.message_data);
         };
 
         $scope.editStudent = function(record,index) {
@@ -629,12 +734,12 @@
             }
         });
 
-        $scope.scheduleContent = function (game) {
+        $scope.scheduleContent = function (collection) {
             ModalService.showModal({
                 templateUrl: "views/schedule-content/content-library.html",
                 controller: "contentLibraryCtrl",
                 inputs: {
-                    gameId: game.id
+                    collection: collection
                 }
             }).then(function (modal) {
                 modal.element.modal({ backdrop: 'static', keyboard: false });
@@ -743,22 +848,27 @@
 
         }
 
-        $scope.sendQuestions = function(game){
-            $http.get('/content-plan-templates/get/'+game.id).then(function(response) {
+        $scope.sendQuestions = function(content_template){
+            $http.get('/content-plan-templates/get/'+content_template.id).then(function(response) {
                 $scope.data = response.data;
             });
-            $http.post('/content-plan-templates/update/'+game.id, {content_activated: true,play_date: new Date(),start_time : new Date()})
+            $http.post('/content-plan-templates/update/'+content_template.id, {content_activated: true,play_date: new Date(),start_time : new Date()})
             .then(function(response){
-                angular.forEach($scope.data.question_schedulings, function(question) {
-                    var dataMessage = {setOffTime : new Date()};
-                    $http.post('/question-scheduling/update-message-off-set/'+question.id,{data:dataMessage}).then(function(res){
-                        $http.get('/content-plan-templates/all?userAccountId=' + $scope.user.userAccountId)
-                        .then(function (response) {
-                            $scope.contents = response.data;
-                            $scope.gamesSelected = 'schedule';
-                            $scope.managearray();
-                        });
+                if(content_template.article.kind == 'message'){
+                    angular.forEach($scope.data.question_schedulings, function(question) {
+                        var dataMessage = {setOffTime : new Date()};
+                        $http.post('/question-scheduling/update-message-off-set/'+question.id,{data:dataMessage});
                     });
+                }else{
+                    angular.forEach($scope.data.scheduled_surveys, function(survey) {
+                        var dataSurvey = {setOffTime : new Date()};
+                        $http.post('/scheduled-surveys/update-message-off-set/'+survey.id,{data:dataSurvey});
+                    });
+                }
+                $http.get('/content-plan-templates/all?userAccountId=' + $scope.user.userAccountId)
+                .then(function (response) {
+                    $scope.contents = response.data;
+                    $scope.managearray();
                 });
             });
         }

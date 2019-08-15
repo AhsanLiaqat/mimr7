@@ -9,6 +9,7 @@ module.exports = function(sequelize, DataTypes) {
         description: DataTypes.STRING,
         type: DataTypes.STRING,
         text: DataTypes.TEXT,
+        kind: DataTypes.STRING,
         private: DataTypes.BOOLEAN,
         saleable: DataTypes.BOOLEAN,
         isDeleted: {

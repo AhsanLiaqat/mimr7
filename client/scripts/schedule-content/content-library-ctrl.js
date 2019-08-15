@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('app')
-        .controller('contentLibraryCtrl', ['$scope', '$filter', '$routeParams', '$http', 'AuthService', 'ModalService', '$location', 'close', 'filterFilter','gameId','$timeout','Query','AccountService', playGameCtrl]);
+        .controller('contentLibraryCtrl', ['$scope', '$filter', '$routeParams', '$http', 'AuthService', 'ModalService', '$location', 'close', 'filterFilter','collection','$timeout','Query','AccountService', playGameCtrl]);
 
-    function playGameCtrl($scope, $filter, $routeParams, $http, AuthService, ModalService, $location, close, filterFilter,gameId,$timeout,Query, AccountService) {
+    function playGameCtrl($scope, $filter, $routeParams, $http, AuthService, ModalService, $location, close, filterFilter,collection,$timeout,Query, AccountService) {
 
         $scope.round={};
         $scope.dateFormat = function (dat) {
@@ -18,18 +18,25 @@
             $scope.user = Query.getCookie('user');
             $scope.page1 = true;
             $scope.playGame = {};
-            $scope.playGame.articleId = gameId;
+            $scope.playGame.articleId = collection.id;
             $http.get('/articles/all').then(function(res){
                 $scope.articles = res.data;
             });
             $http.get('/settings/organizations/all?userAccountId=' + $scope.user.userAccountId).then(function (response) {
                 $scope.organizationList = response.data;
             });
-            $http.get('/questions/get/' + gameId).then(function(response){
-                $scope.questions = response.data;
-                $scope.filteredQuestions = $filter('filter')($scope.questions, function(item){return item.offset});
-                // $scope.gameMessages = _.sortBy($scope.gameMessages, function(o) { return  o.order });
-            })
+            if(collection.kind == 'message'){
+                $http.get('/questions/get/' + collection.id).then(function(response){
+                    $scope.questions = response.data;
+                    $scope.filteredQuestions = $filter('filter')($scope.questions, function(item){return item.offset});
+                    // $scope.gameMessages = _.sortBy($scope.gameMessages, function(o) { return  o.order });
+                })
+            }else{
+                $http.get('/surveys/all?id=' + collection.id).then(function(response){
+                    $scope.surveys = response.data;
+                })
+            }
+            $scope.collection = collection;
         };
         init();
 
@@ -96,29 +103,50 @@
                         .then(function(response){
                             $scope.contentPlanTemplateId=response.data.id;
                             toastr.success("Plan template created Successfully");
-                            var interval = ( $scope.timeSpan / $scope.questions.length ) * 60 ;
-                            var seconds = interval;
-                            angular.forEach($scope.filteredQuestions, function(messageQuestion,ind){
-                                if ( ind == 0 ){
-                                    seconds = ( interval / 2 );
-                                }
-                                else{
-                                    seconds += interval;
-                                }
-                                var messg ={
-                                     index: ind,
-                                     contentPlanTemplateId: $scope.contentPlanTemplateId,
-                                     questionId: messageQuestion.id,
-                                     offset: messageQuestion.offset,
-                                     total_time : $scope.total_time * 60
-                                }
-                                angular.forEach($scope.playerListUser.users, function(usr,ind){
-                                    $http.post('/question-scheduling/save', {data:messg,userId : usr.id})
-                                    .then(function(resp){
-                                        close(resp);
-                                    }); 
+                            // var interval = ( $scope.timeSpan / $scope.questions.length ) * 60 ;
+                            // var seconds = interval;
+                            if($scope.collection.kind == 'message'){
+                                angular.forEach($scope.filteredQuestions, function(messageQuestion,ind){
+                                    // if ( ind == 0 ){
+                                        // seconds = ( interval / 2 );
+                                    // }
+                                    // else{
+                                        // seconds += interval;
+                                    // }
+                                    var messg ={
+                                         index: ind,
+                                         contentPlanTemplateId: $scope.contentPlanTemplateId,
+                                         questionId: messageQuestion.id,
+                                         offset: messageQuestion.offset,
+                                         total_time : $scope.total_time * 60
+                                    }
+                                    angular.forEach($scope.playerListUser.users, function(usr,ind){
+                                        $http.post('/question-scheduling/save', {data:messg,userId : usr.id})
+                                        .then(function(resp){
+                                            close(resp);
+                                        }); 
+                                    });
                                 });
-                            });
+                            }else{
+                                angular.forEach($scope.surveys, function(survy,ind){
+                                    var surveyData ={
+                                         contentPlanTemplateId : $scope.contentPlanTemplateId,
+                                         surveyId : survy.id,
+                                         offset : survy.offset,
+                                         expiryTime : $scope.total_time * 60,
+                                         repeatTime : survy.repeatTime,
+                                         type : survy.type,
+                                         dynamicFormId : survy.dynamicFormId,
+                                         articleId : survy.articleId
+                                    }
+                                    angular.forEach($scope.playerListUser.users, function(usr,ind){
+                                        $http.post('/scheduled-surveys/save', {data:surveyData,userId : usr.id})
+                                        .then(function(resp){
+                                            close();
+                                        }); 
+                                    });
+                                });
+                            }
                         });
                     });
                 }else{

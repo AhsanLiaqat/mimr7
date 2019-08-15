@@ -40,10 +40,12 @@ router.post('/update/:id',function(req,res,next){
 
 });
 
-router.delete('/delete/:id', function(req, res, next) {
+router.delete('/delete/:id/:articleId', function(req, res, next) {
     var id = req.params.id;
     model.chapter.destroy({where: {id: id}}).then(function(response) {
-        res.send({success:true, msg:response.toString()});
+        model.chapter.findAll({where : {articleId : req.params.articleId}}).then(function(chapters){
+            res.send(chapters);
+        });
     },function(response){
         model.chapter.update({isDeleted:true},{where: {id: id}}).then(function(response) {
             res.send({success:true, msg:response.toString()});
