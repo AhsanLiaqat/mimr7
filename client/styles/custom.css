@@ -416,7 +416,7 @@ body{
         padding: 18px 0 5px;
    }
    .table-schedule-content tr td{
-    width: 25%;
+    width: 18%;
     text-align: center;
     padding: 33px 0 !important;
    }
@@ -626,7 +626,6 @@ body{
 }
 .btns-icons .btn.btn-sm{
     margin: 0;
-    padding: 0;
 }
 .collec-btns-icons .btn.btn-sm{
     margin: 0;
