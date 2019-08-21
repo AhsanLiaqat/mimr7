@@ -6,7 +6,7 @@ var Q = require('q');
 
 router.get('/all', function(req, res, next) {
     model.article.findAll({
-        where: {userAccountId: req.user.userAccountId},
+        where: {userAccountId: req.user.userAccountId,isDeleted : false},
             include : [{
                 model : model.message,
                     include : [{
