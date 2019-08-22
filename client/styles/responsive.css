@@ -23,6 +23,12 @@
    .student-table .search-collection-type-sec tr .btns-icons a {
     padding: 0 6px !important;
 }
+.collection-list a{
+	padding: 0px 6px !important;
+}
+.collec-btns-icons .btn.btn-sm {
+	padding: 0px 6px !important;
+}
 
 }
 
@@ -86,6 +92,9 @@
      	overflow-x: auto;
      	width: 100%;
      }
+     .collection-list a{
+	padding: 5px 20px !important;
+}
 
 }
 
@@ -339,6 +348,9 @@
 .dynamic-form .dynamic-form-student .btn.btn-sm {
     padding: 0 4px !important;
 }
+.collection-list a{
+	padding: 0px 20px !important;
+}
 }
 
 @media all and (max-width:480px){
@@ -557,6 +569,9 @@
 	   .dynamic-form tr td{
 	   	font-size: 10px;
 	   }
+	   .collection-list a{
+	padding: 0px 20px !important;
+}
 
 	/*.page-highlights .title-header .main-content h5{
 		font-size: 12px;

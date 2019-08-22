@@ -629,7 +629,11 @@ body{
 }
 .collec-btns-icons .btn.btn-sm{
     margin: 0;
-    padding: 15px;
+    padding:0 15px;
+}
+.collec-btns-icons a{
+     margin: 0;
+    padding:0 15px !important;
 }
 .students-icons{
     width: 20%;
@@ -668,4 +672,17 @@ body{
 .highlightSection  a:nth-child(1){
     line-height: 17px;
     color: #ccc;
+}
+.searchBar{
+    padding: 0 6px;
+}
+.searchBar .input-group-btn{
+    padding: 0;
+}
+.collection-list{
+    width: 100%;
+    margin: 0;
+}
+.collection-list .searchBar{
+    padding: 0 3px;
 }
