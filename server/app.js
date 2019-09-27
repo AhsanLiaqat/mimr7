@@ -53,8 +53,9 @@ app.use(function(req, res, next) {
         (req.url.indexOf('/auth/login') !== -1 || 
         ( req.headers['upper-url'] && 
         (req.headers['upper-url'].indexOf('/pages/content-questions') !== -1 || 
-        (req.headers['upper-url'].indexOf('/pages/studentLogin') !== -1 || 
-        (req.headers['upper-url'] == '/pages/signin' && req.url.indexOf('/auth/confirm-login') == -1 ) )))))){
+        (req.headers['upper-url'].indexOf('/pages/studentLogin') !== -1 ||
+        (req.headers['upper-url'].indexOf('/pages/surveys-forms') !== -1 || 
+        (req.headers['upper-url'] == '/pages/signin' && req.url.indexOf('/auth/confirm-login') == -1 ) ))))))){
         next();
     }
     else if(req.url.indexOf('.map') == -1 ){
@@ -103,9 +104,7 @@ app.use('/responses', require('./routes/responses.js'));
 app.use('/questions', require('./routes/question.js'));
 app.use('/content-questions', require('./routes/content-questions.js'));
 app.use('/dynamic-form', require('./routes/dynamic-form.js'));
-
-
-
+app.use('/survey-form-data', require('./routes/survey-form-data'));
 
 app.all('/*', function(req, res, next) {
     // Just send the index.html for other files to support HTML5Mode

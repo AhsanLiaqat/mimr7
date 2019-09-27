@@ -227,6 +227,16 @@ router.get('/get-form/:gameId/:playerId', function(req, res, next) {
     });
 });
 
+router.get('/one/:id', function(req, res, next) {
+    model.dynamic_form.findOne({
+        where: {id: req.params.id},
+        include : [{model : model.submission}]
+    }).then(function(result) {
+        res.send(result);
+    });
+});
+
+
 router.post('/update-form-detail', function(req, res, next) {
     var data = req.body.data;
     model.player_form_detail.findOne({

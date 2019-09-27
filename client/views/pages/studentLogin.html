@@ -53,15 +53,15 @@
         </div>
     </div>
     <div class="col-sm-12 col-md-12" style=" margin-top:20px" ng-show="state == 'first'">
-        <section class="panel panel-default">
+        <section class="panel panel-default active-content-tabs">
             <div class="panel-heading">
                 <div class="row">
-                    <div class="col-sm-10">
+                    <div class="col-sm-10 col-xs-8">
                          <strong>
                             <span class="glyphicon glyphicon-th"></span> Active Content Messages
                         </strong>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-2 col-xs-4">
                         <a style="float: right;" class="btn btn-info" ng-click = "logout()">
                             <i class="fa fa-home fa-2x"></i> Exit
                         </a>
@@ -71,7 +71,7 @@
 
             </div>
             <div class="panel-body">
-                <table st-pipe="activeContentTable" st-table="activeContent" class="table table-bordered table-striped table-responsive">
+                <table st-pipe="activeContentTable" st-table="activeContent" class="table table-bordered table-striped table-responsive active-content-messages">
                     <thead>
                         <tr>
                             <th st-sort="name">Content</th>
@@ -79,13 +79,13 @@
                             <th>Actions</th>
                         </tr>
                         <tr>
-                            <th>
+                            <td>
                                 <input class="form-control" placeholder="Search Content" st-search="article.title"/>
-                            </th>
-                            <th>
+                            </td>
+                            <td>
                                 <input class="form-control" placeholder="Search Schedules" st-search="scheduled_date"/>
-                            </th>
-                            <th></th>
+                            </td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,7 +94,7 @@
                             <td>
                                 {{dateTimeFormat(content.scheduled_date)}}
                             </td>
-                            <td>
+                            <td >
                                 <a 
                                 class="btn btn-info" title="Incoming Messages"
                                 ng-click = "show_messages(content.id,user.id)"
@@ -137,37 +137,40 @@
             </div>
         </section>
     </div>
-    <div ng-show="state == 'second'" style="background-color: white">
-        <div>
-            <a style="margin-left: 49px" class="btn btn-info" ng-click = "state = 'first'">
+    <div ng-show="state == 'second'" style="background-color: white" class="student-messages">
+    <div class="container">
+        <div class="row">
+        <div class="col-sm-12 col-xs-12">
+            <a class="btn btn-info" ng-click = "state = 'first'">
                 <i class="fa fa-chevron-left fa-lg"></i> Back
             </a>
+            </div> 
+            <div class="col-sm-12 col-xs-12">
+            <a href="" class="btn-messages">Messages</a>
+            </div>
+            </div>
         </div>
          <div class="panel-body">
             <div class="container">
-                <ul class="nav nav-tabs nav-justified">
-                    <li class="active"><a data-toggle="tab" data-target="#rounds" href="">Messages</a></li>
-                </ul>
               <div class="tab-content">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <br><br>
                             <table class="table table-bordered table-striped table-responsive">
                                 <thead>
                                 <tr>
-                                    <th>Messages</th>
-                                    <th>Scheduled Date</th>
+                                    <th class="col-xs-10">Messages</th>
+                                    <th class="col-xs-2">Scheduled Date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="msg in myMessages">
-                                    <td>
+                                    <td class="col-xs-10">
                                         <a ng-bind-html= "trustedHtml(msg.question.name)">
                                                 
                                         </a>
                                     </td>
-                                    <td>
+                                    <td class="col-xs-2">
                                         <a>
                                             {{dateTimeFormat(msg.setOffTime)}}
                                         </a>

@@ -20,6 +20,8 @@ module.exports = function(sequelize, DataTypes) {
             associate: function (models) {
                 dynamic_forms.belongsTo(models.user_accounts);
                 dynamic_forms.hasMany(models.survey);
+                dynamic_forms.hasMany(models.content_plan_template);
+                dynamic_forms.hasOne(models.submission);
             }
         }
     });

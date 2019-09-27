@@ -97,6 +97,28 @@ router.get('/get-player-detail/:id', function(req, res, next) {
     });
 });
 
+router.get('/get-survey-detail/:id', function(req, res, next) {
+    model.content_plan_template.findOne({
+        where: {id: req.params.id},
+        order: [['createdAt', 'DESC']],
+        include: [
+        {model: model.player_list,
+            include : [{model : model.user,
+                include : [{model : model.scheduled_survey,
+                    where : {contentPlanTemplateId : req.params.id},
+                    include : [{
+                        model : model.submission
+                    },{
+                        model : model.dynamic_form
+                    }]
+                }]
+            }]
+        }]
+    }).then(function(playerDetail) {
+        res.send(playerDetail);
+    });
+});
+
 
 router.get('/all', function(req, res, next) {
     model.content_plan_template.findAll({ where : { userAccountId : req.query.userAccountId,isDeleted : false},
@@ -138,6 +160,27 @@ router.post('/cancel-content/:id', function(req, res, next) {
 });
 
 
+router.post('/cancel-survey/:id', function(req, res, next) {
+    model.content_plan_template.update(req.body,
+        {where: { id : req.params.id }
+    }).then(function(scheduledQuestion) {
+        model.content_plan_template.findOne({where : {id : req.params.id},
+            include : [{
+                model : model.scheduled_survey
+            }]
+        }).then(function(resp){
+            resp.scheduled_surveys.forEach(function(survy) {
+                model.scheduled_survey.update({activated: true},{
+                    where: {id: survy.id}
+                }).then(function(response) {
+                    res.send(response);
+                });
+            });
+        });
+    });
+});
+
+
 router.post('/create', function(req, res, next) {
     var record = req.body;
     record.userAccountId = req.user.userAccountId;
@@ -150,6 +193,16 @@ router.get('/closed-contents', function(req, res, next) {
     model.content_plan_template.findAll({where : {status : 'stop'},
         include : [{
             model : model.article
+        }]
+    }).then(function(result) {
+            res.send(result);
+        });
+});
+
+router.get('/closed-surveys', function(req, res, next) {
+    model.content_plan_template.findAll({where : {status : 'stop'},
+        include : [{
+            model : model.dynamic_form
         }]
     }).then(function(result) {
             res.send(result);

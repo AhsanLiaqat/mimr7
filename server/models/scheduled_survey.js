@@ -6,6 +6,7 @@ module.exports = function(sequelize, DataTypes) {
         setOffTime: DataTypes.STRING,
         lastSent : DataTypes.STRING,
         type: {type: DataTypes.BOOLEAN, defaultValue: false},
+        status: {type: DataTypes.BOOLEAN, defaultValue: false},
         skip: {type: DataTypes.BOOLEAN, defaultValue: false},
         repeatTime: {type: DataTypes.INTEGER, defaultValue: 0},
         expiryTime: {type: DataTypes.INTEGER, defaultValue: 0},
@@ -27,6 +28,8 @@ module.exports = function(sequelize, DataTypes) {
                 scheduled_survey.belongsTo(models.article);
                 scheduled_survey.belongsTo(models.dynamic_form);
                 scheduled_survey.belongsTo(models.survey);
+                scheduled_survey.hasOne(models.submission);
+
             }
         }
     });

@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <a class="btn btn-danger pull-right" ng-disabled = "playContent.status == 'stop'" ng-click="cancelContent()">
+                    <a class="btn btn-danger pull-right" ng-disabled = "playContent.status == 'stop'" ng-click="closeSurvey()">
                         Close Survey
                     </a>
                 </div>
@@ -44,18 +44,19 @@
                             <tbody>
                             <tr ng-repeat="survy in survey_summary.scheduled_surveys">
                                 <td>
-                                    <a ng-click = "showMessageDetail(ques)">
+                                    <a>
                                         {{survy.dynamic_form.name | displayString : 25}}
                                     </a>
                                 </td>
                                 <td>{{survy.setOffTime | date : 'd MMMM y'}}</td>
                                 <td ng-show = "!survy.skip">{{survy.setOffTime | date : 'h:mm a'}}</td>
                                 <td ng-show = "survy.skip && !survy.activated">{{survy.skipped_At | date : 'h:mm a'}}</td>
-                                <td ng-show = "survy.activated">Sent</td>
-                                <td ng-show = "!survy.activated && !survy.skip">Sending</td>
+                                <td ng-show = "!survy.type && survy.activated">Sent</td>
+                                <td ng-show = "survy.type && !survy.activated && !survy.skip">Sending</td>
+                                <td ng-show = "!survy.type && !survy.activated && !survy.skip">Sending</td>
                                 <td ng-show = "survy.skip && !survy.activated">Skip</td>
                                 <td>
-                                    <div ng-hide="survy.activated || survy.skip">
+                                    <div ng-hide="!survy.type && survy.activated || survy.skip">
                                         <a class="btn btn-info" ng-click="skipSurvey(survy)" >
                                             Skip    
                                             <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -66,7 +67,10 @@
                                             <span class="glyphicon glyphicon-send"></span>
                                         </a>
                                     </div>
-                                    <p ng-show="survy.activated">
+                                    <p ng-show="survy.activated && !survy.type">
+                                        <i>Survey sent at <b>{{dateFormat(survy.activatedAt)}}</b></i>
+                                    </p>
+                                    <p ng-show="survy.activatedAt && !survy.activated && survy.type">
                                         <i>Survey sent at <b>{{dateFormat(survy.activatedAt)}}</b></i>
                                     </p>
                                     <p ng-show="survy.skip">

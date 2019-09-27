@@ -192,6 +192,7 @@
             $http.get('/content-plan-templates/all?userAccountId=' + $scope.user.userAccountId).then(function (response) {
             $scope.activeContentToShow = [];
                 $scope.active_collections = response.data;
+                console.log('-------',$scope.active_collections);
                 angular.forEach($scope.active_collections, function(value) {
                     if(value.content_activated == true && value.status != 'stop'){
                         $scope.activeContentToShow.push(value);
@@ -622,7 +623,6 @@
             $(".highlights-wrapper").addClass("highlights-wrapper-bg");
             $scope.view = true;
             $scope.message_data = message;
-            console.log('--------',$scope.message_data);
         };
 
         $scope.editStudent = function(record,index) {
@@ -851,24 +851,24 @@
         $scope.sendQuestions = function(content_template){
             $http.get('/content-plan-templates/get/'+content_template.id).then(function(response) {
                 $scope.data = response.data;
-            });
-            $http.post('/content-plan-templates/update/'+content_template.id, {content_activated: true,play_date: new Date(),start_time : new Date()})
-            .then(function(response){
-                if(content_template.article.kind == 'message'){
-                    angular.forEach($scope.data.question_schedulings, function(question) {
-                        var dataMessage = {setOffTime : new Date()};
-                        $http.post('/question-scheduling/update-message-off-set/'+question.id,{data:dataMessage});
+                $http.post('/content-plan-templates/update/'+content_template.id, {content_activated: true,play_date: new Date(),start_time : new Date()})
+                .then(function(response){
+                    if(content_template.article.kind == 'message'){
+                        angular.forEach($scope.data.question_schedulings, function(question) {
+                            var dataMessage = {setOffTime : new Date()};
+                            $http.post('/question-scheduling/update-message-off-set/'+question.id,{data:dataMessage});
+                        });
+                    }else{
+                        angular.forEach($scope.data.scheduled_surveys, function(survey) {
+                            var dataSurvey = {setOffTime : new Date()};
+                            $http.post('/scheduled-surveys/update-message-off-set/'+survey.id,{data:dataSurvey});
+                        });
+                    }
+                    $http.get('/content-plan-templates/all?userAccountId=' + $scope.user.userAccountId)
+                    .then(function (response) {
+                        $scope.contents = response.data;
+                        $scope.managearray();
                     });
-                }else{
-                    angular.forEach($scope.data.scheduled_surveys, function(survey) {
-                        var dataSurvey = {setOffTime : new Date()};
-                        $http.post('/scheduled-surveys/update-message-off-set/'+survey.id,{data:dataSurvey});
-                    });
-                }
-                $http.get('/content-plan-templates/all?userAccountId=' + $scope.user.userAccountId)
-                .then(function (response) {
-                    $scope.contents = response.data;
-                    $scope.managearray();
                 });
             });
         }

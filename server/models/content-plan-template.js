@@ -26,7 +26,9 @@ module.exports = function(sequelize, DataTypes) {
                 content_plan_template.belongsTo(models.player_list);
                 content_plan_template.hasMany(models.question_scheduling);
                 content_plan_template.hasMany(models.answer);
+                content_plan_template.hasMany(models.submission);
                 content_plan_template.hasMany(models.scheduled_survey);
+                content_plan_template.belongsTo(models.dynamic_form);
             }
         }
     });

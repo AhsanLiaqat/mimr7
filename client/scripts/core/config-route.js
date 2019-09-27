@@ -82,7 +82,7 @@
             'forms/elements', 'forms/layouts', 'forms/validation', 'forms/wizard',
             'charts/charts', 'charts/flot',
             'pages/404', 'pages/500', 'pages/blank', 'pages/forgot-password', 'pages/invoice',
-            'pages/lock-screen', 'pages/profile', 'pages/invoice', 'pages/signin', 'pages/signup','pages/studentLogin','pages/content-questions',
+            'pages/lock-screen', 'pages/profile', 'pages/invoice', 'pages/signin', 'pages/signup','pages/studentLogin','pages/content-questions','pages/surveys-forms',
             'mail/compose', 'mail/inbox', 'mail/single',
             'app/tasks', 'app/calendar', 'incidents/edit', 'IdleProvider', 'KeepaliveProvider', 'pages/invite'
         ]
@@ -92,6 +92,8 @@
             var config, url;
             if(route == 'pages/content-questions'){
                 url = '/' + 'pages/content-questions/:userId/:scheduledQuestionId';
+            }else if(route == 'pages/surveys-forms'){
+                url = '/' + 'pages/surveys-forms/:userId/:scheduledSurveyId';
             }else{
                 url = '/' + route;
             }
@@ -147,7 +149,9 @@
         .when('/active-contents/:gameId', { templateUrl: 'views/active-contents/details.html' })
         .when('/active-surveys/:surveyId', { templateUrl: 'views/active-surveys/details.html' })
         .when('/question-responses/:gameId', { templateUrl: 'views/active-contents/question-responses.html' })
+        .when('/survey-responses/:contentPlanTemplateId', { templateUrl: 'views/active-contents/survey-responses.html' })
         .when('/closed-contents', { templateUrl: 'views/schedule-content/list.html' })
+        .when('/closed-surveys', { templateUrl: 'views/schedule-content/closed-surveys-list.html' })
         .when('/view-message/:messageId?', { templateUrl: 'views/content-messages/view-message.html' })
         .when('/view-scheduled-question/:contentId?', { templateUrl: 'views/schedule-content/view-scheduled-question.html' })
         .when('/view-scheduled-surveys/:contentId?', { templateUrl: 'views/schedule-content/view-scheduled-surveys.html' })
@@ -306,6 +310,13 @@
                         $location.path(str);
                     }
                 }
+                else if (next.templateUrl == "views/pages/surveys-forms.html") {
+                    var str = '/pages/surveys-forms/';
+                    if(next.params && next.params.userId && next.params.scheduledSurveyId){
+                        str += next.params.userId + '/' + next.params.scheduledSurveyId;
+                        $location.path(str);
+                    }
+                }
                 else {
                     // not going to #login, we should redirect now
                     $rootScope.superAdmin = false;
@@ -398,6 +409,10 @@
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Question Responses';
                             break;
+                        case '/survey-responses/:contentPlanTemplateId':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Survey Summary';
+                            break;
                         case '/view-scheduled-question/:contentId?':
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Scheduled Questions';
@@ -421,6 +436,10 @@
                         case '/closed-contents':
                             $rootScope.breadcrumb_2 = false;
                             $rootScope.breadcrumb_1Heading = 'Closed Contents';
+                            break;
+                        case '/closed-surveys':
+                            $rootScope.breadcrumb_2 = false;
+                            $rootScope.breadcrumb_1Heading = 'Closed Surveys';
                             break;
                         case '/article-libraries/:gamePlanId?':
                             $rootScope.breadcrumb_2 = false;
@@ -512,7 +531,7 @@
                 }
                 if (next.templateUrl == "views/pages/signin.html") {
                     $location.path("/");
-                } else if ( next.originalPath == "/pages/studentLogin" || next.originalPath == '/pages/content-questions/:userId/:scheduledQuestionId' || next.originalPath == "/reference-library/:userAccountId" || next.originalPath == "/message/:id" || next.originalPath == '/messages' || next.originalPath == '/myTasks/:incidentId' || next.originalPath == '/taskDetail/:taskId' || next.originalPath == '/active-games' || next.originalPath == '/my-messages/:templateGameId/:userId') {
+                } else if ( next.originalPath == "/pages/studentLogin" || next.originalPath == '/pages/content-questions/:userId/:scheduledQuestionId' || next.originalPath == '/pages/surveys-forms/:userId/:scheduledSurveyId' || next.originalPath == "/reference-library/:userAccountId" || next.originalPath == "/message/:id" || next.originalPath == '/messages' || next.originalPath == '/myTasks/:incidentId' || next.originalPath == '/taskDetail/:taskId' || next.originalPath == '/active-games' || next.originalPath == '/my-messages/:templateGameId/:userId') {
                     $rootScope.fixedHeader = false;
                 }
                 else if ($rootScope.infoProvider === true || localStorage['role'] === 'IP') {

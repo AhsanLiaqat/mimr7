@@ -2,9 +2,9 @@
     'use strict';
 
     angular.module('app')
-        .controller('questionResponsesCtrl', ['$scope', '$filter', '$routeParams', '$http', 'AuthService', 'ModalService', '$location', 'filterFilter','$timeout','$rootScope','Query', playGameCtrl]);
+        .controller('surveysResponsesCtrl', ['$scope', '$filter', '$routeParams', '$http', 'AuthService', 'ModalService', '$location', 'filterFilter','$timeout','$rootScope','Query', surveyResponsesCtrl]);
 
-    function playGameCtrl($scope, $filter, $routeParams, $http, AuthService, ModalService, $location, filterFilter,$timeout,$rootScope,Query) {
+    function surveyResponsesCtrl($scope, $filter, $routeParams, $http, AuthService, ModalService, $location, filterFilter,$timeout,$rootScope,Query) {
         $scope.dateFormat = function (dat) {
             return moment(dat).utc().local().format('HH:mm DD-MM-YYYY');
         };
@@ -14,18 +14,18 @@
 
         var setSocketForContentMessages = function () {
             $timeout(function () {
-                console.log('Listening ----> detail_content:'+$routeParams.gameId);
-                SOCKET.on('detail_content:'+$routeParams.gameId, function (response) {
-                    console.log('Message Recieved ----> detail_content:'+$routeParams.gameId,response.data);
+                console.log('Listening ----> detail_survey:'+$routeParams.contentPlanTemplateId);
+                SOCKET.on('detail_survey:'+$routeParams.contentPlanTemplateId, function (response) {
+                    console.log('Message Recieved ----> detail_survey:'+$routeParams.contentPlanTemplateId,response.data);
                     var reslt = response.data;
                     if(reslt){
                         switch (response.action) {
                             case 'update':
                                 var found = false;
-                                for (var i = 0; i < $scope.playerDetail.player_list.users.length; i++) {
-                                    for (var j = 0; j < $scope.playerDetail.player_list.users[i].question_schedulings.length; j++) {
-                                        if ($scope.playerDetail.player_list.users[i].question_schedulings[j].id === reslt.id) {
-                                            $scope.playerDetail.player_list.users[i].question_schedulings[j] = angular.copy(reslt);
+                                for (var i = 0; i < $scope.surveyDetail.player_list.users.length; i++) {
+                                    for (var j = 0; j < $scope.surveyDetail.player_list.users[i].scheduled_surveys.length; j++) {
+                                        if ($scope.surveyDetail.player_list.users[i].scheduled_surveys[j].id === reslt.id) {
+                                            $scope.surveyDetail.player_list.users[i].scheduled_surveys[j] = angular.copy(reslt);
                                             found = true;
                                             break;
                                         }
@@ -33,9 +33,9 @@
                                     if(found)break;
                                 }
                                 // var found = false;
-                                // for(var i = 0; i < $scope.playContent.question_schedulings.length; i++){
-                                //     if($scope.playContent.question_schedulings[i].id === reslt.id){
-                                //         $scope.playContent.question_schedulings[i] = angular.copy(reslt);
+                                // for(var i = 0; i < $scope.playContent.scheduled_surveys.length; i++){
+                                //     if($scope.playContent.scheduled_surveys[i].id === reslt.id){
+                                //         $scope.playContent.scheduled_surveys[i] = angular.copy(reslt);
                                 //         found = true;
                                 //         break;
                                 //     }
@@ -44,26 +44,26 @@
                                 // break;
                         }
                     }else{
-                        console.log('Recieved Nothing on ---> detail_content:'+$routeParams.gameId);
+                        console.log('Recieved Nothing on ---> detail_survey:'+$routeParams.contentPlanTemplateId);
                     }
                     $scope.$apply();
                 });
 
-                SOCKET.on('question_expired:'+$routeParams.gameId, function (response) {
-                    console.log('Message Recieved ----> question_expired:'+$routeParams.gameId,response.data);
+                SOCKET.on('survey_summary_page:'+$routeParams.contentPlanTemplateId, function (response) {
+                    console.log('Message Recieved ----> survey_summary_page:'+$routeParams.contentPlanTemplateId,response.data);
                     var reslt = response.data;
                     if(reslt){
                         switch (response.action) {
                             case 'sent':
                                 var found = false;
-                                for (var i = 0; i < $scope.playerDetail.player_list.users.length; i++) {
-                                    for (var j = 0; j < $scope.playerDetail.player_list.users[i].question_schedulings.length; j++) {
-                                        if ($scope.playerDetail.player_list.users[i].question_schedulings[j].id === reslt.id) {
-                                            $scope.playerDetail.player_list.users[i].question_schedulings[j] = angular.copy(reslt);
-                                            angular.forEach($scope.playerDetail.player_list.users , function(user){
+                                for (var i = 0; i < $scope.surveyDetail.player_list.users.length; i++) {
+                                    for (var j = 0; j < $scope.surveyDetail.player_list.users[i].scheduled_surveys.length; j++) {
+                                        if ($scope.surveyDetail.player_list.users[i].scheduled_surveys[j].id === reslt.id) {
+                                            $scope.surveyDetail.player_list.users[i].scheduled_surveys[j] = angular.copy(reslt);
+                                            angular.forEach($scope.surveyDetail.player_list.users , function(user){
                                                 user.answerQuestions = 0;
-                                                angular.forEach(user.question_schedulings,function(item){
-                                                    if(item.answer){
+                                                angular.forEach(user.scheduled_surveys,function(item){
+                                                    if(item.submission){
                                                         user.answerQuestions++;
                                                     }
                                                 });
@@ -74,16 +74,16 @@
                                     }
                                     if(found)break;
                                 }
-                            case 'questionAnwere':
+                            case 'survey_submission':
                                 var found = false;
-                                for (var i = 0; i < $scope.playerDetail.player_list.users.length; i++) {
-                                    for (var j = 0; j < $scope.playerDetail.player_list.users[i].question_schedulings.length; j++) {
-                                        if ($scope.playerDetail.player_list.users[i].question_schedulings[j].id === reslt.questionSchedulingId) {
-                                            $scope.playerDetail.player_list.users[i].question_schedulings[j].answer = reslt;
-                                            angular.forEach($scope.playerDetail.player_list.users , function(user){
+                                for (var i = 0; i < $scope.surveyDetail.player_list.users.length; i++) {
+                                    for (var j = 0; j < $scope.surveyDetail.player_list.users[i].scheduled_surveys.length; j++) {
+                                        if ($scope.surveyDetail.player_list.users[i].scheduled_surveys[j].id === reslt.questionSchedulingId) {
+                                            $scope.surveyDetail.player_list.users[i].scheduled_surveys[j].submission = reslt;
+                                            angular.forEach($scope.surveyDetail.player_list.users , function(user){
                                                 user.answerQuestions = 0;
-                                                angular.forEach(user.question_schedulings,function(item){
-                                                    if(item.answer){
+                                                angular.forEach(user.scheduled_surveys,function(item){
+                                                    if(item.submission){
                                                         user.answerQuestions++;
                                                     }
                                                 });
@@ -96,7 +96,7 @@
                                 }
                         }
                     }else{
-                        console.log('Recieved Nothing on ---> question_expired:'+$routeParams.gameId);
+                        console.log('Recieved Nothing on ---> survey_summary_page:'+$routeParams.contentPlanTemplateId);
                     }
                     $scope.$apply();
                 });
@@ -106,13 +106,13 @@
         //fetch and set initial data
         function init() {
             $scope.user = Query.getCookie('user');
-            $scope.gameId = $routeParams.gameId;
+            $scope.contentPlanTemplateId = $routeParams.contentPlanTemplateId;
 
-            // $http.get('/content-plan-templates/play-content-summary/' + $scope.gameId).then(function (response) {
+            // $http.get('/content-plan-templates/play-content-summary/' + $scope.contentPlanTemplateId).then(function (response) {
             //     $scope.playContent = response.data;
             //     $scope.time = new Date($scope.playContent.start_time).getTime();
             //     $scope.questionSchedule = [];
-            //     angular.forEach($scope.playContent.question_schedulings, function (scheduledQuestion,ind){
+            //     angular.forEach($scope.playContent.scheduled_surveys, function (scheduledQuestion,ind){
             //         if (scheduledQuestion.question){
             //             putData(scheduledQuestion.user.firstName,$scope.questionSchedule,scheduledQuestion,scheduledQuestion.user.id,scheduledQuestion.user.answers);
             //         }else{
@@ -121,52 +121,52 @@
             //     });
 
             // });
-            $http.get('/content-plan-templates/get-player-detail/' + $scope.gameId).then(function (response) {
-                $scope.playerDetail = response.data;
-                angular.forEach($scope.playerDetail.player_list.users , function(user){
+            $http.get('/content-plan-templates/get-survey-detail/' + $scope.contentPlanTemplateId).then(function (response) {
+                $scope.surveyDetail = response.data;
+                angular.forEach($scope.surveyDetail.player_list.users , function(user){
                     user.answerQuestions = 0;
-                    angular.forEach(user.question_schedulings,function(item){
-                        if(item.answer){
+                    angular.forEach(user.scheduled_surveys,function(item){
+                        if(item.submission){
                             user.answerQuestions++;
                         }
                     });
                 });
-                $scope.time = new Date($scope.playerDetail.start_time).getTime();
+                $scope.time = new Date($scope.surveyDetail.start_time).getTime();
             });
             setSocketForContentMessages();
         };
 
-        $scope.detailsQuestions = (decider,ques) => {
+        $scope.detailSurveys = (decider,ques) => {
             let inputs = [];
             if(decider == 'sent'){
-                let arr = ques.question_schedulings.filter(function(item){return item.activated == true;});
+                let arr = ques.scheduled_surveys.filter(function(item){return item.activated == true;});
                 inputs.arr = arr;
                 inputs.decider = decider;
-                inputs.type = 'message_summary';
+                inputs.type = 'survey_summary';
                 callModal(inputs);
             }else if(decider == 'question'){
-                let arr = ques.question_schedulings;
+                let arr = ques.scheduled_surveys;
                 inputs.arr = arr;
                 inputs.decider = decider;
-                inputs.type = 'message_summary';
+                inputs.type = 'survey_summary';
                 callModal(inputs);
             }else if(decider == 'active'){
-                let arr = ques.question_schedulings.filter(function(item){return item.activated == false;});
+                let arr = ques.scheduled_surveys.filter(function(item){return item.activated == false;});
                 inputs.arr = arr;
                 inputs.decider = decider;
-                inputs.type = 'message_summary';
+                inputs.type = 'survey_summary';
                 callModal(inputs);
             }else if(decider == 'Answered'){
-                let arr = ques.question_schedulings.filter(function(item){return item.answer !== null;});
+                let arr = ques.scheduled_surveys.filter(function(item){return item.submission !== null;});
                 inputs.arr = arr;
                 inputs.decider = decider;
-                inputs.type = 'message_summary';
+                inputs.type = 'survey_summary';
                 callModal(inputs);
             }else if(decider == 'expired'){
-                let arr = ques.question_schedulings.filter(function(item){return item.answer == null && item.status == true;});
+                let arr = ques.scheduled_surveys.filter(function(item){return item.submission == null && item.status == true;});
                 inputs.arr = arr;
                 inputs.decider = decider;
-                inputs.type = 'message_summary';
+                inputs.type = 'survey_summary';
                 callModal(inputs);
             }
             function callModal(inputs){

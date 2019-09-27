@@ -3,6 +3,7 @@ var router = express.Router();
 var model = require('../models');
 var _ = require('underscore');
 var schedule = require('node-schedule');
+var shortUrl = require('node-url-shortener');
 var Q = require('q');
 var mailServer = require('../lib/email');
 
@@ -27,6 +28,9 @@ var j = schedule.scheduleJob('01 * * * * *', function(){
                     }]
                 }).then(function(scheduled_question) {
                     var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://mimr7-dev1.us-east-1.elasticbeanstalk.com/#/pages/content-questions' + '/' + scheduled_question.userId + '/' + scheduled_question.id;
+                    // shortUrl.short(link, function(err, url){
+                    //     console.log(url);
+                    // });
                     var mailOptions = {
                         from: 'noreply@crisishub.co',
                         to: scheduled_question.user.email,
@@ -210,6 +214,9 @@ router.post('/send-question/:id',function(req,res,next){
             }]
         }).then(function(scheduled_question) {
             var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://localhost:8082/#/pages/content-questions' + '/' + scheduled_question.userId + '/' + scheduled_question.id;
+            // shortUrl.short('http://localhost:8082/#/pages/content-questions', function(err, url){
+            //     console.log('what is this url',url);
+            // });
             var mailOptions = {
                 from: 'noreply@crisishub.co',
                 to: scheduled_question.user.email,
@@ -217,7 +224,7 @@ router.post('/send-question/:id',function(req,res,next){
                 html: link
             };
             mailServer.sendMail(mailOptions).then(function(response) {
-                console.log("response," ,response);
+                // console.log("response," ,response);
                 res.send(response);
             }, function(err) {
                 res.send(err);

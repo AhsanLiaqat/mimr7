@@ -14,6 +14,55 @@
                 return cl.dynamic_form.id;
             });
         }
+        var setSocketForRepeatingEvents = function () {
+            $timeout(function () {
+                console.log('Listening ----> repeating_events:'+$routeParams.contentId);
+                SOCKET.on('repeating_events_for_callendar:'+$routeParams.contentId, function (response) {
+                    console.log('Event Recieved ----> repeating_events:'+$routeParams.contentId,response.data);
+                    var reslt = response.data;
+                    if(reslt){
+                        switch (response.action) {
+                            case 'update':
+                                var found = false;
+                                for(var i = 0; i < $scope.survey.length; i++){
+                                    if($scope.survey[i].id === reslt.id){
+                                        $scope.survey[i] = angular.copy(reslt);
+                                        found = true;
+                                        $scope.eventSources = [];
+                                        $('#main-calendar').fullCalendar('refetchEvents');
+                                        angular.forEach($scope.survey , function(survy,index){
+                                            $scope.eventSources = [];
+                                            if(survy.type == true){
+                                                $scope.events.push({
+                                                    id : survy.id,
+                                                    dynamic_form : survy.dynamic_form,
+                                                    className: 'fa fa-repeat',
+                                                    title: htmlToPlaintext(survy.dynamic_form.name),
+                                                    start: findActualDate(survy.offset),
+                                                })
+                                            }else{
+                                                $scope.events.push({
+                                                    id : survy.id,
+                                                    dynamic_form : survy.dynamic_form,
+                                                    className : '',
+                                                    title: htmlToPlaintext(survy.dynamic_form.name),
+                                                    start: findActualDate(survy.offset)
+                                                })
+                                            }
+                                        });
+                                        break;
+                                    }
+                                    if(found)break;
+                                }
+                                break;
+                        }
+                    }else{
+                        console.log('Recieved Nothing on ---> repeating_events:'+$routeParams.contentId);
+                    }
+                    $scope.$apply();
+                });
+            });
+        }
         $scope.init = () => {
             $scope.user = Query.getCookie('user');
             $http.get('/dynamic-form/all').then(function(response){
@@ -52,18 +101,31 @@
                 $('.fc-next-button').hide();
                 refreshEvents();
             });
+            // $('#main-calendar a.fc-day-grid-event .fc-content').prepend("<i class='fa fa-repeat' style='margin-right:5px'></i>");
             $http.get('/surveys/all?id=' + $routeParams.contentId).then(function(response){
                 $scope.survey = response.data;
                 angular.forEach($scope.survey , function(survy,index){
-                    $scope.events.push({
-                        id : survy.id,
-                        dynamic_form : survy.dynamic_form,
-                        title: htmlToPlaintext(survy.dynamic_form.name),
-                        start: findActualDate(survy.offset)
-                    })
+                    if(survy.type == true){
+                        $scope.events.push({
+                            id : survy.id,
+                            dynamic_form : survy.dynamic_form,
+                            className: 'fa fa-repeat',
+                            title: htmlToPlaintext(survy.dynamic_form.name),
+                            start: findActualDate(survy.offset),
+                        })
+                    }else{
+                        $scope.events.push({
+                            id : survy.id,
+                            dynamic_form : survy.dynamic_form,
+                            className : '',
+                            title: htmlToPlaintext(survy.dynamic_form.name),
+                            start: findActualDate(survy.offset)
+                        })
+                    }
                 });
                 refreshEvents();
             });
+            setSocketForRepeatingEvents();
         };
         function htmlToPlaintext(text) {
             return text ? String(text).replace(/<[^>]+>/gm, '') : '';
@@ -71,7 +133,6 @@
 
         
         $scope.alertOnDrop = (event) => {
-            console.log('what is id',event)
             let offset = findOffset(event.start._d);
             $http.post('/surveys/update/' + event.id,{data : {offset}}).then(function(res){
             });

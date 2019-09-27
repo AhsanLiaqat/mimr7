@@ -9,15 +9,18 @@
                     <table class="table table-bordered table-striped table-responsive">
                         <thead>
                             <tr>
-                                <th>Questions</th>
+                                <th ng-if = "type == 'message_summary'" >Questions</th>
+                                <th ng-if = "type == 'survey_summary'">Surveys</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-show = "records.length" ng-repeat="ques in records">
-                                <td ng-bind-html = "ques.question.name"></td>
+                                <td ng-if = "type == 'message_summary'" ng-bind-html = "ques.question.name"></td>
+                                <td ng-if = "type == 'survey_summary'" ng-bind-html = "ques.dynamic_form.name"></td>
                             </tr>
                             <tr ng-show = "!records.length">
-                                <td>No Question Present</td>
+                                <td ng-if = "type == 'survey_summary'">No Survey Present</td>
+                                <td ng-if = "type == 'message_summary'">No Question Present</td>
                             </tr>
                         </tbody>
                     </table>
@@ -31,10 +34,12 @@
                         </thead>
                         <tbody>
                             <tr ng-show = "records.length" ng-repeat="ques in records">
-                                <td ng-bind-html = "ques.answer.text"></td>
+                                <td ng-if = "type == 'message_summary'" ng-bind-html = "ques.answer.text"></td>
+                                <td ng-if = "type == 'survey_summary'" ng-bind-html = "ques.submission.data"></td>
                             </tr>
                             <tr ng-show = "!records.length">
-                                <td>No Question Present</td>
+                                <td ng-if = "type == 'message_summary'">No Question Present</td>
+                                <td ng-if = "type == 'survey_summary'">No Survey Present</td>
                             </tr>
                         </tbody>
                     </table>

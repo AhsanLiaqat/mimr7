@@ -686,3 +686,56 @@ body{
 .collection-list .searchBar{
     padding: 0 3px;
 }
+.active-content-messages th, td, tr {
+    padding: 20px;
+}
+.active-content-messages  td a{
+    padding: 0;
+    margin: 0;
+}
+.active-content-tabs .row{
+    align-items: center;
+}
+.active-content-tabs .col-sm-2 a{
+    padding: 0 20px !important;
+    margin: 0 !important;
+}
+.student-messages .col-xs-10 a{
+    height: 0;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.student-messages .col-xs-10 h2{
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+.btn-messages{
+   background-color:  #009688;
+   text-align: center;
+   display: block;
+   color: #fff;
+}
+.student-messages .col-sm-12 .btn.btn-info{
+    padding-left: 0;
+}
+.student-messages .form-group{
+    margin-top: 0;
+}
+.student-messages .panel-body{
+    padding-top: 0;
+}
+.users-surveys-forms .survey-inner-content{
+    width: 75%;
+    margin: 0 auto;
+    background-color: #eeeeee;
+    padding: 20px 0px;
+}
+#main-calendar a.fc-day-grid-event .fc-content{
+    display: inline;
+    margin-left: 5px;
+    white-space: inherit;
+}
+#main-calendar .fc-event.fc-draggable{
+    padding: 10px !important;
+}

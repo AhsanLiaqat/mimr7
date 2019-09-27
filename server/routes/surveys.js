@@ -30,8 +30,14 @@ router.post('/update/:id',function(req,res,next){
     model.survey.update(req.body.data,{where: { id : req.params.id }})
     .then(function(result) {
         model.survey.findOne({
-            where: {id: req.params.id}
+            where: {id: req.params.id},
+                include : [{model : model.dynamic_form}]
         }).then(function(response) {
+            var data = {
+                data: response,
+                action: 'update'
+            }
+            process.io.emit('repeating_events_for_callendar:' + response.articleId,data)
             res.send(response);
         });
     });

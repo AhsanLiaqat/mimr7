@@ -25,6 +25,10 @@ module.exports = {
                     type: Sequelize.BOOLEAN,
                     defaultValue: false
                 },
+                status: {
+                    type: Sequelize.BOOLEAN,
+                    defaultValue: false
+                },
                 activatedAt: {
                     type: "TIMESTAMP WITH TIME ZONE"
                 },

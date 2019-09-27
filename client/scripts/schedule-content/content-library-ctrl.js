@@ -60,42 +60,75 @@
             }
         };
 
-         var validateValues = function () {
-            if ($scope.page1){
-                var passed  = true;
-                if (!$scope.playGame.organizationId){
-                    toastr.error('Please select a organization', 'Error!');
-                    passed = false;
-                } else if (!$scope.playGame.playerListId){
-                    toastr.error('Please select Payer List', 'Error!');
-                    passed = false;
-                }
+        //  var validateValues = function () {
+        //     if ($scope.page1){
+        //         var passed  = true;
+        //         if (!$scope.playGame.organizationId){
+        //             toastr.error('Please select a organization', 'Error!');
+        //             passed = false;
+        //         } else if (!$scope.playGame.playerListId){
+        //             toastr.error('Please select Payer List', 'Error!');
+        //             passed = false;
+        //         }
+        //         return passed;
+        //     } else if ($scope.page2){
+        //         var passed = true;
+        //             if ($scope.questions.length == 0){
+        //                 toastr.error('Please Add Question First', 'Error!');
+        //                 passed = false;
+        //             }
+        //         return passed;
+        //     } else if ($scope.page3){
+        //         var passed = true;
+        //             // if (!$scope.timeSpan){
+        //             //     toastr.error('Please Enter Time Span', 'Error!');
+        //             //     passed = false;
+        //             // }
+        //             if(!$scope.total_time){
+        //                 toastr.error('Please Enter Total Time','Error!');
+        //                 passed = false;
+        //             }
+        //         return passed;
+        //     } else {
+        //         return true;
+        //     }
+        // };
+
+         var validateModalValues = function () {
+            var passed  = true;
+            if($scope.filteredQuestions != undefined && $scope.filteredQuestions.length == 0){
+                toastr.error('Please Scheduled Messages First', 'Error!');
+                passed = false;
                 return passed;
-            } else if ($scope.page2){
-                var passed = true;
-                    if ($scope.questions.length == 0){
-                        toastr.error('Please Add Question First', 'Error!');
-                        passed = false;
-                    }
+            }else if($scope.surveys != undefined && $scope.surveys.length == 0){
+                toastr.error('Please Scheduled Your Surveys First','Error');
+                passed = false;
                 return passed;
-            } else if ($scope.page3){
-                var passed = true;
-                    // if (!$scope.timeSpan){
-                    //     toastr.error('Please Enter Time Span', 'Error!');
-                    //     passed = false;
-                    // }
-                    if(!$scope.total_time){
-                        toastr.error('Please Enter Total Time','Error!');
-                        passed = false;
-                    }
+                // if($scope.surveys.length == 0){
+                //     toastr.error('Please Scheduled Your Surveys First');
+                //     passed = false;
+                //     return passed;
+                // }
+            }else{
                 return passed;
-            } else {
-                return true;
             }
+            // if($scope.surveys != undefined && $scope.surveys.length == 0){
+            //     toastr.error('Please Scheduled Your Surveys First');
+            //     passed = false;
+            //     return passed;
+            // }else{
+            //     if($scope.filteredQuestions.length == 0){
+            //         toastr.error('Please Scheduled Your Messages First');
+            //         passed = false;
+            //         return passed;   
+            //     }
+            // }
         };
+
 
         $scope.scheduleContent = function () {
             // if($scope.page3 && validateValues()){
+            if(validateModalValues()){
                 if($scope.total_time && $scope.playGame.organizationId && $scope.playGame.playerListId){
                     $http.get('settings/player-lists/get/'+ $scope.playGame.playerListId).then(function(res){
                         $scope.playerListUser = res.data;
@@ -152,6 +185,7 @@
                 }else{
                     toastr.error('Please Enter All Fields','Error!');
                 }
+            }
             // }
         };
 

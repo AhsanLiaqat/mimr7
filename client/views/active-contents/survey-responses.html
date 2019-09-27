@@ -1,0 +1,78 @@
+<div class="page" ng-controller="surveysResponsesCtrl">
+    <section class="panel panel-default user-response-panel">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-sm-4 col-xs-12">
+                    Survey Responses Details
+                    <br>
+                </div>
+
+                <div class="col-sm-8 col-xs-12 text-center ">
+                    <div class="text-right">
+                        Content started At : :
+                        <timer start-time=time>{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+           
+        <div class="panel-body">
+            <div class="container">
+              
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active"><a data-toggle="tab" data-target="#rounds" href="">User Responses</a></li>
+                </ul>
+
+              <div class="tab-content">
+                        <div class="form-group">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <thead>
+                                <tr>
+                                    <th>Users</th>
+                                    <th>Question</th>
+                                    <th>Sent</th>
+                                    <th>Active</th>
+                                    <th>Answered</th>
+                                    <th>Expired</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="survy in surveyDetail.player_list.users">
+                                    <td>
+                                        {{survy.firstName}} {{survy.lastName}}
+                                    </td>
+                                    <td>
+                                        <a href="" ng-click = "detailSurveys('question',survy)">
+                                            {{survy.scheduled_surveys.length}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="" ng-click = "detailSurveys('sent',survy)">
+                                            {{(survy.scheduled_surveys | filter : { activated: true }).length}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="" ng-click = "detailSurveys('active',survy)">
+                                            {{(survy.scheduled_surveys | filter : { activated: false }).length}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="" ng-click = "detailSurveys('Answered',survy)">
+                                            {{survy.answerQuestions}}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="" ng-click = "detailSurveys('expired',survy)">
+                                            {{(survy.scheduled_surveys | filter : { submission : null,status : true}).length}}
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+      </section>
+</div>

@@ -1,0 +1,85 @@
+<div class="page external-surveys-forms" ng-controller="SurveysQuestionsCtrl">
+
+    <section class="panel panel-default">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Survey </strong></div>
+        <div class="panel-body users-surveys-forms" ng-if = "page1">
+            <!-- <div class="row">
+            </div> -->
+            <div class="row">
+                <div class="survey-inner-content">
+                    <div class="col-sm-8">
+                        <strong>Surveys Start At :</strong> 
+                        <timer start-time=time>{{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer>
+                    </div>
+                    <div class="col-sm-4">
+                        <strong>Total Time : </strong> {{form.expiryTime / 60}} Minutes 
+                    </div>
+                    <div>
+                        <!-- <button type="button" class="close" ng-click="close()" >&times;</button> -->
+                        <h4 style="text-align: center; padding: 40px 0px 20px 0px; font-size: 28px; font-weight: 500;">{{form.dynamic_form.heading}}</h4>
+                    </div>
+
+                    <div>
+                        <div ng-repeat="field in form.dynamic_form.fields | orderBy:'position'" class="col-md-12">
+                            <div ng-if="field.type == TEXT_FIELD">
+                                <input type="text" class="form-control" ng-model="model.data[field.model]" placeholder="{{field.label}}">
+                                <!-- <p>{{field.description}}</p> -->
+                            </div>
+                            <div ng-if="field.type == TEXT_AREA">
+                                <textarea class="form-control" rows="7" ng-model="model.data[field.model]"
+                                          placeholder="Enter {{field.label}}"> </textarea>
+                                <!-- <p>{{field.description}}</p> -->
+                            </div>
+                            <div ng-if="field.type == CHECK_BOX" class="form-control">
+                                <input type="checkbox" ng-model="model.data[field.model]"> {{field.label}}
+                                <!-- <p>{{field.description}}</p> -->
+                            </div>
+                            <div ng-if="field.type == SELECT_BOX">
+                                <label>{{field.label}}</label>
+                                <select ng-model="model.data[field.model]"  class="form-control" ng-options="option.value as option.label for option in field.options">
+                                </select>
+                                <!-- <p>{{field.description}}</p> -->
+                            </div>
+                            <div ng-if="field.type == RADIO_BUTTON">
+                                <label>{{field.label}}</label>
+                                <div ng-repeat='option in field.options'  class="form-group">
+                                    <input type="radio" ng-model="model.data[field.model]" ng-value="option.value"> {{option.label}}
+                                </div>
+                                <!-- <p>{{field.description}}</p> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <!-- <div ng-if = "insertionMode">
+                            <button class="btn btn-sm btn-success" style="float:left" ng-click="letestVersion()" ng-if = "detailed">Newer </button>
+                            <button class="btn btn-sm btn-info" style="float:left" ng-click="prevVersion()" ng-if = "detailed"><i class="fa fa-angle-left"></i> Previous</button>
+                            <button class="btn btn-sm btn-warning" style="float:left" ng-click="nextVersion()" ng-if = "detailed">Next <i class="fa fa-angle-right"></i></button>
+                        </div> -->
+
+                        <!-- <button class="btn btn-sm btn-info" ng-click="close()" data-dismiss="modal">Close</button> -->
+                        <a ng-click="submit(model.data)"> <button class="btn btn-sm btn-success" style="font-size: 20px; margin-top: 30px;"> Save</button> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body" ng-if = "page2">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="form-group" style="text-align: center;">
+                        <strong>"Expiration time for the survey have passed"</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body" ng-if = "page3">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="form-group" style="text-align: center;">
+                        <strong>"Thanks For Submitting Your Response"</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
