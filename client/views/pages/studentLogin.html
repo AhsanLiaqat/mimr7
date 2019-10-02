@@ -61,7 +61,12 @@
                             <span class="glyphicon glyphicon-th"></span> Active Content Messages
                         </strong>
                     </div>
-                    <div class="col-sm-2 col-xs-4">
+                    <div class="col-sm-1 col-xs-4">
+                        <a style="float: right;" class="btn btn-info" ng-click = "show_student_messages()">
+                            <i class="fa fa-fast-forward"></i> Quick Content
+                        </a>
+                    </div>
+                    <div class="col-sm-1 col-xs-4">
                         <a style="float: right;" class="btn btn-info" ng-click = "logout()">
                             <i class="fa fa-home fa-2x"></i> Exit
                         </a>
@@ -138,16 +143,16 @@
         </section>
     </div>
     <div ng-show="state == 'second'" style="background-color: white" class="student-messages">
-    <div class="container">
-        <div class="row">
-        <div class="col-sm-12 col-xs-12">
-            <a class="btn btn-info" ng-click = "state = 'first'">
-                <i class="fa fa-chevron-left fa-lg"></i> Back
-            </a>
-            </div> 
-            <div class="col-sm-12 col-xs-12">
-            <a href="" class="btn-messages">Messages</a>
-            </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <a class="btn btn-info" ng-click = "state = 'first'">
+                        <i class="fa fa-chevron-left fa-lg"></i> Back
+                    </a>
+                </div> 
+                <div class="col-sm-12 col-xs-12">
+                    <a href="" class="btn-messages">Messages</a>
+                </div>
             </div>
         </div>
          <div class="panel-body">
@@ -160,11 +165,59 @@
                                 <thead>
                                 <tr>
                                     <th class="col-xs-10">Messages</th>
-                                    <th class="col-xs-2">Scheduled Date</th>
+                                    <th class="col-xs-2">Date</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr ng-repeat="msg in myMessages">
+                                    <td class="col-xs-10">
+                                        <a ng-bind-html= "trustedHtml(msg.question.name)">
+                                                
+                                        </a>
+                                    </td>
+                                    <td class="col-xs-2">
+                                        <a>
+                                            {{dateTimeFormat(msg.setOffTime)}}
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>  
+        </div>
+    </div>
+    <div ng-show="state == 'third'" style="background-color: white" class="student-messages">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <a class="btn btn-info" ng-click = "state = 'first'">
+                        <i class="fa fa-chevron-left fa-lg"></i> Back
+                    </a>
+                </div> 
+                <div class="col-sm-12 col-xs-12">
+                    <a href="" class="btn-messages">Messages</a>
+                </div>
+            </div>
+        </div>
+         <div class="panel-body">
+            <div class="container">
+              <div class="tab-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <table class="table table-bordered table-striped table-responsive">
+                                <thead>
+                                <tr>
+                                    <th class="col-xs-10">Messages</th>
+                                    <th class="col-xs-2">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="msg in studentMessages">
                                     <td class="col-xs-10">
                                         <a ng-bind-html= "trustedHtml(msg.question.name)">
                                                 

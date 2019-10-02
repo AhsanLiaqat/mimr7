@@ -104,7 +104,7 @@ app.use('/responses', require('./routes/responses.js'));
 app.use('/questions', require('./routes/question.js'));
 app.use('/content-questions', require('./routes/content-questions.js'));
 app.use('/dynamic-form', require('./routes/dynamic-form.js'));
-app.use('/survey-form-data', require('./routes/survey-form-data'));
+app.use('/survey-form-data', require('./routes/survey-form-data.js'));
 
 app.all('/*', function(req, res, next) {
     // Just send the index.html for other files to support HTML5Mode

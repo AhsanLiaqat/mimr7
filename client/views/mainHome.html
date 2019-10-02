@@ -82,8 +82,6 @@
                                 <i class="fa fa-caret-down fa-2x "></i>
                             </a>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -151,6 +149,9 @@
                                     </button>
                                     <button class="btn btn-sm btn-raised" ng-click="toggleCollectionList()" ng-class = "{'students_btn': collectionToShow}">
                                         <span><img ng-src="../images/collections.png" class="collections_image" /> Collections</span>
+                                    </button>
+                                    <button ng-show = "collectionToShow" class="btn btn-sm btn-raised btn-default" title="New Collection" style="margin-right: 10px;" ng-click="addCollections()">
+                                        <i class="glyphicon glyphicon-plus"></i>
                                     </button>
                                 </div>
                             </div>
@@ -461,7 +462,7 @@
                                 </div>
                             </div>
                         <!-- </div> -->
-                        <a href="" class="btn btn-success btn-sm pull-right" ng-click = "addCollection()"> <i class="fa fa-plus"></i> ADD</a>
+                        <!-- <a href="" class="btn btn-success btn-sm pull-right" ng-click = "addCollection()"> <i class="fa fa-plus"></i> ADD</a> -->
                     <div class="table-responsive">
                         <table st-pipe="collectionListTable" st-table="collections" class="table table-striped table-complete-status highlight-collection-table">
                             <thead>
@@ -527,6 +528,9 @@
                                     Students
                                     </span>
                                 </button>
+                                <button class="btn btn-sm btn-raised btn-default" title="New Student" style="margin-right: 10px;" ng-click="addStudent()">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                </button>
                             </div>
                     </div>
                 </div>
@@ -551,7 +555,7 @@
             </div>
         </div>
         <div ng-if="organizationToShow" class="pull-right add_org">
-            <a href="" class="btn btn-success btn-sm" ng-click = "addOrganization()"> <i class="fa fa-plus"></i> ADD</a>
+            <!-- <a href="" class="btn btn-success btn-sm" ng-click = "addOrganization()"> <i class="fa fa-plus"></i> ADD</a> -->
         </div>
         <div ng-if="organizationToShow" class="table-responsive">  
             <table st-pipe="organizationTable" st-table="organizations" class="table table-striped table-schedule-content">
@@ -582,7 +586,7 @@
             </table>
         </div>
          <div ng-if="playerListToShow" class="pull-right add_org">
-                <a href="" class="btn btn-success btn-sm" ng-click = "CreatePlayerList()"> <i class="fa fa-plus"></i> ADD</a>
+                <!-- <a href="" class="btn btn-success btn-sm" ng-click = "CreatePlayerList()"> <i class="fa fa-plus"></i> ADD</a> -->
             </div>
 
         <div ng-if="playerListToShow" class="table-responsive">
@@ -622,7 +626,7 @@
                 </p> -->
         </div>
         <div ng-if="employeeToShow" class="pull-right add_org">
-                <a href="" class="btn btn-success btn-sm" ng-click = "addEmployee()"> <i class="fa fa-plus"></i> ADD</a>
+                <!-- <a href="" class="btn btn-success btn-sm" ng-click = "addEmployee()"> <i class="fa fa-plus"></i> ADD</a> -->
             </div>
         <div ng-if="employeeToShow" class="table-responsive">
             <table st-pipe="employeeListTable" st-table="employees" class="table table-striped table-schedule-content-student">
@@ -673,6 +677,9 @@
                                         <img ng-src="../images/complete.png" />
                                     Complete
                                     </span>
+                                </button>
+                                <button ng-show = "scheduleToShow" class="btn btn-sm btn-raised btn-default" title="New Collection" style="margin-right: 10px;" ng-click="addClass()">
+                                    <i class="glyphicon glyphicon-plus"></i>
                                 </button>
                             </div>
                     </div>

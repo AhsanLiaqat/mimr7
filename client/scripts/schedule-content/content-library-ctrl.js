@@ -18,31 +18,52 @@
             $scope.user = Query.getCookie('user');
             $scope.page1 = true;
             $scope.playGame = {};
-            $scope.playGame.articleId = collection.id;
+            if(collection){
+                $scope.playGame.articleId = collection.id;
+                $scope.collection = collection;
+            }
             $http.get('/articles/all').then(function(res){
                 $scope.articles = res.data;
             });
             $http.get('/settings/organizations/all?userAccountId=' + $scope.user.userAccountId).then(function (response) {
                 $scope.organizationList = response.data;
             });
-            if(collection.kind == 'message'){
-                $http.get('/questions/get/' + collection.id).then(function(response){
-                    $scope.questions = response.data;
-                    $scope.filteredQuestions = $filter('filter')($scope.questions, function(item){return item.offset});
-                    // $scope.gameMessages = _.sortBy($scope.gameMessages, function(o) { return  o.order });
-                })
-            }else{
-                $http.get('/surveys/all?id=' + collection.id).then(function(response){
-                    $scope.surveys = response.data;
-                })
+            if(collection){
+                if(collection.kind == 'message'){
+                    $http.get('/questions/get/' + collection.id).then(function(response){
+                        $scope.questions = response.data;
+                        $scope.filteredQuestions = $filter('filter')($scope.questions, function(item){return item.offset});
+                        // $scope.gameMessages = _.sortBy($scope.gameMessages, function(o) { return  o.order });
+                    })
+                }else{
+                    $http.get('/surveys/all?id=' + collection.id).then(function(response){
+                        $scope.surveys = response.data;
+                    })
+                }
             }
-            $scope.collection = collection;
         };
         init();
 
         $scope.getPlayerList = function(){
             $http.get('settings/organizations/get/'+ $scope.playGame.organizationId).then(function(res){
                 $scope.organization = res.data;
+            });
+        }
+
+        $scope.getOneCollection = (articleId) => {
+            $http.get('/articles/get/' + articleId).then(function(res){
+                $scope.collection = res.data;
+                if($scope.collection.kind == 'message'){
+                    $http.get('/questions/get/' + $scope.collection.id).then(function(response){
+                        $scope.questions = response.data;
+                        $scope.filteredQuestions = $filter('filter')($scope.questions, function(item){return item.offset});
+                        // $scope.gameMessages = _.sortBy($scope.gameMessages, function(o) { return  o.order });
+                    })
+                }else{
+                    $http.get('/surveys/all?id=' + $scope.collection.id).then(function(response){
+                        $scope.surveys = response.data;
+                    })
+                }
             });
         }
 
@@ -129,7 +150,7 @@
         $scope.scheduleContent = function () {
             // if($scope.page3 && validateValues()){
             if(validateModalValues()){
-                if($scope.total_time && $scope.playGame.organizationId && $scope.playGame.playerListId){
+                if($scope.playGame.articleId && $scope.total_time && $scope.playGame.organizationId && $scope.playGame.playerListId){
                     $http.get('settings/player-lists/get/'+ $scope.playGame.playerListId).then(function(res){
                         $scope.playerListUser = res.data;
                         $http.post('/content-plan-templates/create', $scope.playGame)

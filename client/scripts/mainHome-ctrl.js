@@ -597,6 +597,7 @@
             });  
         };
 
+
         $scope.editHighlight = (highlight) => {
             $(".add-highlight-modal").addClass("slide-div");
             $(".highlights-wrapper").addClass("highlights-wrapper-bg");
@@ -726,7 +727,23 @@
                     $scope.activeContentToShow.push(value);
                 }
             });
-        }
+        };
+
+        $scope.addClass = () => {
+            if($scope.scheduleToShow){
+                $scope.scheduleContent();
+            }
+        };
+
+        $scope.addStudent = () => {
+            if($scope.organizationToShow){
+                $scope.addOrganization();
+            }else if($scope.playerListToShow){
+                $scope.CreatePlayerList();
+            }else{
+                $scope.addEmployee();
+            }
+        };
 
         $('.main-wrapper').click(function(event){
             if(!($(event.target).hasClass('question-manage') || $(event.target).parents('.question-manage').length > 0)){

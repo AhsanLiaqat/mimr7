@@ -23,7 +23,9 @@
                         $scope.state = 'first';
                         localStorage["loginStudentUser"] = JSON.stringify($scope.user);
                         localStorage["loginStudentState"] = $scope.state;
-                        $scope.activeContentTable($scope.tableState);
+                        setTimeout(function(){ 
+                            $scope.activeContentTable($scope.tableState);
+                        }, 300);
                         toastr.success('Here is your active content');
 
                     }else{
@@ -33,6 +35,7 @@
             }
 
             $scope.show_messages = function(contentId){
+                console.log('-----what is conent id',contentId);
                 $scope.state = 'second';
                 localStorage["loginStudentState"] = $scope.state;
                 localStorage["loginStudentContentId"] = contentId;
@@ -42,6 +45,21 @@
                             toastr.warning('Content not Found');
                     }else{
                         $scope.myMessages = response.data;
+                    }
+                });
+            }
+
+            $scope.show_student_messages = function(studentId){
+                $scope.state = 'third';
+                localStorage["loginStudentState"] = $scope.state;
+                localStorage["loginStudentMessageId"] = studentId;
+                $http.get('/student/my-messages/' + studentId)
+                .then(function (response) {
+                    if(response.status == 380){
+                            toastr.warning('Messages not Found');
+                    }else{
+                        $scope.studentMessages = response.data;
+                        console.log('$scope.my-messages',$scope.studentMessages);
                     }
                 });
             }
@@ -59,6 +77,9 @@
                             $scope.verify();
                         }else if ($scope.state == 'second'){
                             $scope.show_messages(localStorage["loginStudentContentId"],$scope.user.id);
+                        }
+                        else if ($scope.state == 'third'){
+                            $scope.show_student_messages(localStorage["loginStudentMessageId"],$scope.user.id);
                         }
                     }
                 }
@@ -79,6 +100,7 @@
 
             $scope.activeContentTable = function (tableState) {
                 $scope.tableState = tableState;
+                console.log('-----',$scope.tableState);
                 if($scope.state != 'login'){
                     $scope.isLoading = true;
                     var pagination = tableState.pagination;

@@ -27,9 +27,9 @@
                             <div class="chosen-full-container" style="margin: 5px;">
                                 <select chosen
                                         class="form-control"
-                                        data-placeholder-text-single="'Select Game Template'"
+                                        data-placeholder-text-single="'Select Collection Template'"
                                         ng-model="playGame.articleId"
-                                        ng-disabled="true"
+                                        ng-change = getOneCollection(playGame.articleId)
                                         ng-options="article.id as article.title for article in articles" >
                                     <option></option>
                                 </select>
