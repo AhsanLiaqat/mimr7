@@ -34,33 +34,44 @@
                });
             }
 
-            $scope.show_messages = function(contentId){
-                console.log('-----what is conent id',contentId);
-                $scope.state = 'second';
-                localStorage["loginStudentState"] = $scope.state;
-                localStorage["loginStudentContentId"] = contentId;
-                $http.get('/question-scheduling/my-messages/' + contentId)
-                .then(function (response) {
-                    if(response.status == 380){
+            $scope.show_messages = function(content){
+                if(typeof content === 'string'){
+                    var content = JSON.parse(content);
+                }
+                if(content.article.kind == 'message'){
+                    $scope.state = 'second';
+                    localStorage["loginStudentState"] = $scope.state;
+                    localStorage["loginStudentContent"] = JSON.stringify(content);
+                    $http.get('/question-scheduling/my-messages/' + content.id + '/' + $scope.user.id)
+                    .then(function (response) {
+                        if(response.status == 380){
                             toastr.warning('Content not Found');
-                    }else{
-                        $scope.myMessages = response.data;
-                    }
-                });
+                        }else{
+                            $scope.myMessages = response.data;
+                        }
+                    });
+                }else{
+                    $scope.state = 'fourth';
+                    localStorage["loginStudentState"] = $scope.state;
+                    localStorage["loginStudentContent"] = JSON.stringify(content);
+                    $http.get('/scheduled-surveys/my-surveys/' + content.id + '/' + $scope.user.id)
+                    .then(function (response) {
+                        if(response.status == 380){
+                            toastr.warning('Content not Found');
+                        }else{
+                            $scope.mySurveys = response.data;
+                        }
+                    });
+                }
             }
 
-            $scope.show_student_messages = function(studentId){
+            $scope.show_student_messages = function(){
                 $scope.state = 'third';
                 localStorage["loginStudentState"] = $scope.state;
-                localStorage["loginStudentMessageId"] = studentId;
-                $http.get('/student/my-messages/' + studentId)
+                localStorage["loginStudentMessageId"] = $scope.user.id;
+                $http.get('/student-message/all-messages/' + $scope.user.id)
                 .then(function (response) {
-                    if(response.status == 380){
-                            toastr.warning('Messages not Found');
-                    }else{
-                        $scope.studentMessages = response.data;
-                        console.log('$scope.my-messages',$scope.studentMessages);
-                    }
+                    $scope.studentMessages = response.data;
                 });
             }
 
@@ -76,10 +87,13 @@
                         if($scope.state == 'first'){
                             $scope.verify();
                         }else if ($scope.state == 'second'){
-                            $scope.show_messages(localStorage["loginStudentContentId"],$scope.user.id);
+                            $scope.show_messages(localStorage["loginStudentContent"],$scope.user.id);
                         }
                         else if ($scope.state == 'third'){
                             $scope.show_student_messages(localStorage["loginStudentMessageId"],$scope.user.id);
+                        }
+                        else if ($scope.state == 'fourth'){
+                            $scope.show_messages(localStorage["loginStudentContent"],$scope.user.id);
                         }
                     }
                 }
@@ -92,15 +106,75 @@
                 $scope.state = 'login';
                 delete localStorage["loginStudentUser"];
                 delete localStorage["loginStudentState"];
-                delete localStorage["loginStudentContentId"]
+                delete localStorage["loginStudentContent"];
+                delete localStorage["loginStudentMessageId"]
                 Query.delCookie('Auth_tk.sig');
                 Query.delCookie('user');
                 Query.delCookie('Auth_token');
             }
 
+            $scope.addModal = function() {
+                ModalService.showModal({
+                    templateUrl: "views/pages/add-student-message.html",
+                    controller: "addMessageCtrl",
+                    inputs : {
+                        messageId : null,
+                        user : $scope.user
+                    }
+                }).then(function(modal) {
+                    modal.element.modal( {backdrop: 'static',  keyboard: false });
+                    modal.close.then(function(result) {
+                        if(result){
+                            $scope.studentMessages.push(result);
+                        }
+                        $('.modal-backdrop').remove();
+                        $('body').removeClass('modal-open');
+                    });
+                });
+            };
+
+
+            $scope.edit = function(record,index) {
+                ModalService.showModal({
+                    templateUrl: "views/pages/add-student-message.html",
+                    controller: "addMessageCtrl",
+                    inputs : {
+                        messageId : record.id,
+                        user : null
+                    }
+                }).then(function(modal) {
+                    modal.element.modal( {backdrop: 'static',  keyboard: false });
+                    modal.close.then(function(result) {
+                        if(result){
+                            $scope.studentMessages[index] = result;
+                        }
+                        $('.modal-backdrop').remove();
+                        $('body').removeClass('modal-open');
+                    });
+                });
+            };
+
+            $scope.deleteMessage = function (id, index) {
+                $http.delete('/student-message/delete/' + id)
+                    .then(function(res){
+                       $scope.studentMessages.splice(index, 1);
+                });
+            };
+
+            $scope.changeStatus = function (record, index) {
+                if(record.status == 'Active'){
+                    record.status = 'InActive';
+                }else{
+                    record.status = 'Active';
+                    record.setOffTime = new Date(new Date().getTime() + 1*1000*60*60);
+                }
+                $http.post('/student-message/update-status',{ data : record}).then(function(result){
+                    $scope.studentMessages[index] = result.data;
+                });
+            };
+
             $scope.activeContentTable = function (tableState) {
                 $scope.tableState = tableState;
-                console.log('-----',$scope.tableState);
                 if($scope.state != 'login'){
                     $scope.isLoading = true;
                     var pagination = tableState.pagination;

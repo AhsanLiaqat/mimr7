@@ -1,0 +1,48 @@
+<div class="modal fade content-edit-collection form-articles highlights" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div id="modal-header" class="modal-header">
+            <button type="button" class="close" ng-click="close()" >&times;</button>
+             <h4 class="modal-title" id="modal-title">New Message</h4>
+        </div>
+        <div class="modal-body">
+            <div class="panel panel-default">
+                <div class="panel-heading">Basic Info</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label>Message Name</label>
+                        <span  style="color: red" title="Required"> *</span>
+                        <input type="text" class="form-control" ng-model="message.content" ng-readonly="viewTask">
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">Message Content Info</div>
+                <div class="panel-body">
+                    <div class="form-group report-editor">
+                        <label>Message Content</label>
+                        <textarea froala="froalaOptions" ng-model="message.description"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="form-group">
+                <label for="exampleInputEmail1">Status</label>
+                <div class="form-group chosen-full-container">
+                    <select chosen class="form-control" ng-model="message.status"
+                            data-placeholder-text-single="'Choose Status'">
+                      <option>Active</option>
+                      <option>InActive</option>
+                    </select>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-info" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-success" ng-click="submit()">Save</button>
+        </div>
+    </div>
+  </div>
+</div>

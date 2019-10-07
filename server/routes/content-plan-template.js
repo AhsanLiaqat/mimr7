@@ -119,6 +119,27 @@ router.get('/get-survey-detail/:id', function(req, res, next) {
     });
 });
 
+// router.get('/my-messages/:id/:userId', function(req, res, next) {
+//     model.content_plan_template.findOne({
+//         where: {id: req.params.id ,content_activated : true , isDeleted : false},
+//         include: [{
+//             model : model.question_scheduling,
+//                 where : {contentPlanTemplateId : req.params.id , userId : req.params.userId },
+//                 include : [{
+//                     model : model.question
+//                 },{
+//                     model : model.answer
+//             }]
+//         },{
+//             model : model.article
+//         }]
+//     }).then(function(messages) {
+//         res.send(messages);
+//     });
+// });
+
+
+
 
 router.get('/all', function(req, res, next) {
     model.content_plan_template.findAll({ where : { userAccountId : req.query.userAccountId,isDeleted : false},

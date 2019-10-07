@@ -207,6 +207,19 @@ router.post('/update/:id',function(req,res,next){
 
 });
 
+router.get('/my-surveys/:id/:userId', function(req, res, next) {
+    model.scheduled_survey.findAll({
+        where: {contentPlanTemplateId: req.params.id,userId : req.params.userId , isDeleted : false},
+        attributes : ['id', 'setOffTime','activatedAt'],
+        include: [{
+            model : model.dynamic_form
+        }]
+    }).then(function(surveys) {
+        res.send(surveys);
+    });
+});
+
+
 router.post('/update-message-off-set/:id',function(req,res,next){
     var record = req.body.data;
     model.scheduled_survey.findOne({
