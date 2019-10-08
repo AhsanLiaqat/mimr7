@@ -249,7 +249,7 @@ router.post('/skip/:id',function(req,res,next){
 
 router.get('/my-messages/:id/:userId', function(req, res, next) {
     model.question_scheduling.findAll({
-        where: {contentPlanTemplateId: req.params.id,userId : req.params.userId ,activated : true , isDeleted : false},
+        where: {contentPlanTemplateId: req.params.id,userId : req.params.userId, activated : true , isDeleted : false},
         attributes : ['id', 'setOffTime','activatedAt'],
         include: [{
             model : model.question

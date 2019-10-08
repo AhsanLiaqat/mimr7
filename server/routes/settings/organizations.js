@@ -9,6 +9,7 @@ router.get('/get/:id', function(req, res, next) {
         },
         include:[{
             model: model.player_list,
+                where : {isDeleted : false},
                 include : [{model : model.user}]
         },{model :model.user},
         {model : model.student}]
