@@ -30,6 +30,7 @@
                     }else{
                         params += 'All Students';
                     }
+                    params += "&userAccountId=" + $scope.user.userAccountId;
                     $http.get('/settings/students/all?' + params).then(function (respp) {
                         $scope.selectoptions = $scope.selectoptions.concat($scope.org);
                         $scope.students = respp.data;

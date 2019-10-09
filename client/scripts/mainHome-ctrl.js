@@ -192,7 +192,6 @@
             $http.get('/content-plan-templates/all?userAccountId=' + $scope.user.userAccountId).then(function (response) {
             $scope.activeContentToShow = [];
                 $scope.active_collections = response.data;
-                console.log('-------',$scope.active_collections);
                 angular.forEach($scope.active_collections, function(value) {
                     if(value.content_activated == true && value.status != 'stop'){
                         $scope.activeContentToShow.push(value);

@@ -9,7 +9,8 @@ router.get('/get/:id', function(req, res, next) {
 });
 
 router.get('/all', function(req, res, next) {
-    let condition = (req.query.id !== "All Students") ? {organizationId: req.query.id,type : 'student'}: {type : 'student'};
+    console.log('what is organizationId',req.query.id,'userAccountId',req.query.userAccountId)
+    let condition = (req.query.id !== "All Students") ? {userAccountId : req.query.userAccountId, organizationId: req.query.id,type : 'student'}: {userAccountId : req.query.userAccountId, type : 'student'};
     model.user.findAll({where: condition,
         include : [{model : model.question_scheduling,
             include : [{
