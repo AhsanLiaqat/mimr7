@@ -29,11 +29,15 @@
                     close(res.data);
                 });
             }else{
-                $scope.message.userId = $scope.user.id;
-                $scope.message.status = 'InActive';
-                $http.post("/student-message/save" , { data: $scope.message }).then(function (res) {
-                    close(res.data);
-                });
+                if($scope.message){
+                    $scope.message.userId = $scope.user.id;
+                    $scope.message.status = 'InActive';
+                    $http.post("/student-message/save" , { data: $scope.message }).then(function (res) {
+                        close(res.data);
+                    });
+                }else{
+                    toastr.error('please fill all fields');                    
+                }
             }
         };
 
