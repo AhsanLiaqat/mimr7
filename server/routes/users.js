@@ -159,7 +159,7 @@ router.get('/student-details/:userId', function (req, res, next) {
         var playerListIds = _.map(student.player_lists, function (plyrList) { return plyrList.dataValues.id });
         model.content_plan_template.findAll({
             where : {playerListId : {in : playerListIds},isDeleted : false},
-                include : [{model : model.article}]
+                include : [{model : model.article},{model : model.question_scheduling}]
         }).then(function(activeArticle){
             res.send(activeArticle); 
         });

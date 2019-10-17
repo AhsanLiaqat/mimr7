@@ -5078,10 +5078,6 @@ body { padding-right: 0 !important }
   background: #eaeaea;
 }
 
-
-
-
-
 .add-question {
     background-color: #ccc;
     position: absolute;
@@ -5335,4 +5331,8 @@ body { padding-right: 0 !important }
   }
   .home-page-cards{
     margin: 5px;
+  }
+  .calendar-questions-list .panel-group{
+    height: 680px;
+    overflow: auto;
   }

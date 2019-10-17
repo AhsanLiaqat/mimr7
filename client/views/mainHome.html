@@ -125,7 +125,7 @@
                                                 <span class="caret" style="float: right;margin-top: 8px;"></span>
                                             </a>
                                             <ul class="dropdown-menu">
-                                                <li role="presentation" ng-repeat="record in article">
+                                                <li role="presentation" ng-repeat="record in article | filter : {kind : 'message'}">
                                                     <a class="dropdown-cursor" role="menuitem" ng-click="changeArticle(record)"> {{record.title}}</a>
                                                 </li>
                                             </ul>
@@ -195,7 +195,7 @@
                             <textarea froala="froalaOptions" ng-model="chapter.text"></textarea>
                             <br>
                             <button class="pull-right btn btn-success" ng-click="saveContent()">Save</button>
-                            <button class="pull-right btn btn-success" ng-click="cancelContent()">Cancel</button>
+                            <button class="pull-right btn btn-danger" ng-click="cancelContent()">Cancel</button>
                         </div>
                     </div>
                     <div class="col-sm-4 col-xs-12"  ng-if = "contentToShow">
@@ -464,7 +464,7 @@
                         <!-- </div> -->
                         <!-- <a href="" class="btn btn-success btn-sm pull-right" ng-click = "addCollection()"> <i class="fa fa-plus"></i> ADD</a> -->
                     <div class="table-responsive">
-                        <table st-pipe="collectionListTable" st-table="collections" class="table table-striped table-complete-status highlight-collection-table">
+                        <table st-pipe="collectionListTable" st-table="article" class="table table-striped table-complete-status highlight-collection-table">
                             <thead>
                                 <tr>
                                     <th st-sort="title"><strong>Name</strong></th>
@@ -472,7 +472,7 @@
                                     <th><strong>Actions</strong></th>
                                 </tr>
                             </thead>
-                            <tr ng-repeat="record in collections | filter : searchVal">
+                            <tr ng-repeat="record in article | filter : searchVal">
                                 <td>{{record.title | displayString : 20}}</td>
                                 <td> {{record.description}}</td>
                                 <td class="collec-btns-icons btn-icons-messages">

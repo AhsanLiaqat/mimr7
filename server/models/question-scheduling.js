@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
         activatedAt: {type: DataTypes.DATE},
         skipped_At: {type: DataTypes.DATE},
         status: { type: DataTypes.BOOLEAN, defaultValue: 0},
+        read_messages: { type: DataTypes.BOOLEAN, defaultValue: 0},
         statusAt: {type: DataTypes.DATE},
         offset: {type: DataTypes.INTEGER, defaultValue: 0},
         total_time: {type: DataTypes.INTEGER, defaultValue: 0},

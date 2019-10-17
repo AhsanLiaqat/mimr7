@@ -598,7 +598,7 @@ body{
     outline-offset: none;
 }
 .calender-page .questions-wrapper{
-   height: calc(100% - 50px) !important;
+   height: calc(100vh - 120px) !important;
    overflow-y: auto !important;
    overflow-x: hidden !important;
 }
@@ -743,4 +743,14 @@ body{
 }
 #main-calendar .fc-event.fc-draggable{
     padding: 10px !important;
+}
+.active-quick-content{
+    padding: 0 0 0 15px;
+}
+.active-quick-content ul li{
+    width: 180px;
+    text-align: center
+}
+.list-group-wrap .panel-body{
+    padding: 0px !important;
 }

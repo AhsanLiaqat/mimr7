@@ -80,8 +80,8 @@
         $scope.collectionListTable = function (tableState) {
             $scope.isLoading = true;
             $http.get('/articles/all').then(function(res){
-                $scope.collections = res.data;
-                $scope.collections = _.sortBy($scope.collections, function (o) { return o.title.toLowerCase(); });
+                $scope.article = res.data;
+                $scope.article = _.sortBy($scope.article, function (o) { return o.title.toLowerCase(); });
                 $scope.isLoading = false;
             });
         };
@@ -104,6 +104,7 @@
         }
 
         $scope.changeArticle = function (record) {
+            $scope.contentShow = false;
             $scope.selectedArticle = record;
             $http.get('/articles/get/' + $scope.selectedArticle.id).then(function(response){
                 $scope.currentArticle = response.data;
@@ -301,27 +302,6 @@
             }
                 
         };
-
-        $scope.addCollection = function () {
-            ModalService.showModal({
-                templateUrl: "views/content/new-content-making.html",
-                controller: "addArticleModalCtrl",
-                inputs: {
-                    gameId: null
-                }
-            }).then(function (modal) {
-                modal.element.modal({ backdrop: 'static', keyboard: false });
-                modal.close.then(function (result) {
-                    if (result) {
-                        $scope.collections.push(result);
-                    }
-                    $('.modal-backdrop').remove();
-                    $('body').removeClass('modal-open');
-                });
-            });
-        };
-
-        
 
         $scope.addOrganization = function () {
             ModalService.showModal({
@@ -785,25 +765,6 @@
                 });
             });
         };
-        // manage array for both type games filtered by cards used
-        $scope.newContent = function () {
-            ModalService.showModal({
-                templateUrl: "views/content/new-content-making.html",
-                controller: "addArticleModalCtrl",
-                inputs: {
-                    gameId: null
-                }
-            }).then(function (modal) {
-                modal.element.modal({ backdrop: 'static', keyboard: false });
-                modal.close.then(function (result) {
-                    if (result) {
-                        $scope.cards.push(result);
-                    }
-                    $('.modal-backdrop').remove();
-                    $('body').removeClass('modal-open');
-                });
-            });
-        };
 
         $scope.editModal = function (id, index) {
             ModalService.showModal({
@@ -816,7 +777,7 @@
                 modal.element.modal({ backdrop: 'static', keyboard: false });
                 modal.close.then(function (result) {
                     if (result && result !== '') {
-                        $scope.collections[index] = result;
+                        $scope.article[index] = result;
                     }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
@@ -827,7 +788,7 @@
         $scope.deleteCollection = function (index, card) {
             $http.delete('/articles/remove/' + card.id)
             .then(function(res){
-                $scope.collections.splice(index,1);
+                $scope.article.splice(index,1);
                 toastr.success('Content Template Deleted.', 'Success!');
             });
         };

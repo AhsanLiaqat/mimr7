@@ -38,32 +38,63 @@
                 if(typeof content === 'string'){
                     var content = JSON.parse(content);
                 }
-                if(content.article.kind == 'message'){
-                    $scope.state = 'second';
+                if(content.id == 0){
+                    $scope.state = 'third';
                     localStorage["loginStudentState"] = $scope.state;
-                    localStorage["loginStudentContent"] = JSON.stringify(content);
-                    $http.get('/question-scheduling/my-messages/' + content.id + '/' + $scope.user.id)
-                    .then(function (response) {
-                        if(response.status == 380){
-                            toastr.warning('Content not Found');
-                        }else{
-                            $scope.myMessages = response.data;
-                        }
-                    });
+                    localStorage["loginStudentMessageId"] = $scope.user.id;
+                    $scope.studentMessages = $scope.studentMessages;
                 }else{
-                    $scope.state = 'fourth';
-                    localStorage["loginStudentState"] = $scope.state;
-                    localStorage["loginStudentContent"] = JSON.stringify(content);
-                    $http.get('/scheduled-surveys/my-surveys/' + content.id + '/' + $scope.user.id)
-                    .then(function (response) {
-                        if(response.status == 380){
-                            toastr.warning('Content not Found');
-                        }else{
-                            $scope.mySurveys = response.data;
-                        }
-                    });
+                    if(content.article.kind == 'message'){
+                        $scope.state = 'second';
+                        localStorage["loginStudentState"] = $scope.state;
+                        localStorage["loginStudentContent"] = JSON.stringify(content);
+                        $http.get('/question-scheduling/my-messages/' + content.id + '/' + $scope.user.id)
+                        .then(function (response) {
+                            if(response.status == 380){
+                                toastr.warning('Content not Found');
+                            }else{
+                                $scope.myMessages = response.data;
+                                console.log('-----how many messages',$scope.myMessages);
+                                $scope.readMessages = [];
+                                $scope.unReadMessages = [];
+                                angular.forEach($scope.myMessages, function(msg){
+                                    if(msg.read_messages == true){
+                                        $scope.readMessages.push(msg);
+                                    }else{
+                                        $scope.unReadMessages.push(msg);
+                                    }
+                                });
+                            }
+                        });
+                    }else{
+                        $scope.state = 'fourth';
+                        localStorage["loginStudentState"] = $scope.state;
+                        localStorage["loginStudentContent"] = JSON.stringify(content);
+                        $http.get('/scheduled-surveys/my-surveys/' + content.id + '/' + $scope.user.id)
+                        .then(function (response) {
+                            if(response.status == 380){
+                                toastr.warning('Content not Found');
+                            }else{
+                                $scope.mySurveys = response.data;
+                            }
+                        });
+                    }
                 }
             }
+
+            $scope.readMessage = function (message) {
+                var data = {
+                    read_messages : true
+                }
+                $http.post('/question-scheduling/update/' + message.id, { data: data }).then(function (res) {
+                    $scope.readMessages.push(res.data);
+                    $scope.read_messages = $scope.readMessages.map(function(x) { return x.id;})
+                    $scope.unReadMessages = $filter('filter')($scope.unReadMessages, function(item){ 
+                        return !$scope.read_messages.includes(item.id);
+                    });
+                });
+
+            };
 
             $scope.show_student_messages = function(){
                 $scope.state = 'third';
@@ -170,6 +201,7 @@
                 }
                 $http.post('/student-message/update-status',{ data : record}).then(function(result){
                     $scope.studentMessages[index] = result.data;
+                    $scope.activeContentTable($scope.tableState);
                 });
             };
 
@@ -182,24 +214,50 @@
                     var number = pagination.number || 10;
                     $http.get('users/student-details/' + $scope.user.id)
                     .then(function (response) {
-                        $scope.activeContent = response.data;
-                        $scope.a = [];
-                        angular.forEach($scope.activeContent, function(msg, key) {
-                            if(msg.content_activated == true && msg.status != 'stop'){
-                                $scope.a.push(msg);
+                        $http.get('/student-message/all-messages/' + $scope.user.id)
+                        .then(function (studentMsgs) {
+                            $scope.studentMessages = studentMsgs.data;
+                            $scope.activeContent = response.data;
+                            $scope.a = [];
+                            angular.forEach($scope.activeContent, function(msg, key) {
+                                if(msg.content_activated == true && msg.status != 'stop'){
+                                    $scope.a.push(msg);
+                                }
+                            });
+                            $scope.total = response.data.length;
+                            var filtered = tableState.search.predicateObject ? $filter('filter')($scope.a, tableState.search.predicateObject) : $scope.a;
+
+                            if (tableState.sort.predicate) {
+                                filtered = $filter('orderBy')(filtered, tableState.sort.predicate, tableState.sort.reverse);
                             }
+                            var result = filtered.slice(start, start + number);
+                            $scope.activeContent = result;
+                            angular.forEach($scope.activeContent,function(content){
+                                content.readMsg = 0;
+                                content.unReadMsg = 0;
+                                content.question_schedulings = content.question_schedulings.filter(function(item){return item.userId == $scope.user.id;});
+                                angular.forEach(content.question_schedulings,function(scheduled_ques){
+                                    if(scheduled_ques.read_messages){
+                                        content.readMsg++;
+                                    }else{
+                                        content.unReadMsg++;
+                                    }
+                                });
+                            });
+                            var flag = $scope.studentMessages.every((msg)=>{
+                                return msg.status == 'InActive'
+                            });
+                            if(!flag){
+                                $scope.activeContent.unshift({
+                                    id: 0,
+                                    article : {
+                                        title: 'Quick Content',
+                                    }
+                                });
+                            }
+                            tableState.pagination.numberOfPages = Math.ceil(filtered.length / number);
+                            $scope.isLoading = false;
                         });
-                        $scope.total = response.data.length;
-                        var filtered = tableState.search.predicateObject ? $filter('filter')($scope.a, tableState.search.predicateObject) : $scope.a;
-
-                        if (tableState.sort.predicate) {
-                            filtered = $filter('orderBy')(filtered, tableState.sort.predicate, tableState.sort.reverse);
-                        }
-                        var result = filtered.slice(start, start + number);
-                        $scope.activeContent = result;
-
-                        tableState.pagination.numberOfPages = Math.ceil(filtered.length / number);
-                        $scope.isLoading = false;
 
                     });
                 }

@@ -52,10 +52,12 @@ section and drop onto the calendar*/
                                         revert: true,      // will cause the event to go back to its
                                         revertDuration: 0,  //  original position after the drag
                                         drag: function() {
-                                            $(this).parent().css('overflow' , 'inherit');
+                                            $(this).parent().css('overflow', 'inherit');
+                                            $(this).parent().parent().parent().parent().css('overflow' , 'inherit');
                                         },
                                         stop: function() {
                                             $(this).parent().css('overflow' , 'auto');
+                                            $(this).parent().parent().parent().parent().css('overflow' , 'auto');
                                         }
                                     });
                             }, 1);
@@ -98,31 +100,38 @@ section and drop onto the calendar*/
                 //   end: '23:00',
                 // },
                 droppable: true,
+                fixedWeekCount : false,
                 defaultDate: "2018-07-01",
                 dayNamesShort : ["Day1", "Day2", "Day3", "Day4", "Day5", "Day6", "Day7"],
                 eventClick: $scope.alertOnEventClick, 
                 eventDrop: $scope.alertOnDrop,
                 eventResize: $scope.alertOnResize,
                 eventReceive: function(event) {
-                    let question = event.data;
-                    // let days = event.start._d.getDate() - new Date(2018,6,1).getDate();
-                    // let offset = (days * 24) + new Date(event.start._d).getHours();
-                    let offset = findOffset(event.start._d);
-                    let newEventDay = event.start.startOf('day');
-                    // let existingEvents = $("#main-calendar").fullCalendar("clientEvents", function(evt) {
-                    //     return true;
-                    // });
-                    $("#main-calendar").fullCalendar("removeEvents", function(evt) {
-                        if (evt == event) return true;
-                    });
-                    $http.post('/questions/update/' + question.id,{data : {offset}}).then(function(res){
-                        $scope.events.push({
-                            ...question,
-                            title: htmlToPlaintext(question.name),
-                            start: findActualDate(offset)
-                        })
-                        refreshEvents();
-                    });
+                    if(new Date(event.start._d) < new Date(2018,7,1)){
+                        let question = event.data;
+                        // let days = event.start._d.getDate() - new Date(2018,6,1).getDate();
+                        // let offset = (days * 24) + new Date(event.start._d).getHours();
+                        let offset = findOffset(event.start._d);
+                        let newEventDay = event.start.startOf('day');
+                        // let existingEvents = $("#main-calendar").fullCalendar("clientEvents", function(evt) {
+                        //     return true;
+                        // });
+                        $("#main-calendar").fullCalendar("removeEvents", function(evt) {
+                            if (evt == event) return true;
+                        });
+                        $http.post('/questions/update/' + question.id,{data : {offset}}).then(function(res){
+                            $scope.events.push({
+                                ...question,
+                                title: htmlToPlaintext(question.name),
+                                start: findActualDate(offset)
+                            })
+                            refreshEvents();
+                        });
+                    }else{
+                        toastr.error('You Can Not Drop Message Here');
+                        $('#main-calendar').fullCalendar('removeEvents', event._id);
+                    }
+
                     
                     // let msgIndex = $scope.messages.findIndex(msg =>  msg.id == jsEvent.data.messageId);
                     // console.log('msg index is what a index',msgIndex)
