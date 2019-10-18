@@ -25,7 +25,7 @@ var j = schedule.scheduleJob('01 * * * * *', function(){
                         model : model.user
                     }]
                 }).then(function(users_data) {
-                    var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://mimr7-dev1.us-east-1.elasticbeanstalk.com/#/pages/surveys-forms' + '/' + users_data.userId + '/' + users_data.id;
+                    var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://app.mimr7.com/#/pages/surveys-forms' + '/' + users_data.userId + '/' + users_data.id;
                     var mailOptions = {
                         from: 'noreply@crisishub.co',
                         to: users_data.user.email,
@@ -260,7 +260,7 @@ router.post('/send-survey/:id',function(req,res,next){
                         model : model.dynamic_form
                     }]
                 }).then(function(scheduled_survey) {
-                    var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://localhost:8082/#/pages/surveys-forms' + '/' + scheduled_survey.userId + '/' + scheduled_survey.id;
+                    var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://app.mimr7.com/#/pages/surveys-forms' + '/' + scheduled_survey.userId + '/' + scheduled_survey.id;
                     var mailOptions = {
                         from: 'noreply@crisishub.co',
                         to: scheduled_survey.user.email,
@@ -292,7 +292,7 @@ router.post('/send-survey/:id',function(req,res,next){
                         model : model.dynamic_form
                     }]
                 }).then(function(scheduled_survey) {
-                    var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://localhost:8082/#/pages/surveys-forms' + '/' + scheduled_survey.userId + '/' + scheduled_survey.id;
+                    var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://app.mimr7.com/#/pages/surveys-forms' + '/' + scheduled_survey.userId + '/' + scheduled_survey.id;
                     var mailOptions = {
                         from: 'noreply@crisishub.co',
                         to: scheduled_survey.user.email,
