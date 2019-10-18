@@ -213,7 +213,7 @@ router.post('/send-question/:id',function(req,res,next){
                     include : [{model : model.message}]
             }]
         }).then(function(scheduled_question) {
-            var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://localhost:8082/#/pages/content-questions' + '/' + scheduled_question.userId + '/' + scheduled_question.id;
+            var link = "\n\n\n\n\n\n\n\n\n\n\n\n"+'http://mimr7-dev1.us-east-1.elasticbeanstalk.com/#/pages/content-questions' + '/' + scheduled_question.userId + '/' + scheduled_question.id;
             // shortUrl.short('http://localhost:8082/#/pages/content-questions', function(err, url){
             //     console.log('what is this url',url);
             // });

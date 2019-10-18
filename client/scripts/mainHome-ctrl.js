@@ -677,7 +677,7 @@
         $scope.deleteStudent = function (id, index) {
             $http.delete('/settings/students/remove/' + id)
                 .then(function(res){
-                   $scope.studentToShow.splice(index, 1);
+                   $scope.employees.splice(index, 1);
                 });
         };
 
