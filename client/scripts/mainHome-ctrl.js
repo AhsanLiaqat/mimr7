@@ -483,7 +483,7 @@
         };
 
         $scope.saveContent = () => {
-            if($scope.chapter.id){
+            if($scope.chapter && $scope.chapter.id){
                 $http.post('/chapters/update/' + $scope.chapter.id,{data : $scope.chapter}).then(function(res){
                     $scope.currentStatus = res.data;
                     $scope.contentShow = false;
