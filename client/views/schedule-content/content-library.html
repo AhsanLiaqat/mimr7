@@ -40,6 +40,22 @@
                                 </label>
                                 <input type="number" min="0" ng-model="total_time" class="form-control" placeholder="" required="required">
                             </div>
+                            <div ng-show = "decider" class="chosen-full-container play-game-client">
+                                <label> Repitition Required
+                                </label>
+                                <input type="number" min="0" ng-model="repetition" class="form-control" placeholder="" required="required">
+                            </div>
+                            <div ng-show = "decider" class="chosen-full-container play-game-client">
+                                <label> Active Days
+                                </label>
+                                <input type="number" min="0" ng-model="total_working_days" class="form-control" placeholder="" required="required">
+                            </div>
+                            <br>
+                            <div ng-show = "decider" class="chosen-full-container play-game-client">
+                                <label> Active Hours
+                                </label>
+                                <input type="number" min="0" ng-model="total_working_hours" class="form-control" placeholder="" required="required">
+                            </div>
                             <br>
                             <div class="chosen-full-container" style="margin: 5px;">
                                 <label>Select Date:</label>

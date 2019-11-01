@@ -13,6 +13,7 @@ module.exports = function(sequelize, DataTypes) {
         read_messages: { type: DataTypes.BOOLEAN, defaultValue: 0},
         statusAt: {type: DataTypes.DATE},
         offset: {type: DataTypes.INTEGER, defaultValue: 0},
+        repetition: {type: DataTypes.INTEGER},
         total_time: {type: DataTypes.INTEGER, defaultValue: 0},
         timeleft: {type: DataTypes.INTEGER},
         isDeleted: {

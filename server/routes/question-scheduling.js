@@ -267,15 +267,7 @@ router.post('/save', function(req, res, next) {
     record.userAccountId = req.user.userAccountId;
     model.question_scheduling.create(record)
         .then(function(msg) {
-            model.question_scheduling.findOne({
-                where: { id : msg.id },
-                include: [{
-                    model: model.question, attributes: ['id', 'name']
-                }]
-            })
-            .then(function(rspp) {
-                res.send(rspp);
-            });  
+            res.send(msg);
         });
 });
 

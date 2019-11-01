@@ -480,8 +480,12 @@
                                     <a href="#/article-libraries/{{record.id}}" class="btn btn-sm btn-primary">Docs& Media</a>
 
                                     <!-- <a href="#/view-contents/{{record.id}}" class="btn btn-sm btn-primary">Contents</a> -->
-                                    <button title="Schedule Content" class="btn btn-sm btn-success" ng-click="scheduleContent(record)">
+                                    <button title="Manual Schedule Content" class="btn btn-sm btn-success" ng-click="scheduleContent(record)">
                                         <i class="fa fa-calendar"></i>
+                                    </button>
+
+                                    <button title="Automatic Schedule Content" class="btn btn-sm btn-success" ng-click="autoScheduleContent(record)">
+                                        <i class="fa fa-cogs"></i>
                                     </button>
 
                                     <a ng-hide = "record.kind == 'survey'" href = "#/view-scheduled-question/{{record.id}}" title="Question Scheduling" class="btn btn-success">

@@ -735,7 +735,25 @@
                 templateUrl: "views/schedule-content/content-library.html",
                 controller: "contentLibraryCtrl",
                 inputs: {
-                    collection: collection
+                    collection: collection,
+                    decider : false
+                }
+            }).then(function (modal) {
+                modal.element.modal({ backdrop: 'static', keyboard: false });
+                modal.close.then(function () {
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
+            });
+        };
+
+        $scope.autoScheduleContent = function (collection) {
+            ModalService.showModal({
+                templateUrl: "views/schedule-content/content-library.html",
+                controller: "contentLibraryCtrl",
+                inputs: {
+                    collection: collection,
+                    decider : true
                 }
             }).then(function (modal) {
                 modal.element.modal({ backdrop: 'static', keyboard: false });
