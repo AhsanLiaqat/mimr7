@@ -59,16 +59,13 @@
                     SOCKET.on('incoming_message:'+$scope.selected, function (response) {
                         var data = response.data;
                         if(response.action == "new"){
-                            console.log("incoming_message new------",data);
                             $scope.messages.push(data);
                             $scope.managearray($scope.selected,true);
                             toastr.success("New message added successfully");
                         }else if(response.action == "update"){
-                            console.log("incoming_message update",data);
                             // var messageToShow = Query.filter($scope.messages , {articleId : data.articleId},false)
                             for(var i = 0; i < $scope.messages.length; i++){
                                 if($scope.messages[i].id == data.id){
-
                                     $scope.messages[i] = data;
                                     $scope.managearray($scope.selected,true);
 
@@ -77,7 +74,6 @@
                                 }
                             }
                         }else if(response.action == "delete"){
-                            console.log("incoming_message delete",data);
                             // var messageToShow = Query.filter($scope.messages , {articleId : data.articleId},false)
                             for(var i = 0; i < $scope.messages.length; i++){
                                 if($scope.messages[i].id == data.id){
@@ -101,11 +97,9 @@
                         var data = response.data;
                         if($scope.valid){
                             if(response.action == "new"){
-                                console.log("incoming_message new------",data);
                                 $scope.messageToShow.push(data);
                                 toastr.success("New message added successfully");
                             }else if(response.action == "update"){
-                                console.log("incoming_message update",data);
                                 for(var i = 0; i < $scope.messages.length; i++){
                                     if($scope.messageToShow[i].id == data.id){
                                         $scope.messageToShow[i] = data;
@@ -113,7 +107,6 @@
                                     }
                                 }
                             }else if(response.action == "delete"){
-                                console.log("incoming_message delete",data);
                                 for(var i = 0; i < $scope.messages.length; i++){
                                     if($scope.messageToShow[i].id == data.id){
                                         $scope.messageToShow.splice(i,1);
