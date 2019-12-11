@@ -38,7 +38,12 @@ router.post('/save', function(req, res, next) {
     var record = req.body.data;
     record.userAccountId = req.user.userAccountId;
     model.article.create(record).then(function (point) {
-        res.send(point);
+        model.article.findOne({
+            where : {id : point.id},
+                include : [{model : model.message},{model : model.question}]
+        }).then(function(collec){
+            res.send(collec);
+        });
     });
 });
 
