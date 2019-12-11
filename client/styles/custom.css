@@ -754,3 +754,60 @@ body{
 .list-group-wrap .panel-body{
     padding: 0px !important;
 }
+.tableHeaders{
+    font-size: 20px;
+}
+.tableValues{
+    font-size: 15px;
+}
+.collection-list .highlight-collection-table th{
+    text-align: left !important;
+    padding: 15px 25px !important;
+}
+.collection-list .highlight-collection-table tr td{
+    width: 25% !important;
+    text-align: left !important;
+     padding: 15px 25px !important; 
+}
+
+.collection-list .highlight-collection-table .collec-btns-icons .btn.btn-sm{
+    padding: 0 5px !important;
+}
+
+.student-list .table-schedule-content th{
+    text-align: left !important;
+    padding: 15px 25px !important;
+}
+.student-list .table-schedule-content tr td{
+    width: 25% !important;
+    text-align: left !important;
+     padding: 15px 25px !important; 
+}
+.student-list .table-schedule-content-student th{
+    text-align: left !important;
+    padding: 15px 25px !important;
+}
+.student-list .table-schedule-content-student tr td{
+    width: 25% !important;
+    text-align: left !important;
+    padding: 15px 25px !important; 
+}
+.class-list .table-schedule-content th{
+    text-align: left !important;
+    padding: 15px 25px !important;
+}
+.class-list .table-schedule-content tr td{
+    width: 20% !important;
+    text-align: left !important;
+    padding: 15px 25px !important; 
+}
+.class-list .table-complete-status th{
+    text-align: left !important;
+    padding: 15px 25px !important;
+}
+.class-list .table-complete-status tr td{
+    width: 33.3% !important;
+    text-align: left !important;
+    padding: 15px 25px !important; 
+}
+

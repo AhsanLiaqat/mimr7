@@ -13,7 +13,9 @@ router.get('/all', function(req, res, next) {
                                 model : model.question
                             }
                 ]},
-                {model : model.chapter}]
+                {model : model.chapter},{
+                    model : model.question
+                }]
     }).then(function(users) {
         res.json(users);
     });

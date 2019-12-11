@@ -89,10 +89,10 @@
 
         $scope.showContents = function(){
             $scope.mainContentToShow = !$scope.mainContentToShow;
-            $scope.contentToShow = true;
+            $scope.contentToShow = false;
             $scope.classToShow = false;
             $scope.studentToShow = false;
-            $scope.collectionToShow = false;
+            $scope.collectionToShow = true;
             $scope.scheduleToShow = false;
             $scope.activeToShow = false;
             $scope.completeToShow = false;
