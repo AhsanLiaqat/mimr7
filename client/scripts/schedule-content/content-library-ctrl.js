@@ -117,7 +117,7 @@
 
          var validateModalValues = function () {
             var passed  = true;
-            if($scope.filteredQuestions != undefined && $scope.filteredQuestions.length == 0){
+            if($scope.filteredQuestions != undefined && $scope.filteredQuestions.length == 0 && $scope.decider == false){
                 toastr.error('Please Scheduled Messages First', 'Error!');
                 passed = false;
                 return passed;

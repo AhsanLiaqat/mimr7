@@ -115,10 +115,10 @@
                 <div class="container-fluid">
                     <div class="Quick-plan-row Information-dashboard-top-btn">
                         <div class="row">
-                            <div class="col-sm-3 col-xs-12">
+                            <div class="col-sm-4 col-xs-12">
                                <div class="custom-clm text-left" ng-hide = "collectionToShow">
                                     <ul class="nav navbar-nav">
-                                        <li class="dropdown inf-db-inc"">
+                                        <li class="dropdown inf-db-inc">
                                             <a href class="dropdown-toggle navbar-dashboard-dropdown dropin" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                                 <span ng-hide = "currentArticle" ng-model="currentArticle">Select Collection</span>
                                                 <span ng-show = "currentArticle"> {{currentArticle.title}} </span>
@@ -133,19 +133,19 @@
                                     </ul>
                                 </div> 
                             </div>
-                            <div class="col-sm-9 col-xs-12">
+                            <div class="col-sm-8 col-xs-12">
                                 <div class="custom-clm text-left">
-                                    <button class="btn btn-sm btn-raised btn-default" ng-click="toggleContentList()" ng-class = "{'students_btn':contentToShow}">
-                                        <span><i class="fa fa-pencil" aria-hidden="true"></i> Contents</span>
+                                    <button title="Contents" class="btn btn-sm btn-raised btn-default" ng-click="toggleContentList()" ng-class = "{'students_btn':contentToShow}">
+                                        <span><i class="fa fa-pencil" aria-hidden="true"></i></span>
                                     </button>
-                                    <button class="btn btn-sm btn-raised btn-default" ng-click="toggleHighlightList()" ng-class = "{'students_btn':highlightsToShow}">
-                                        <span><i class="fa fa-lightbulb-o" style="margin-right: 3px;" aria-hidden="true"></i>Highlights</span>
+                                    <button title="Highlights" class="btn btn-sm btn-raised btn-default" ng-click="toggleHighlightList()" ng-class = "{'students_btn':highlightsToShow}">
+                                        <span><i class="fa fa-lightbulb-o" style="margin-right: 3px;" aria-hidden="true"></i></span>
                                     </button>
-                                    <button class="btn btn-sm btn-raised btn-default" ng-click="toggleMessageList()" ng-class = "{'students_btn':messagesToShow}">
-                                        <span><i class="fa fa-envelope-o" aria-hidden="true"></i> Messages</span>
+                                    <button title="Messages" class="btn btn-sm btn-raised btn-default" ng-click="toggleMessageList()" ng-class = "{'students_btn':messagesToShow}">
+                                        <span><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
                                     </button>
-                                    <button class="btn btn-sm btn-raised" ng-click="toggleCollectionList()" ng-class = "{'students_btn': collectionToShow}">
-                                        <span><img ng-src="../images/collections.png" class="collections_image" /> Collections</span>
+                                    <button title="Collections" class="btn btn-sm btn-raised" ng-click="toggleCollectionList()" ng-class = "{'students_btn': collectionToShow}">
+                                        <span><img ng-src="../images/collections.png" class="collections_image" /></span>
                                     </button>
                                     <button class="btn btn-sm btn-raised btn-default" title="New Collection" style="margin-right: 10px;" ng-click="addCollections()">
                                         <i class="glyphicon glyphicon-plus"></i>
@@ -165,14 +165,16 @@
             </nav>
                 <div class="row content-section-highlight">
                     <div class="col-sm-8 col-xs-12" ng-if = "contentToShow">
-                        <a confirm = "Are you sure you want to DELETE"  href="" class="pull-right add-content-btn" ng-click = "deleteContent(currentStatus.id)"><i class="fa fa-trash"></i> Delete Content</a>
-                        <a href="" class="pull-right add-content-btn" ng-click = "editContent(currentStatus)"><i class="fa fa-edit"></i> Edit Content</a>
-                        <a href="" class="pull-right add-content-btn" ng-click = "addContent()"><i class="fa fa-plus"></i> Add Content</a>
+                        <a confirm = "Are you sure you want to DELETE"  href="" class="pull-right add-content-btn" ng-show = "!contentShow" ng-click = "deleteContent(currentStatus.id)"><i title="Delete Chapter" class="fa fa-trash"></i></a>
+                        <a href="" ng-show = "contentShow" class="pull-right add-content-btn" ng-click = "cancelContent(currentStatus)"><i title="Cancel" class="fa fa-times" style="color: red"></i></a>
+                        <a href="" ng-show = "!contentShow" class="pull-right add-content-btn" ng-click = "editContent(currentStatus)"><i title="Edit Chapter" class="fa fa-edit"></i></a>
+                        <a href="" ng-show = "contentShow" class="pull-right add-content-btn" ng-click = "saveContent()"><i title="Save" class="fa fa-check"></i></a>
+                        <a href="" ng-show = "!contentShow" class="pull-right add-content-btn" ng-click = "addContent()"><i title="Add Chapter" class="fa fa-plus"></i></a>
                         <div class="title-header">
                             <h3><span class="content-list-higlight">Content</span>
                                 <ul class="nav navbar-nav navbar-left incident-ul content-list">
                                     <li class="dropdown">
-                                        <a href="" data-target="" class="dropdown-toggle" data-toggle="dropdown">
+                                        <a href="" ng-show = "!contentShow" data-target="" class="dropdown-toggle" data-toggle="dropdown">
                                             <span class="chapter-heading" ng-hide="currentStatus">Select Chapter <b class="caret"></b></span>
                                             <span class="chapter-heading"  ng-show="currentStatus">{{currentStatus.name}} <b class="caret"></b></span>
                                         </a>
@@ -191,13 +193,15 @@
                         <div class = "froalaEditor" ng-show = "contentShow">
                             <textarea froala="froalaOptions" ng-model="chapter.text"></textarea>
                             <br>
-                            <button class="pull-right btn btn-success" ng-click="saveContent()">Save</button>
-                            <button class="pull-right btn btn-danger" ng-click="cancelContent()">Cancel</button>
+                            <!-- <button class="pull-right btn btn-success" ng-click="saveContent()">Save</button>
+                            <button class="pull-right btn btn-danger" ng-click="cancelContent()">Cancel</button> -->
                         </div>
                     </div>
                     <div class="col-sm-4 col-xs-12"  ng-if = "contentToShow">
                         <div class="title-header">
-                            <h3><span  class="span-content-highlight">Highlights</span></h3>
+                            <h3><span  class="span-content-highlight">Highlights</span>
+                                <a ng-click= "edit({})"><i class="fa fa-plus"></i></a>
+                            </h3>
                         </div>
                         <div class="questions-wrapper">
                             <div class="message-questions">
@@ -219,7 +223,7 @@
                                     </div>
                                 </div>
                                 <div class="add-question">
-                                    <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Highlights</a>
+                                    <!-- <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Highlights</a> -->
                                 </div>
                                 <form class="add-query">
                                     <div class = "highlightSection">
@@ -293,7 +297,9 @@
                     </div>
                     <div class="col-sm-4 col-xs-12" ng-if = "highlightsToShow">
                         <div class="title-header">
-                            <h3><span>Messages</span></h3>
+                            <h3><span>Messages</span>
+                                <a ng-click= "edit({})"><i class="fa fa-plus"></i> </a>
+                            </h3>
                         </div>
                         <div class="questions-wrapper highlight-message-wrapper">
                             <div class="message-questions">
@@ -311,7 +317,7 @@
                                             </div>
                                     </div>
                                 <div class="add-question">
-                                    <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Message</a>
+                                    <!-- <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Message</a> -->
                                 </div>
                                 <form class="add-query">
                                     <div class = "highlightSection">
@@ -411,7 +417,9 @@
                     </div>
                     <div class="col-sm-4 col-xs-12" ng-if = "messagesToShow">
                         <div class="title-header">
-                            <h3><span>Responses</span></h3>
+                            <h3><span>Responses</span>
+                                <a ng-click= "edit({})"><i class="fa fa-plus"></i> </a>
+                            </h3>
                         </div>
                         <div class="questions-wrapper">
                             <div class="message-questions ">
@@ -429,7 +437,7 @@
                                             </div>
                                         </div>
                                 <div class="add-question">
-                                    <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Response</a>
+                                    <!-- <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Response</a> -->
                                 </div>
                                 <form class="add-query">
                                     <a class="close"><i class="fa fa-times" ng-click = "close()"></i></a>
