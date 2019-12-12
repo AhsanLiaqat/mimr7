@@ -4959,6 +4959,11 @@ body { padding-right: 0 !important }
 .title-header h3 {
     color: #f26528;
 }
+.title-header a {
+     float: right;
+     color:#f26528;
+}
+
 .title-header span{
   display: inline-block;
   position: relative;
@@ -5082,7 +5087,6 @@ body { padding-right: 0 !important }
     background-color: #ccc;
     position: absolute;
     width: calc(100%);
-    margin: 0 auto;
     bottom: 0;
 }
 .add-question a{
@@ -5090,6 +5094,7 @@ body { padding-right: 0 !important }
     text-align: center;
     padding: 20px !important;
 }
+
 .questions-wrapper,.main-content {
     height: calc(100vh - 130px);
     position: relative;
