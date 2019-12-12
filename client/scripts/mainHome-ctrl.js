@@ -766,7 +766,7 @@
             });
         };
 
-        $scope.editScheduleContent = function (contentId) {
+        $scope.editScheduleContent = function (contentId,index) {
             ModalService.showModal({
                 templateUrl: "views/schedule-content/edit-content-library.html",
                 controller: "editContentLibraryCtrl",
@@ -777,6 +777,7 @@
                 modal.element.modal({ backdrop: 'static', keyboard: false });
                 modal.close.then(function (result) {
                     if (result && result !== '') {
+                        $scope.scheduleContentToShow[index] = result.data;
                     }
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');

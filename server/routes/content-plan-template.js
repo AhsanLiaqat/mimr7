@@ -39,7 +39,7 @@ router.post('/update/:id', function(req, res, next) {
                 where: {id: req.params.id},
                 attributes: ['id', 'scheduled_date', 'createdAt','start_time','status','play_date','pause_date','resume_date'],
                 order: [['createdAt', 'DESC']],
-                include: []
+                include: [{model : model.article},{model: model.player_list}]
             }).then(function(game) {
                 res.send(game);
             });

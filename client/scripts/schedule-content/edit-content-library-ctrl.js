@@ -27,6 +27,7 @@
             $http.get('/content-plan-templates/get/' + gameId).then(function(res){
                 $scope.result = res.data;
                 console.log('what is actual result is',$scope.result)
+                $scope.total_time = $scope.result.question_schedulings[0].total_time/60;
                 $http.get('settings/organizations/get/'+ $scope.result.player_list.organizationId).then(function(res){
                     $scope.organization = res.data;
                 });
@@ -46,6 +47,8 @@
         }
 
         $scope.scheduleContent = function () {
+            var dateFromHTML = $('#datepicker').val();
+            $scope.result.scheduled_date = dateFromHTML;
             // if($scope.page3 && validateValues()){
                 if($scope.total_time && $scope.result.player_list.organizationId && $scope.result.playerListId){
                     $http.post('/content-plan-templates/update/' + $scope.result.id, $scope.result)

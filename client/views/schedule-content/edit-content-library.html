@@ -54,7 +54,7 @@
                                     </span>
                                 </div> -->
                                 <datepicker date-month-title="selected year" data-date-format='EEEE, dd, MMMM, yyyy' date-min-limit ="{{newDate}}" ng-model-options="{ timezone: 'utc' }">
-                                    <input ng-model="result.scheduled_date" pattern="dd/MM/YYYY" class = "form-control"/>
+                                    <input id="datepicker" ng-model="result.scheduled_date" pattern="dd/MM/YYYY" class = "form-control"/>
                                 </datepicker>
                             </div>
                             <div class="chosen-full-container play-game-client" style="margin: 5px;">
