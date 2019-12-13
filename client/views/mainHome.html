@@ -200,8 +200,8 @@
                     <div class="col-sm-4 col-xs-12"  ng-if = "contentToShow">
                         <div class="title-header add-icon-to-highlights">
                             <h3><span class="span-content-highlight">Highlights</span>
-                                <a href="" ng-show = "showHighlightsModal" class="pull-right " ng-click = "close()"><i title="Cancel" class="fa fa-times" style="color: red"></i></a>
-                                <a href="" ng-show = "showHighlightsModal" class="pull-right" ng-click = "save()"><i title="Save highlight" class="fa fa-check"></i></a>
+                                <a href="" ng-show = "showHighlightsModal" class="pull-right " ng-click = "close()"><i title="Cancel" class="fa fa-times" style="color: red;font-size: 14px;"></i></a>
+                                <a href="" ng-show = "showHighlightsModal" class="pull-right" ng-click = "save()"><i title="Save highlight" style="font-size: 14px;" class="fa fa-check"></i></a>
                                 <a ng-if = "!showHighlightsModal" class="add_highlights" ng-click= "edit({})"><i class="fa fa-plus"></i></a>
                             </h3>
                         </div>
@@ -301,8 +301,8 @@
                         <div class="title-header add-icon-to-highlights">
                             <h3><span>Messages</span>
                                 <!-- <a ng-click= "edit({})"><i class="fa fa-plus"></i> </a> -->
-                                <a href="" ng-show = "showHighlightsModal" class="pull-right " ng-click = "close()"><i title="Cancel" class="fa fa-times" style="color: red"></i></a>
-                                <a href="" ng-show = "showHighlightsModal" class="pull-right" ng-click = "saveMessage()"><i title="Save Messages" class="fa fa-check"></i></a>
+                                <a href="" ng-show = "showHighlightsModal" class="pull-right " ng-click = "close()"><i title="Cancel" class="fa fa-times" style="color: red;font-size: 14px;"></i></a>
+                                <a href="" ng-show = "showHighlightsModal" class="pull-right" ng-click = "saveMessage()"><i title="Save Messages" style="font-size: 14px;" class="fa fa-check"></i></a>
                                 <a ng-if = "!showHighlightsModal" class="add_highlights" ng-click= "edit({})"><i class="fa fa-plus"></i></a>
                             </h3>
                         </div>
@@ -423,8 +423,8 @@
                     <div class="col-sm-4 col-xs-12" ng-if = "messagesToShow">
                         <div class="title-header add-icon-to-highlights">
                             <h3><span>Responses</span>
-                                <a href="" ng-show = "showHighlightsModal" class="pull-right " ng-click = "close()"><i title="Cancel" class="fa fa-times" style="color: red"></i></a>
-                                <a href="" ng-show = "showHighlightsModal" class="pull-right" ng-click = "saveResponse()"><i title="Save Response" class="fa fa-check"></i></a>
+                                <a href="" ng-show = "showHighlightsModal" class="pull-right " ng-click = "close()"><i title="Cancel" class="fa fa-times" style="color: red;font-size: 14px;"></i></a>
+                                <a href="" ng-show = "showHighlightsModal" class="pull-right" ng-click = "saveResponse()"><i title="Save Response" style="font-size: 14px;" class="fa fa-check"></i></a>
                                 <a ng-if = "!showHighlightsModal" class="add_highlights" ng-click= "edit({})"><i class="fa fa-plus"></i></a>
                             </h3>
                         </div>
@@ -447,7 +447,6 @@
                                     <!-- <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Response</a> -->
                                 </div>
                                 <form class="add-query">
-                                    <a class="close"><i class="fa fa-times" ng-click = "close()"></i></a>
                                     <div class="form-group">
                                         <label>Name</label>
                                         <input type = "text" class="form-control" ng-model = "data.name" placeholder="Enter Name"></input>

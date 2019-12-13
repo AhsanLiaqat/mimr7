@@ -4988,9 +4988,9 @@ body { padding-right: 0 !important }
 .questions-section:hover{
   background-color: #ddd;
 }
-.questions-section:hover h4, .questions-section:hover p{
+/*.questions-section:hover h4, .questions-section:hover p{
   color: #fff;
-}
+}*/
 .questions-section > a{
   float: right;
   display: block;
@@ -5039,9 +5039,9 @@ body { padding-right: 0 !important }
 /*.highlights-section:hover{
   background-color: #ddd;
 }*/
-.highlights-section:hover h4, .highlights-section:hover p{
+/*.highlights-section:hover h4, .highlights-section:hover p{
   color: #fff;
-}
+}*/
 .highlights-section > a{
   float: right;
   display: block;

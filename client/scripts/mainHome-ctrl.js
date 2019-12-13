@@ -249,6 +249,7 @@
                     $(".add-query").removeClass("slide-div");
                     $(".questions-wrapper").removeClass("questions-wrapper-bg");
                 });
+                $scope.showHighlightsModal = false; 
             }else{
                 if($scope.data.content){
                     $scope.data.articleId = $scope.currentArticle.id;
@@ -259,12 +260,12 @@
                         toastr.success('Message Added.', 'Success!');
                         $(".add-query").removeClass("slide-div");
                         $(".questions-wrapper").removeClass("questions-wrapper-bg");
+                        $scope.showHighlightsModal = false; 
                     });
                 }else{
                     toastr.error('Enter All Fields');
                 }
             }
-            $scope.showHighlightsModal = false; 
         };
 
         $scope.saveHighlight = () => {
@@ -453,6 +454,7 @@
                     $(".add-query").removeClass("slide-div");
                     $(".questions-wrapper").removeClass("questions-wrapper-bg");
                 });
+                $scope.showHighlightsModal = false;
             }else{
                 if($scope.data.name && $scope.msg.id){
                     $scope.data.messageId = $scope.msg.id;
@@ -464,12 +466,12 @@
                         toastr.success('Message Added.', 'Success!');
                         $(".add-query").removeClass("slide-div");
                         $(".questions-wrapper").removeClass("questions-wrapper-bg");
+                        $scope.showHighlightsModal = false;
                     });
                 }else{
                     toastr.error('Enter All Fields');
                 }
             }
-            $scope.showHighlightsModal = false;
                 
         };
 
@@ -529,6 +531,7 @@
                     $(".add-query").removeClass("slide-div");
                     $(".questions-wrapper").removeClass("questions-wrapper-bg");
                 });
+                $scope.showHighlightsModal = false;
             }else{
                 if(!$scope.messageRes){
                     if($scope.data.name && $scope.ques.id){
@@ -540,6 +543,7 @@
                             toastr.success('Response Added.', 'Success!');
                             $(".add-query").removeClass("slide-div");
                             $(".questions-wrapper").removeClass("questions-wrapper-bg");
+                            $scope.showHighlightsModal = false;
                         });
                     }else{
                         toastr.error('Enter All Fields');
@@ -548,7 +552,6 @@
                     toastr.error('Response is Already Exist');
                 }
             }
-            $scope.showHighlightsModal = false;
                 
         };
 
