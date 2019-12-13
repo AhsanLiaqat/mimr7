@@ -136,16 +136,16 @@
                             <div class="col-sm-8 col-xs-12">
                                 <div class="custom-clm text-left">
                                     <button title="Contents" class="btn btn-sm btn-raised btn-default" ng-click="toggleContentList()" ng-class = "{'students_btn':contentToShow}">
-                                        <span><i class="fa fa-pencil" aria-hidden="true"></i></span>
+                                        <span><i class="fa fa-pencil" aria-hidden="true"></i> Contents</span>
                                     </button>
                                     <button title="Highlights" class="btn btn-sm btn-raised btn-default" ng-click="toggleHighlightList()" ng-class = "{'students_btn':highlightsToShow}">
-                                        <span><i class="fa fa-lightbulb-o" style="margin-right: 3px;" aria-hidden="true"></i></span>
+                                        <span><i class="fa fa-lightbulb-o" style="margin-right: 3px;" aria-hidden="true"></i>Highlights</span>
                                     </button>
                                     <button title="Messages" class="btn btn-sm btn-raised btn-default" ng-click="toggleMessageList()" ng-class = "{'students_btn':messagesToShow}">
-                                        <span><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+                                        <span><i class="fa fa-envelope-o" aria-hidden="true"></i> Messages</span>
                                     </button>
                                     <button title="Collections" class="btn btn-sm btn-raised" ng-click="toggleCollectionList()" ng-class = "{'students_btn': collectionToShow}">
-                                        <span><img ng-src="../images/collections.png" class="collections_image" /></span>
+                                        <span><img ng-src="../images/collections.png" class="collections_image" />Collections</span>
                                     </button>
                                     <button class="btn btn-sm btn-raised btn-default" title="New Collection" style="margin-right: 10px;" ng-click="addCollections()">
                                         <i class="glyphicon glyphicon-plus"></i>
@@ -198,9 +198,11 @@
                         </div>
                     </div>
                     <div class="col-sm-4 col-xs-12"  ng-if = "contentToShow">
-                        <div class="title-header">
-                            <h3><span  class="span-content-highlight">Highlights</span>
-                                <a ng-click= "edit({})"><i class="fa fa-plus"></i></a>
+                        <div class="title-header add-icon-to-highlights">
+                            <h3><span class="span-content-highlight">Highlights</span>
+                                <a href="" ng-show = "showHighlightsModal" class="pull-right " ng-click = "close()"><i title="Cancel" class="fa fa-times" style="color: red"></i></a>
+                                <a href="" ng-show = "showHighlightsModal" class="pull-right" ng-click = "save()"><i title="Save highlight" class="fa fa-check"></i></a>
+                                <a ng-if = "!showHighlightsModal" class="add_highlights" ng-click= "edit({})"><i class="fa fa-plus"></i></a>
                             </h3>
                         </div>
                         <div class="questions-wrapper">
@@ -227,8 +229,8 @@
                                 </div>
                                 <form class="add-query">
                                     <div class = "highlightSection">
-                                        <a href="" title="Save highlight" class="glyphicon glyphicon-save" ng-click = "save()"></a>
-                                        <a class="close"><i class="fa fa-times" ng-click = "close()"></i></a>
+                                        <!-- <a href="" title="Save highlight" class="glyphicon glyphicon-save" ng-click = "save()"></a>
+                                        <a class="close"><i class="fa fa-times" ng-click = "close()"></i></a> -->
                                     </div>
                                     <div class="form-group">
                                         <label>Name</label>
@@ -296,9 +298,12 @@
                         </div>
                     </div>
                     <div class="col-sm-4 col-xs-12" ng-if = "highlightsToShow">
-                        <div class="title-header">
+                        <div class="title-header add-icon-to-highlights">
                             <h3><span>Messages</span>
-                                <a ng-click= "edit({})"><i class="fa fa-plus"></i> </a>
+                                <!-- <a ng-click= "edit({})"><i class="fa fa-plus"></i> </a> -->
+                                <a href="" ng-show = "showHighlightsModal" class="pull-right " ng-click = "close()"><i title="Cancel" class="fa fa-times" style="color: red"></i></a>
+                                <a href="" ng-show = "showHighlightsModal" class="pull-right" ng-click = "saveMessage()"><i title="Save Messages" class="fa fa-check"></i></a>
+                                <a ng-if = "!showHighlightsModal" class="add_highlights" ng-click= "edit({})"><i class="fa fa-plus"></i></a>
                             </h3>
                         </div>
                         <div class="questions-wrapper highlight-message-wrapper">
@@ -321,8 +326,8 @@
                                 </div>
                                 <form class="add-query">
                                     <div class = "highlightSection">
-                                        <a href="" title="Save Message" class="glyphicon glyphicon-save" ng-click = "saveMessage()"></a>
-                                        <a class="close"><i class="fa fa-times" ng-click = "close()"></i></a>
+                                        <!-- <a href="" title="Save Message" class="glyphicon glyphicon-save" ng-click = "saveMessage()"></a>
+                                        <a class="close"><i class="fa fa-times" ng-click = "close()"></i></a> -->
                                     </div>
                                     <div class="form-group">
                                         <label>Name</label>
@@ -416,26 +421,28 @@
                         </div>
                     </div>
                     <div class="col-sm-4 col-xs-12" ng-if = "messagesToShow">
-                        <div class="title-header">
+                        <div class="title-header add-icon-to-highlights">
                             <h3><span>Responses</span>
-                                <a ng-click= "edit({})"><i class="fa fa-plus"></i> </a>
+                                <a href="" ng-show = "showHighlightsModal" class="pull-right " ng-click = "close()"><i title="Cancel" class="fa fa-times" style="color: red"></i></a>
+                                <a href="" ng-show = "showHighlightsModal" class="pull-right" ng-click = "saveResponse()"><i title="Save Response" class="fa fa-check"></i></a>
+                                <a ng-if = "!showHighlightsModal" class="add_highlights" ng-click= "edit({})"><i class="fa fa-plus"></i></a>
                             </h3>
                         </div>
                         <div class="questions-wrapper">
-                            <div class="message-questions ">
-                                        <div class="message-listing-wrpper">
-                                            <div class="questions-section question-selection-wrapper" ng-if = messageRes.name>
-                                                <a ng-click = "toggleList(messageRes)" class="question-manage"><i class="fa fa-ellipsis-v"></i></a>
-                                                <ul ng-if = "messageRes.show">
-                                                    <li><a ng-click = "edit(messageRes,$index)"><i class="fa fa-edit"></i> edit</a></li>
-                                                    <li><a ng-click = "deleteResponse(messageRes.id,$index)"><i class="fa fa-trash"></i> delete</a></li>
-                                                </ul>
-                                                <div ng-bind-html= "toTrustedHTML( messageRes.name )" ></div>
-                                            </div>
-                                            <div ng-if = !messageRes.name> 
-                                                <h3 style="padding-left: 11px;">No Response Present</h3>
-                                            </div>
-                                        </div>
+                            <div class="message-questions">
+                                <div class="message-listing-wrpper">
+                                    <div class="questions-section question-selection-wrapper" ng-if = messageRes.name>
+                                        <a ng-click = "toggleList(messageRes)" class="question-manage"><i class="fa fa-ellipsis-v"></i></a>
+                                        <ul ng-if = "messageRes.show">
+                                            <li><a ng-click = "edit(messageRes,$index)"><i class="fa fa-edit"></i> edit</a></li>
+                                            <li><a ng-click = "deleteResponse(messageRes.id,$index)"><i class="fa fa-trash"></i> delete</a></li>
+                                        </ul>
+                                        <div ng-bind-html= "toTrustedHTML( messageRes.name )" ></div>
+                                    </div>
+                                    <div ng-if = !messageRes.name> 
+                                        <h3 style="padding-left: 11px;">No Response Present</h3>
+                                    </div>
+                                </div>
                                 <div class="add-question">
                                     <!-- <a ng-click= "edit({})"><i class="fa fa-plus"></i> Add Response</a> -->
                                 </div>
@@ -479,7 +486,11 @@
                                     </tr>
                                 </thead>
                                 <tr ng-repeat="record in article | filter : searchVal">
-                                    <td class = "tableValues">{{record.title | displayString : 20}}</td>
+                                    <td class = "tableValues">
+                                        <a href="" ng-click = "showCollectionDetail(record.id)">
+                                            {{record.title | displayString : 20}}
+                                        </a>
+                                    </td>
                                     <td class = "tableValues"> {{record.messages.length}}</td>
                                     <td class = "tableValues"> {{record.questions.length}}</td>
 

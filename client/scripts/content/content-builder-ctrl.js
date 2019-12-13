@@ -107,7 +107,8 @@
                 templateUrl: "views/content/new-content-making.html",
                 controller: "addArticleModalCtrl",
                 inputs: {
-                    gameId: null
+                    gameId: null,
+                    show_details : null
                 }
             }).then(function (modal) {
                 modal.element.modal({ backdrop: 'static', keyboard: false });

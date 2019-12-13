@@ -123,25 +123,13 @@
             messageRes.show = !messageRes.show;
         }
 
-        $scope.toggleContentList = () => {
-            $scope.contentToShow = true;
-            $scope.highlightsToShow = false;
-            $scope.messagesToShow = false;
-            $scope.collectionToShow = false;
-        }
-
-        $scope.toggleHighlightList = () => {
-            $scope.highlightsToShow = true;
-            $scope.contentToShow = false;
-            $scope.messagesToShow = false;
-            $scope.collectionToShow = false;
-        }
 
         $scope.toggleMessageList = () => {
             $scope.messagesToShow = true;
             $scope.contentToShow = false;
             $scope.highlightsToShow = false;
             $scope.collectionToShow = false;
+            $scope.showHighlightsModal = false;
         }
 
         $scope.toggleOrganizationList = () => {
@@ -235,6 +223,7 @@
         $scope.close = () => {
             $(".add-query").removeClass("slide-div");
             $(".questions-wrapper").removeClass("questions-wrapper-bg");
+            $scope.showHighlightsModal = false;
         } 
 
         $scope.closeHighlight = () => {
@@ -275,7 +264,7 @@
                     toastr.error('Enter All Fields');
                 }
             }
-                
+            $scope.showHighlightsModal = false; 
         };
 
         $scope.saveHighlight = () => {
@@ -302,6 +291,22 @@
             }
                 
         };
+
+
+        $scope.toggleContentList = () => {
+            $scope.contentToShow = true;
+            $scope.highlightsToShow = false;
+            $scope.messagesToShow = false;
+            $scope.collectionToShow = false;
+        }
+
+        $scope.toggleHighlightList = () => {
+            $scope.highlightsToShow = true;
+            $scope.contentToShow = false;
+            $scope.messagesToShow = false;
+            $scope.collectionToShow = false;
+            $scope.showHighlightsModal = false;
+        }
 
         $scope.addOrganization = function () {
             ModalService.showModal({
@@ -363,7 +368,8 @@
                 templateUrl: "views/content/new-content-making.html",
                 controller: "addArticleModalCtrl",
                 inputs: {
-                    gameId: null
+                    gameId: null,
+                    show_details : null
                 }
             }).then(function (modal) {
                 modal.element.modal({ backdrop: 'static', keyboard: false });
@@ -463,6 +469,7 @@
                     toastr.error('Enter All Fields');
                 }
             }
+            $scope.showHighlightsModal = false;
                 
         };
 
@@ -541,6 +548,7 @@
                     toastr.error('Response is Already Exist');
                 }
             }
+            $scope.showHighlightsModal = false;
                 
         };
 
@@ -554,6 +562,7 @@
             $(".add-query").addClass("slide-div");
             $(".questions-wrapper").addClass("questions-wrapper-bg");
             $scope.data = question;
+            $scope.showHighlightsModal = true;
         };
 
         $scope.editPlayerList = function (list, index) {
@@ -730,6 +739,23 @@
             }
         });
 
+        $scope.showCollectionDetail = function(id){
+            ModalService.showModal({
+                templateUrl: "views/content/new-content-making.html",
+                controller: "addArticleModalCtrl",
+                inputs: {
+                    gameId: id,
+                    show_details : true
+                }
+            }).then(function (modal) {
+                modal.element.modal({ backdrop: 'static', keyboard: false });
+                modal.close.then(function (result) {
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
+            });
+        };
+
         $scope.scheduleContent = function (collection) {
             ModalService.showModal({
                 templateUrl: "views/schedule-content/content-library.html",
@@ -790,7 +816,8 @@
                 templateUrl: "views/content/new-content-making.html",
                 controller: "addArticleModalCtrl",
                 inputs: {
-                    gameId: id
+                    gameId: id,
+                    show_details : null
                 }
             }).then(function (modal) {
                 modal.element.modal({ backdrop: 'static', keyboard: false });

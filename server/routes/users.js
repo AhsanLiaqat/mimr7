@@ -170,7 +170,7 @@ router.post('/verifyEmail', function (req, res) {
     var record = req.body.data;
     if(record.email){
         model.user.findOne({
-            where: { email: record.email,type : 'student'}
+            where: { email: {$iLike : record.email},type : 'student'}
         }).then(function (u) {
             if(u){
             var new_jwt = nJwt.create({id: u.dataValues.id},process.env.JWT_SECRET);

@@ -4,9 +4,9 @@
         <div class="modal-content">
             <div class="modal-header" id="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" ng-hide = "gameId" id="modal-title">New Collection</h4>
-                <h4 class="modal-title" ng-hide = "!gameId" id="modal-title">Edit Collection</h4>
-
+                <h4 class="modal-title" ng-hide = "gameId || show_details" id="modal-title">New Collection</h4>
+                <h4 class="modal-title" ng-hide = "!gameId || show_details" id="modal-title">Edit Collection</h4>
+                <h4 class="modal-title" ng-show = "show_details" id="modal-title">View Collection</h4>
             </div>
             <div class="modal-body modal_big_height ">
                 <section class="panel panel-default modal_third_cal">
@@ -76,7 +76,7 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-success" ng-click="save()" style="float:right">
+                <button ng-hide = "show_details" class="btn btn-success" ng-click="save()" style="float:right">
                     <span>Save</span>
                 </button>
             </div>

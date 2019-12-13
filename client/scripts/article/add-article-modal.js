@@ -2,10 +2,11 @@
     'use strict';
 
     angular.module('app')
-    .controller('addArticleModalCtrl', ['$scope', '$routeParams', '$http', 'AuthService', 'ModalService', '$location', 'filterFilter','$filter','Query','close','gameId', homeFunction]);
+    .controller('addArticleModalCtrl', ['$scope', '$routeParams', '$http', 'AuthService', 'ModalService', '$location', 'filterFilter','$filter','Query','close','gameId','show_details', homeFunction]);
 
-    function homeFunction($scope, $routeParams, $http, AuthService, ModalService, $location, filterFilter,$filter,Query, close,gameId) {
+    function homeFunction($scope, $routeParams, $http, AuthService, ModalService, $location, filterFilter,$filter,Query, close,gameId, show_details) {
         $scope.gameId = gameId;
+        $scope.show_details = show_details;
         if(gameId){
             $http.get('/articles/get/' + gameId)
             .then(function (response) {
