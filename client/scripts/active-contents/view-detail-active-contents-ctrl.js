@@ -171,11 +171,28 @@
             });
         }
 
-        $scope.cancelContent =function(){
-            $http.post('/content-plan-templates/cancel-content/'+$scope.gameId, {status: 'stop'})
-            .then(function(response){
-                $location.path("/closed-contents");
+
+        $scope.cancelContent = function (card, index) { // tick
+            ModalService.showModal({
+                templateUrl: "views/content/delete-confirmation-popup.html",
+                controller: "removeContentCtrl"
+            }).then(function (modal) {
+                modal.element.modal({ backdrop: 'static', keyboard: false });
+                modal.close.then(function (result) {
+                    console.log(result);
+                    if(result != undefined && result.answer === '87654321'){
+                        $http.post('/content-plan-templates/cancel-content/'+$scope.gameId, {status: 'stop'})
+                        .then(function(response){
+                            $location.path("/closed-contents");
+                        });
+                    }else{
+                        toastr.error('Content not deleted, Try again!');
+                    }
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
             });
+
         }
 
         //close modal
