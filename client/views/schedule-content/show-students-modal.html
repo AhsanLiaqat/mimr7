@@ -1,0 +1,32 @@
+<div class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none;">
+              <button type="button" class="close" ng-click="close()">&times;</button>
+            </div>
+            <div class="modal-body" style="padding-top: 0px !important;">
+                <div class="form-group">
+                    <table class="table table-bordered table-striped table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Students</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-show = "students.length" ng-repeat="std in students">
+                                <td ng-bind-html = "std.firstName"></td>
+                            </tr>
+                            <tr ng-show = "!students.length">
+                                <td>No Student Present</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <div class="modal-footer">
+                    <button class="btn btn-info" ng-click="close()" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

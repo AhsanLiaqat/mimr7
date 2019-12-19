@@ -192,7 +192,6 @@
                     $('body').removeClass('modal-open');
                 });
             });
-
         }
 
         //close modal

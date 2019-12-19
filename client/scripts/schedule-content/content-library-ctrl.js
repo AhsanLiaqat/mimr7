@@ -157,6 +157,11 @@
                 if($scope.playGame.articleId && $scope.total_time && $scope.playGame.organizationId && $scope.playGame.playerListId){
                     $http.get('settings/player-lists/get/'+ $scope.playGame.playerListId).then(function(res){
                         $scope.playerListUser = res.data;
+                        if($scope.decider == true){
+                            $scope.playGame.schedule_type = 'automatic_scheduled';
+                        }else{
+                            $scope.playGame.schedule_type = 'manual_scheduled';
+                        }
                         $http.post('/content-plan-templates/create', $scope.playGame)
                         .then(function(response){
                             $scope.contentPlanTemplateId=response.data.id;

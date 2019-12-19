@@ -738,7 +738,11 @@
                     <td class="tableValues" ng-show = "record.article.kind == 'message'">Message</td>
                     <td class="tableValues" ng-show = "record.article.kind == 'survey'">Survey</td>
                     <td class="tableValues"> {{dateTimeFormat(record.scheduled_date)}}</td>
-                    <td class="tableValues"> {{record.player_list.name || "No List attached"}}</td>
+                    <td class="tableValues">
+                        <a href="" ng-click = "showClassStudents(record.player_list.users)">
+                            {{record.player_list.name || "No List attached"}}
+                        </a>
+                    </td>
                     <td class="btns-icons">
                         <a ng-click="sendQuestions(record)"
                             confirm = "Do you want to Play Content?"
