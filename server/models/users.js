@@ -51,12 +51,12 @@ module.exports = function(sequelize, DataTypes) {
                 users.belongsTo(models.organization);
                 users.hasMany(models.auth_token);
                 users.hasMany(models.student_message);
-                users.hasMany(models.question_scheduling);
+                users.hasMany(models.scheduled_question);
                 users.hasMany(models.scheduled_survey);
                 users.hasOne(models.player);
                 users.hasMany(models.answer);
                 users.hasMany(models.submission);
-                users.belongsToMany(models.player_list, {through: 'player_lists_users'});
+                users.belongsToMany(models.class_list, {through: 'class_lists_users'});
                 users.hasMany(models.device, {foreignKey: 'userId'});
             }, byId: function(id){
                 var deferred = Q.defer();

@@ -13,7 +13,7 @@ var s3Library = require('../lib/aws/s3').library;
 
 router.get('/get/:id', function(req, res, next) {
     model.response.findOne({
-        where: {questionId: req.params.id}}).then(function(result) {
+        where: {messageId: req.params.id}}).then(function(result) {
         res.send(result);
     });
 });
@@ -26,7 +26,7 @@ router.post('/save', function(req, res, next) {
 });
 
 router.get('/one/:id', function(req, res, next) {
-    model.question.findOne({
+    model.message.findOne({
         where: {id: req.params.id},
         include : [{model : model.answer}]
     }).then(function(result) {
@@ -35,8 +35,8 @@ router.get('/one/:id', function(req, res, next) {
 });
 
 router.get('/all-questions', function(req, res, next) {
-    let condition = (req.query.id !== "All Questions") ? {articleId: req.query.id}: {};
-    model.question.findAll({where: condition}).then(function(msg) {
+    let condition = (req.query.id !== "All Questions") ? {collectionId: req.query.id}: {};
+    model.message.findAll({where: condition}).then(function(msg) {
         res.send(msg);
     });
 });
@@ -65,8 +65,8 @@ router.post('/update/:id',function(req,res,next){
 });
 
 router.get('/all/:id', function(req, res, next) {
-    model.question.findAll({
-        where: {messageId: req.params.id}}).then(function(result) {
+    model.message.findAll({
+        where: {highlightId: req.params.id}}).then(function(result) {
         res.send(result);
     });
 });

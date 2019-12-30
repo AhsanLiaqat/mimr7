@@ -61,11 +61,11 @@ module.exports = {
                       key: 'id'
                     }
                 },
-                articleId: {
+                collectionId: {
                     type: Sequelize.UUID,
                     index: true,
                     references: {
-                      model: 'articles',
+                      model: 'collections',
                       key: 'id'
                     }
                 },

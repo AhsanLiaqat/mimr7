@@ -8,7 +8,7 @@ router.get('/get/:id', function(req, res, next) {
             id: req.params.id,isDeleted:false
         },
         include:[{
-            model: model.player_list,
+            model: model.class_list,
                 where : {isDeleted : false},
                 include : [{model : model.user}]
         },{model :model.user},

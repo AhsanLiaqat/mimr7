@@ -14,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 chapter.belongsTo(models.user_accounts);
-                chapter.belongsTo(models.article);
+                chapter.belongsTo(models.collection);
             }
         }
     });

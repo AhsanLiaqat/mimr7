@@ -1,0 +1,1279 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.1 (Ubuntu 12.1-1.pgdg18.04+1)
+-- Dumped by pg_dump version 12.1 (Ubuntu 12.1-1.pgdg18.04+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: SequelizeMeta; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public."SequelizeMeta" (
+    name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public."SequelizeMeta" OWNER TO mani;
+
+--
+-- Name: answers; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.answers (
+    id uuid NOT NULL,
+    text text,
+    "isDeleted" boolean DEFAULT false,
+    "contentPlanTemplateId" uuid,
+    "messageId" uuid,
+    "userId" uuid,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "ScheduledQuestionId" uuid
+);
+
+
+ALTER TABLE public.answers OWNER TO mani;
+
+--
+-- Name: chapters; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.chapters (
+    id uuid NOT NULL,
+    name character varying(255),
+    text text,
+    "isDeleted" boolean DEFAULT false,
+    "collectionId" uuid,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "userAccountId" uuid
+);
+
+
+ALTER TABLE public.chapters OWNER TO mani;
+
+--
+-- Name: class_lists; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.class_lists (
+    id uuid NOT NULL,
+    name text,
+    description character varying(255),
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "isDeleted" boolean DEFAULT false,
+    "organizationId" uuid,
+    "userAccountId" uuid
+);
+
+
+ALTER TABLE public.class_lists OWNER TO mani;
+
+--
+-- Name: class_lists_users; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.class_lists_users (
+    id integer NOT NULL,
+    "createdAt" timestamp with time zone,
+    "updatedAt" timestamp with time zone,
+    "userId" uuid,
+    "classListId" uuid
+);
+
+
+ALTER TABLE public.class_lists_users OWNER TO mani;
+
+--
+-- Name: class_lists_users_id_seq; Type: SEQUENCE; Schema: public; Owner: mani
+--
+
+CREATE SEQUENCE public.class_lists_users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.class_lists_users_id_seq OWNER TO mani;
+
+--
+-- Name: class_lists_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mani
+--
+
+ALTER SEQUENCE public.class_lists_users_id_seq OWNED BY public.class_lists_users.id;
+
+
+--
+-- Name: collections; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.collections (
+    id uuid NOT NULL,
+    title text,
+    description text,
+    private boolean,
+    saleable boolean,
+    "isDeleted" boolean DEFAULT false,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "userId" uuid,
+    text text,
+    "userAccountId" uuid,
+    type character varying(255),
+    kind character varying(255)
+);
+
+
+ALTER TABLE public.collections OWNER TO mani;
+
+--
+-- Name: content_plan_templates; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.content_plan_templates (
+    id uuid NOT NULL,
+    content_activated boolean DEFAULT false,
+    scheduled_date character varying(255),
+    status character varying(255) DEFAULT 'made'::character varying,
+    start_time timestamp with time zone,
+    pause_date timestamp with time zone,
+    resume_date timestamp with time zone,
+    play_date timestamp with time zone,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "isDeleted" boolean DEFAULT false,
+    "collectionId" uuid,
+    "classListId" uuid,
+    "userAccountId" uuid,
+    "dynamicFormId" uuid
+);
+
+
+ALTER TABLE public.content_plan_templates OWNER TO mani;
+
+--
+-- Name: devices; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.devices (
+    id uuid NOT NULL,
+    device_token character varying(255),
+    application_arn character varying(255),
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "userId" uuid
+);
+
+
+ALTER TABLE public.devices OWNER TO mani;
+
+--
+-- Name: dynamic_forms; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.dynamic_forms (
+    id uuid NOT NULL,
+    name character varying(255),
+    fields json,
+    heading text,
+    page_link character varying(255),
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "isDeleted" boolean DEFAULT false,
+    "userAccountId" uuid
+);
+
+
+ALTER TABLE public.dynamic_forms OWNER TO mani;
+
+--
+-- Name: highlights; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.highlights (
+    id uuid NOT NULL,
+    content text,
+    description text,
+    "isDeleted" boolean DEFAULT false,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "collectionId" uuid,
+    "order" integer DEFAULT 0,
+    "userAccountId" uuid
+);
+
+
+ALTER TABLE public.highlights OWNER TO mani;
+
+--
+-- Name: libraries; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.libraries (
+    id uuid NOT NULL,
+    title text,
+    description text,
+    link character varying(255),
+    filename character varying(255),
+    url character varying(255),
+    type character varying(255),
+    mimetype character varying(255),
+    tags character varying(255),
+    "parentId" uuid,
+    "parentType" character varying(255),
+    "isDeleted" boolean DEFAULT false,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "userAccountId" uuid
+);
+
+
+ALTER TABLE public.libraries OWNER TO mani;
+
+--
+-- Name: locations; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.locations (
+    id uuid NOT NULL,
+    address1 character varying(255),
+    address2 character varying(255),
+    address3 character varying(255),
+    city character varying(255),
+    state character varying(255),
+    country character varying(255),
+    "mobilePhone" character varying(255),
+    "officePhone" character varying(255),
+    type character varying(255),
+    location json,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "isDeleted" boolean DEFAULT false,
+    "userAccountId" uuid
+);
+
+
+ALTER TABLE public.locations OWNER TO mani;
+
+--
+-- Name: messages; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.messages (
+    id uuid NOT NULL,
+    name text,
+    number integer,
+    type character varying(255),
+    "isDeleted" boolean DEFAULT false,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "highlightId" uuid,
+    "collectionId" uuid,
+    "offset" integer,
+    hint text,
+    solution text,
+    "userAccountId" uuid
+);
+
+
+ALTER TABLE public.messages OWNER TO mani;
+
+--
+-- Name: organizations; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.organizations (
+    id uuid NOT NULL,
+    name character varying(255),
+    city character varying(255),
+    region character varying(255),
+    state character varying(255),
+    status boolean DEFAULT true,
+    "isDeleted" boolean DEFAULT false,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "userAccountId" uuid
+);
+
+
+ALTER TABLE public.organizations OWNER TO mani;
+
+--
+-- Name: players; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.players (
+    id uuid NOT NULL,
+    "firstName" character varying(255),
+    "lastName" character varying(255),
+    "organizationName" character varying(255),
+    "mobilePhone" character varying(255),
+    country character varying(255),
+    active boolean,
+    "isDeleted" boolean DEFAULT false,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "userId" uuid
+);
+
+
+ALTER TABLE public.players OWNER TO mani;
+
+--
+-- Name: responses; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.responses (
+    id uuid NOT NULL,
+    name character varying(255),
+    "collectionId" uuid,
+    "messageId" uuid,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "isDeleted" boolean DEFAULT false,
+    "userAccountId" uuid
+);
+
+
+ALTER TABLE public.responses OWNER TO mani;
+
+--
+-- Name: scheduled_questions; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.scheduled_questions (
+    id uuid NOT NULL,
+    "setOffTime" character varying(255),
+    index integer DEFAULT 0,
+    activated boolean DEFAULT false,
+    "activatedAt" timestamp with time zone,
+    status boolean DEFAULT false,
+    "statusAt" timestamp with time zone,
+    "isDeleted" boolean DEFAULT false,
+    "contentPlanTemplateId" uuid,
+    "offset" integer DEFAULT 0,
+    "messageId" uuid,
+    timeleft integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    total_time integer,
+    "userId" uuid,
+    "skipped_At" timestamp with time zone,
+    skip boolean DEFAULT false,
+    "userAccountId" uuid,
+    read_messages boolean DEFAULT false,
+    repetition integer
+);
+
+
+ALTER TABLE public.scheduled_questions OWNER TO mani;
+
+--
+-- Name: scheduled_surveys; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.scheduled_surveys (
+    id uuid NOT NULL,
+    "setOffTime" character varying(255),
+    "offset" integer DEFAULT 0,
+    activated boolean DEFAULT false,
+    skip boolean DEFAULT false,
+    status boolean DEFAULT false,
+    "activatedAt" timestamp with time zone,
+    "expiryTime" integer DEFAULT 0,
+    "lastSent" character varying(255),
+    "skipped_At" timestamp with time zone,
+    "repeatTime" integer,
+    type boolean DEFAULT false,
+    "isDeleted" boolean DEFAULT false,
+    "dynamicFormId" uuid,
+    "collectionId" uuid,
+    "userId" uuid,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "userAccountId" uuid,
+    "contentPlanTemplateId" uuid,
+    "surveyId" uuid
+);
+
+
+ALTER TABLE public.scheduled_surveys OWNER TO mani;
+
+--
+-- Name: student_messages; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.student_messages (
+    id uuid NOT NULL,
+    content text,
+    description text,
+    status character varying(255),
+    "setOffTime" character varying(255),
+    "isDeleted" boolean DEFAULT false,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "userId" uuid
+);
+
+
+ALTER TABLE public.student_messages OWNER TO mani;
+
+--
+-- Name: students; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.students (
+    id uuid NOT NULL,
+    name character varying(255),
+    email character varying(255),
+    "mobilePhone" character varying(255),
+    "isDeleted" boolean DEFAULT false,
+    "organizationId" uuid,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.students OWNER TO mani;
+
+--
+-- Name: survey_form_data; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.survey_form_data (
+    id uuid NOT NULL,
+    "contentPlanTemplateId" uuid,
+    "scheduledSurveyId" uuid,
+    "dynamicFormId" uuid,
+    data text,
+    "userId" uuid,
+    "isDelete" boolean DEFAULT false,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.survey_form_data OWNER TO mani;
+
+--
+-- Name: surveys; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.surveys (
+    id uuid NOT NULL,
+    "offset" integer DEFAULT 0,
+    "repeatTime" integer,
+    type boolean DEFAULT false,
+    "isDeleted" boolean DEFAULT false,
+    "dynamicFormId" uuid,
+    "collectionId" uuid,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "userAccountId" uuid
+);
+
+
+ALTER TABLE public.surveys OWNER TO mani;
+
+--
+-- Name: user_accounts; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.user_accounts (
+    id uuid NOT NULL,
+    "organizationName" character varying(255),
+    avatar character varying(255),
+    type character varying(255),
+    category_header character varying(255),
+    messages_font_size character varying(255),
+    messages_font_family character varying(255),
+    status boolean DEFAULT true,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "isDeleted" boolean DEFAULT false
+);
+
+
+ALTER TABLE public.user_accounts OWNER TO mani;
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: mani
+--
+
+CREATE TABLE public.users (
+    id uuid NOT NULL,
+    email character varying(255),
+    avatar character varying(255),
+    "firstName" character varying(255),
+    "middleName" character varying(255),
+    "lastName" character varying(255),
+    password character varying(255),
+    role character varying(255),
+    "lastLogin" timestamp with time zone,
+    title character varying(255),
+    "officePhone" character varying(255),
+    "mobilePhone" character varying(255),
+    "countryCode" character varying(255),
+    "locationsId" integer,
+    "userType" character varying(255),
+    "userCountry" character varying(255),
+    "latestAlert" timestamp with time zone,
+    "LastEmailActivation" timestamp with time zone,
+    "LastUpdatePassword" timestamp with time zone,
+    enabled boolean DEFAULT true,
+    available boolean DEFAULT false,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "userAccountId" uuid,
+    "isDeleted" boolean DEFAULT false,
+    "organizationId" uuid,
+    type character varying(255),
+    active character varying(255)
+);
+
+
+ALTER TABLE public.users OWNER TO mani;
+
+--
+-- Name: class_lists_users id; Type: DEFAULT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.class_lists_users ALTER COLUMN id SET DEFAULT nextval('public.class_lists_users_id_seq'::regclass);
+
+
+--
+-- Data for Name: SequelizeMeta; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public."SequelizeMeta" (name) FROM stdin;
+20180116183000-user_accounts.js
+20180116183170-users.js
+20180116183609-devices.js
+20181001071740-collections.js
+20181001075237-libraries.js
+20181001093144-highlights.js
+20181001102015-player.js
+20181001122703-addIsDeletedToUsers.js
+20181002094310-addTextAnduserAccountIdToCollection.js
+20181003061359-adduserAccountIdToLibraries.js
+20181102110114-organizations.js
+20181105073056-addIsDeletedToUserAccount.js
+20181105074835-locations.js
+20181105115154-addOrganizationIdToUser.js
+20181108104706-messages.js
+20181109080014-addOrderToHighlights.js
+20181114072941-classLists.js
+20181114141042-class_list_users.js
+20181115131805-content_plan_template.js
+20181119103410-addCollectionIdToMessages.js
+20181119125726-scheduled_questions.js
+20181228073405-answers.js
+20181231145853-addTotalTimeToScheduledQuestions.js
+20190110080356-addUserIDToScheduledQuestions.js
+20190111101548-addSkipAndskippedAtToScheduledQuestions.js
+20190211134907-addOffsetToMessages.js
+20190220083229-changeDataTypeOfScheduledDate.js
+20190222101842-chapters.js
+20190226125033-addAnswerIdToScheduledQuestions.js
+20190308110659-students.js
+20190313123410-addTypeToUsers.js
+20190403142357-addHintAndAnswerToMessages.js
+20190408081529-dynamic_forms.js
+20190502071957-addTypeToCollection.js
+20190514075642-addActiveToUsers.js
+20190522104853-responses.js
+20190705131045-addUserAccountIdTOAllTables.js
+20190708071225-addUerAccountIdToScheduledQuestions.js
+20190730110356-surveys.js
+20190805122839-addKindToCollection.js
+20190805123151-scheduled_surveys.js
+20190826111819-addDynamicFormIdToContentPlanTemplates.js
+20190829112738-survey-form-data.js
+20191002075451-student_messages.js.js
+20191011111016-addReadMessagesToScheduledQuestions.js
+20191028122754-addRepetitionToScheduledQuestions.js
+\.
+
+
+--
+-- Data for Name: answers; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.answers (id, text, "isDeleted", "contentPlanTemplateId", "messageId", "userId", "createdAt", "updatedAt", "ScheduledQuestionId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: chapters; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.chapters (id, name, text, "isDeleted", "collectionId", "createdAt", "updatedAt", "userAccountId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: class_lists; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.class_lists (id, name, description, "createdAt", "updatedAt", "isDeleted", "organizationId", "userAccountId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: class_lists_users; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.class_lists_users (id, "createdAt", "updatedAt", "userId", "classListId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: collections; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.collections (id, title, description, private, saleable, "isDeleted", "createdAt", "updatedAt", "userId", text, "userAccountId", type, kind) FROM stdin;
+\.
+
+
+--
+-- Data for Name: content_plan_templates; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.content_plan_templates (id, content_activated, scheduled_date, status, start_time, pause_date, resume_date, play_date, "createdAt", "updatedAt", "isDeleted", "collectionId", "classListId", "userAccountId", "dynamicFormId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: devices; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.devices (id, device_token, application_arn, "createdAt", "updatedAt", "userId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: dynamic_forms; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.dynamic_forms (id, name, fields, heading, page_link, "createdAt", "updatedAt", "isDeleted", "userAccountId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: highlights; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.highlights (id, content, description, "isDeleted", "createdAt", "updatedAt", "collectionId", "order", "userAccountId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: libraries; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.libraries (id, title, description, link, filename, url, type, mimetype, tags, "parentId", "parentType", "isDeleted", "createdAt", "updatedAt", "userAccountId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: locations; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.locations (id, address1, address2, address3, city, state, country, "mobilePhone", "officePhone", type, location, "createdAt", "updatedAt", "isDeleted", "userAccountId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: messages; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.messages (id, name, number, type, "isDeleted", "createdAt", "updatedAt", "highlightId", "collectionId", "offset", hint, solution, "userAccountId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: organizations; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.organizations (id, name, city, region, state, status, "isDeleted", "createdAt", "updatedAt", "userAccountId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: players; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.players (id, "firstName", "lastName", "organizationName", "mobilePhone", country, active, "isDeleted", "createdAt", "updatedAt", "userId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: responses; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.responses (id, name, "collectionId", "messageId", "createdAt", "updatedAt", "isDeleted", "userAccountId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: scheduled_questions; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.scheduled_questions (id, "setOffTime", index, activated, "activatedAt", status, "statusAt", "isDeleted", "contentPlanTemplateId", "offset", "messageId", timeleft, "createdAt", "updatedAt", total_time, "userId", "skipped_At", skip, "userAccountId", read_messages, repetition) FROM stdin;
+\.
+
+
+--
+-- Data for Name: scheduled_surveys; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.scheduled_surveys (id, "setOffTime", "offset", activated, skip, status, "activatedAt", "expiryTime", "lastSent", "skipped_At", "repeatTime", type, "isDeleted", "dynamicFormId", "collectionId", "userId", "createdAt", "updatedAt", "userAccountId", "contentPlanTemplateId", "surveyId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: student_messages; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.student_messages (id, content, description, status, "setOffTime", "isDeleted", "createdAt", "updatedAt", "userId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: students; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.students (id, name, email, "mobilePhone", "isDeleted", "organizationId", "createdAt", "updatedAt") FROM stdin;
+\.
+
+
+--
+-- Data for Name: survey_form_data; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.survey_form_data (id, "contentPlanTemplateId", "scheduledSurveyId", "dynamicFormId", data, "userId", "isDelete", "createdAt", "updatedAt") FROM stdin;
+\.
+
+
+--
+-- Data for Name: surveys; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.surveys (id, "offset", "repeatTime", type, "isDeleted", "dynamicFormId", "collectionId", "createdAt", "updatedAt", "userAccountId") FROM stdin;
+\.
+
+
+--
+-- Data for Name: user_accounts; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.user_accounts (id, "organizationName", avatar, type, category_header, messages_font_size, messages_font_family, status, "createdAt", "updatedAt", "isDeleted") FROM stdin;
+00000000-0000-0000-0000-000000000001	CrisisPlan	\N	\N	\N	\N	\N	t	2019-12-18 16:48:08.057+05	2019-12-18 16:48:08.057+05	f
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: mani
+--
+
+COPY public.users (id, email, avatar, "firstName", "middleName", "lastName", password, role, "lastLogin", title, "officePhone", "mobilePhone", "countryCode", "locationsId", "userType", "userCountry", "latestAlert", "LastEmailActivation", "LastUpdatePassword", enabled, available, "createdAt", "updatedAt", "userAccountId", "isDeleted", "organizationId", type, active) FROM stdin;
+00000000-0000-0000-0000-100000000000	admin@crisisplan.nl	\N	Admin	\N	user	crisis123	superadmin	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	t	2019-12-18 16:48:08.068+05	2019-12-18 16:48:08.068+05	\N	f	\N	\N	\N
+00000000-0000-0000-0000-100000000001	broek@crisisplan.nl	\N	Adinda	\N	van den Broek	12345678	admin	2019-12-19 15:51:17.103+05	\N	\N	\N	\N	\N	\N	\N	\N	\N	\N	t	t	2019-12-18 16:48:08.068+05	2019-12-19 15:51:17.106+05	00000000-0000-0000-0000-000000000001	f	\N	\N	\N
+\.
+
+
+--
+-- Name: class_lists_users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mani
+--
+
+SELECT pg_catalog.setval('public.class_lists_users_id_seq', 1, false);
+
+
+--
+-- Name: SequelizeMeta SequelizeMeta_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public."SequelizeMeta"
+    ADD CONSTRAINT "SequelizeMeta_pkey" PRIMARY KEY (name);
+
+
+--
+-- Name: answers answers_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.answers
+    ADD CONSTRAINT answers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chapters chapters_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT chapters_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: class_lists class_lists_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.class_lists
+    ADD CONSTRAINT class_lists_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: class_lists_users class_lists_users_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.class_lists_users
+    ADD CONSTRAINT class_lists_users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: collections collections_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.collections
+    ADD CONSTRAINT collections_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: content_plan_templates content_plan_templates_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.content_plan_templates
+    ADD CONSTRAINT content_plan_templates_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: devices devices_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.devices
+    ADD CONSTRAINT devices_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dynamic_forms dynamic_forms_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.dynamic_forms
+    ADD CONSTRAINT dynamic_forms_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: highlights highlights_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.highlights
+    ADD CONSTRAINT highlights_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: libraries libraries_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.libraries
+    ADD CONSTRAINT libraries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.locations
+    ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: organizations organizations_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.organizations
+    ADD CONSTRAINT organizations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: players players_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.players
+    ADD CONSTRAINT players_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: responses responses_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.responses
+    ADD CONSTRAINT responses_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: scheduled_questions scheduled_questions_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.scheduled_questions
+    ADD CONSTRAINT scheduled_questions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: scheduled_surveys scheduled_surveys_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.scheduled_surveys
+    ADD CONSTRAINT scheduled_surveys_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: student_messages student_messages_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.student_messages
+    ADD CONSTRAINT student_messages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: students students_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.students
+    ADD CONSTRAINT students_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: survey_form_data survey_form_data_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.survey_form_data
+    ADD CONSTRAINT survey_form_data_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: surveys surveys_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.surveys
+    ADD CONSTRAINT surveys_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_accounts user_accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.user_accounts
+    ADD CONSTRAINT user_accounts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: answers answers_contentPlanTemplateId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.answers
+    ADD CONSTRAINT "answers_contentPlanTemplateId_fkey" FOREIGN KEY ("contentPlanTemplateId") REFERENCES public.content_plan_templates(id);
+
+
+--
+-- Name: answers answers_messageId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.answers
+    ADD CONSTRAINT "answers_messageId_fkey" FOREIGN KEY ("messageId") REFERENCES public.messages(id);
+
+
+--
+-- Name: answers answers_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.answers
+    ADD CONSTRAINT "answers_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id);
+
+
+--
+-- Name: chapters chapters_collectionId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.chapters
+    ADD CONSTRAINT "chapters_collectionId_fkey" FOREIGN KEY ("collectionId") REFERENCES public.collections(id);
+
+
+--
+-- Name: class_lists class_lists_organizationId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.class_lists
+    ADD CONSTRAINT "class_lists_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES public.organizations(id);
+
+
+--
+-- Name: class_lists_users class_lists_users_classListId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.class_lists_users
+    ADD CONSTRAINT "class_lists_users_classListId_fkey" FOREIGN KEY ("classListId") REFERENCES public.class_lists(id);
+
+
+--
+-- Name: class_lists_users class_lists_users_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.class_lists_users
+    ADD CONSTRAINT "class_lists_users_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id);
+
+
+--
+-- Name: collections collections_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.collections
+    ADD CONSTRAINT "collections_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id);
+
+
+--
+-- Name: content_plan_templates content_plan_templates_classListId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.content_plan_templates
+    ADD CONSTRAINT "content_plan_templates_classListId_fkey" FOREIGN KEY ("classListId") REFERENCES public.class_lists(id);
+
+
+--
+-- Name: content_plan_templates content_plan_templates_collectionId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.content_plan_templates
+    ADD CONSTRAINT "content_plan_templates_collectionId_fkey" FOREIGN KEY ("collectionId") REFERENCES public.collections(id);
+
+
+--
+-- Name: devices devices_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.devices
+    ADD CONSTRAINT "devices_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- Name: locations locations_userAccountId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.locations
+    ADD CONSTRAINT "locations_userAccountId_fkey" FOREIGN KEY ("userAccountId") REFERENCES public.user_accounts(id);
+
+
+--
+-- Name: messages messages_highlightId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT "messages_highlightId_fkey" FOREIGN KEY ("highlightId") REFERENCES public.highlights(id);
+
+
+--
+-- Name: organizations organizations_userAccountId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.organizations
+    ADD CONSTRAINT "organizations_userAccountId_fkey" FOREIGN KEY ("userAccountId") REFERENCES public.user_accounts(id);
+
+
+--
+-- Name: players players_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.players
+    ADD CONSTRAINT "players_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id);
+
+
+--
+-- Name: responses responses_collectionId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.responses
+    ADD CONSTRAINT "responses_collectionId_fkey" FOREIGN KEY ("collectionId") REFERENCES public.collections(id);
+
+
+--
+-- Name: responses responses_messageId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.responses
+    ADD CONSTRAINT "responses_messageId_fkey" FOREIGN KEY ("messageId") REFERENCES public.messages(id);
+
+
+--
+-- Name: scheduled_questions scheduled_questions_contentPlanTemplateId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.scheduled_questions
+    ADD CONSTRAINT "scheduled_questions_contentPlanTemplateId_fkey" FOREIGN KEY ("contentPlanTemplateId") REFERENCES public.content_plan_templates(id);
+
+
+--
+-- Name: scheduled_questions scheduled_questions_messageId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.scheduled_questions
+    ADD CONSTRAINT "scheduled_questions_messageId_fkey" FOREIGN KEY ("messageId") REFERENCES public.messages(id);
+
+
+--
+-- Name: scheduled_surveys scheduled_surveys_collectionId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.scheduled_surveys
+    ADD CONSTRAINT "scheduled_surveys_collectionId_fkey" FOREIGN KEY ("collectionId") REFERENCES public.collections(id);
+
+
+--
+-- Name: scheduled_surveys scheduled_surveys_contentPlanTemplateId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.scheduled_surveys
+    ADD CONSTRAINT "scheduled_surveys_contentPlanTemplateId_fkey" FOREIGN KEY ("contentPlanTemplateId") REFERENCES public.content_plan_templates(id);
+
+
+--
+-- Name: scheduled_surveys scheduled_surveys_dynamicFormId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.scheduled_surveys
+    ADD CONSTRAINT "scheduled_surveys_dynamicFormId_fkey" FOREIGN KEY ("dynamicFormId") REFERENCES public.dynamic_forms(id);
+
+
+--
+-- Name: scheduled_surveys scheduled_surveys_surveyId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.scheduled_surveys
+    ADD CONSTRAINT "scheduled_surveys_surveyId_fkey" FOREIGN KEY ("surveyId") REFERENCES public.surveys(id);
+
+
+--
+-- Name: scheduled_surveys scheduled_surveys_userAccountId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.scheduled_surveys
+    ADD CONSTRAINT "scheduled_surveys_userAccountId_fkey" FOREIGN KEY ("userAccountId") REFERENCES public.user_accounts(id);
+
+
+--
+-- Name: scheduled_surveys scheduled_surveys_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.scheduled_surveys
+    ADD CONSTRAINT "scheduled_surveys_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id);
+
+
+--
+-- Name: students students_organizationId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.students
+    ADD CONSTRAINT "students_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES public.organizations(id);
+
+
+--
+-- Name: survey_form_data survey_form_data_contentPlanTemplateId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.survey_form_data
+    ADD CONSTRAINT "survey_form_data_contentPlanTemplateId_fkey" FOREIGN KEY ("contentPlanTemplateId") REFERENCES public.content_plan_templates(id);
+
+
+--
+-- Name: survey_form_data survey_form_data_dynamicFormId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.survey_form_data
+    ADD CONSTRAINT "survey_form_data_dynamicFormId_fkey" FOREIGN KEY ("dynamicFormId") REFERENCES public.dynamic_forms(id);
+
+
+--
+-- Name: survey_form_data survey_form_data_scheduledSurveyId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.survey_form_data
+    ADD CONSTRAINT "survey_form_data_scheduledSurveyId_fkey" FOREIGN KEY ("scheduledSurveyId") REFERENCES public.scheduled_surveys(id);
+
+
+--
+-- Name: survey_form_data survey_form_data_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.survey_form_data
+    ADD CONSTRAINT "survey_form_data_userId_fkey" FOREIGN KEY ("userId") REFERENCES public.users(id);
+
+
+--
+-- Name: surveys surveys_collectionId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.surveys
+    ADD CONSTRAINT "surveys_collectionId_fkey" FOREIGN KEY ("collectionId") REFERENCES public.collections(id);
+
+
+--
+-- Name: surveys surveys_dynamicFormId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.surveys
+    ADD CONSTRAINT "surveys_dynamicFormId_fkey" FOREIGN KEY ("dynamicFormId") REFERENCES public.dynamic_forms(id);
+
+
+--
+-- Name: surveys surveys_userAccountId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.surveys
+    ADD CONSTRAINT "surveys_userAccountId_fkey" FOREIGN KEY ("userAccountId") REFERENCES public.user_accounts(id);
+
+
+--
+-- Name: users users_userAccountId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: mani
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT "users_userAccountId_fkey" FOREIGN KEY ("userAccountId") REFERENCES public.user_accounts(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

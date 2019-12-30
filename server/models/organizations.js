@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
             associate: function(models) {
                 obj.belongsTo(models.user_accounts);
                 obj.hasMany(models.user);
-                obj.hasMany(models.player_list);
+                obj.hasMany(models.class_list);
                 obj.hasMany(models.student);
             },
 

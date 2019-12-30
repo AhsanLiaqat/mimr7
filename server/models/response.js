@@ -14,8 +14,8 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'responses',
         classMethods: {
             associate: function(models) {
-                response.belongsTo(models.question);
-                response.belongsTo(models.article);
+                response.belongsTo(models.message);
+                response.belongsTo(models.collection);
             }
         }
     });

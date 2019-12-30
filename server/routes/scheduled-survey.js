@@ -161,7 +161,7 @@ var j = schedule.scheduleJob('*/1 * * * * *', function(){
 
 router.get('/all', function(req, res, next) {
     model.survey.findAll({
-        where : { articleId : req.query.id },
+        where : { collectionId : req.query.id },
             include : [{
                 model : model.dynamic_form
             }]

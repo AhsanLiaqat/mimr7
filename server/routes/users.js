@@ -154,14 +154,14 @@ router.get('/student-details/:userId', function (req, res, next) {
     model.user.findOne({
         where: {id: req.params.userId,type : 'student'},
         order: [['createdAt', 'DESC']],
-            include : [{model : model.player_list}]
+            include : [{model : model.class_list}]
     }).then(function(student) {
-        var playerListIds = _.map(student.player_lists, function (plyrList) { return plyrList.dataValues.id });
+        var playerListIds = _.map(student.class_lists, function (plyrList) { return plyrList.dataValues.id });
         model.content_plan_template.findAll({
             where : {playerListId : {in : playerListIds},isDeleted : false},
-                include : [{model : model.article},{model : model.question_scheduling}]
-        }).then(function(activeArticle){
-            res.send(activeArticle); 
+                include : [{model : model.collection},{model : model.scheduled_question}]
+        }).then(function(activeCollection){
+            res.send(activeCollection); 
         });
     });
 });

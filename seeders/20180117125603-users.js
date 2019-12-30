@@ -32,7 +32,7 @@ module.exports = {
   },
 
   down : function (queryInterface, Sequelize) {
-    queryInterface.bulkDelete('users', [{
+    return queryInterface.bulkDelete('users', [{
       organizationName :'broek@crisisplan.nl'
     }])
   }

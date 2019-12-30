@@ -13,19 +13,19 @@ module.exports = {
                 name : {
                     type : Sequelize.STRING
                 },
-                articleId: {
+                collectionId: {
                     type: Sequelize.UUID,
                     index: true,
                     references: {
-                      model: 'articles',
+                      model: 'collections',
                       key: 'id'
                     }
                 },
-                questionId: {
+                messageId: {
                     type: Sequelize.UUID,
                     index: true,
                     references: {
-                      model: 'questions',
+                      model: 'messages',
                       key: 'id'
                     }
                 },

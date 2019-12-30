@@ -11,11 +11,11 @@ router.get('/get/:id', function(req, res, next) {
 router.get('/all', function(req, res, next) {
     let condition = (req.query.id !== "All Students") ? {userAccountId : req.query.userAccountId, organizationId: req.query.id,type : 'student'}: {userAccountId : req.query.userAccountId, type : 'student'};
     model.user.findAll({where: condition,
-        include : [{model : model.question_scheduling,
+        include : [{model : model.scheduled_question,
             include : [{
                 model : model.answer
             },{
-                model : model.question
+                model : model.message
             }]
         }]
     }).then(function(std) {
@@ -29,7 +29,7 @@ router.post('/save', function(req, res, next) {
     model.user.create(record).then(function(response) {
         model.user.findOne({
             where: { id: response.id},
-                include : [{model : model.question_scheduling,
+                include : [{model : model.scheduled_question,
                     include : [{
                         model : model.answer
                     }]
@@ -51,11 +51,11 @@ router.post('/One', function (req, res) {
 
 router.get('/find-all', function(req, res, next) {
     model.user.findAll({where: {userAccountId :req.query.userAccountId,type : 'student'} ,
-        include : [{model : model.question_scheduling,
+        include : [{model : model.scheduled_question,
             include : [{
                 model : model.answer
             },{
-                model : model.question
+                model : model.message
             }]
         }]
     }).then(function(std) {
@@ -76,7 +76,7 @@ router.post('/CheckEmail', function (req, res) {
 router.post('/update/:id', function(req, res, next) {
     model.user.update(req.body.data, {where: { id : req.params.id }}).then(function(response) {
         model.user.findOne({where : {id : req.params.id},
-            include : [{model : model.question_scheduling,
+            include : [{model : model.scheduled_question,
                 include : [{
                     model : model.answer
                 }]

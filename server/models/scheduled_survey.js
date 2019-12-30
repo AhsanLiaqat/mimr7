@@ -25,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
                 scheduled_survey.belongsTo(models.user_accounts);
                 scheduled_survey.belongsTo(models.content_plan_template, {foreignKey: 'contentPlanTemplateId'});
                 scheduled_survey.belongsTo(models.user);
-                scheduled_survey.belongsTo(models.article);
+                scheduled_survey.belongsTo(models.collection);
                 scheduled_survey.belongsTo(models.dynamic_form);
                 scheduled_survey.belongsTo(models.survey);
                 scheduled_survey.hasOne(models.submission);

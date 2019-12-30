@@ -15,17 +15,17 @@ router.get('/get/:id', function(req, res, next) {
     model.content_plan_template.findOne({
         where: {id: req.params.id},
         include: [{
-            model: model.player_list,
+            model: model.class_list,
                 include : [{model : model.organization}] 
         },{
-            model : model.article
+            model : model.collection
         },{
-            model: model.question_scheduling
+            model: model.scheduled_question
         },{
             model : model.scheduled_survey
         }]
     }).then(function(contentPlanTmplate) {
-        // var unique_questions = _.uniq(contentPlanTmplate.question_schedulings,'offset');
+        // var unique_questions = _.uniq(contentPlanTmplate.scheduled_question,'offset');
         res.send(contentPlanTmplate);
     });
 });
@@ -51,11 +51,11 @@ router.get('/play-content-summary/:id', function(req, res, next) {
     model.content_plan_template.findOne({
         where: {id: req.params.id},
         order: [['createdAt', 'DESC']],
-        include: [{model: model.question_scheduling,
+        include: [{model: model.scheduled_question,
             include : [{model : model.question,
-                            include : [{model : model.message}]},
+                            include : [{model : model.highlight}]},
                         {model : model.user}]
-        },{model : model.article}]
+        },{model : model.collection}]
     }).then(function(contentPlanTmplate) {
         res.send(contentPlanTmplate);
     });
@@ -80,9 +80,9 @@ router.get('/get-player-detail/:id', function(req, res, next) {
         where: {id: req.params.id},
         order: [['createdAt', 'DESC']],
         include: [
-        {model: model.player_list,
+        {model: model.class_list,
             include : [{model : model.user,
-                include : [{model : model.question_scheduling,
+                include : [{model : model.scheduled_question,
                     where : {contentPlanTemplateId : req.params.id},
                     include : [{
                         model : model.answer
@@ -102,7 +102,7 @@ router.get('/get-survey-detail/:id', function(req, res, next) {
         where: {id: req.params.id},
         order: [['createdAt', 'DESC']],
         include: [
-        {model: model.player_list,
+        {model: model.class_list,
             include : [{model : model.user,
                 include : [{model : model.scheduled_survey,
                     where : {contentPlanTemplateId : req.params.id},
@@ -123,7 +123,7 @@ router.get('/get-survey-detail/:id', function(req, res, next) {
 //     model.content_plan_template.findOne({
 //         where: {id: req.params.id ,content_activated : true , isDeleted : false},
 //         include: [{
-//             model : model.question_scheduling,
+//             model : model.scheduled_question,
 //                 where : {contentPlanTemplateId : req.params.id , userId : req.params.userId },
 //                 include : [{
 //                     model : model.question
@@ -131,7 +131,7 @@ router.get('/get-survey-detail/:id', function(req, res, next) {
 //                     model : model.answer
 //             }]
 //         },{
-//             model : model.article
+//             model : model.collection
 //         }]
 //     }).then(function(messages) {
 //         res.send(messages);
@@ -146,9 +146,9 @@ router.get('/all', function(req, res, next) {
         attributes: ['id', 'scheduled_date', 'content_activated', 'createdAt','status','start_time','play_date'],
         order: [['createdAt', 'DESC']],
         include: [
-            {model: model.player_list, attributes: ['id', 'name','description'],
+            {model: model.class_list, attributes: ['id', 'name','description'],
                         include: [{ model: model.user}]},
-            {model: model.article, attributes: ['id', 'title','description','kind']}]
+            {model: model.collection, attributes: ['id', 'title','description','kind']}]
     })
         .then(function(result) {
             // result.forEach(function(game) {
@@ -166,11 +166,11 @@ router.post('/cancel-content/:id', function(req, res, next) {
     }).then(function(scheduledQuestion) {
         model.content_plan_template.findOne({where : {id : req.params.id},
             include : [{
-                model : model.question_scheduling
+                model : model.scheduled_question
             }]
         }).then(function(resp){
-            resp.question_schedulings.forEach(function(ques) {
-                model.question_scheduling.update({activated: true},{
+            resp.scheduled_question.forEach(function(ques) {
+                model.scheduled_question.update({activated: true},{
                     where: {id: ques.id}
                 }).then(function(response) {
                     res.send(response);
@@ -213,7 +213,7 @@ router.post('/create', function(req, res, next) {
 router.get('/closed-contents', function(req, res, next) {
     model.content_plan_template.findAll({where : {status : 'stop'},
         include : [{
-            model : model.article
+            model : model.collection
         }]
     }).then(function(result) {
             res.send(result);

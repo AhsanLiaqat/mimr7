@@ -25,11 +25,11 @@ module.exports = {
                       key: 'id'
                     }
                 },
-                questionId: {
+                messageId: {
                     type: Sequelize.UUID,
                     index: true,
                     references: {
-                      model: 'questions',
+                      model: 'messages',
                       key: 'id'
                     }
                 },

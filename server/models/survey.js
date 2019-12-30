@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
         classMethods: {
             associate: function(models) {
                 survey.belongsTo(models.user_accounts);
-                survey.belongsTo(models.article);
+                survey.belongsTo(models.collection);
                 survey.belongsTo(models.dynamic_form);
             }
         }

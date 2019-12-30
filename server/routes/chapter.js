@@ -14,7 +14,7 @@ router.get('/get/:id', function(req, res, next) {
 
 router.get('/all', function(req, res, next) {
     model.chapter.findAll({ where : {userAccountId : req.query.userAccountId},
-        include : [{model : model.article}]
+        include : [{model : model.collection}]
     }).then(function(chapt) {
         res.send(chapt);
     });
@@ -40,10 +40,10 @@ router.post('/update/:id',function(req,res,next){
 
 });
 
-router.delete('/delete/:id/:articleId', function(req, res, next) {
+router.delete('/delete/:id/:collectionId', function(req, res, next) {
     var id = req.params.id;
     model.chapter.destroy({where: {id: id}}).then(function(response) {
-        model.chapter.findAll({where : {articleId : req.params.articleId}}).then(function(chapters){
+        model.chapter.findAll({where : {collectionId : req.params.collectionId}}).then(function(chapters){
             res.send(chapters);
         });
     },function(response){

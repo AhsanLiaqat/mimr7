@@ -9,7 +9,7 @@ var mailServer = require('../lib/email');
 
 router.get('/all', function(req, res, next) {
     model.survey.findAll({
-        where : { articleId : req.query.id },
+        where : { collectionId : req.query.id },
             include : [{
                 model : model.dynamic_form
             }]
@@ -37,7 +37,7 @@ router.post('/update/:id',function(req,res,next){
                 data: response,
                 action: 'update'
             }
-            process.io.emit('repeating_events_for_callendar:' + response.articleId,data)
+            process.io.emit('repeating_events_for_callendar:' + response.collectionId,data)
             res.send(response);
         });
     });

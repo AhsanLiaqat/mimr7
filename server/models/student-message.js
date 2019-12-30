@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var message = sequelize.define("student_message", {
+    var student_message = sequelize.define("student_message", {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -17,9 +17,9 @@ module.exports = function(sequelize, DataTypes) {
         tableName: 'student_messages',
         classMethods: {
             associate: function(models) {
-                message.belongsTo(models.user);
+                student_message.belongsTo(models.user);
             }
         }
     });
-    return message;
+    return student_message;
 }
