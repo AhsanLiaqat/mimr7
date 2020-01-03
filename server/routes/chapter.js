@@ -24,7 +24,12 @@ router.post('/save', function(req, res, next) {
     var record = req.body.data;
     record.userAccountId = req.user.userAccountId;
     model.chapter.create(record).then(function (chap) {
-        res.send(chap);
+        model.chapter.findOne({
+            where: {id: chap.id},
+                include : [{model : model.article}]
+        }).then(function(response) {
+            res.send(response);
+        });
     });
 });
 
@@ -32,7 +37,8 @@ router.post('/update/:id',function(req,res,next){
     model.chapter.update(req.body.data,{where: { id : req.params.id }})
     .then(function(result) {
         model.chapter.findOne({
-            where: {id: req.params.id}
+            where: {id: req.params.id},
+                include : [{model : model.article}]
         }).then(function(response) {
             res.send(response);
         });

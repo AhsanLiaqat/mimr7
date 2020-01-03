@@ -37,6 +37,7 @@
 
         $scope.save = function () {
             if($scope.contentId){
+                $scope.data.articleId = $scope.articleId;
                 $http.post('/chapters/update/' + $scope.contentId,{data : $scope.data})
                 .then(function(res){
                     $scope.data = res.data;
