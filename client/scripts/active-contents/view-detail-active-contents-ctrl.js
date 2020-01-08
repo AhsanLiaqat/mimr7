@@ -239,6 +239,28 @@
             return $sce.trustAsHtml( html );
         };
 
+        $scope.cancelContent = function (card, index) { // tick
+            ModalService.showModal({
+                templateUrl: "views/content/delete-confirmation-popup.html",
+                controller: "removeContentCtrl"
+            }).then(function (modal) {
+                modal.element.modal({ backdrop: 'static', keyboard: false });
+                modal.close.then(function (result) {
+                    console.log(result);
+                    if(result != undefined && result.answer === '87654321'){
+                        $http.post('/content-plan-templates/cancel-content/'+$routeParams.gameId, {status: 'stop'})
+                        .then(function(response){
+                            $location.path("/closed-contents");
+                        });
+                    }else{
+                        toastr.error('Content not deleted, Try again!');
+                    }
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
+            });
+        }
+
         $scope.filteredMessages = function(highlight,event){
             event.stopPropagation();
             event.preventDefault();
