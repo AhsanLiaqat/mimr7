@@ -23,6 +23,7 @@ module.exports = function(sequelize, DataTypes) {
                 question.belongsTo(models.message);
                 question.belongsTo(models.article);
                 question.hasOne(models.answer);
+                question.hasMany(models.question_scheduling);
                 question.hasOne(models.response);
             }
         }

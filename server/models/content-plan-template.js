@@ -6,6 +6,7 @@ module.exports = function(sequelize, DataTypes) {
         content_activated: { type: DataTypes.BOOLEAN,
             defaultValue: false },
         scheduled_date: { type: DataTypes.STRING },
+        schedule_type: { type: DataTypes.STRING },
         status: { type: DataTypes.STRING, defaultValue: 'made' },
         start_time: { type: DataTypes.DATE },
         pause_date: { type: DataTypes.DATE },

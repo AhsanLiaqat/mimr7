@@ -24,7 +24,13 @@ router.get('/all', function(req, res, next) {
 
 router.get('/get', function(req, res, next) {
     model.message.findOne({
-        where: {id: req.query.id}}).then(function(result) {
+        where: {id: req.query.id},
+            include: [{model : model.question,
+                include : [{model : model.question_scheduling,
+                    include : [{model : model.question}]
+                }]
+            }]
+    }).then(function(result) {
         res.send(result);
     });
 });

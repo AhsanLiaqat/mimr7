@@ -722,7 +722,7 @@
 
         $scope.addClass = () => {
             if($scope.scheduleToShow){
-                $scope.scheduleContent();
+                $scope.autoScheduleContent();
             }
         };
 
@@ -770,15 +770,6 @@
             }).then(function (modal) {
                 modal.element.modal({ backdrop: 'static', keyboard: false });
                 modal.close.then(function () {
-                    $http.get('/content-plan-templates/all?userAccountId=' + $scope.user.userAccountId).then(function (response) {
-                    $scope.scheduleContentToShow = [];
-                        $scope.scheduled_collections = response.data;
-                        angular.forEach($scope.scheduled_collections, function(value) {
-                            if(value.content_activated == false){
-                                $scope.scheduleContentToShow.push(value);
-                            }
-                        });
-                    });
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
                 });
@@ -796,8 +787,15 @@
             }).then(function (modal) {
                 modal.element.modal({ backdrop: 'static', keyboard: false });
                 modal.close.then(function (result) {
-                    if (result && result !== '') {
-                    }
+                    $http.get('/content-plan-templates/all?userAccountId=' + $scope.user.userAccountId).then(function (response) {
+                    $scope.scheduleContentToShow = [];
+                        $scope.scheduled_collections = response.data;
+                        angular.forEach($scope.scheduled_collections, function(value) {
+                            if(value.content_activated == false){
+                                $scope.scheduleContentToShow.push(value);
+                            }
+                        });
+                    });
                     $('.modal-backdrop').remove();
                     $('body').removeClass('modal-open');
                 });
@@ -848,6 +846,22 @@
             .then(function(res){
                 $scope.article.splice(index,1);
                 toastr.success('Content Template Deleted.', 'Success!');
+            });
+        };
+
+        $scope.showClassStudents = function(students){
+            ModalService.showModal({
+                templateUrl: "views/schedule-content/show-students-modal.html",
+                controller: "classStudentsCtrl",
+                inputs: {
+                    students : students
+                }
+            }).then(function (modal) {
+                modal.element.modal({ backdrop: 'static', keyboard: false });
+                modal.close.then(function () {
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                });
             });
         };
 

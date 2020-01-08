@@ -1,4 +1,77 @@
-<div class="page" ng-controller="viewDetailActiveContentCtrl">
+<div class="panel-heading" ng-controller="viewDetailActiveContentCtrl">
+    <div class="">
+        <div class="row">
+            <div class="col-sm-8 ">
+                <div class="title-header">
+                    <h3><span>Active Messages</span></h3>
+                </div>
+                <div ui-calendar="uiConfig.calendar" id="main-calendar" class="span8 calendar calendar-custom-margin" ng-model = "eventSources"></div> 
+            </div>
+            <div class="col-sm-4" >
+                <div class="title-header">
+                    <h3><span>Highlights</span></h3>
+                </div>
+                <div class="serch-filed">
+                    <input type="text" class="search-filed" data-ng-model="$parent.searchKeywords"
+                    data-ng-keyup="search()">
+                    <a href=""><i class="fa fa-search"></i></a>
+
+                </div>
+                <div class="calendar-questions-list">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="questions-section-hower highlight-sec">
+                                <uib-accordion close-others="true" class = "list-accordian">
+                                    <div uib-accordion-group class="panel-default to-move" 
+                                        is-open="false"
+                                        ng-repeat="msg in filtered_highlights">
+                                        <uib-accordion-heading >
+                                            <div class="row">
+                                                <div class="col-sm-10 panel-heading" ng-click = filteredMessages(msg,$event)>
+                                                  <strong><span class="pull-left"></span> {{msg.content}}</strong>
+                                                </div> 
+                                                <div class="col-sm-2">
+                                                    <i  style="margin: 8px;" class=" glyphicon pull-right" ng-class="{'glyphicon-chevron-down': expand, 'glyphicon-chevron-down': !expand}"></i>
+                                                </div>
+                                            </div>
+                                        </uib-accordion-heading>
+                                        <div class="questions-section" ng-repeat = "question in msg.questions track by $index">
+                                            <div ng-bind-html= "toTrustedHTML( question.name )" ></div>
+                                        </div>
+                                    </div>
+                                </uib-accordion>
+                            </div>
+                            <!-- <div class="questions-section-hower highlight-sec">
+                                <div ng-repeat="msg in filtered_highlights">
+                                    <div class="panel-heading panel-heading-styling">
+                                        <strong><span class="pull-left"></span> {{msg.content}}</strong>
+                                    </div> 
+                                </div>
+                            </div> -->
+                            <div ng-if = "!filtered_highlights.length"> 
+                                <h3>No Highlight Present</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer"></div>
+    </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("a[href='#']").click(function(e){
+        e.preventDefault();
+    });
+    $(".close").click(function(){
+        $(".add-query").removeClass("slide-div");
+        $(".questions-wrapper").removeClass("questions-wrapper-bg");
+    });
+});
+
+</script>
+<!-- <div class="page" ng-controller="viewDetailActiveContentCtrl">
     <section class="panel panel-default active-schedule-message">
         <div class="panel-heading">
             <div class="row">
@@ -82,7 +155,7 @@
                                 </tr>
                                 </tbody>
                             </table>
-                </div>
+                </div> -->
                 <!-- <div id="rounds" class="tab-pane fade in active">
                     <div class="row">
                         <div class="col-md-12">
@@ -145,8 +218,8 @@
                     </div>
                  
                 </div> -->
-              </div>
+     <!--          </div>
             </div>  
         </div>
     </section>
-</div>
+</div> -->
